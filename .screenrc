@@ -1,0 +1,52 @@
+##################################
+#
+# Standard .screenrc
+#
+##################################
+
+escape          ``   # Use ` as escape character
+startup_message off  # No banner message
+altscreen       on   # man/vi/etc clear screen when exiting
+nethack         on   # Use Nethack style error messages
+deflogin        on   # Update utmp for all windows
+vbell           off  # No visual bell
+defscrollback   1024 # Scrollback buffer
+defutf8         on   # UNICODE
+
+# This ***NEVER*** works right
+shelltitle "$ |bash" # Setup auto window titles
+
+# Use 256 colors
+# (sanity check?)
+term "screen-256color"
+
+####
+# Hardstatus line
+#hardstatus alwayslastline
+hardstatus on
+hardstatus lastline
+hardstatus string '%{= .W} %= %?%-Lw%?%{= .G}%n*%f %t%{= .W}%?%+Lw%?%='
+
+####
+# Bindings
+# Remove some stupid / dangerous key bindings
+bind ^k # kill
+bind ^\ # kill and terminate
+# Make them better
+bind \\ quit
+bind K kill
+bind I login on
+bind O login off
+bind } history
+# Can't seem to get new shells to source .bashrc otherwise
+bind c screen bash -i
+####
+
+####
+# Default startup
+screen  0 bash
+# Use this format to send commands to a window:
+#screen -t TITLE 2
+#stuff "COMMAND\015"
+####
+

@@ -1,0 +1,36 @@
+$
+$ =============================================================
+$ ========== USER MACROS ======================================
+$ =============================================================
+$
+|AUTHOR|    = Jeremy Brubaker
+|AUTHORREF| = jdb
+|EMAIL|     = jbru362 /at/ gmail.com
+|COMPANY|   = Orion Arts
+|COPYRIGHT| = Copyright (c) |YEAR|
+|STYLE|     = C
+$
+$ =============================================================
+$ ========== FILE INCLUDES ====================================
+$ =============================================================
+$
+== IF  |STYLE| IS C  ==
+$
+|includefile| = my_c.comments.template
+|includefile| = my_c.cpp.template
+|includefile| = my_c.idioms.template
+|includefile| = my_c.preprocessor.template
+|includefile| = my_c.statements.template
+$
+== ENDIF ==
+
+== IF |STYLE| IS CPP ==
+$
+|includefile| = cpp.comments.template
+|includefile| = cpp.cpp.template
+|includefile| = cpp.idioms.template
+|includefile| = cpp.preprocessor.template
+|includefile| = cpp.statements.template
+$
+== ENDIF ==
+$

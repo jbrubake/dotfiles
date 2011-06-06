@@ -1,0 +1,135 @@
+# Configuration file for dircolors, a utility to help you set the
+# LS_COLORS environment variable used by GNU ls with the --color option.
+# Copyright (C) 1996, 1999-2008
+# Free Software Foundation, Inc.
+# Copying and distribution of this file, with or without modification,
+# are permitted provided the copyright notice and this notice are preserved.
+
+# Below, there should be one TERM entry for each termtype that is colorizable
+# This file is meant for 256 color capable terminals, so only include those
+TERM konsole
+TERM screen-256color
+TERM xterm-256color
+
+# Below are the color init strings for the basic file types. A color init
+# string consists of one or more of the following numeric codes:
+# Attribute codes:
+# 00=none 01=bold 04=underscore 05=blink 07=reverse 08=concealed
+# Text color codes:
+# 30=black 31=red 32=green 33=yellow 34=blue 35=magenta 36=cyan 37=white
+# Background color codes:
+# 40=black 41=red 42=green 43=yellow 44=blue 45=magenta 46=cyan 47=white
+
+NORMAL                00 # global default, although everything should be something.
+FILE                  00 # normal file
+EXEC                  38;5;10 # This is for files with execute permission:
+DIR                   38;5;12 # directory
+LINK                  target # Symbolic link (color is as for the file pointed to)
+FIFO                  40;33 # pipe
+SOCK                  01;35 # socket
+DOOR                  01;35 # door
+BLK                   40;33;01 # block device driver
+CHR                   40;33;01 # character device driver
+ORPHAN                40;31;01 # symlink to nonexistent file, or non-stat'able file
+SETUID                37;41 # file that is setuid (u+s)
+SETGID                30;43 # file that is setgid (g+s)
+STICKY                37;44 # dir with the sticky bit set (+t) and not other-writable
+STICKY_OTHER_WRITABLE 30;42 # dir that is sticky and other-writable (+t,o+w)
+OTHER_WRITABLE        34;42 # dir that is other-writable (o+w) and not sticky
+
+# List any file extensions like '.gz' or '.tar' that
+# you would like ls to colorize below
+
+# Archives
+.tar  38;5;196
+.tgz  38;5;196
+.svgz 38;5;196
+.arj  38;5;196
+.taz  38;5;196
+.lzh  38;5;196
+.lzma 38;5;196
+.zip  38;5;196
+.z    38;5;196
+.Z    38;5;196
+.dz   38;5;196
+.gz   38;5;196
+.bz2  38;5;196
+.bz   38;5;196
+.tbz2 38;5;196
+.tz   38;5;196
+.deb  38;5;196
+.rpm  38;5;196
+.jar  38;5;196
+.rar  38;5;196
+.ace  38;5;196
+.zoo  38;5;196
+.cpio 38;5;196
+.7z   38;5;196
+.rz   38;5;196
+
+# Image formats
+.jpg  01;35
+.jpeg 01;35
+.gif  01;35
+.bmp  01;35
+.pbm  01;35
+.pgm  01;35
+.ppm  01;35
+.tga  01;35
+.xbm  01;35
+.xpm  01;35
+.tif  01;35
+.tiff 01;35
+.png  01;35
+.svg  01;35
+.mng  01;35
+.pcx  01;35
+.mov  01;35
+.mpg  01;35
+.mpeg 01;35
+.m2v  01;35
+.mkv  01;35
+.ogm  01;35
+.mp4  01;35
+.m4v  01;35
+.mp4v 01;35
+.vob  01;35
+.qt   01;35
+.nuv  01;35
+.wmv  01;35
+.asf  01;35
+.rm   01;35
+.rmvb 01;35
+.flc  01;35
+.avi  01;35
+.fli  01;35
+.gl   01;35
+.dl   01;35
+.xcf  01;35
+.xwd  01;35
+.yuv  01;35
+
+# Audio formats
+.au   00;36
+.flac 00;36
+.mid  00;36
+.midi 00;36
+.mka  00;36
+.mp3  00;36
+.mpc  00;36
+.ogg  00;36
+.ra   00;36
+.wav  00;36
+
+# Source files
+.c   01;33
+.h   01;33
+.cpp 01;33
+.hpp 01;33
+.cc  01;33
+.C   01;33
+.cxx 01;33
+.c++ 01;33
+
+# LaTeX Sources
+.tex 38;5;202

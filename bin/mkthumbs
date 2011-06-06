@@ -1,0 +1,42 @@
+#!/bin/sh
+
+# NAME   : mkthumbs - script to scale images down
+#
+# USAGE  : mkthumbs [dir] [scalefac]
+#
+# INPUTS : [dir]      -> the directory with jpg files
+#          [scalefac] -> the factor to scale them down by
+#
+# OUTPUTS: scaled down .thumb.jpg files of same basename
+#
+# EXAMPLE: to scale down your cwd .jpg's by a factor of 8:
+#          % ./mkthumbs . 8
+#
+# $Id: mkthumbs,v 1.0 2001.01.28 14:50:59 tkralidi Exp $
+
+if [ $# -ne 2 ]; then
+    echo "Usage: $0 [dir] [scalefac]"
+    exit 1
+fi
+
+DJPEG=`which djpeg`
+CJPEG=`which cjpeg`
+
+echo "Working on .jpg files in $1"
+
+cd $1
+for i in *.jpg; do
+    if [ -f $i ]; then
+        echo "Scaling $i by $2"
+        $DJPEG -scale 1/$2 $i | $CJPEG > th.$i
+        echo "th.$i created"
+    else
+        echo "No files in $1 of type .jpg"
+        echo "Exiting"
+        exit 2
+    fi
+done
+
+echo "Done"
+
+exit 0

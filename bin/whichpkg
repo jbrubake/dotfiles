@@ -1,0 +1,5 @@
+#!/bin/sh
+
+for file in `grep -l "/$1|" /var/log/paco/*`; do
+    basename $file
+done

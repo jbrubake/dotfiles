@@ -1,0 +1,6 @@
+#!/bin/sh
+#
+# Update 'locate' database
+#
+
+updatedb --prunepaths=/mnt

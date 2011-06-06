@@ -1,0 +1,82 @@
+IndentCommentPrefix: Indents comments sensibly
+
+    >>  : Indent keeping comment prefix where it is
+    <<  : Deindent keeping comment prefix where it is
+    g>> : Indent, including comment prefix
+
+ezcomment: Commenting keymaps
+
+    gcA : Append a comment to end of line. Prepend to an existing
+           comment
+    gcC : Same as gcA, but delete previous comment
+    gco : Begin a new line below cursor and start a comment
+    gcO : Begin a new line above cursor and start a comment
+
+a: Switch between header and source files easily
+
+    :A : Switch between header and source files
+
+    Use 'set autochdir' to make it work
+
+repeat: Allows '.' to repeat plugin keymaps
+
+NERD_Commenter: Commenting keymaps
+
+    [count],cc       : Comment out each line
+    [count],cb       : Same as ,cc but align delimiters on each side
+    [count],c<space> : Toggle commenting based on top line
+    [count],ci       : Toggle commenting of each line
+    [count],cs       : Comment out using a pretty comment
+    [count],cy       : Same as ,cc but yank first
+    [count],cu       : Uncomments lines
+    ,c$              : Comment from cursor to end ofline
+    ,cA              : Append a comment to end of line
+
+NERD_Tree: File tree browser
+
+    :NERDTreeToggle [<start-dir>] : Refresh or start a new NERDTree
+    :NERDTreeClose                : Close NERDTree
+    :NERDTreeFind                 : Find current file in tree
+
+    :help NERDTree for browser commands
+
+surround: Helps with things that surround like quotes and brackets
+
+    ds<target>      : Delete surroundings
+    cs<target><new> : Change surroundings
+    ys<motion><new> : Wraps on a motion command
+    ysiw<new>       : Wrap current word
+    yss<new>        : Wrap entire line
+
+    Valid targets:
+        ( { [ < : Bracket pairs. Trim spaces
+        ) } ] > : Bracket pairs. DO NOT trim spaces
+        " ' `   : Quote pairs
+        t       : HTML tag
+
+    Valid new characters:
+        ) } ] > : Bracket pair
+        ( { [   : Bracket pair. Insert spaces
+        t       : Prompts for HTML tag
+        " ' `   : Quote pairs
+
+    :help surround for adding surround pairs
+
+cctree: Generate call-trees using cscope
+
+    Read cctree.vim for info
+
+taglist: Source code browser using ctags
+
+    :help taglist.txt for browser commands
+
+snipMate: Code snippets
+
+c-support: Adds IDE-like features fo Vim
+
+    :help c-support for info
+
+fly:
+
+    Adds IDE-like features to Vim. Read docs for more info.
+

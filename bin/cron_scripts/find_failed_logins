@@ -1,0 +1,12 @@
+#!/bin/sh
+#
+# Print a listing of failed login attempts in the last 24 hours
+#
+
+res=`grep -ia "fail" /var/log/auth.log`
+
+if [ $? -ne 1 ]; then
+    echo "$res"
+else
+    echo "No failed logins found."
+fi

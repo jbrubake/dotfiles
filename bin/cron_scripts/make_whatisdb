@@ -1,0 +1,10 @@
+#!/bin/sh
+#
+# Update 'makewhatis' database
+#
+
+for root in /usr /usr/local /usr/X11R6 /opt; do
+    mount -o remount,rw $root
+    makewhatis $root/man
+    mount -o remount,ro $root
+done
