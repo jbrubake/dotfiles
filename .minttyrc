@@ -30,3 +30,5 @@ Term=xterm-256color
 BoldAsFont=yes
 FontSmoothing=default
 BoldAsColour=no
+BellSound=yes
+BellFlash=no
