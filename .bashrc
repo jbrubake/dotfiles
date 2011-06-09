@@ -299,7 +299,7 @@ PS1="$reset$NEW_PWD\n$bracket_color<$user_color\u$at_color@$hostname_color\h$bra
 
 # Need to save $? here so that PS1_ERROR can occur anywhere in the prompt
 # Otherwise, NEW_PWD will clobber the value of $? that we want
-PROMPT_COMMAND='RETVAL=$?; echo -ne "\033]0;$PWD\077"'
+PROMPT_COMMAND='RETVAL=$?;'
 
 # Set PROMPT_COMMAND based on terminal type
 #

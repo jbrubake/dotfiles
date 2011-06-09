@@ -22,9 +22,7 @@ term "screen-256color"
 
 ####
 # Hardstatus line
-#hardstatus alwayslastline
-hardstatus on
-hardstatus lastline
+hardstatus alwayslastline
 hardstatus string '%{= .W} %= %?%-Lw%?%{= .G}%n*%f %t%{= .W}%?%+Lw%?%='
 
 ####
