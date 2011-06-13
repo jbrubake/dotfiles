@@ -80,3 +80,5 @@ fly:
 
     Adds IDE-like features to Vim. Read docs for more info.
 
+tabular:
+
