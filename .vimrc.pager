@@ -1,16 +1,18 @@
+set nocompatible                " Vim not vi 
+
 syntax enable
 
-set hlsearch                    " Highlight search matches
-set nocompatible                " Vim not vi 
-set background=dark             " Background color
 set incsearch                   " Incremental search
+set hlsearch                    " Highlight search matches
+set background=dark             " Background color
 
-set mouse=a                     " Use mouse everywhere
-set mousehide                   " Hide mouse while typing
 set nowrap                      " Long lines do not wrap
 set list
-set listchars=precedes:<,extends:>,tab:->
+set listchars=
+set listchars+=extends:>,precedes:< " Show long line continuation chars
+set listchars+=tab:»\               " Show real tabs
 
 set laststatus=0                " Never show status line
+set norelativenumber
 
-colorscheme desert256
+colorscheme inkpot

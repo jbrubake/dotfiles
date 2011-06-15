@@ -63,10 +63,11 @@ set mouse=a                         " Use mouse everywhere
 set mousehide                       " Hide mouse while typing
 set incsearch                       " Incremental search
 set nolist                          " Do not show listchars
-set listchars=extends:>,precedes:<  " Show long line continuation chars
-set listchars=tab:»\                " Show real tabs
-set listchars=trail:.               " Show trailing spaces and higlight them
-set listchars=eol:¬                 " Show end of line
+set listchars=
+set listchars+=extends:>,precedes:< " Show long line continuation chars
+set listchars+=tab:»\               " Show real tabs
+set listchars+=trail:.              " Show trailing spaces and higlight them
+set listchars+=eol:¬                " Show end of line
 set visualbell                      " Blink instead of beep
 set relativenumber                  " Use relative line numbers
 set numberwidth=4                   " Allows line numbers up to 999
@@ -184,9 +185,6 @@ set smartindent          " Automatic indenting is intelligent
         au filetype make setlocal tabstop=8         " Real tabs are 8 spaces
         au filetype make setlocal softtabstop=8
         au filetype make setlocal shiftwidth=8
-        " Shouldn't these be carried over from my normal settings?
-        au filetype make setlocal listchars=tab:»\  " Show real tabs
-        au filetype make setlocal listchars=eol:¬   " Show eol
     " }}}
     " snipMate {{{
         au filetype snippet setlocal tabstop=8 " snipMate works better with
