@@ -260,27 +260,8 @@ reset='\[$(FX reset)\]'
 #
 
 # Print pwd with ~ and highlighted /'s
-# Optionally abbreviate long directory names
-#
-STR_MAX_LENGTH=100 # Set this smaller to use abbreviated dirs
 NEW_PWD='$(
-p="${PWD/$HOME/}";                 # Strip $HOME
-[ "$p" != "$PWD" ] &&
-    echo -n "'"$dir_color"'~";     # Print ~ if it is base of PWD
-i=0;
-until [ "$p" = "$d" ]; do          # Create an array of each individual dir
-    p=${p#*/};                     # Remove up to and including first /
-    d=${p%%/*};                    # Set d to first dir
-    dirnames[i]=$d;
-    (( i += 1 ));
-done;
-for i in $(seq 0 $((${#dirnames[@]} - 1))); do
-    if [ $i -eq 0 ] || [ $i -eq $((${#dirnames[@]} - 1)) ] || [ ${#dirnames[$i]} -le '"$STR_MAX_LENGTH"' ]; then
-        echo -n "'"$slash_color"'/'"$dir_color"'${dirnames[$i]}";
-    else
-        echo -n "'"$slash_color"'/'"$abbr_dir_color"'${dirnames[$i]:0:'"$STR_MAX_LENGTH"'}";
-    fi;
-done
+    pwd | sed 's/^/$dir_color/' | sed "s@$HOME@~@" | sed 's@/@$slash_color/$dir_color@g'
 )'
 
 # Output $? if it is non-zero
@@ -324,7 +305,7 @@ PROMPT_COMMAND='RETVAL=$?;'
 unset screen_esc reset dir_color slash_color
 unset abbr_dir_color hostname_color at_color user_color
 unset bracket_color history_color prompt_color
-unset STR_MAX_LENGTH NEW_PWD PS1_ERROR
+unset NEW_PWD PS1_ERROR
 
 # }}}
 
