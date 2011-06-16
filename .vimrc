@@ -79,7 +79,7 @@ set sidescrolloff=10                " Keep 10 lines at right/left
 set sidescroll=1                    " Horizontal scroll one column at a
                                     " time
 set showtabline=2                   " Always show tabline
-" set number                        " Show line numbers
+set hidden                          " Allow hidden buffers
 " set colorcolumn=85                " Higlight a column for wrapping
 " }}}
 
@@ -187,8 +187,7 @@ set smartindent          " Automatic indenting is intelligent
 
     au BufWritePost ~/.vimrc source ~/.vimrc " Reread .vimrc after editing
 
-    au BufRead *.c,*.cc,*.h :call My_tlist_open " Open taglist when opening C source
-                                       " Make this more generic
+    au BufRead *.c,*.cc,*.h :call My_tlist_open() " Open taglist when opening C source
 
     " Makefiles {{{
         au filetype make setlocal noexpandtab       " We need real tabs
