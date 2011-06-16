@@ -15,4 +15,4 @@ set listchars+=tab:»\               " Show real tabs
 set laststatus=0                " Never show status line
 set norelativenumber
 
-colorscheme inkpot
+colorscheme desert256

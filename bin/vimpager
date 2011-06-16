@@ -5,6 +5,12 @@
 # Version 1.5.1
 # git://github.com/rkitover/vimpager.git
 
+# Modified to use ~/.vimrc.pager if it exissts
+# instead of ~/.vimrc
+#
+# Jeremy Brubaker <jbru362@gmail.com>
+# 16 Jun 2011
+
 # Just pass through if not on a tty
 if [ ! -t 1 ]; then
 	exec cat "$@"
@@ -89,7 +95,12 @@ less_vim() {
 
 	case $vim_cmd in
 		vim*)
-			$vim_cmd --noplugin \
+			if [ -f ~/.vimrc.pager ]; then
+				rccmd='-u ~/.vimrc.pager'
+			else
+				rccmd=''
+			fi
+			$vim_cmd $rccmd --noplugin \
 			-c 'set scrolloff=5 | runtime! macros/less.vim | set foldlevel=999 | set mouse=h | set nonu' \
 			-c 'nmap <ESC>u :nohlsearch<cr>' \
 			"${@:--}"

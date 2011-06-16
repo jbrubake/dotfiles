@@ -116,6 +116,15 @@ set smartindent          " Automatic indenting is intelligent
     let Tlist_Use_Right_Window=1   " Put taglist on the right
     let Tlist_Enable_Fold_column=0 " Do not show Vim fold column
     let Tlist_Exit_OnlyWindow=1    " Exit vim if only taglist is open
+
+    " Function to cleanly open TagList window
+    " XXX: Is there a better way to do this?
+    function! My_tlist_open()
+        TlistOpen
+        setlocal norelativenumber
+        wincmd p
+    endfunction
+
     " }}}
     " snipMate {{{
     let g:snips_author = 'Jeremy Brubaker' " Authorname for snipMate
@@ -173,11 +182,12 @@ set smartindent          " Automatic indenting is intelligent
 
 " Autocommands {{{
 "=================
+
     au Filetype gitcommit set tw=68 " spell <-- annoying, but I'd like to use it
 
     au BufWritePost ~/.vimrc source ~/.vimrc " Reread .vimrc after editing
 
-    au BufRead *.c,*.cc,*.h :TlistOpen " Open taglist when opening C source
+    au BufRead *.c,*.cc,*.h :call My_tlist_open " Open taglist when opening C source
                                        " Make this more generic
 
     " Makefiles {{{

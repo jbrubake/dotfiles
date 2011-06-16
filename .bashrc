@@ -83,7 +83,7 @@ export EDITOR VISUAL
 # PAGER/MANPAGER
 #
 if command -v vimpager >/dev/null; then
-    PAGER=vimpager
+    PAGER=`which vimpager` # Only works with git if I set the whole path
 elif command -v less >/dev/null; then
     PAGER=less
 else
