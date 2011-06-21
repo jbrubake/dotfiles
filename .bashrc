@@ -4,18 +4,190 @@
 #
 # Some stuff ripped from Ryan Tomayko <tomayko.com/about>
 
-#PS4='+ $(date "+%s.%N")\011 '
-#exec 3>&2 2>/tmp/bashstart.$$.log
-#set -x
-
 # Setup {{{
 
 # Source additional files
 #
-for file in /etc/bashrc /etc/bash.bashrc ~/.functions; do
+for file in /etc/bashrc /etc/bash.bashrc ; do
     test -r "$file" && 
           . "$file"
 done;
+
+# }}}
+
+# Functions {{{
+
+# Color Escape Functions {{{
+
+###################################################
+# Functions to set colors and attributes
+#
+#  ${FX bold} sets bold attribute
+#  ${FG 100} sets foreground color to '100'
+#  ${BG 100} sets background color to '100'
+#  $(FX bold; FG 100) sets foreground color to '100'
+#      and bold in one command
+#
+# These functions automatically interpret escape
+# sequences so you don't need to pass '-e' to echo
+#
+# Based on P. C. SHyamshankar's spectrum script
+# for zsh <github.com/sykora>. Changed to use
+# functions instead of hashes since it's quicker
+###################################################
+function FX()
+{
+    case "$1" in
+        reset)       echo -en "\e[00m" ;;
+        bold)        echo -en "\e[01m" ;;
+        nobold)      echo -en "\e[22m" ;;
+        italic)      echo -en "\e[03m" ;;
+        noitalic)    echo -en "\e[23m" ;;
+        underline)   echo -en "\e[04m" ;;
+        nounderline) echo -en "\e[24m" ;;
+        blink)       echo -en "\e[05m" ;;
+        noblink)     echo -en "\e[25m" ;;
+        reverse)     echo -en "\e[07m" ;;
+        noreverse)   echo -en "\e[27m" ;;
+        *) echo "";
+    esac
+}
+
+function FG() {
+    echo -en "\e[38;5;$1m"
+}
+
+function BG()
+{
+    echo -en "\e[48;5;$1m"
+}
+
+# }}}
+
+# Miscellaneous Functions {{{
+
+####
+# ruler
+#
+# Print a ruler the width of the terminal
+####
+function ruler()
+{
+    # TODO: Make this colorized
+    for s in "....^....|" '1234567890'; do
+        w=${#s}
+        str=$( for (( i=1; $i<=$(( ($COLUMNS + $w) / $w )) ; i=$i+1 )); do echo -en $s; done )
+        str=$(echo -e $str | cut -c -$COLUMNS)
+        echo -e $str
+    done;
+}
+
+####
+# google
+#
+# Google something
+#
+# Expects: a google search string, just like
+#          you would enter it at the website
+####
+function google ()
+{
+    unset url
+
+    # Create search string if arguments were passed
+    if [[ "$*" ]]; then
+        # Google search strings replace spaces with '+'
+        IFS='+'
+        SEARCH_STRING="$*"
+        unset IFS
+
+        url="search?hl=en&lr=&ie=UTF-8&oe=UTF-8&q="
+        url="$url$SEARCH_STRING&btnG=Google+Search"
+    fi
+
+    # Open URL in browser. If no arguments were passed
+    # it merely opens google.com
+    openurl "www.google.com/$url"
+
+    unset url
+}
+
+####
+# define
+#
+# Define words and phrases with google
+####
+function define()
+{
+    local y="$@"
+    curl -sA"Opera" "http://www.google.com/search?q=define:${y// /+}"|grep -Eo '<li>[^<]+'|sed 's/^<li>//g'|nl|/usr/bin/perl -MHTML::Entities -pe 'decode_entities($_)'
+}
+
+function rtfm()
+{
+    man "$@" || [[ -f "/usr/share/info/$@.info*" ]] && info "$@" ||
+        echo "No info entry for $@" >/dev/stderr && "$@" --help ||
+        openurl BROWSER "http://duckduckgo.com/?q=%21man+$@" ;
+}
+
+####
+# hb/hc
+# Blinking, Color Highlighted search for input/output
+# and files, like grep --color
+#hb blinks, hc does a reverse color with background.. both very nice.
+#Run this:
+#
+#command ps -Hacl -F S -A f | hc ".*$PPID.*" | hb ".*$$.*"
+####
+function hb()
+{
+    sed "s/\($*\)/`tput setaf 2;tput setab 0;tput blink`\1`tput sgr0`/gI"
+}
+
+function hc()
+{
+    sed "s/\($*\)/`tput setaf 0;tput setab 6`\1`tput sgr0`/gI"
+}
+
+# }}}
+
+# Helper Functions {{{
+# (prefix names with '__')
+
+##
+# __git_ps1
+# Print out the name of the current git branch of pwd
+__git_ps1 ()
+{
+    local b="$(git symbolic-ref HEAD 2>/dev/null)";
+    if [ -n "$b" ]; then
+        printf " (%s)" "${b##refs/heads/}";
+    fi
+}
+
+# }}}
+
+# PATH Manipulation Functions {{{
+
+# Usage: pls [<var>]
+# List path entries of PATH or environment variable <var>.
+pls () {
+    eval echo \$${1:-PATH} |tr : '\n';
+}
+
+# Usage: puniq [<path>]
+# Remove duplicate entries from a PATH style value while retaining
+# the original order. Use PATH if no <path> is given.
+#
+# Example:
+#   $ puniq /usr/bin:/usr/local/bin:/usr/bin
+#   /usr/bin:/usr/local/bin
+puniq () {
+    echo "$1" |tr : '\n' |nl |sort -u -k 2,2 |sort -n |
+    cut -f 2- |tr '\n' : |sed -e 's/:$//' -e 's/^://'
+}
+
+# }}}
 
 # }}}
 
@@ -333,7 +505,4 @@ _expand() {
 }
 
 # }}}
-
-#set +x
-#exec 2>&3 3>&-
 
