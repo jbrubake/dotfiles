@@ -1,0 +1,49 @@
+! Use color
+#ifdef COLOR
+*customization: -color
+#endif
+
+! XCalc
+XCalc*Cursor:           top_left_arrow
+XCalc*pointerColor:     black
+
+! XLogo
+XLogo*background:       red
+XLogo*foreground:       black
+XLogo*shapeWindow:      false
+
+! XClock
+! nothing at the moment
+
+! XTerm
+XTerm*colorBDMode:      true
+XTerm*colorBD:          blue
+
+XTerm*colorULMode:      true
+XTerm*colorUL:          green
+
+XTerm*deleteIsDEL:      true
+
+XTerm*foreground:       white
+XTerm*background:       black
+XTerm*cursorColor:      yellow
+
+! UXTerm
+UXTerm*colorBDMode:      true
+UXTerm*colorBD:          blue
+
+UXTerm*colorULMode:      true
+UXTerm*colorUL:          green
+
+UXTerm*deleteIsDEL:      true
+
+UXTerm*foreground:       white
+UXTerm*background:       black
+UXTerm*cursorColor:      yellow
+! urxvt
+URxvt.scrollBar: false
+URxvt.foreground: white
+URxvt.background: black
+URxvt.termName: rxvt-256color
+
+!Xcursor.theme: /usr/share/cursors/xorg-x11/gentoo
