@@ -318,7 +318,7 @@ shopt -s cmdhist      # Try to save multiline commands as one history
 shopt -s histverify   # Allow verification of history substitution
 shopt -s no_empty_cmd_completion # Don't TAB complete a blank line
 
-umask 027
+umask 077
 
 # }}}
 
