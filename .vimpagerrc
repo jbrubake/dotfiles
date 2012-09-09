@@ -1,3 +1,5 @@
+" vim: filetype=vim
+
 set nocompatible                " Vim not vi 
 
 syntax enable
