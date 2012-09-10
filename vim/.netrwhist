@@ -1,9 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =7
-let g:netrw_dirhist_1='/home/jbrubake/.mutt'
-let g:netrw_dirhist_2='/home/jbrubake/.vim'
-let g:netrw_dirhist_3='/home/jbrubake/.todo'
-let g:netrw_dirhist_4='/home/jbrubake/Downloads/Conky-Panel-And-Mpd/.mpdcover'
-let g:netrw_dirhist_5='/home/jbrubake/.conky/scripts/extra'
-let g:netrw_dirhist_6='/usr/share/xsessions'
-let g:netrw_dirhist_7='/home/jbrubake/.vim'
