@@ -1,0 +1,30 @@
+! Caps_Lock -> Escape key
+! Control_L -> Capslock key
+! Escape    -> Control key
+remove Lock = Caps_Lock
+remove Control = Control_L
+keycode 9 = Caps_Lock
+keycode 66 = Control_L
+keycode 37 = Escape
+add Lock = Caps_Lock
+add Control = Control_L
+
+! Add Windows and Menu keys
+!keycode 115=Super_L
+!keycode 116=Super_R
+!keycode 117=Menu
+
+! Add those stupid extra keys on top
+!keycode 223=F13
+!keycode 227=F14
+!keycode 222=F15
+
+! Mod1 = Alt_L Alt_R Meta_L
+! Mod2 = Num_Lock
+! Mod3 = Super_L Super_R(can Win_L and Win_R be separate?)
+! Mod4 = 
+! Mod5 = 
+clear Mod3
+clear Mod4
+clear Mod5
+add Mod3 = Super_L Super_R
