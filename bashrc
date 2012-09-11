@@ -54,12 +54,12 @@ function FX()
 }
 
 function FG() {
-    echo -en "\e[38;5;$1m"
+    echo -en "\e[3$1m"
 }
 
 function BG()
 {
-    echo -en "\e[48;5;$1m"
+    echo -en "\e[4$1m"
 }
 
 # }}}
@@ -416,16 +416,15 @@ screen_esc="\[\033k\033\134\]"
 #
 dir_color='\[$(FG 2)\]'
 slash_color='\[$(FG 1)\]'
-abbr_dir_color='[$(FG 15)\]'
 hostname_color='\[$(FG 5)\]'
 at_color='\[$(FG 4)\]'
 bracket_color='\[$(FG 4)\]'
 history_color='\[$(FG 2)\]'
-error_color='\[$(FG 7; BG 1)\]'
-prompt_color='\[$(FG 3)\]'
+error_color='\[$(FG 7)$(BG 1)\]'
+prompt_color='\[$(FX bold)$(FG 3)\]'
 reset='\[$(FX reset)\]'
 # Colorize username differently if we are root or not
-[ $UID == '0' ] && user_color="\[$(FG 196)\]" || user_color="\[$(FG 6)\]"
+[ $UID == '0' ] && user_color='\[$(FG 1)\]' || user_color='\[$(FG 6)\]'
 
 #
 # NEW_PWD and PS1_ERROR modified from Yu-Jie Lin's example <libb.wordpress.com>
@@ -433,20 +432,20 @@ reset='\[$(FX reset)\]'
 
 # Print pwd with ~ and highlighted /'s
 NEW_PWD='$(
-    pwd | sed 's/^/$dir_color/' | sed "s@$HOME@~@" | sed 's@/@$slash_color/$dir_color@g'
-)'
+           pwd | sed 's/^/$dir_color/' | sed 's@$HOME@~@' | sed 's@/@$slash_color/$dir_color@g'
+          )'
 
-# Output $? if it is non-zero
+# Output $? if it non-zero
 #
 PS1_ERROR='$(
-if [ $RETVAL -gt 0 ]; then (( i = 3 - ${#ret} ));
-    echo -n "'"$error_color"'[";
-    [ $i -gt 0 ] && echo -n " ";
-    echo -n "$RETVAL";
-    [ $i -eq 2 ] && echo -n " ";
-    echo -n "]"'"$reset"'" ";
-fi
-)'
+    if [ $RETVAL -gt 0 ]; then (( i = 3 - ${#RETVAL} ));
+        echo -n "'"$error_color"'[";
+        [ $i -gt 0 ] && echo -n " ";
+        echo -n "$RETVAL";
+        [ $i -eq 2 ] && echo -n " ";
+        echo -n "]"'"$reset"'" ";
+    fi
+    )'
 
 PS1="$reset$NEW_PWD\n$bracket_color<$user_color\u$at_color@$hostname_color\h$bracket_color> $bracket_color[$history_color\!$bracket_color] $PS1_ERROR\n$prompt_color $ $reset"
 
@@ -475,7 +474,7 @@ PROMPT_COMMAND='RETVAL=$?;'
 #esac
 
 unset screen_esc reset dir_color slash_color
-unset abbr_dir_color hostname_color at_color user_color
+unset hostname_color at_color user_color
 unset bracket_color history_color prompt_color
 unset NEW_PWD PS1_ERROR
 
