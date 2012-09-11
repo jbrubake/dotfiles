@@ -195,8 +195,8 @@ puniq () {
 
 # Setup PATH {{{
 
-# Put sbins and /usr/local/bin in PATH
-PATH="/usr/local/bin:$PATH:/usr/local/sbin:/usr/sbin:/sbin"
+# Put /usr/local/bin in PATH
+PATH="/usr/local/bin:$PATH"
 
 # Put ~/bin in PATH if it exists
 test -d "$HOME/bin" &&
