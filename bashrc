@@ -151,6 +151,15 @@ function hc()
     sed "s/\($*\)/`tput setaf 0;tput setab 6`\1`tput sgr0`/gI"
 }
 
+###
+# lh
+#
+# List last "n" commands in history
+###
+function lh()
+{
+    history | tail -"$1"
+}
 # }}}
 
 # Helper Functions {{{
@@ -377,16 +386,16 @@ command -v clear >/dev/null ||
     alias clear='echo -en "\e[2J\e[H"'
 
 # Display latest xkcd comic if I have
-# feh and w3m available
+# feh and curl available
 #
-if command -v feh >/dev/null && command -v w3m >/dev/null; then
-    alias xkcd='feh `w3m -dump http://xkcd.com/| grep png | awk {print $5}`'
+if command -v feh >/dev/null && command -v curl >/dev/null; then
+    alias xkcd="feh `curl -s 'http://xkcd.com/' | sed -n 's/Image URL.*: \(.*\)/\1/p'`"
 fi
 
 # Fancy fortunes if toilet(1) exists
-#
-command -v toilet >/dev/null &&
-    alias colfortune="fortune | toilet --metal -f term"
+# XXX: Keep this in reserve for /etc/issue
+#command -v toilet >/dev/null &&
+#    alias colfortune="fortune | toilet --metal -f term"
 
 # If todo.txt is installed, make it simpler
 # to access
@@ -395,10 +404,9 @@ command -v todo.sh >/dev/null &&
 
 # Miscellaneous
 #
-alias du='du -h --max-depth=1'  # du(1) prints totals for one level down
-alias lh='history | tail -10'   # List last 10 commands
-alias df='df -hT'               # Make df output nicer
-alias reset='echo -en "\e]R"'   # Reset system palette
+alias dut='du -h --max-depth=1'  # du(1) prints totals for one level down
+alias df='df -hT'                # Make df output nicer
+alias reset='echo -en "\e]R"'    # Reset system palette
 alias update_sigfortunes='strfile -r ~/.fortunes/sigfortunes' # XXX: This alias is kinda lame
 
 # }}}
