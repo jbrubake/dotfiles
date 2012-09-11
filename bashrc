@@ -23,9 +23,9 @@ done;
 # Functions to set colors and attributes
 #
 #  ${FX bold} sets bold attribute
-#  ${FG 100} sets foreground color to '100'
-#  ${BG 100} sets background color to '100'
-#  $(FX bold; FG 100) sets foreground color to '100'
+#  ${FG 1} sets foreground color to '31'
+#  ${BG 1} sets background color to '41'
+#  $(FX bold; FG 1) sets foreground color to '31'
 #      and bold in one command
 #
 # These functions automatically interpret escape
@@ -35,6 +35,8 @@ done;
 # for zsh <github.com/sykora>. Changed to use
 # functions instead of hashes since it's quicker
 ###################################################
+# TODO: Find a way to alter functions and calls based on
+# TODO: if terminal supports 256 colors
 function FX()
 {
     case "$1" in
@@ -429,8 +431,8 @@ hostname_color='\[$(FG 5)\]'
 at_color='\[$(FG 4)\]'
 bracket_color='\[$(FG 4)\]'
 history_color='\[$(FG 2)\]'
-error_color='\[$(FG 7)$(BG 1)\]'
-prompt_color='\[$(FX bold)$(FG 3)\]'
+error_color='\[$(FG 7; BG 1)\]'
+prompt_color='\[$(FX bold; FG 3)\]'
 reset='\[$(FX reset)\]'
 # Colorize username differently if we are root or not
 [ $UID == '0' ] && user_color='\[$(FG 1)\]' || user_color='\[$(FG 6)\]'
