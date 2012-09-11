@@ -312,7 +312,7 @@ unset COLORS mycolors
 # Miscellaneous
 # FIXME: Make this more robust
 #
-BROWSER="chrome"
+BROWSER="uzbl"
 export BROWSER
 
 # }}}

@@ -6,11 +6,12 @@
 #
 # Uses environment variable $BROWSER as follows:
 #
-# firefox -> firefx (opens new tab) This is the default
+# firefox -> firefox (opens new tab) This is the default
 # chrome  -> Google Chrome
 # links   -> links
 # glinks  -> links -g
 # elinks  -> elinks
+# uzbl    -> uzbl-browser
 #
 # Expects: URL to open. You can open local files simply
 #          by passing the filename as the arguemt to openurl
@@ -42,6 +43,10 @@ case "$BROWSER" in
 
     links)
         links $url
+        ;;
+
+    uzbl)
+        uzbl-browser $url
         ;;
 
     # Graphical links
