@@ -134,12 +134,12 @@ function rtfm()
 
 ####
 # hb/hc
-# Blinking, Color Highlighted search for input/output
+# Blinking and Reverse-Color Highlighted search for input/output
 # and files, like grep --color
-#hb blinks, hc does a reverse color with background.. both very nice.
-#Run this:
 #
-#command ps -Hacl -F S -A f | hc ".*$PPID.*" | hb ".*$$.*"
+# Run this:
+#
+# ps | hc ".*$PPID.*" | hb ".*$$.*"
 ####
 function hb()
 {
