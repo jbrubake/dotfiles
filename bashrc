@@ -268,10 +268,19 @@ export PAGER MANPAGER ACK_PAGER ACK_PAGER_COLOR
 
 # Development
 #
-CC=colorgcc
+case $(uname -o) in
+    Cygwin*)
+        LD=gcc #Cygwin won't build without this. Weird
+        ;;
+esac
+
+if command -v colorgcc >/dev/null; then
+    CC=colorgcc
+fi
+
+# XXX: Make CFLAGS/CXXFLAGS more portable based on actual architecture
 CFLAGS='-O3 -march=pentium4 -Wall -pedantic -ansi'
 CXXFLAGS="$CFLAGS"
-LD=gcc # Cygwin won't build without this . Weird
 export CC CFLAGS CXXFLAGS LD
 
 # All my xterm's are actually xterm-256color
