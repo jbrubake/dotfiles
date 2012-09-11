@@ -435,7 +435,7 @@ NEW_PWD='$(
            pwd | sed 's/^/$dir_color/' | sed 's@$HOME@~@' | sed 's@/@$slash_color/$dir_color@g'
           )'
 
-# Output $? if it non-zero
+# Output $? if it is non-zero
 #
 PS1_ERROR='$(
     if [ $RETVAL -gt 0 ]; then (( i = 3 - ${#RETVAL} ));
