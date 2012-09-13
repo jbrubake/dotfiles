@@ -38,23 +38,23 @@ WINDOWMANAGER=fluxbox
 #
 # Start daemons
 #
-if [ `which urxvtd` ]; then
+if command -v urxvtd >/dev/null; then
     urxvtd -q -o -f
 fi
-if [ `which unclutter` ]; then
+if command -v unclutter >/dev/null; then
     unclutter -root &
 fi
-if [ `which xscreensaver` ]; then
+if command -v xscreensaver >/dev/null; then
     xscreensaver &
-elif [ `which gnome-screensaver` ]; then
+elif command -v gnome-screensaver >/dev/null; then
     gnome-screensaver &
 fi
-if [ `which dropbox` ]; then
+if command -v dropbox >/dev/null; then
     dropbox start &    
 fi
-#if [ `which gpg-agent` ]; then
-    #gpg-agent --daemon
-#fi
+if command -v gpg-agent >/dev/null; then
+    gpg-agent --daemon
+fi
 
 #
 # Start WM
@@ -72,33 +72,42 @@ esac
 #
 # Set wallpaper
 #
-#Esetroot "$HOME/pixmaps/wallpaper.jpg"
-feh --bg-scale "$HOME/Misc/pixmaps/Wallpaper/wallpaper.jpg"
+if command -v Esetroot >/dev/null; then
+    Esetroot "$HOME/pixmaps/wallpaper.jpg"
+elif command -v feh >/dev/null; then
+    feh --bg-scale "$HOME/Misc/pixmaps/Wallpaper/wallpaper.jpg"
+fi
 
 #
 # Start desktop apps
 #
-#ipager &
-tint2 -c ~/.tintrc &
-trayer --edge top --align right --margin 0 --widthtype request \
-    --height 24 --SetDockType false --transparent true --alpha 255 &
-volumeicon &
-$HOME/.conky/start_conky.sh start
-#keepassx &
+command -v ipager >/dev/null && ipager &
+command -v tint2  >/dev/null && tint2 -c ~/.tintrc &
+command -v trayer >/dev/null && trayer --edge top --align right --margin 0 \
+                                       --widthtype request --height 24 \
+                                       --SetDockType false --transparent true \
+                                       --alpha 255 &
+command -v volumeicon >/dev/null && volumeicon &
+command -v keepassx   >/dev/null && keepassx &
+if [ -x $HOME/.conky/start_conky.sh ]; then
+    $HOME/.conky/start_conky.sh start
+fi
 
 #
 # Start apps
 #
-pidgin &
-urxvt -name main_terminal  -tr -fg white \
-    -e sh -c "screen -c ~/.screenrc -dR MAIN"  &
-urxvt -name devel_terminal -tr -fg white \
-    -e sh -c "screen -c ~/.screenrc -dR DEVEL" &
+command -v pidgin >/dev/null && pidgin &
+if command -v urxvt >/dev/null; then
+    urxvt -name main_terminal  -tr -fg white -e sh \
+           -c "screen -c ~/.screenrc -dR MAIN"  &
+    urxvt -name devel_terminal -tr -fg white \
+          -e sh -c "screen -c ~/.screenrc -dR DEVEL" &
+fi
 
 #
 # Set up composite manager (must be after ipager)
 #
-xcompmgr &
+command -v xcompmgr >/dev/null && xcompmgr &
 
 # Wait for WM to exit
 wait $wmpid
