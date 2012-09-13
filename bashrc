@@ -389,7 +389,8 @@ command -v clear >/dev/null ||
 # feh and curl available
 #
 if command -v feh >/dev/null && command -v curl >/dev/null; then
-    alias xkcd="feh `curl -s 'http://xkcd.com/' | sed -n 's/Image URL.*: \(.*\)/\1/p'`"
+#    alias xkcd="feh `curl -s 'http://xkcd.com/' | sed -n 's/Image URL.*: \(.*\)/\1/p'`"
+    alias xkcd="curl -s 'http://xkcd.com/' | sed -n 's/Image URL.*: \(.*\)/\1/p' | feh -"
 fi
 
 # Fancy fortunes if toilet(1) exists
