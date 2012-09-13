@@ -13,13 +13,12 @@ scheme=solar_light
 # Color numbers:
 #  0 black    8 bold black
 #  1 red      9 bold red
-#  2 green   10 bold green
-#  3 yellow  11 bold yellow
-#  4 blue    12 bold blue
-#  5 magenta 13 bold magenta
-#  6 cyan    14 bold cyan
-#  7 white   15 bold white
-
+#  2 green    A bold green
+#  3 yellow   B bold yellow
+#  4 blue     C bold blue
+#  5 magenta  D bold magenta
+#  6 cyan     E bold cyan
+#  7 white    F bold white 
 if [ $scheme == "custom" ]; then
     echo -en "\e]P0222222" # black
     echo -en "\e]P8222222" # bold black
