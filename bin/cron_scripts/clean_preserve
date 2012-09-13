@@ -1,7 +1,0 @@
-#!/bin/sh
-#
-# Clean /var/lib/ex of all files over 1 day old
-#
-
-# How do I make this safe?
-find /var/lib/ex ! -name . -mtime +1 -exec rm {}
