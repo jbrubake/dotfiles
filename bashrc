@@ -421,7 +421,7 @@ alias update_sigfortunes='strfile -r ~/.fortunes/sigfortunes' # XXX: This alias 
 
 # Screen auto-title escape
 #
-screen_esc="\[\033k\033\134\]"
+#screen_esc="\[\033k\033\134\]"
 
 #############################################
 # This prompt looks roughly like this:
@@ -501,26 +501,26 @@ unset NEW_PWD PS1_ERROR
 
 # Bash Completion {{{
 
-test -z "$BASH_COMPLETION" && {
-    bash=${BASH_VERSION%.*}; bmajor=${bash%.*}; bminor=${bash#*.}
-    test -n "$PS1" && test $bmajor -gt 1 && {
-        # Search for a bash_completion file to source
-        for f in /usr/local/etc/bash_completion \
-                 /etc/bash_completion
-        do
-            test -f $f && {
-                . $f
-                break
-            }
-        done
-    }
-    unset bash bmajor bminor
-}
+#test -z "$BASH_COMPLETION" && {
+#    bash=${BASH_VERSION%.*}; bmajor=${bash%.*}; bminor=${bash#*.}
+#    test -n "$PS1" && test $bmajor -gt 1 && {
+#        # Search for a bash_completion file to source
+#        for f in /usr/local/etc/bash_completion \
+#                 /etc/bash_completion
+#        do
+#            test -f $f && {
+#                . $f
+#                break
+#            }
+#        done
+#    }
+#    unset bash bmajor bminor
+#}
 
 # Override and disable tilde expansion
-_expand() {
-    return 0
-}
+#_expand() {
+#    return 0
+#}
 
 # }}}
 
