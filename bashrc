@@ -312,11 +312,14 @@ esac
 # unless I have my own
 #
 if command -v dircolors >/dev/null; then
-    test -r '/etc/DIR_COLORS' && COLORS='/etc/DIR_COLORS'
-    test -r "$mycolors"       && COLORS="$HOME/.dircolors"
-    eval $(dircolors -b $COLORS)
+    test -r '/etc/DIR_COLORS' && mycolors='/etc/DIR_COLORS'
+    case $TERM in
+        *256*) mycolors="$HOME/.dircolors.256" ;;
+        *)     mycolors="$HOME/.dircolors" ;;
+    esac
+    eval $(dircolors -b $mycolors)
+    unset mycolors
 fi
-unset COLORS mycolors
 
 # Miscellaneous
 # FIXME: Make this more robust
