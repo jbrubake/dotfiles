@@ -403,6 +403,9 @@ fi
 command -v todo.sh >/dev/null &&
     alias t=todo.sh
 
+# Keep uzbl-browser from polluting the terminal
+alias uzbl="uzbl-browser &> /dev/null &"
+
 # Miscellaneous
 #
 alias dut='du -h --max-depth=1'  # du(1) prints totals for one level down
