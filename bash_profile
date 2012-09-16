@@ -69,5 +69,12 @@ esac
 # Everything is in .bashrc
 source $HOME/.bashrc
 
-# If screen(1) exists, I want to start it
-command -v screen && screen
+# Automatically start tmux or screen
+if command -v tmux &>/dev/null; then
+    #tmux has-session &> /dev/null &&
+    #    tmux attach-session ||
+    #    tmux new-session -s login
+    tmux
+elif command -v screen &>/dev/null; then
+    screen
+fi
