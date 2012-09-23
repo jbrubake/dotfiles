@@ -23,3 +23,7 @@
 	lg  = log --graph --pretty=oneline --abbrev-commit --decorate
 	si  = !git svn show-ignore > .git/info/exclude
 	sh  = !git-sh
+    ; Print out last commit message from current branch for each file/directory in pwd
+    last = "!sh -c 'git ls-tree --name-only HEAD | while read f; do git --no-pager log -n 1 --format=\"$f:|%s|(%h)\" -- $f; done | column -t -s \"|\"'"
+    ; I like git add --patch better
+    ap = add --patch
