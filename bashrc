@@ -281,7 +281,7 @@ export PAGER MANPAGER ACK_PAGER ACK_PAGER_COLOR
 #
 case $(uname -o) in
     Cygwin*)
-        LD=gcc #Cygwin won't build without this. Weird
+        LD=gcc # Cygwin won't build without this. Weird
         ;;
 esac
 
@@ -294,12 +294,18 @@ CFLAGS='-O3 -march=pentium4 -Wall -pedantic -ansi'
 CXXFLAGS="$CFLAGS"
 export CC CFLAGS CXXFLAGS LD
 
-# All my xterm's are actually xterm-256color
-# FIXME: How can I tell if my terminal supports 256 colors?
+# Set TERM correctly if 256 colors are available
 #
-if [[ $TERM == "xterm" ]]; then
-    TERM="xterm-256color";
-fi;
+case $TERM in
+    xterm) # All my xterms are 256 color capable
+        TERM="xterm-256color"
+        ;;
+    screen) # screen/tmux support 256 colors only under X
+        if [ -n "$DISPLAY" ]; then
+            TERM="screen-256color"
+        fi
+        ;;
+esac
 
 # Setup dircolors using my .dircolors file for 256 colors
 # if my terminal supports it
