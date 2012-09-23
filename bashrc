@@ -285,10 +285,6 @@ case $(uname -o) in
         ;;
 esac
 
-if command -v colorgcc >/dev/null; then
-    CC=colorgcc
-fi
-
 # XXX: Make CFLAGS/CXXFLAGS more portable based on actual architecture
 CFLAGS='-O3 -march=pentium4 -Wall -pedantic -ansi'
 CXXFLAGS="$CFLAGS"
@@ -406,6 +402,12 @@ fi
 # XXX: Keep this in reserve for /etc/issue
 #command -v toilet >/dev/null &&
 #    alias colfortune="fortune | toilet --metal -f term"
+
+# Use pretty-make.py
+#
+if command -v pretty-make.py >/dev/null; then
+    alias make=pretty-make.py
+fi
 
 # If todo.txt is installed, make it simpler
 # to access
