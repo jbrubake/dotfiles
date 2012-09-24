@@ -64,7 +64,8 @@ case $WINDOWMANAGER in
         fluxbox & wmpid=$! # Don't remember what this does
         ;;
     dwm)
-        dwm & wmpid=$!
+        #dwm & wmpid=$!
+        ~/src/dwm/dwm & wmpid=$!
         ;;
     # Default to twm
     *)
