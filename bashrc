@@ -488,7 +488,7 @@ PS1_ERROR='$(
     fi
     )'
 
-PS1="$reset$NEW_PWD\n$bracket_color<$user_color\u$at_color@$hostname_color\h$bracket_color> $bracket_color[$history_color\!$bracket_color] $PS1_ERROR\n$prompt_color $ $reset"
+PS1="$reset$NEW_PWD\n$bracket_color<$user_color\u$at_color@$hostname_color\h$bracket_color> $bracket_color[$history_color\!$bracket_color] $PS1_ERROR\n$prompt_color$ $reset"
 
 # Need to save $? here so that PS1_ERROR can occur anywhere in the prompt
 # Otherwise, NEW_PWD will clobber the value of $? that we want
@@ -523,26 +523,8 @@ unset NEW_PWD PS1_ERROR
 
 # Bash Completion {{{
 
-#test -z "$BASH_COMPLETION" && {
-#    bash=${BASH_VERSION%.*}; bmajor=${bash%.*}; bminor=${bash#*.}
-#    test -n "$PS1" && test $bmajor -gt 1 && {
-#        # Search for a bash_completion file to source
-#        for f in /usr/local/etc/bash_completion \
-#                 /etc/bash_completion
-#        do
-#            test -f $f && {
-#                . $f
-#                break
-#            }
-#        done
-#    }
-#    unset bash bmajor bminor
-#}
-
-# Override and disable tilde expansion
-#_expand() {
-#    return 0
-#}
+test -f /etc/profile.d/bash-completion.sh &&
+    . /etc/profile.d/bash-completion.sh
 
 # }}}
 
