@@ -222,6 +222,13 @@ MANPATH=$(puniq $MANPATH)
 : ${LOGNAME=$(id -un)}
 : ${UNAME=$(uname)}
 
+# Non-interactive shells should source .bashrc
+# XXX: If I move functions and aliases to a separate
+# XXX: file that would work better. Also need
+# XXX: expand_aliases
+BASH_ENV=~/.bashrc
+export BASH_ENV
+
 # Always use my .inputrc
 if [[ -z $INPUTRC && -r "$HOME/.inputrc" ]]; then
     INPUTRC="$HOME/.inputrc"
