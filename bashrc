@@ -423,6 +423,7 @@ command -v todo.sh >/dev/null &&
 
 # Keep uzbl-browser from polluting the terminal
 alias uzbl="uzbl-browser &> /dev/null &"
+alias uzblt="uzbl-tabbed &> /dev/null &"
 
 # Miscellaneous
 #
