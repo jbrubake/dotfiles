@@ -28,18 +28,17 @@ set nocompatible
    " Statusline colors
    highlight User1 ctermfg=red   ctermbg=blue
    highlight User2 ctermfg=green ctermbg=blue
-endif
 " }}}
 
 " Statusline {{{
 "===============
 set laststatus=2                 " Always show status line
 set statusline=                  " Clear status line
-set statusline+=%F               " Full path to file
+set statusline+=%t               " Filename
 set statusline+=%m               " Modified flag
 set statusline+=%r               " Readonly flag
 set statusline+=\ %-15.(%l,%c%)  " Line number and column number
-set statusline+=\ %P             " Percentage through file of displayed window
+set statusline+=\ %p             " Percentage through file in lines
 set statusline+=\ [Filetype=%Y]  " Filetype
 set statusline+=\ [ASCII=%03.3b] " ASCII value of char under cursor
 set statusline+=\ [Lines=%L]     " Total lines in buffer
