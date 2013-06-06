@@ -47,11 +47,14 @@ set statusline+=\ [Lines=%L]     " Total lines in buffer
 
 " Basics {{{
 "===========
-filetype plugin indent on      " Load filetype plugins and indent settings
+filetype plugin indent on           " Load filetype plugins and indent settings
+
+set encoding=utf8                   " Use Unicode
 
 set noexrc                          " Do not source .exrc
 set autowrite                       " Write file when changing to a new file
-set wildmode=longest,list           " Filename completion like in Bash
+set wildmenu                        " Show Tab completion menu
+set wildmode=longest,list           " Tab complete longest part, then show menu
 set autochdir                       " Automatically chdir to file (needed
                                     " for a.vim) automatically
 set backspace=indent,eol,start      " What BS can delete
@@ -78,7 +81,7 @@ set sidescroll=1                    " Horizontal scroll one column at a
                                     " time
 set showtabline=2                   " Always show tabline
 set hidden                          " Allow hidden buffers
-" set colorcolumn=85                " Higlight a column for wrapping
+"set colorcolumn=70                 " Higlight column 70
 " }}}
 
 " Text Formatting/Layout {{{
@@ -98,6 +101,7 @@ set shiftwidth=4         " Indent and <</>> is 4 spaces
 set textwidth=80         " Lines wrap at column 80
 set autoindent           " Automatically indent based on previous line
 set smartindent          " Automatic indenting is intelligent
+set matchpairs+=<:>      " Match <,> with %
 " }}}
 
 " Folding {{{
