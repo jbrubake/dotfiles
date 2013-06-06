@@ -12,7 +12,6 @@ set nocompatible
 
 " Color and Syntax Settings {{{
 "===============================
-if &t_Co > 2 " What about 16/256 color schemes?
     set background=dark   " Background color
     colorscheme desert256 " Colorscheme
     syntax enable         " Use syntax hilighting
