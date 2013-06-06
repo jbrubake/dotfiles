@@ -78,13 +78,23 @@
 *color7:                S_base2
 *color15:               S_base3
 
-! XTerm
+! XTerm / UXTerm
 XTerm*colorBDMode:      true
 XTerm*colorBD:          blue
 XTerm*colorULMode:      true
 XTerm*colorUL:          green
 XTerm*deleteIsDEL:      true
 XTerm*cursorColor:      yellow
+XTerm*faceName:         Terminus
+XTerm*faceSize:         10
+UXTerm*colorBDMode:     true
+UXTerm*colorBD:         blue
+UXTerm*colorULMode:     true
+UXTerm*colorUL:         green
+UXTerm*deleteIsDEL:     true
+UXTerm*cursorColor:     yellow
+UXTerm*faceName:        Monospace
+UXTerm*faceSize:        10
 
 ! XLogo
 XLogo*background:       S_red
