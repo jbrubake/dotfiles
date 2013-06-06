@@ -215,7 +215,7 @@ set matchpairs+=<:>      " Match <,> with %
     map <C-L> <C-W>l
 
     " Make Y consistent with C and D
-    nnoremap Y y
+    nnoremap Y y$
 
     " Resize windows with + and -
     map + <C-W>+
@@ -223,28 +223,54 @@ set matchpairs+=<:>      " Match <,> with %
     " <C-W>> and <C-W>< do this for vertical windows, but
     " < and > are already bound. Hmm...
 
-    " Toggle taglist window
-    noremap <silent> <F9> :TlistToggle<CR>
+    " Adjust viewports to the same size
+    map <Leader>= <C-w>=
 
-    " Toggle NERDTree browser
-    noremap <silent> <F8> :NERDTreeToggle<CR>
+    " Clearing highlighted search
+    nmap <silent> <leader>/ :nohlsearch<CR>
+
+    " For when you forget to sudo.. Really Write the file.
+    cmap w!! w !sudo tee % >/dev/null
 
     " Reflow paragraph with Q in normal and visual mode
     nnoremap Q gqap
     vnoremap Q gq
 
     " Basically underline current line with '='
-    nmap <leader>= yypVr=
+    " TODO: Conflicts with mapping above
+    "nmap <leader>= yypVr=
+
+    " Turn on paste mode with F12
+    set pastetoggle=<F12>
+
+    " Easier horizontal scrolling
+    map zl zL
+    map zh zH
+
+    " Code folding options
+    nmap <leader>f0 :set foldlevel=0<CR>
+    nmap <leader>f1 :set foldlevel=1<CR>
+    nmap <leader>f2 :set foldlevel=2<CR>
+    nmap <leader>f3 :set foldlevel=3<CR>
+    nmap <leader>f4 :set foldlevel=4<CR>
+    nmap <leader>f5 :set foldlevel=5<CR>
+    nmap <leader>f6 :set foldlevel=6<CR>
+    nmap <leader>f7 :set foldlevel=7<CR>
+    nmap <leader>f8 :set foldlevel=8<CR>
+    nmap <leader>f9 :set foldlevel=9<CR>
 " }}}
 
 " Autocommands {{{
 "=================
 
+    " Always switch to the current file directory.
+    au BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | lcd %:p:h | endif
+
     au Filetype gitcommit set tw=68 " spell <-- annoying, but I'd like to use it
 
     au BufWritePost ~/.vimrc source ~/.vimrc " Reread .vimrc after editing
 
-    au BufRead *.c,*.cc,*.h :call My_tlist_open() " Open taglist when opening C source
+    "au BufRead *.c,*.cc,*.h :call My_tlist_open() " Open taglist when opening C source
 
     " Makefiles {{{
         au filetype make setlocal noexpandtab       " We need real tabs
