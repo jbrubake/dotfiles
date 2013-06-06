@@ -51,6 +51,9 @@ set mark-symlinked-directories on
 # Append ls -F character to Tab completion
 set visible-stats on
 
+"\e[A": history-search-backward
+"\e[B": history-search-forward
+
 # Use vi bindings
 #set editing-mode vi
 #set keymap vi
