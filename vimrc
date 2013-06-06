@@ -113,35 +113,90 @@ set matchpairs+=<:>      " Match <,> with %
 
 " Plugins {{{
 "============
+" TODO: Only configure plugin if it exists
+
+    " Manage plugins with pathogen
+    call pathogen#infect()
+    call pathogen#helptags()
+
+    " ShowMarks {{{
+    " Enable ShowMarks
+    let g:showmarks_enable=1
+
+    " Only show marks in files I am editing
+    let g:showmarks_ignore_type="hmpqr"
+
+    " Marks to show
+    "
+    " '`: last position
+    " . : last change
+    " (): start/end of sentence
+    " {}: start/end of paragraph
+    let g:showmarks_include="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'`.(){}"
+
+    highlight ShowMarksHLl cterm=bold ctermfg=yellow ctermbg=darkgrey " Lower case
+    highlight ShowMarksHLu cterm=bold ctermfg=yellow ctermbg=darkgrey " Upper case
+    highlight ShowMarksHLo cterm=bold ctermfg=yellow ctermbg=darkgrey " Other
+    highlight ShowMarksHLm cterm=bold ctermfg=yellow ctermbg=darkgrey " Multiple
+    " }}}
+
     " Taglist {{{
-    let Tlist_Sort_Type="name"     " Sort taglist alphabetically
-    let Tlist_Use_Right_Window=1   " Put taglist on the right
-    let Tlist_Enable_Fold_column=0 " Do not show Vim fold column
-    let Tlist_Exit_OnlyWindow=1    " Exit vim if only taglist is open
+    "let Tlist_Sort_Type="name"     " Sort taglist alphabetically
+    "let Tlist_Use_Right_Window=1   " Put taglist on the right
+    "let Tlist_Enable_Fold_column=0 " Do not show Vim fold column
+    "let Tlist_Exit_OnlyWindow=1    " Exit vim if only taglist is open
 
     " Function to cleanly open TagList window
     " XXX: Is there a better way to do this?
-    function! My_tlist_open()
-        TlistOpen
-        setlocal norelativenumber
-        wincmd p
-    endfunction
+    "function! My_tlist_open()
+        "TlistOpen
+        "setlocal norelativenumber
+        "wincmd p
+    "endfunction
+
+    " Toggle taglist window
+    "noremap <silent> <F9> :TlistToggle<CR>
 
     " }}}
+
+    " Tagbar {{{
+
+    " Toggle taglist window
+    noremap <silent> <F9> :TagbarToggle<CR>
+
+    " }}}
+
     " snipMate {{{
     let g:snips_author = 'Jeremy Brubaker' " Authorname for snipMate
     " }}}
+
     " tabular {{{
     if exists(":Tabularize")
+        " Align '=' with padding spaces on both sides
         nmap <leader>t= :Tabularize /=<cr>
         vmap <leader>t= :Tabularize /=<cr>
     endif
     " }}}
+
+    " NERDTree {{{
+        let NERDTreeQuitOnOpen=1 " Close browser when opening a file
+
+        " Toggle NERDTree browser
+        noremap <silent> <F8> :NERDTreeToggle<CR>
+
+        " Find current file in NERDTree
+        noremap <silent> <F7> :NERDTreeFind<CR>
+
+    " }}}
+
 " }}}
 
 " Mappings {{{
 "=============
-    let mapleader = "," " Use ',' as <leader>
+    " TODO: Mapping to turn on colorcolumn
+
+    " Use ',' as <leader>
+    let mapleader = ","
 
     " Clear search string to remove highlighting
     nnoremap <leader><space> :noh<cr>
