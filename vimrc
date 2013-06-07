@@ -189,7 +189,89 @@ set matchpairs+=<:>      " Match <,> with %
         " Align '=' with padding spaces on both sides
         nmap <leader>t= :Tabularize /=<cr>
         vmap <leader>t= :Tabularize /=<cr>
+
+        "nmap <Leader>a= :Tabularize /=<CR>
+        "vmap <Leader>a= :Tabularize /=<CR>
+        "nmap <Leader>a: :Tabularize /:<CR>
+        "vmap <Leader>a: :Tabularize /:<CR>
+        "nmap <Leader>a:: :Tabularize /:\zs<CR>
+        "vmap <Leader>a:: :Tabularize /:\zs<CR>
+        "nmap <Leader>a, :Tabularize /,<CR>
+        "vmap <Leader>a, :Tabularize /,<CR>
+        "nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
+        "vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
+
+        "" The following function automatically aligns when typing a
+        "" supported character
+        "inoremap <silent> <Bar>   <Bar><Esc>:call <SID>align()<CR>a
+
+        "function! s:align()
+            "let p = '^\s*|\s.*\s|\s*$'
+            "if exists(':Tabularize') && getline('.') =~# '^\s*|' && (getline(line('.')-1) =~# p || getline(line('.')+1) =~# p)
+                "let column = strlen(substitute(getline('.')[0:col('.')],'[^|]','','g'))
+                "let position = strlen(matchstr(getline('.')[0:col('.')],'.*|\s*\zs.*'))
+                "Tabularize/|/l1
+                "normal! 0
+                "call search(repeat('[^|]*|',column).'\s\{-\}'.repeat('.',position),'ce',line('.'))
+            "endif
+        "endfunction
     endif
+    " }}}
+
+    " neocomplcache {{{
+    "let g:neocomplcache_enable_at_startup = 1
+    "let g:neocomplcache_enable_camel_case_completion = 1
+    "let g:neocomplcache_enable_smart_case = 1
+    "let g:neocomplcache_enable_underbar_completion = 1
+    "let g:neocomplcache_min_syntax_length = 3
+    "let g:neocomplcache_enable_auto_delimiter = 1
+
+    " AutoComplPop like behavior.
+    "let g:neocomplcache_enable_auto_select = 0
+
+    " SuperTab like snippets behavior.
+    "imap <expr><TAB> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-n>" : "\<TAB>"
+
+    " Plugin key-mappings.
+    "imap <C-k>     <Plug>(neocomplcache_snippets_expand)
+    "smap <C-k>     <Plug>(neocomplcache_snippets_expand)
+    "inoremap <expr><C-g>     neocomplcache#undo_completion()
+    "inoremap <expr><C-l>     neocomplcache#complete_common_string()
+
+    " <CR>: close popup
+    " <s-CR>: close popup and save indent.
+    "inoremap <expr><CR>  pumvisible() ? neocomplcache#close_popup() : "\<CR>"
+    "inoremap <expr><s-CR> pumvisible() ? neocomplcache#close_popup() "\<CR>" : "\<CR>"
+    " <TAB>: completion.
+    "inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+
+    " <C-h>, <BS>: close popup and delete backword char.
+    "inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
+    "inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
+    "inoremap <expr><C-y>  neocomplcache#close_popup()
+    "inoremap <expr><C-e>  neocomplcache#cancel_popup()
+
+    " Enable omni completion.
+    "autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+    "autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+    "autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+    "autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+    "autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+    " Enable heavy omni completion.
+    "if !exists('g:neocomplcache_omni_patterns')
+        "let g:neocomplcache_omni_patterns = {}
+    "endif
+    "let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
+    "autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+    "let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+    "let g:neocomplcache_omni_patterns.c = '\%(\.\|->\)\h\w*'
+    "let g:neocomplcache_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'
+
+    " For snippet_complete marker.
+    "if has('conceal')
+        "set conceallevel=2 concealcursor=i
+    "endif
     " }}}
 
     " NERDTree {{{
@@ -200,9 +282,17 @@ set matchpairs+=<:>      " Match <,> with %
 
         " Find current file in NERDTree
         noremap <silent> <F7> :NERDTreeFind<CR>
+     " }}}
 
-    " }}}
-
+     " Fugitive {{{
+     "nnoremap <silent> <leader>gs :Gstatus<CR>
+     "nnoremap <silent> <leader>gd :Gdiff<CR>
+     "nnoremap <silent> <leader>gc :Gcommit<CR>
+     "nnoremap <silent> <leader>gb :Gblame<CR>
+     "nnoremap <silent> <leader>gl :Glog<CR>
+     "nnoremap <silent> <leader>gp :Git push<CR>
+     " }}}
+     
 " }}}
 
 " Mappings {{{
@@ -303,5 +393,58 @@ set matchpairs+=<:>      " Match <,> with %
         au Filetype c setlocal foldmethod=syntax "Fold on comments and braces
         au Filetype c setlocal foldlevel=100     " Don't automatically fold
     " }}}
+" }}}
+
+" Local Vimrc{{{
+" ================================
+    if filereadable(expand("~/.vimrc.local"))
+        source ~/.vimrc.local
+    endif
+" }}}
+
+" Functions {{{
+
+"function! InitializeDirectories()
+    "let separator = "."
+    "let parent = $HOME
+    "let prefix = '.vim'
+    "let dir_list = {
+                "\ 'backup': 'backupdir',
+                "\ 'views': 'viewdir',
+                "\ 'swap': 'directory' }
+
+    "if has('persistent_undo')
+        "let dir_list['undo'] = 'undodir'
+    "endif
+
+    "for [dirname, settingname] in items(dir_list)
+        "let directory = parent . '/' . prefix . dirname . "/"
+        "if exists("*mkdir")
+            "if !isdirectory(directory)
+                "call mkdir(directory)
+            "endif
+        "endif
+        "if !isdirectory(directory)
+            "echo "Warning: Unable to create backup directory: " . directory
+            "echo "Try: mkdir -p " . directory
+        "else
+            "let directory = substitute(directory, " ", "\\\\ ", "g")
+            "exec "set " . settingname . "=" . directory
+        "endif
+    "endfor
+"endfunction
+"call InitializeDirectories()
+
+"function! NERDTreeInitAsNeeded()
+    "redir => bufoutput
+    "buffers!
+    "redir END
+    "let idx = stridx(bufoutput, "NERD_tree")
+    "if idx > -1
+        "NERDTreeMirror
+        "NERDTreeFind
+        "wincmd l
+    "endif
+"endfunction
 " }}}
 
