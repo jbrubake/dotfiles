@@ -1,3 +1,4 @@
+" Modeline and Notes {{{
 " vim: foldlevel=0
 
 " Folding cheet sheet 
@@ -7,8 +8,21 @@
 " zj    move down to start of next fold
 " zk    move up to end of previous fold
 
-" I want vim not vi. This needs to be first
-set nocompatible
+"      _ _                _____  __  ____  
+"     (_) |__  _ __ _   _|___ / / /_|___ \ 
+"     | | '_ \| '__| | | | |_ \| '_ \ __) |
+"     | | |_) | |  | |_| |___) | (_) / __/ 
+"    _/ |_.__/|_|   \__,_|____/ \___/_____|
+"   |__/                                   
+
+"   Jeremy Brubaker's .vimrc. Some stuff in here was shame-
+"   lessly ripped from places I completely forget about.
+"
+"   https://github.com/jbrubake/dotfiles/blob/master/vimrc
+
+    set nocompatible " This needs to be first
+
+" }}}
 
 " Color and Syntax Settings {{{
 "===============================
@@ -167,7 +181,7 @@ set matchpairs+=<:>      " Match <,> with %
     " }}}
 
     " snipMate {{{
-    let g:snips_author = 'Jeremy Brubaker' " Authorname for snipMate
+    let g:snips_author = 'Jeremy Brubaker <jbru362@gmail.com>' " Authorname for snipMate
     " }}}
 
     " tabular {{{
@@ -209,6 +223,7 @@ set matchpairs+=<:>      " Match <,> with %
     nmap <silent> <leader>l :set list!<cr>
 
     " Switch windows with Ctl-[hjkl]
+    " TODO: <C-W>?<C-W>_ switches *and* maximizes
     map <C-J> <C-W>j
     map <C-K> <C-W>k
     map <C-H> <C-W>h
