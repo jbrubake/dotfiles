@@ -94,6 +94,7 @@ esac
                                        #--widthtype request --height 24 \
                                        #--SetDockType false --transparent true \
                                        #--alpha 255 &
+#command -v bmpanel >/dev/null && bmpanel &
 #command -v volumeicon >/dev/null && volumeicon &
 #command -v keepassx   >/dev/null && keepassx &
 #if [ -x $HOME/.conky/start_conky.sh ]; then
@@ -115,6 +116,16 @@ esac
 # Set up composite manager (must be after ipager)
 #
 #command -v xcompmgr >/dev/null && xcompmgr &
+
+#
+# Run this stuff forever
+#
+while true; do
+    # stuff to run forever
+    # e.g. setting variables for scripts to watch
+    # such as temperature or IP address
+    sleep 20s # Reasonable CPU cycles
+done &
 
 # Wait for WM to exit
 wait $wmpid
