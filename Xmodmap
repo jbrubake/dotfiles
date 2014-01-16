@@ -28,3 +28,6 @@ clear Mod3
 clear Mod4
 clear Mod5
 add Mod3 = Super_L Super_R
+
+! Right Alt is Compose
+keycode 108 = Multi_key
