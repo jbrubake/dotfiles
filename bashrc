@@ -416,10 +416,10 @@ fi
 #command -v toilet >/dev/null &&
 #    alias colfortune="fortune | toilet --metal -f term"
 
-# Use pretty-make.py
+# Use pretty_make
 #
-if command -v pretty-make.py >/dev/null; then
-    alias make=pretty-make.py
+if command -v pretty_make >/dev/null; then
+    alias make=pretty_make
 fi
 
 # If todo.txt is installed, make it simpler
