@@ -209,7 +209,7 @@ PATH="/usr/local/bin:$PATH"
 
 # Put ~/bin in PATH if it exists
 test -d "$HOME/bin" &&
-    PATH="~/bin:$PATH"
+    PATH="$HOME/bin:$PATH"
 
 PATH=$(puniq $PATH)
 MANPATH=$(puniq $MANPATH)
