@@ -366,6 +366,12 @@ alias lal="command ls $LS_OPTS -lhA"
 alias l.="command  ls $LS_OPTS -d .*"
 unset LS_OPTS
 
+# Force color in *grep
+#
+alias grep="grep --color=auto"
+alias fgrep="fgrep --color=auto"
+alias egrep="egrep --color=auto"
+
 # If my pager is not less, make me think it is
 #
 test $PAGER != 'less' &&
