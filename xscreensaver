@@ -1,5 +1,5 @@
 # XScreenSaver Preferences File
-# Written by xscreensaver-demo 5.07 for jbrubake on Tue Feb 24 10:46:11 2009.
+# Written by xscreensaver-demo 5.15 for jbrubake on Sun Nov  2 18:10:52 2014.
 # http://www.jwz.org/xscreensaver/
 
 timeout:	0:10:00
@@ -25,6 +25,7 @@ captureStderr:	True
 ignoreUninstalledPrograms:False
 font:		*-medium-r-*-140-*-m-*
 dpmsEnabled:	True
+dpmsQuickOff:	False
 dpmsStandby:	1:00:00
 dpmsSuspend:	1:00:00
 dpmsOff:	2:00:00
@@ -258,15 +259,21 @@ programs:								      \
   GL: 				hypnowheel -root			    \n\
 -				lcdscrub -root				    \n\
   GL: 				skytentacles -root			    \n\
+- GL: 				surfaces -root				    \n\
+- GL: 				photopile -root				    \n\
+- GL: 				rubikblocks -root			    \n\
+- GL: 				companioncube -root			    \n\
+- GL: 				hilbert -root				    \n\
+- GL: 				tronbit -root				    \n\
+				unicode -root				    \n\
 
 
 pointerPollTime:    0:00:05
 pointerHysteresis:  10
 windowCreationTimeout:0:00:30
 initialDelay:	0:00:00
-sgiSaverExtension:  True
-xidleExtension:	True
 GetViewPortIsFullOfLies:False
 procInterrupts:	True
+xinputExtensionDev: False
 overlayStderr:	True
 
