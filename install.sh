@@ -5,7 +5,7 @@ F=`pwd |sed -e "s#$HOME/\?##"`
 
 for P in *
 do
-    # skip setup and README.md
+    # skip support files
     if [ "$P" = "setup.sh" ]; then continue; fi
     if [ "$P" = "README.md" ]; then continue; fi
 
