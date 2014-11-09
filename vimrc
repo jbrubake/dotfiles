@@ -62,6 +62,7 @@ set statusline+=\ [Lines=%L]     " Total lines in buffer
 " Basics {{{
 "===========
 filetype plugin indent on           " Load filetype plugins and indent settings
+set omnifunc=syntaxcomplete#Complete
 
 set encoding=utf8                   " Use Unicode
 
