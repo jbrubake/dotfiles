@@ -134,6 +134,10 @@ set matchpairs+=<:>      " Match <,> with %
     call pathogen#infect()
     call pathogen#helptags()
 
+    " Rainbow {{{
+    "let g:rainbow_active = 1 
+    " }}}
+
     " ShowMarks {{{
     " Enable ShowMarks
     let g:showmarks_enable=1
