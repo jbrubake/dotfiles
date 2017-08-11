@@ -243,7 +243,7 @@ fi
 # already set
 #
 : ${LANG:="en_US.UTF-8"}
-: ${LANGUAGE:="en"}
+: ${LANGUAGE:="en_US.UTF-8"}
 : ${LC_CTYPE:="en_US.UTF-8"}
 : ${LC_ALL:="en_US.UTF-8"}
 export LANG LANGUAGE LC_CTYPE LC_ALL
@@ -293,7 +293,8 @@ case $(uname -o) in
 esac
 
 # XXX: Make CFLAGS/CXXFLAGS more portable based on actual architecture
-CFLAGS='-O3 -march=pentium4 -Wall -pedantic -ansi'
+CFLAGS='-O3 -Wall -pedantic'
+# CFLAGS='-O3 -march=pentium4 -Wall -pedantic -ansi'
 CXXFLAGS="$CFLAGS"
 export CC CFLAGS CXXFLAGS LD
 
