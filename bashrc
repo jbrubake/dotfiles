@@ -446,6 +446,14 @@ alias update_sigfortunes='strfile -r ~/.fortunes/sigfortunes' # XXX: This alias 
 
 # Prompts {{{
 
+# Make powerline run faster
+powerline-daemon -q
+# Not sure what these two do
+POWERLINE_BASH_CONTINUATION=1
+POWERLINE_BASH_SELECT=1
+# Setup bash powerline prompt
+ . /usr/share/powerline/bindings/bash/powerline.sh
+
 # Put code for my current prompt here
 #
 # Additional prompts can be found in ~/.prompts
@@ -543,6 +551,9 @@ if ! shopt -oq posix; then
         . /etc/profile.d/bash-completion.sh
     fi
 fi
+
+# Allow todo.sh alias to use bash completion
+complete -F _todo t
 
 # }}}
 
