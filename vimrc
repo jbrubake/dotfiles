@@ -1,68 +1,36 @@
-" Modeline and Notes {{{
 " vim: foldlevel=0
+"    _ _                _           _        
+"   (_) |__  _ __ _   _| |__   __ _| | _____ 
+"   | | '_ \| '__| | | | '_ \ / _` | |/ / _ \
+"   | | |_) | |  | |_| | |_) | (_| |   <  __/
+"  _/ |_.__/|_|   \__,_|_.__/ \__,_|_|\_\___|
+" |__/                                       
+"
+"   Jeremy Brubaker's .vimrc. Some stuff in here was shame-
+"   lessly ripped from places I completely forget about.
+"
+"   https://github.com/jbrubake/dotfiles/blob/master/vimrc
 
-" Folding cheet sheet 
+" Folding cheet sheet (because I always forget)
 " zR    open all folds
 " zM    close all folds
 " za    toggle fold at cursor position
 " zj    move down to start of next fold
 " zk    move up to end of previous fold
 
-"      _ _                _____  __  ____  
-"     (_) |__  _ __ _   _|___ / / /_|___ \ 
-"     | | '_ \| '__| | | | |_ \| '_ \ __) |
-"     | | |_) | |  | |_| |___) | (_) / __/ 
-"    _/ |_.__/|_|   \__,_|____/ \___/_____|
-"   |__/                                   
+" Initialization {{{1
+" ==============
+set nocompatible
 
-"   Jeremy Brubaker's .vimrc. Some stuff in here was shame-
-"   lessly ripped from places I completely forget about.
-"
-"   https://github.com/jbrubake/dotfiles/blob/master/vimrc
+call pathogen#infect()
+call pathogen#helptags()
 
-    set nocompatible " This needs to be first
-
-" }}}
-
-" Color and Syntax Settings {{{
-"===============================
-    set background=dark   " Background color
-    colorscheme desert256 " Colorscheme
-    syntax enable         " Use syntax hilighting
-    set hlsearch          " Highlight search matches
-
-   " In-active window status line
-   highlight StatusLineNC ctermfg=blue ctermbg=black
-   " Active window status line
-   highlight StatusLine   ctermfg=blue ctermbg=white
-
-   highlight NonText    ctermfg =darkblue " Listchars
-   highlight SpecialKey ctermfg =brown    " Non-printable chars
-   
-   " Statusline colors
-   highlight User1 ctermfg=red   ctermbg=blue
-   highlight User2 ctermfg=green ctermbg=blue
-" }}}
-
-" Statusline {{{
-"===============
-set laststatus=2                 " Always show status line
-set statusline=                  " Clear status line
-set statusline+=%t               " Filename
-set statusline+=%m               " Modified flag
-set statusline+=%r               " Readonly flag
-set statusline+=\ %-15.(%l,%c%)  " Line number and column number
-set statusline+=\ %p             " Percentage through file in lines
-set statusline+=\ [Filetype=%Y]  " Filetype
-set statusline+=\ [ASCII=%03.3b] " ASCII value of char under cursor
-set statusline+=\ [Lines=%L]     " Total lines in buffer
-
-" }}}
-
-" Basics {{{
-"===========
+" Basics {{{1
+" ======
 filetype plugin indent on           " Load filetype plugins and indent settings
-set omnifunc=syntaxcomplete#Complete
+
+" XXX: Not sure this works
+set omnifunc=syntaxcomplete#Complete " Complete on syntax
 
 set encoding=utf8                   " Use Unicode
 
@@ -70,8 +38,7 @@ set noexrc                          " Do not source .exrc
 set autowrite                       " Write file when changing to a new file
 set wildmenu                        " Show Tab completion menu
 set wildmode=longest,list           " Tab complete longest part, then show menu
-set autochdir                       " Automatically chdir to file (needed
-                                    " for a.vim) automatically
+set autochdir                       " Automatically chdir to file (needed for a.vim)
 set backspace=indent,eol,start      " What BS can delete
 set backupdir=~/.vim/backup         " Where to put backup files
 set directory=~/.vim/tmp            " Where to put swap files
@@ -85,21 +52,18 @@ set listchars+=tab:»\               " Show real tabs
 set listchars+=trail:.              " Show trailing spaces and higlight them
 set listchars+=eol:¬                " Show end of line
 set visualbell                      " Blink instead of beep
-set relativenumber                  " Use relative line numbers
+set relativenumber                  " Show relative line number
+set number                          " Show line number of current line
 set numberwidth=4                   " Allows line numbers up to 999
-set report=0                        " Always report when a : command
-                                    " changes something
+set report=0                        " Always report when a : command changes something
 set shortmess=aOstT                 " Keep messages short
 set scrolloff=10                    " Keep 10 lines at top/bottom
 set sidescrolloff=10                " Keep 10 lines at right/left
-set sidescroll=1                    " Horizontal scroll one column at a
-                                    " time
-set showtabline=2                   " Always show tabline
+set sidescroll=1                    " Horizontal scroll one column at a time
+set showtabline=0                   " Never show tabline
 set hidden                          " Allow hidden buffers
-"set colorcolumn=70                 " Higlight column 70
-" }}}
 
-" Text Formatting/Layout {{{
+" Text Formatting/Layout {{{1
 "===========================
 set formatoptions+=rqln  " Insert comment leader on return, let gq format
                          "  comments and do not break an already long line
@@ -108,7 +72,6 @@ set ignorecase           " Case insensitive by default
 set smartcase            "  but case sensitive if search string is multi-case
 set nowrap               " Long lines do not wrap
 set shiftround           " Indent at multiples of shiftwidth
-set smartcase            " If there are caps, be case sensitive
 set expandtab            " Expand tabs to spaces
 set tabstop=4            " Real tabs are 4 spaces
 set softtabstop=4        " A tab is 4 spaces for a tab or backspace
@@ -116,340 +79,351 @@ set shiftwidth=4         " Indent and <</>> is 4 spaces
 set textwidth=80         " Lines wrap at column 80
 set autoindent           " Automatically indent based on previous line
 set smartindent          " Automatic indenting is intelligent
-set matchpairs+=<:>      " Match <,> with %
-" }}}
 
-" Folding {{{
+" Statusline {{{1
+" ==========
+set laststatus=2                 " Always show status line
+
+set statusline=                  " Clear status line
+set statusline+=%t               " Filename
+set statusline+=%m               " Modified flag
+set statusline+=%r               " Readonly flag
+set statusline+=%15.l(%L),%c     " Line and column numbers
+set statusline+=\ [%Y]           " Filetype
+set statusline+=\ [ASCII=%03.3b] " ASCII value of char under cursor
+
+" Folding {{{1
 "============
-    set foldenable                                   " Turn on folding
-    set foldmethod=marker                            " Fold on the marker
-    set foldopen=block,hor,mark,percent,quickfix,tag " What movements open folds
-" }}}
+set foldenable                                   " Turn on folding
+set foldmethod=marker                            " Fold on the marker
+set foldopen=block,hor,mark,percent,quickfix,tag " What movements open folds
 
-" Plugins {{{
+" Right justify folded line count
+"
+" dhruvasagar (dhruvasagar.com/2013/03/28/vim-better-foldtext)
+function! NeatFoldText()
+    let line = ' ' . substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{' . '{\d*\s*', '', 'g') . ' '
+    let lines_count = v:foldend - v:foldstart + 1
+    let lines_count_text = '| ' . printf("%10s", lines_count . ' lines') . ' |'
+    let foldchar = matchstr(&fillchars, 'fold:\zs.')
+    let foldtextstart = strpart('+' . repeat(foldchar, v:foldlevel*2) . line, 0, (winwidth(0)*2)/3)
+    let foldtextend = lines_count_text . repeat(foldchar, 8)
+    let foldtextlength = strlen(substitute(foldtextstart . foldtextend, '.', 'x', 'g')) + &foldcolumn
+    return foldtextstart . repeat(foldchar, winwidth(0)-foldtextlength) .  foldtextend
+endfunction
+set foldtext=NeatFoldText()
+" Plugins {{{1
 "============
 " TODO: Only configure plugin if it exists
 
-    " Manage plugins with pathogen
-    call pathogen#infect()
-    call pathogen#helptags()
+" IndentCommentPrefix {{{
+" Comment chars in this list will *not* be left in column 1
+"let g:IndentCommentPrefix_Blacklist = ['#', '>']
 
-    " Rainbow {{{
-    "let g:rainbow_active = 1 
-    " }}}
-
-    " ShowMarks {{{
-    " Enable ShowMarks
-    let g:showmarks_enable=1
-
-    " Only show marks in files I am editing
-    let g:showmarks_ignore_type="hmpqr"
-
-    " Marks to show
-    "
-    " '`: last position
-    " . : last change
-    " (): start/end of sentence
-    " {}: start/end of paragraph
-    let g:showmarks_include="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'`.(){}"
-
-    highlight ShowMarksHLl cterm=bold ctermfg=yellow ctermbg=darkgrey " Lower case
-    highlight ShowMarksHLu cterm=bold ctermfg=yellow ctermbg=darkgrey " Upper case
-    highlight ShowMarksHLo cterm=bold ctermfg=yellow ctermbg=darkgrey " Other
-    highlight ShowMarksHLm cterm=bold ctermfg=yellow ctermbg=darkgrey " Multiple
-    " }}}
-
-    " Taglist {{{
-    "let Tlist_Sort_Type="name"     " Sort taglist alphabetically
-    "let Tlist_Use_Right_Window=1   " Put taglist on the right
-    "let Tlist_Enable_Fold_column=0 " Do not show Vim fold column
-    "let Tlist_Exit_OnlyWindow=1    " Exit vim if only taglist is open
-
-    " Function to cleanly open TagList window
-    " XXX: Is there a better way to do this?
-    "function! My_tlist_open()
-        "TlistOpen
-        "setlocal norelativenumber
-        "wincmd p
-    "endfunction
-
-    " Toggle taglist window
-    "noremap <silent> <F9> :TlistToggle<CR>
-
-    " }}}
-
-    " Tagbar {{{
-
-    " Toggle taglist window
-    noremap <silent> <F9> :TagbarToggle<CR>
-
-    " }}}
-
-    " snipMate {{{
-    let g:snips_author = 'Jeremy Brubaker <jbru362@gmail.com>' " Authorname for snipMate
-    " }}}
-
-    " tabular {{{
-    if exists(":Tabularize")
-        " Align '=' with padding spaces on both sides
-        nmap <leader>t= :Tabularize /=<cr>
-        vmap <leader>t= :Tabularize /=<cr>
-
-        "nmap <Leader>a= :Tabularize /=<CR>
-        "vmap <Leader>a= :Tabularize /=<CR>
-        "nmap <Leader>a: :Tabularize /:<CR>
-        "vmap <Leader>a: :Tabularize /:<CR>
-        "nmap <Leader>a:: :Tabularize /:\zs<CR>
-        "vmap <Leader>a:: :Tabularize /:\zs<CR>
-        "nmap <Leader>a, :Tabularize /,<CR>
-        "vmap <Leader>a, :Tabularize /,<CR>
-        "nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
-        "vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
-
-        "" The following function automatically aligns when typing a
-        "" supported character
-        "inoremap <silent> <Bar>   <Bar><Esc>:call <SID>align()<CR>a
-
-        "function! s:align()
-            "let p = '^\s*|\s.*\s|\s*$'
-            "if exists(':Tabularize') && getline('.') =~# '^\s*|' && (getline(line('.')-1) =~# p || getline(line('.')+1) =~# p)
-                "let column = strlen(substitute(getline('.')[0:col('.')],'[^|]','','g'))
-                "let position = strlen(matchstr(getline('.')[0:col('.')],'.*|\s*\zs.*'))
-                "Tabularize/|/l1
-                "normal! 0
-                "call search(repeat('[^|]*|',column).'\s\{-\}'.repeat('.',position),'ce',line('.'))
-            "endif
-        "endfunction
-    endif
-    " }}}
-
-    " neocomplcache {{{
-    "let g:neocomplcache_enable_at_startup = 1
-    "let g:neocomplcache_enable_camel_case_completion = 1
-    "let g:neocomplcache_enable_smart_case = 1
-    "let g:neocomplcache_enable_underbar_completion = 1
-    "let g:neocomplcache_min_syntax_length = 3
-    "let g:neocomplcache_enable_auto_delimiter = 1
-
-    " AutoComplPop like behavior.
-    "let g:neocomplcache_enable_auto_select = 0
-
-    " SuperTab like snippets behavior.
-    "imap <expr><TAB> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-n>" : "\<TAB>"
-
-    " Plugin key-mappings.
-    "imap <C-k>     <Plug>(neocomplcache_snippets_expand)
-    "smap <C-k>     <Plug>(neocomplcache_snippets_expand)
-    "inoremap <expr><C-g>     neocomplcache#undo_completion()
-    "inoremap <expr><C-l>     neocomplcache#complete_common_string()
-
-    " <CR>: close popup
-    " <s-CR>: close popup and save indent.
-    "inoremap <expr><CR>  pumvisible() ? neocomplcache#close_popup() : "\<CR>"
-    "inoremap <expr><s-CR> pumvisible() ? neocomplcache#close_popup() "\<CR>" : "\<CR>"
-    " <TAB>: completion.
-    "inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-
-    " <C-h>, <BS>: close popup and delete backword char.
-    "inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
-    "inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
-    "inoremap <expr><C-y>  neocomplcache#close_popup()
-    "inoremap <expr><C-e>  neocomplcache#cancel_popup()
-
-    " Enable omni completion.
-    "autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-    "autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-    "autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-    "autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-    "autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-
-    " Enable heavy omni completion.
-    "if !exists('g:neocomplcache_omni_patterns')
-        "let g:neocomplcache_omni_patterns = {}
-    "endif
-    "let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
-    "autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
-    "let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-    "let g:neocomplcache_omni_patterns.c = '\%(\.\|->\)\h\w*'
-    "let g:neocomplcache_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'
-
-    " For snippet_complete marker.
-    "if has('conceal')
-        "set conceallevel=2 concealcursor=i
-    "endif
-    " }}}
-
-    " NERDTree {{{
-        let NERDTreeQuitOnOpen=1 " Close browser when opening a file
-
-        " Toggle NERDTree browser
-        noremap <silent> <F8> :NERDTreeToggle<CR>
-
-        " Find current file in NERDTree
-        noremap <silent> <F7> :NERDTreeFind<CR>
-     " }}}
-
-     " Fugitive {{{
-     "nnoremap <silent> <leader>gs :Gstatus<CR>
-     "nnoremap <silent> <leader>gd :Gdiff<CR>
-     "nnoremap <silent> <leader>gc :Gcommit<CR>
-     "nnoremap <silent> <leader>gb :Gblame<CR>
-     "nnoremap <silent> <leader>gl :Glog<CR>
-     "nnoremap <silent> <leader>gp :Git push<CR>
-     " }}}
-     
+" Any string in this list *will* remain in column 1
+"let g:IndentCommentPrefix_Whitelist = ['REMARK:']
 " }}}
 
-" Mappings {{{
+" ingo-library {{{
+" No configuration here
+" }}}
+
+" Rainbow {{{
+let g:rainbow_active = 1 
+" }}}
+
+" tabular {{{
+" Tabularize the following:
+" -------------------------
+" <Leader>t=  : = (with space)
+" <Leader>t:  : : (with space)
+" <Leader>t:: : : (no space before)
+" <Leader>t,  : , (with space)
+" <Leader>t|  : | (with space)
+"
+nmap <Leader>t= :Tabularize /=<cr>
+vmap <Leader>t= :Tabularize /=<cr>
+nmap <Leader>t: :Tabularize /:<cr>
+vmap <Leader>t: :Tabularize /:<cr>
+nmap <Leader>t:: :Tabularize /:\zs<cr>
+vmap <Leader>t:: :Tabularize /:\zs<cr>
+nmap <Leader>t, :Tabularize /,<cr>
+vmap <Leader>t, :Tabularize /,<cr>
+nmap <Leader>t<Bar> :Tabularize /<Bar><cr>
+vmap <Leader>t<Bar> :Tabularize /<Bar><cr>
+
+" s:align() - automatically align '|' delimited tables {{{
+"
+" Typing '|' in insert mode, automatically
+" aligns the containing '|' delimited table
+" FIXME: Can't get it to work
+"
+"function! s:align()
+    "let p = '^\s*|\s.*\s|\s*$'
+    "if exists(':Tabularize') && getline('.') =~# '^\s*|' && (getline(line('.')-1) =~# p || getline(line('.')+1) =~# p)
+        "let column = strlen(substitute(getline('.')[0:col('.')],'[^|]','','g'))
+        "let position = strlen(matchstr(getline('.')[0:col('.')],'.*|\s*\zs.*'))
+        "Tabularize/|/l1
+        "normal! 0
+        "call search(repeat('[^|]*|',column).'\s\{-\}'.repeat('.',position),'ce',line('.'))
+    "endif
+"endfunction
+"inoremap <silent> <Bar>   <Bar><Esc>:call <SID>align()<cr>a
+" }}}
+
+" }}}
+
+" Tagbar {{{
+
+" Toggle taglist window
+noremap <silent> <F9> :TagbarToggle<cr>
+
+" Default settings
+" ----------------
+" let g:tagbar_left = 1
+" let g:tagbar_width = 40
+" let g:tagbar_autoclose = 0
+
+" }}}
+
+" vim-closetag {{{
+" Use closetag in these files
+let g:closetag_filenames = "*.html,*.xhtml,*.phtml"
+" }}}
+
+" vim-commentary {{{
+" No configuration here
+" }}}
+
+" vim-markdown {{{
+let g:markdown_fenced_languages = ['python', 'html', 'bash=sh', 'c']
+" }}}
+
+" vim-repeat {{{
+" No configuration here
+" }}}
+
+" vim-snipMate {{{
+" TODO: Configuration and manual
+let g:snips_author = 'Jeremy Brubaker <jbru362@gmail.com>'
+" }}}
+
+" vim-space {{{
+" No configuration here
+" }}}
+
+" vim-surround {{{
+" No configuration here
+" }}}
+
+" vim-workspace {{{
+" Make it look like Powerline
+let g:workspace_powerline_separators = 1
+let g:workspace_tab_icon = "\uf00a"
+let g:workspace_left_trunc_icon = "\uf0a8"
+let g:workspace_right_trunc_icon = "\uf0a9"
+
+noremap <C-n> :WSNext<CR>
+noremap <C-p> :WSPrev<CR>
+noremap <C-tab> :WSNext<CR>
+noremap <Leader>q :WSClose<CR>
+noremap <Leader>Q :WSClose!<CR>
+noremap <C-t> :WSTabNew<CR>
+
+" use 'bonly' as an abbreviation for WSBufOnly
+cabbrev bonly WSBufOnly
+"}}}
+
+" a.vim {{{
+" No configuration here
+" }}}
+
+" gundo.vim {{{
+nnoremap <F8> :GundoToggle<cr>
+" }}}
+
+" Mappings {{{1
 "=============
-    " TODO: Mapping to turn on colorcolumn
 
-    " Use ',' as <leader>
-    let mapleader = ","
+" XXX: Don't forget Shift/C/M+Arrows
+" XXX: Don't forget C+hjkl
 
-    " Clear search string to remove highlighting
-    nnoremap <leader><space> :noh<cr>
+" Help {{{
+" map: normal, visual, select, operator-pending
+" nmap: normal
+" vmap: visual and select
+" omap: operator-pending
+" xmap: visual
+" smap: select
+" map!: insert and command-line
+" imap: insert
+" cmap: command line
+" lmap: insert, command line, language-arg
+"
+" noremap: non-recursive mapping
+"
+" <silent> : don't echo mapping on command line
+" <expr> : mapping inserts result of {rhs} }}}
 
-    " Use TAB to jump between braces, etc
-    nnoremap <tab> %
-    vnoremap <tab> %
+" Window Management {{{
+" ======================
 
-    " Toggle listchars
-    nmap <silent> <leader>l :set list!<cr>
-
-    " Switch windows with Ctl-[hjkl]
-    " TODO: <C-W>?<C-W>_ switches *and* maximizes
-    map <C-J> <C-W>j
-    map <C-K> <C-W>k
-    map <C-H> <C-W>h
-    map <C-L> <C-W>l
-
-    " Make Y consistent with C and D
-    nnoremap Y y$
-
-    " Resize windows with + and -
-    map + <C-W>+
-    map - <C-W>-
-    " <C-W>> and <C-W>< do this for vertical windows, but
-    " < and > are already bound. Hmm...
-
-    " Adjust viewports to the same size
-    map <Leader>= <C-w>=
-
-    " Clearing highlighted search
-    nmap <silent> <leader>/ :nohlsearch<CR>
-
-    " For when you forget to sudo.. Really Write the file.
-    cmap w!! w !sudo tee % >/dev/null
-
-    " Reflow paragraph with Q in normal and visual mode
-    nnoremap Q gqap
-    vnoremap Q gq
-
-    " Basically underline current line with '='
-    " TODO: Conflicts with mapping above
-    "nmap <leader>= yypVr=
-
-    " Turn on paste mode with F12
-    set pastetoggle=<F12>
-
-    " Easier horizontal scrolling
-    map zl zL
-    map zh zH
-
-    " Code folding options
-    nmap <leader>f0 :set foldlevel=0<CR>
-    nmap <leader>f1 :set foldlevel=1<CR>
-    nmap <leader>f2 :set foldlevel=2<CR>
-    nmap <leader>f3 :set foldlevel=3<CR>
-    nmap <leader>f4 :set foldlevel=4<CR>
-    nmap <leader>f5 :set foldlevel=5<CR>
-    nmap <leader>f6 :set foldlevel=6<CR>
-    nmap <leader>f7 :set foldlevel=7<CR>
-    nmap <leader>f8 :set foldlevel=8<CR>
-    nmap <leader>f9 :set foldlevel=9<CR>
+" Switch windows with Ctl-[hjkl] {{{
+nnoremap <C-J> <C-W>j
+nnoremap <C-K> <C-W>k
+nnoremap <C-H> <C-W>h
+nnoremap <C-L> <C-W>l
 " }}}
 
-" Autocommands {{{
+" Resize windows with M-hjkl {{{
+"   M-h : decrease vertical
+"   M-j : decrease horizontal
+"   M-k : increase horizontal
+"   M-l : increase vertical
+if has ('unix') " Doesn't work otherwise
+    nnoremap j <C-w>-
+    nnoremap k <C-w>+
+    nnoremap h <C-w><
+    nnoremap l <C-w>>
+else
+    nnoremap <M-j> <C-w>-
+    nnoremap <M-k> <C-w>+
+    nnoremap <M-h> <C-w><
+    nnoremap <M-l> <C-w>>
+endif
+" }}}
+
+" Maximize/Minimize split {{{
+" TODO: Make ^wm toggle this state
+" FIXME: Maximizing doesn't work for all splits
+noremap <C-W>M :resize<cr> :vertical resize <cr>
+nnoremap <C-W>m <C-W>=
+" }}}
+
+" }}}
+
+" Miscellaneous {{{
+
+" Toggle colorcolumn with <leader>c {{{
+"
+" Kevin Kuchta (www.vimbits.com/bits/317)
+function! g:ToggleColorColumn()
+    if &colorcolumn == ''
+        setlocal colorcolumn=70
+    else
+        setlocal colorcolumn&
+    endif
+endfunction
+nnoremap <silent> <leader>c :call g:ToggleColorColumn()<cr>
+" }}}
+
+" Clear search string to remove highlighting
+nnoremap <silent> // :nohlsearch<cr>
+
+" Use TAB to jump between braces, etc
+nnoremap <tab> %
+vnoremap <tab> %
+
+" Toggle listchars
+nnoremap <silent> <leader>l :set list!<cr>
+
+" Make Y consistent with C and D
+nnoremap Y y$
+
+" Really write the file when you forget to sudo 
+cnoremap w!! w !sudo tee % >/dev/null
+
+" Reflow paragraph with Q in normal and visual mode
+nnoremap Q gqap
+vnoremap Q gq
+
+" Easier history navigation
+cnoremap <C-P> <Up>
+cnoremap <C-N> <Down>
+
+" Underline current line with '=' or '-'
+" TODO: Make this work with comments
+nnoremap <leader>= yyp^v$r=
+nnoremap <leader>- yyp^v$r-
+
+" Easier horizontal scrolling
+map zl zL
+map zh zH
+
+" Code folding{{{
+nmap <leader>f0 :set foldlevel=0<cr>
+nmap <leader>f1 :set foldlevel=1<cr>
+nmap <leader>f2 :set foldlevel=2<cr>
+nmap <leader>f3 :set foldlevel=3<cr>
+nmap <leader>f4 :set foldlevel=4<cr>
+nmap <leader>f5 :set foldlevel=5<cr>
+nmap <leader>f6 :set foldlevel=6<cr>
+nmap <leader>f7 :set foldlevel=7<cr>
+nmap <leader>f8 :set foldlevel=8<cr>
+nmap <leader>f9 :set foldlevel=9<cr>
+" }}}
+
+" }}}
+
+" Autocommands {{{1
 "=================
 
-    " Always switch to the current file directory.
-    au BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | lcd %:p:h | endif
+" Remove everything if sourcing .vimrc again
+autocmd!
 
-    au Filetype gitcommit set tw=68 " spell <-- annoying, but I'd like to use it
+au BufWritePost ~/.vimrc source ~/.vimrc
+au Filetype gitcommit set tw=68 spell
 
-    au BufWritePost ~/.vimrc source ~/.vimrc " Reread .vimrc after editing
-
-    "au BufRead *.c,*.cc,*.h :call My_tlist_open() " Open taglist when opening C source
-
-    " Makefiles {{{
-        au filetype make setlocal noexpandtab       " We need real tabs
-        au filetype make setlocal tabstop=8         " Real tabs are 8 spaces
-        au filetype make setlocal softtabstop=8
-        au filetype make setlocal shiftwidth=8
-    " }}}
-    " snipMate {{{
-        au filetype snippet setlocal tabstop=8 " snipMate works better with
-                                               " full tabs
-        au filetype snippet setlocal softtabstop=0
-        au filetype snippet setlocal tabstop=8
-    " }}}
-    " C {{{
-        au Filetype c setlocal foldmethod=syntax "Fold on comments and braces
-        au Filetype c setlocal foldlevel=100     " Don't automatically fold
-    " }}}
+" Makefiles {{{
+au Filetype make setlocal noexpandtab   " We need real tabs
+au Filetype make setlocal tabstop=8
+au Filetype make setlocal softtabstop=8
+au Filetype make setlocal shiftwidth=8
 " }}}
 
-" Local Vimrc{{{
+" snipMate {{{
+au Filetype snippet setlocal noexpandtab   " We need real tabs
+au Filetype snippet setlocal tabstop=8
+au Filetype snippet setlocal softtabstop=0
+au Filetype snippet setlocal tabstop=8
+" }}}
+
+" C {{{
+au Filetype c setlocal foldmethod=syntax " Fold on comments and braces
+au Filetype c setlocal foldlevel=100     " Don't automatically fold
+" }}}
+
 " ================================
-    if filereadable(expand("~/.vimrc.local"))
-        source ~/.vimrc.local
-    endif
-" }}}
 
-" Functions {{{
+" Colors and Syntax Settings {{{1
+" ==========================
+" XXX: Rainbow stopped working unless this was at the end
+set background=dark
+colorscheme desert256
+syntax enable
+set hlsearch " Highlight search matches
 
-"function! InitializeDirectories()
-    "let separator = "."
-    "let parent = $HOME
-    "let prefix = '.vim'
-    "let dir_list = {
-                "\ 'backup': 'backupdir',
-                "\ 'views': 'viewdir',
-                "\ 'swap': 'directory' }
+" In-active window status line
+highlight StatusLineNC ctermfg=darkblue ctermbg=black
+" Active window status line
+highlight StatusLine   ctermfg=darkblue ctermbg=white
 
-    "if has('persistent_undo')
-        "let dir_list['undo'] = 'undodir'
-    "endif
+" Non-printing characters
+highlight NonText    ctermfg=brown
+highlight SpecialKey ctermfg=brown
 
-    "for [dirname, settingname] in items(dir_list)
-        "let directory = parent . '/' . prefix . dirname . "/"
-        "if exists("*mkdir")
-            "if !isdirectory(directory)
-                "call mkdir(directory)
-            "endif
-        "endif
-        "if !isdirectory(directory)
-            "echo "Warning: Unable to create backup directory: " . directory
-            "echo "Try: mkdir -p " . directory
-        "else
-            "let directory = substitute(directory, " ", "\\\\ ", "g")
-            "exec "set " . settingname . "=" . directory
-        "endif
-    "endfor
-"endfunction
-"call InitializeDirectories()
+" Colors used in the statusline
+highlight User1 ctermfg=red   ctermbg=blue
+highlight User2 ctermfg=green ctermbg=blue
 
-"function! NERDTreeInitAsNeeded()
-    "redir => bufoutput
-    "buffers!
-    "redir END
-    "let idx = stridx(bufoutput, "NERD_tree")
-    "if idx > -1
-        "NERDTreeMirror
-        "NERDTreeFind
-        "wincmd l
-    "endif
-"endfunction
-" }}}
+" Powerline setup {{{1
+" ================================
+python from powerline.vim import setup as powerline_setup
+python powerline_setup()
+python del powerline_setup
 
+" Local Vimrc {{{1
+" ================================
+if filereadable(expand("~/.vimrc.local"))
+    source ~/.vimrc.local
+endif
