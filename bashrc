@@ -417,10 +417,13 @@ fi
 #command -v toilet >/dev/null &&
 #    alias colfortune="fortune | toilet --metal -f term"
 
-# Use pretty_make
+# Use pretty_make and colorgcc
 #
 if command -v pretty_make >/dev/null; then
     alias make=pretty_make
+fi
+if command -v colorgcc >/dev/null; then
+    alias gcc=colorgcc
 fi
 
 # If todo.txt is installed, make it simpler
