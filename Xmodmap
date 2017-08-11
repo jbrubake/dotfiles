@@ -27,7 +27,8 @@ add Control = Control_L
 clear Mod3
 clear Mod4
 clear Mod5
-add Mod3 = Super_L Super_R
+add Mod3 = Super_R
+add Mod4 = Super_L
 
 ! Right Alt is Compose
 keycode 108 = Multi_key
