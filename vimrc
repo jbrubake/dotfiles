@@ -116,7 +116,20 @@ set foldtext=NeatFoldText()
 "============
 " TODO: Only configure plugin if it exists
 
-" IndentCommentPrefix {{{
+" conkyrc: Syntax files {{{
+"
+"   Used with *conkyrc and conky.conf
+" }}}
+"
+" IndentCommentPrefix: Indents comments sensibly {{{
+"
+"   >>  : Indent keeping comment prefix where it is
+"   <<  : Deindent keeping comment prefix where it is
+"   g>> : Indent, including comment prefix
+"
+"   Use single > or < in Visual mode
+"
+
 " Comment chars in this list will *not* be left in column 1
 "let g:IndentCommentPrefix_Blacklist = ['#', '>']
 
@@ -124,23 +137,43 @@ set foldtext=NeatFoldText()
 "let g:IndentCommentPrefix_Whitelist = ['REMARK:']
 " }}}
 
-" ingo-library {{{
+" ingo-library: library functions required by IndentCommentPrefix {{{
 " No configuration here
 " }}}
 
-" Rainbow {{{
+" rainbow: Highlight "parentheses" with varying colors {{{
 let g:rainbow_active = 1 
 " }}}
 
-" tabular {{{
-" Tabularize the following:
-" -------------------------
+" tabular: Smart alignment of tables {{{
+"
+"   :Tabularize /<delimiter>/<format>
+"
+"   <format> : (l)eft, (r)ight, (center)
+"       Each is followed by a number indicating padding
+"
+"   Example:
+"       x = 12;
+"       num = 13;
+"       var2 = 1;
+"
+"       :Tabularize /=/l0r1
+"
+"       x   = 12;
+"       num = 13;
+"       var2= 1;
+"
+"   :AddTabularPattern <name> <pattern> allows you to save patterns
+"
+" Custom mappings:
+" ---------------------------------
 " <Leader>t=  : = (with space)
 " <Leader>t:  : : (with space)
 " <Leader>t:: : : (no space before)
 " <Leader>t,  : , (with space)
 " <Leader>t|  : | (with space)
 "
+
 nmap <Leader>t= :Tabularize /=<cr>
 vmap <Leader>t= :Tabularize /=<cr>
 nmap <Leader>t: :Tabularize /:<cr>
@@ -170,53 +203,126 @@ vmap <Leader>t<Bar> :Tabularize /<Bar><cr>
 "endfunction
 "inoremap <silent> <Bar>   <Bar><Esc>:call <SID>align()<cr>a
 " }}}
-
 " }}}
 
-" Tagbar {{{
-
-" Toggle taglist window
-noremap <silent> <F9> :TagbarToggle<cr>
-
+" tagbar: Source code browser using ctags {{{
+"
+"   <F1> : display help
+"   <F9> : toggle TagBar
+"
 " Default settings
 " ----------------
 " let g:tagbar_left = 1
 " let g:tagbar_width = 40
 " let g:tagbar_autoclose = 0
+"
 
+" Toggle taglist window
+noremap <silent> <F9> :TagbarToggle<cr>
 " }}}
 
-" vim-closetag {{{
+" tlib_vim: Utility functions required by snipMate {{{
+" No configuration here
+" }}}
+
+" vim-addon-mw-utils: Caching required by snipMate {{{
+" No configuration here
+" }}}
+
+" vim-closetag: Easily close HTML/XML tags {{{
+"
+"   Current content:
+"       <table|
+"   Press >:
+"       <table>|</table>
+"   Press > again:
+"       <table>
+"           |
+"       </table>
+"
+
 " Use closetag in these files
 let g:closetag_filenames = "*.html,*.xhtml,*.phtml"
 " }}}
 
-" vim-commentary {{{
+" vim-commentary: Commenting keymaps {{{
+"
+"   gc{motion} : Toggle commenting over {motion}
+"   gcc        : Toggle commenting of [count] lines
+"   {Visual}gc : Toggle commenting of highlighted lines
+"   gcu        : Uncomment current and adjacent lines
+"
+
 " No configuration here
 " }}}
 
-" vim-markdown {{{
+" vim-devicons: Patched fonts with more icons {{{
+" No configuration here
+" }}}
+
+" vim-markdown: Markdown syntax {{{
+let g:markdown_fenced_languages = ['python', 'html', 'bash=sh', 'c']
 let g:markdown_fenced_languages = ['python', 'html', 'bash=sh', 'c']
 " }}}
 
-" vim-repeat {{{
+" vim-repeat: Allows '.' to repeat plugin keymaps {{{
 " No configuration here
 " }}}
 
-" vim-snipMate {{{
+" vim-snipmate: Code snippets {{{
 " TODO: Configuration and manual
 let g:snips_author = 'Jeremy Brubaker <jbru362@gmail.com>'
 " }}}
 
-" vim-space {{{
+" vim-space: Use <space> as smart move command {{{
+"
+"   Map <space> to repeat previous movement command and <BS> to
+"   previous backwards movement command
+"
+"   Example:
+"   /foo
+"   n
+"   N
+"
+"   becomes:
+"   /foo
+"   <space>
+"   <BS>
+"
+
 " No configuration here
 " }}}
 
-" vim-surround {{{
+" vim-surround: Modify surrounding characters {{{
+"
+"   ds<t>    : delete
+"   cs<t><r> : change
+"   ys<motion><t> : surround <motion>
+"
+"   csw<r> : surround current word
+"   yss<r> : surround current line
+"   ysS<r> : put <t> on separate lines
+"
+"   Valid characters for <t> and <r>
+"       ( { [ < : trim/insert spaces
+"       ) } ] > : DO NOT trim/insert spaces
+"       " ' `   : quote pairs (current line only)
+"       t       : HTML tag
+"       w, W    : word, WORD (<t> only)
+"       s       : sentence (<t> only)
+"       p       : paragraph (<t> only)
+"
+"   Using 't' for <r>
+"       Vim will prompt for the tag to insert. Any attributes given
+"       will be stripped from the closing tag. Any attributes will be
+"       kept, unless you close the tag with >. If C-T is used, tags
+"       will appear on lines by themselves.
+"
+
 " No configuration here
 " }}}
 
-" vim-workspace {{{
+" vim-workspace: Automated session management and file auto-save {{{
 " Make it look like Powerline
 let g:workspace_powerline_separators = 1
 let g:workspace_tab_icon = "\uf00a"
@@ -234,11 +340,19 @@ noremap <C-t> :WSTabNew<CR>
 cabbrev bonly WSBufOnly
 "}}}
 
-" a.vim {{{
+" a.vim: Swap header and source files {{{
+"
+"   :A : Switch between header and source files
+"   :AS: Split and switch
+"   :AV: Vertical split and switch
+"
+"   Use 'set autochdir' to make it work
+"
+
 " No configuration here
 " }}}
 
-" gundo.vim {{{
+" gundo.vim: View Vim undo tree {{{
 nnoremap <F8> :GundoToggle<cr>
 " }}}
 
