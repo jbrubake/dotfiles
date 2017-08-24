@@ -198,6 +198,12 @@ puniq () {
     cut -f 2- |tr '\n' : |sed -e 's/:$//' -e 's/^://'
 }
 
+# Usage: prm <path> [<var>]
+# Remove <path> from PATH or environment variable <var>.
+prm () {
+    eval "${2:-PATH}='$(pls $2 |
+        grep -v "^$1\$" |tr '\n' :)'"
+}
 # }}}
 
 # }}}
