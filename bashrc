@@ -447,18 +447,11 @@ alias dut='du -h --max-depth=1'  # du(1) prints totals for one level down
 alias df='df -hT'                # Make df output nicer
 alias reset='echo -en "\e]R"'    # Reset system palette
 alias update_sigfortunes='strfile -r ~/.fortunes/sigfortunes' # XXX: This alias is kinda lame
+alias myip='dig +short myip.opendns.com @resolver1.opendns.com' # XXX: Get my real IP
 
 # }}}
 
 # Prompts {{{
-
-# Make powerline run faster
-powerline-daemon -q
-# Not sure what these two do
-POWERLINE_BASH_CONTINUATION=1
-POWERLINE_BASH_SELECT=1
-# Setup bash powerline prompt
- . /usr/share/powerline/bindings/bash/powerline.sh
 
 # Put code for my current prompt here
 #
