@@ -40,28 +40,33 @@ done;
 function FX()
 {
     case "$1" in
-        reset)       echo -en "\e[00m" ;;
-        bold)        echo -en "\e[01m" ;;
+        reset)       tput sgr0 ;;
+        bold)        tput bold ;;
         nobold)      echo -en "\e[22m" ;;
-        italic)      echo -en "\e[03m" ;;
-        noitalic)    echo -en "\e[23m" ;;
-        underline)   echo -en "\e[04m" ;;
-        nounderline) echo -en "\e[24m" ;;
-        blink)       echo -en "\e[05m" ;;
+        italic)      tput sitm ;;
+        noitalic)    tput ritm ;;
+        underline)   tput smul ;;
+        nounderline) tput rmul ;;
+        blink)       tput blink ;;
         noblink)     echo -en "\e[25m" ;;
-        reverse)     echo -en "\e[07m" ;;
+        reverse)     tput rev ;;
         noreverse)   echo -en "\e[27m" ;;
+        standout)    tput smso ;;
+        nostandout)  tput rmso ;;
+        dim)         tput dim ;;
+        nodim)       # Unkown sequence
+
         *) echo "";
     esac
 }
 
 function FG() {
-    echo -en "\e[3$1m"
+    tput setaf $1
 }
 
 function BG()
 {
-    echo -en "\e[4$1m"
+    tput setab $1
 }
 
 # }}}
