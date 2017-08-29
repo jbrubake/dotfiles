@@ -327,10 +327,17 @@ if test $HAS_COLOR && command -v dircolors >/dev/null; then
     unset colorfile
 fi
 
-# Miscellaneous
-# FIXME: Make this more robust
+# Set default web browser
 #
-BROWSER="firefox"
+if command -v chrome >/dev/null; then
+    BROWSER='chrome'
+elif command -v chromium >/dev/null; then
+    BROWSER='chromium'
+elif command -v firefox >/dev/null; then
+    BROWSER='firefox'
+elif command -v uzbl-browser >/dev/null; then
+    BROWSER='uzbl-browser'
+fi
 
 # }}}
 
