@@ -434,8 +434,14 @@ fi
 alias dut='du -h --max-depth=1'  # du(1) prints totals for one level down
 alias df='df -hT'                # Make df output nicer
 alias reset=$( FX reset )        # Reset system palette
-alias update_sigfortunes='strfile -r ~/.fortunes/sigfortunes' # XXX: This alias is kinda lame
 alias myip='dig +short myip.opendns.com @resolver1.opendns.com' # XXX: Get my real IP
+if command -v wget >/dev/null; then
+    alias myip='wget http://ipecho.net/plain -O - -q'
+elif command -v curl >/dev/null; then
+    alias myip='curl http://ipecho.net/plain'
+else
+    alias myip="wget or curl not available"
+fi
 
 # }}}
 
