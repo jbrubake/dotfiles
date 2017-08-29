@@ -308,19 +308,6 @@ case $(uname -o) in
         ;;
 esac
 
-# Set TERM correctly if 256 colors are available
-#
-case $TERM in
-    xterm) # All my xterms are 256 color capable
-        TERM="xterm-256color"
-        ;;
-    screen) # screen/tmux support 256 colors only under X
-        if [ -n "$DISPLAY" ]; then
-            TERM="screen-256color"
-        fi
-        ;;
-esac
-
 # Setup dircolors
 # Use system default configuration unless I have my own
 #
