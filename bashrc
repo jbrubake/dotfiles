@@ -531,26 +531,6 @@ PS1="$reset$NEW_PWD\n$bracket_color<$user_color\u$at_color@$hostname_color\h$bra
 # Otherwise, NEW_PWD will clobber the value of $? that we want
 PROMPT_COMMAND='RETVAL=$?;'
 
-# Set PROMPT_COMMAND based on terminal type
-#
-# FIXME: This doesn't quite work right. Screen titles suck mostly
-#        and I can't get the xterm part to work with screen
-#        Maybe I can just assume that I will always use screen with
-#        xterm and just include the screen part automatically?
-#case "$TERM" in
-    # If this is an xterm set the title to user@host
-    #xterm*|*rxvt*)
-        #PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}\007"'
-        #;;
-
-    # If this is screen, setup automatic titles
-    #screen*)
-        # This ***NEVER*** works
-        #PROMPT_COMMAND='echo -ne "\ek\e\\"'
-        #PS1="$PS1$screen_esc"
-        #;;
-#esac
-
 unset dir_color slash_color hostname_color at_color bracket_color
 unset history_color error_color prompt_color user_color root_user_color
 unset reset
