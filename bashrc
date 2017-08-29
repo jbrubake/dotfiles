@@ -13,6 +13,10 @@ for file in /etc/bashrc /etc/bash.bashrc ; do
           . "$file"
 done;
 
+# Determine if terminal supports color
+#
+[ $( tput colors ) -ge 0 ] && HAS_COLOR=yes
+
 # }}}
 
 # Functions {{{
@@ -35,39 +39,47 @@ done;
 # for zsh <github.com/sykora>. Changed to use
 # functions instead of hashes since it's quicker
 ###################################################
-# TODO: Find a way to alter functions and calls based on
-# TODO: if terminal supports 256 colors
 function FX()
 {
     case "$1" in
         reset)       tput sgr0 ;;
         bold)        tput bold ;;
-        nobold)      echo -en "\e[22m" ;;
+        nobold)      echo -en "\e[22m" ;; # no tput sequence
         italic)      tput sitm ;;
         noitalic)    tput ritm ;;
         underline)   tput smul ;;
         nounderline) tput rmul ;;
         blink)       tput blink ;;
-        noblink)     echo -en "\e[25m" ;;
+        noblink)     echo -en "\e[25m" ;; # no tput sequence
         reverse)     tput rev ;;
-        noreverse)   echo -en "\e[27m" ;;
+        noreverse)   echo -en "\e[27m" ;; # no tput sequence
         standout)    tput smso ;;
         nostandout)  tput rmso ;;
         dim)         tput dim ;;
-        nodim)       # Unkown sequence
+        nodim)       ;; # no tput sequence
 
         *) echo "";
     esac
 }
 
-function FG() {
-    tput setaf $1
-}
+if test $HAS_COLOR; then
+    function FG() {
+        tput setaf $1
+    }
 
-function BG()
-{
-    tput setab $1
-}
+    function BG()
+    {
+        tput setab $1
+    }
+else
+    function FG() {
+        :
+    }
+
+    function BG() {
+        :
+    }
+fi
 
 # }}}
 
@@ -148,12 +160,12 @@ function rtfm()
 ####
 function hb()
 {
-    sed "s/\($*\)/`tput setaf 2;tput setab 0;tput blink`\1`tput sgr0`/gI"
+    sed "s/\($*\)/$(FX blink)\1`tput sgr0`/gI"
 }
 
 function hc()
 {
-    sed "s/\($*\)/`tput setaf 0;tput setab 6`\1`tput sgr0`/gI"
+    sed "s/\($*\)/$(FX reverse)\1`tput sgr0`/gI"
 }
 
 ###
@@ -368,9 +380,11 @@ umask 077
 
 # Aliases {{{
 
+test $HAS_COLOR && color_flag='--color=auto'
+
 # My standard ls aliases
 #
-LS_OPTS='--color=auto --group-directories-first -XF --dereference-command-line-symlink-to-dir'
+LS_OPTS="$color_flag --group-directories-first -XF --dereference-command-line-symlink-to-dir"
 alias ls="command  ls $LS_OPTS"
 alias la="command  ls $LS_OPTS -A"
 alias ll="command  ls $LS_OPTS -lh"
@@ -380,9 +394,9 @@ unset LS_OPTS
 
 # Force color in *grep
 #
-alias grep="grep --color=auto"
-alias fgrep="fgrep --color=auto"
-alias egrep="egrep --color=auto"
+alias grep="grep $color_flag"
+alias fgrep="fgrep $color_flag"
+alias egrep="egrep $color_flag"
 
 # If my pager is not less, make me think it is
 #
@@ -433,7 +447,7 @@ fi
 if command -v pretty_make >/dev/null; then
     alias make=pretty_make
 fi
-if command -v colorgcc >/dev/null; then
+if command -v colorgcc >/dev/null && test $HAS_COLOR; then
     alias gcc=colorgcc
 fi
 
@@ -478,17 +492,34 @@ alias myip='dig +short myip.opendns.com @resolver1.opendns.com' # XXX: Get my re
 
 # Prompt color definitions
 #
-dir_color='\[$(FG 2)\]'
-slash_color='\[$(FG 1)\]'
-hostname_color='\[$(FG 5)\]'
-at_color='\[$(FG 4)\]'
-bracket_color='\[$(FG 4)\]'
-history_color='\[$(FG 2)\]'
-error_color='\[$(FG 7; BG 1)\]'
-prompt_color='\[$(FX bold; FG 3)\]'
+if test $HAS_COLOR; then
+    dir_color='\[$(FG 2)\]'
+    slash_color='\[$(FG 1)\]'
+    hostname_color='\[$(FG 5)\]'
+    at_color='\[$(FG 4)\]'
+    bracket_color='\[$(FG 4)\]'
+    history_color='\[$(FG 2)\]'
+    error_color='\[$(FG 7; BG 1)\]'
+    prompt_color='\[$(FX bold; FG 3)\]'
+    user_color='\[$(FG 6)\]'
+    root_user_color='\[$(FG 1)\]'
+else
+    dir_color=
+    slash_color=
+    hostname_color=
+    at_color=
+    bracket_color=
+    history_color=
+    error_color=
+    prompt_color=
+    user_color=
+    root_user_color=
+fi
+
 reset='\[$(FX reset)\]'
-# Colorize username differently if we are root or not
-[ $UID == '0' ] && user_color='\[$(FG 1)\]' || user_color='\[$(FG 6)\]'
+
+# Colorize username differently if we are root
+[ $UID == '0' ] && user_color=$root_user_color
 
 #
 # NEW_PWD and PS1_ERROR modified from Yu-Jie Lin's example <libb.wordpress.com>
