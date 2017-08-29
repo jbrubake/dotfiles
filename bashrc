@@ -142,7 +142,7 @@ function rtfm()
 {
     man "$@" || [[ -f "/usr/share/info/$@.info*" ]] && info "$@" ||
         echo "No info entry for $@" >/dev/stderr && "$@" --help ||
-        openurl $BROWSER "http://duckduckgo.com/?q=%21man+$@" ;
+        openurl "http://duckduckgo.com/?q=%21man+$@" ;
 }
 
 ####
