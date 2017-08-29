@@ -308,11 +308,6 @@ case $(uname -o) in
         ;;
 esac
 
-# XXX: Make CFLAGS/CXXFLAGS more portable based on actual architecture
-CFLAGS='-O3 -Wall -pedantic'
-# CFLAGS='-O3 -march=pentium4 -Wall -pedantic -ansi'
-CXXFLAGS="$CFLAGS"
-
 # Set TERM correctly if 256 colors are available
 #
 case $TERM in
