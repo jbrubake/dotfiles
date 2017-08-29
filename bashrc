@@ -12,6 +12,7 @@ for file in /etc/bashrc /etc/bash.bashrc ; do
     test -r "$file" && 
           . "$file"
 done;
+unset file
 
 # Determine if terminal supports color
 #
@@ -93,9 +94,10 @@ fi
 function ruler()
 {
     # TODO: Make this colorized
+    local s
     for s in "....^....|" '1234567890'; do
-        w=${#s}
-        str=$( for (( i=1; $i<=$(( ($COLUMNS + $w) / $w )) ; i=$i+1 )); do echo -en $s; done )
+        local w=${#s}
+        local str=$( for (( i=1; $i<=$(( ($COLUMNS + $w) / $w )) ; i=$i+1 )); do echo -en $s; done )
         str=$(echo -e $str | cut -c -$COLUMNS)
         echo -e $str
     done;
@@ -111,24 +113,20 @@ function ruler()
 ####
 function google ()
 {
-    unset url
-
     # Create search string if arguments were passed
     if [[ "$*" ]]; then
         # Google search strings replace spaces with '+'
         IFS='+'
-        SEARCH_STRING="$*"
+        local SEARCH_STRING="$*"
         unset IFS
 
-        url="search?hl=en&lr=&ie=UTF-8&oe=UTF-8&q="
+        local url="search?hl=en&lr=&ie=UTF-8&oe=UTF-8&q="
         url="$url$SEARCH_STRING&btnG=Google+Search"
     fi
 
     # Open URL in browser. If no arguments were passed
     # it merely opens google.com
     openurl "www.google.com/$url"
-
-    unset url
 }
 
 ####
@@ -250,7 +248,6 @@ MANPATH=$(puniq $MANPATH)
 # XXX: file that would work better. Also need
 # XXX: expand_aliases
 BASH_ENV=~/.bashrc
-export BASH_ENV
 
 # Always use my .inputrc
 if [[ -z $INPUTRC && -r "$HOME/.inputrc" ]]; then
@@ -269,7 +266,6 @@ fi
 : ${LANGUAGE:="en_US.UTF-8"}
 : ${LC_CTYPE:="en_US.UTF-8"}
 : ${LC_ALL:="en_US.UTF-8"}
-export LANG LANGUAGE LC_CTYPE LC_ALL
 
 # Filename completion ignores backups and vim swap files
 #
@@ -291,7 +287,6 @@ else
     EDITOR=vi
 fi
 VISUAL=$EDITOR
-export EDITOR VISUAL
 
 # PAGER/MANPAGER
 #
@@ -305,7 +300,6 @@ fi
 MANPAGER=$PAGER
 ACK_PAGER=$PAGER
 ACK_PAGER_COLOR=$PAGER
-export PAGER MANPAGER ACK_PAGER ACK_PAGER_COLOR
 
 # Development
 #
@@ -319,7 +313,6 @@ esac
 CFLAGS='-O3 -Wall -pedantic'
 # CFLAGS='-O3 -march=pentium4 -Wall -pedantic -ansi'
 CXXFLAGS="$CFLAGS"
-export CC CFLAGS CXXFLAGS LD
 
 # Set TERM correctly if 256 colors are available
 #
@@ -358,7 +351,6 @@ fi
 # FIXME: Make this more robust
 #
 BROWSER="uzbl"
-export BROWSER
 
 # }}}
 
@@ -568,9 +560,10 @@ PROMPT_COMMAND='RETVAL=$?;'
         #;;
 #esac
 
-unset screen_esc reset dir_color slash_color
-unset hostname_color at_color user_color
-unset bracket_color history_color prompt_color
+unset dir_color slash_color hostname_color at_color bracket_color
+unset history_color error_color prompt_color user_color root_user_color
+unset reset
+unset screen_esc 
 unset NEW_PWD PS1_ERROR
 
 # }}}
@@ -592,3 +585,8 @@ complete -F _todo t
 
 # }}}
 
+# Unset Variables {{{
+
+unset HAS_COLOR
+
+# }}}
