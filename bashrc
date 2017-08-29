@@ -428,12 +428,8 @@ if command -v uzbl >/dev/null; then
     alias uzblt="uzbl-tabbed &> /dev/null &"
 fi
 
-# Miscellaneous
+# Get my real IP
 #
-alias dut='du -h --max-depth=1'  # du(1) prints totals for one level down
-alias df='df -hT'                # Make df output nicer
-alias reset=$( FX reset )        # Reset system palette
-alias myip='dig +short myip.opendns.com @resolver1.opendns.com' # XXX: Get my real IP
 if command -v wget >/dev/null; then
     alias myip='wget http://ipecho.net/plain -O - -q'
 elif command -v curl >/dev/null; then
@@ -441,6 +437,12 @@ elif command -v curl >/dev/null; then
 else
     alias myip="wget or curl not available"
 fi
+
+# Miscellaneous
+#
+alias dut='du -h --max-depth=1'  # du(1) prints totals for one level down
+alias df='df -hT'                # Make df output nicer
+alias reset=$( FX reset )        # Reset system palette
 
 # }}}
 
