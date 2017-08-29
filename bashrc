@@ -8,15 +8,12 @@
 
 # Source additional files
 #
-for file in /etc/bashrc /etc/bash.bashrc ; do
-    test -r "$file" && 
-          . "$file"
-done;
-unset file
+test -r /etc/bashrc && . /etc/bashrc
+test -r /etc/bash.bashrc && . /etc/bash.bashrc
 
 # Determine if terminal supports color
 #
-[ $( tput colors ) -ge 0 ] && HAS_COLOR=yes
+test $( tput colors ) -ge 0 && HAS_COLOR=yes
 
 # }}}
 
@@ -27,18 +24,19 @@ unset file
 ###################################################
 # Functions to set colors and attributes
 #
-#  ${FX bold} sets bold attribute
-#  ${FG 1} sets foreground color to '31'
-#  ${BG 1} sets background color to '41'
-#  $(FX bold; FG 1) sets foreground color to '31'
-#      and bold in one command
+#  $(FX bold) sets bold attribute
+#  $(FG 1) sets foreground color to ANSI color 1
+#  $(BG 1) sets background color to ANSI color 1
+#  $(FX bold; FG 1) sets foreground color to ANSI
+#      color 1 and bold in one command
 #
 # These functions automatically interpret escape
 # sequences so you don't need to pass '-e' to echo
 #
 # Based on P. C. SHyamshankar's spectrum script
-# for zsh <github.com/sykora>. Changed to use
-# functions instead of hashes since it's quicker
+# for zsh <github.com/sykora>.
+# Changed to use functions instead of hashes for speed
+# Changed to use tput(1) as much as possible
 ###################################################
 function FX()
 {
@@ -57,9 +55,9 @@ function FX()
         standout)    tput smso ;;
         nostandout)  tput rmso ;;
         dim)         tput dim ;;
-        nodim)       ;; # no tput sequence
+        nodim)       ;;                   # no tput sequence
 
-        *) echo "";
+        *)           echo "";
     esac
 }
 
@@ -117,11 +115,11 @@ function google ()
     if [[ "$*" ]]; then
         # Google search strings replace spaces with '+'
         IFS='+'
-        local SEARCH_STRING="$*"
+        local search_string="$*"
         unset IFS
 
         local url="search?hl=en&lr=&ie=UTF-8&oe=UTF-8&q="
-        url="$url$SEARCH_STRING&btnG=Google+Search"
+        url="$url$search_string&btnG=Google+Search"
     fi
 
     # Open URL in browser. If no arguments were passed
@@ -144,7 +142,7 @@ function rtfm()
 {
     man "$@" || [[ -f "/usr/share/info/$@.info*" ]] && info "$@" ||
         echo "No info entry for $@" >/dev/stderr && "$@" --help ||
-        openurl BROWSER "http://duckduckgo.com/?q=%21man+$@" ;
+        openurl $BROWSER "http://duckduckgo.com/?q=%21man+$@" ;
 }
 
 ####
@@ -186,7 +184,7 @@ function lh()
 __git_ps1 ()
 {
     local b="$(git symbolic-ref HEAD 2>/dev/null)";
-    if [ -n "$b" ]; then
+    if test -n "$b" ; then
         printf " (%s)" "${b##refs/heads/}";
     fi
 }
@@ -280,11 +278,12 @@ HISTIGNORE="&:[bf]g:exit" # History ignores these matches
 
 # EDITOR/VISUAL
 #
-EDITOR=ed
 if command -v vim >/dev/null; then
     EDITOR=vim
-else
+elif command -v vi >/dev/null; then
     EDITOR=vi
+else
+    EDITOR=ed
 fi
 VISUAL=$EDITOR
 
@@ -327,30 +326,29 @@ case $TERM in
         ;;
 esac
 
-# Setup dircolors using my .dircolors file for 256 colors
-# if my terminal supports it
-case $TERM in
-    *256*) mycolors="$HOME/.dircolors.256" ;;
-    *)     mycolors="$HOME/.dircolors" ;;
-esac
-
-# Setup dircolors. Use system default configuration
-# unless I have my own
+# Setup dircolors
+# Use system default configuration unless I have my own
 #
-if command -v dircolors >/dev/null; then
-    test -r '/etc/DIR_COLORS' && mycolors='/etc/DIR_COLORS'
+if test $HAS_COLOR && command -v dircolors >/dev/null; then
     case $TERM in
-        *256*) mycolors="$HOME/.dircolors.256" ;;
-        *)     mycolors="$HOME/.dircolors" ;;
+        *256*) colorfile="$HOME/.dircolors.256" ;;
+        *)     colorfile="$HOME/.dircolors" ;;
     esac
-    eval $(dircolors -b $mycolors)
-    unset mycolors
+    
+    if [[ ! -r $colorfile && -r '/etc/DIR_COLORS' ]]; then
+        colorfile='/etc/DIR_COLORS'
+    fi
+
+    # test -r '/etc/DIR_COLORS' && colorfile='/etc/DIR_COLORS'
+    test $colorfile && eval $(dircolors -b $colorfile)
+
+    unset colorfile
 fi
 
 # Miscellaneous
 # FIXME: Make this more robust
 #
-BROWSER="uzbl"
+BROWSER="firefox"
 
 # }}}
 
@@ -389,6 +387,7 @@ unset LS_OPTS
 alias grep="grep $color_flag"
 alias fgrep="fgrep $color_flag"
 alias egrep="egrep $color_flag"
+unset color_flag
 
 # If my pager is not less, make me think it is
 #
@@ -404,9 +403,6 @@ command -v screen >/dev/null &&
 case $(uname -o) in
     # Cygwin only
     Cygwin*) 
-        # Create a shortcut to chrome
-        # XXX: Hardcoded path == bad
-        alias chrome='/cygdrive/c/Documents\ and\ Settings/jbrubake/Local\ Settings/Application\ Data/Google/Chrome/Application/chrome.exe &'
         # Use ssh to emulate su(1)
         # TODO: Work out how to emulate 'su command', etc.
         alias su='ssh Administrator@localhost'
@@ -421,27 +417,24 @@ esac
 command -v clear >/dev/null ||
     alias clear='echo -en "\e[2J\e[H"'
 
-# Display latest xkcd comic if I have
-# feh and curl available
+# Display latest xkcd comic if I have # feh and curl available
 #
 if command -v feh >/dev/null && command -v curl >/dev/null; then
-#    alias xkcd="feh `curl -s 'http://xkcd.com/' | sed -n 's/Image URL.*: \(.*\)/\1/p'`"
     alias xkcd="curl -s 'http://xkcd.com/' | sed -n 's/Image URL.*: \(.*\)/\1/p' | feh -"
 fi
 
 # Fancy fortunes if toilet(1) exists
 # XXX: Keep this in reserve for /etc/issue
-#command -v toilet >/dev/null &&
-#    alias colfortune="fortune | toilet --metal -f term"
+command -v toilet >/dev/null &&
+   alias colfortune="fortune | toilet --metal -f term"
 
 # Use pretty_make and colorgcc
 #
-if command -v pretty_make >/dev/null; then
+command -v pretty_make >/dev/null &&
     alias make=pretty_make
-fi
-if command -v colorgcc >/dev/null && test $HAS_COLOR; then
+
+command -v colorgcc >/dev/null && test $HAS_COLOR &&
     alias gcc=colorgcc
-fi
 
 # If todo.txt is installed, make it simpler
 # to access
@@ -449,14 +442,16 @@ command -v todo.sh >/dev/null &&
     alias t=todo.sh
 
 # Keep uzbl-browser from polluting the terminal
-alias uzbl="uzbl-browser $@ &> /dev/null &"
-alias uzblt="uzbl-tabbed &> /dev/null &"
+if command -v uzbl >/dev/null; then
+    alias uzbl="uzbl-browser $@ &> /dev/null &"
+    alias uzblt="uzbl-tabbed &> /dev/null &"
+fi
 
 # Miscellaneous
 #
 alias dut='du -h --max-depth=1'  # du(1) prints totals for one level down
 alias df='df -hT'                # Make df output nicer
-alias reset='echo -en "\e]R"'    # Reset system palette
+alias reset=$( FX reset )        # Reset system palette
 alias update_sigfortunes='strfile -r ~/.fortunes/sigfortunes' # XXX: This alias is kinda lame
 alias myip='dig +short myip.opendns.com @resolver1.opendns.com' # XXX: Get my real IP
 
@@ -485,16 +480,16 @@ alias myip='dig +short myip.opendns.com @resolver1.opendns.com' # XXX: Get my re
 # Prompt color definitions
 #
 if test $HAS_COLOR; then
-    dir_color='\[$(FG 2)\]'
-    slash_color='\[$(FG 1)\]'
-    hostname_color='\[$(FG 5)\]'
-    at_color='\[$(FG 4)\]'
-    bracket_color='\[$(FG 4)\]'
-    history_color='\[$(FG 2)\]'
-    error_color='\[$(FG 7; BG 1)\]'
-    prompt_color='\[$(FX bold; FG 3)\]'
-    user_color='\[$(FG 6)\]'
-    root_user_color='\[$(FG 1)\]'
+    dir_color=$(FG 2)
+    slash_color=$(FG 1)
+    hostname_color=$(FG 5)
+    at_color=$(FG 4)
+    bracket_color=$(FG 4)
+    history_color=$(FG 2)
+    error_color=$(FG 7; BG 1)
+    prompt_color=$(FX bold; FG 3)
+    user_color=$(FG 6)
+    root_user_color=$(FG 1)
 else
     dir_color=
     slash_color=
@@ -508,7 +503,7 @@ else
     root_user_color=
 fi
 
-reset='\[$(FX reset)\]'
+reset=$(FX reset)
 
 # Colorize username differently if we are root
 [ $UID == '0' ] && user_color=$root_user_color
@@ -519,7 +514,7 @@ reset='\[$(FX reset)\]'
 
 # Print pwd with ~ and highlighted /'s
 NEW_PWD='$(
-           pwd | sed 's/^/$dir_color/' | sed 's@$HOME@~@' | sed 's@/@$slash_color/$dir_color@g'
+           pwd | sed 's@^@$dir_color@' | sed 's@$HOME@~@' | sed 's@/@$slash_color/$dir_color@g'
           )'
 
 # Output $? if it is non-zero
