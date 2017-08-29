@@ -406,7 +406,6 @@ if command -v feh >/dev/null && command -v curl >/dev/null; then
 fi
 
 # Fancy fortunes if toilet(1) exists
-# XXX: Keep this in reserve for /etc/issue
 command -v toilet >/dev/null &&
    alias colfortune="fortune | toilet --metal -f term"
 
