@@ -22,8 +22,7 @@
 " ==============
 set nocompatible
 
-call pathogen#infect()
-call pathogen#helptags()
+helptags ALL
 
 " Basics {{{1
 " ======
