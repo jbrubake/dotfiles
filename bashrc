@@ -85,23 +85,6 @@ fi
 # Miscellaneous Functions {{{
 
 ####
-# ruler
-#
-# Print a ruler the width of the terminal
-####
-function ruler()
-{
-    # TODO: Make this colorized
-    local s
-    for s in "....^....|" '1234567890'; do
-        local w=${#s}
-        local str=$( for (( i=1; $i<=$(( ($COLUMNS + $w) / $w )) ; i=$i+1 )); do echo -en $s; done )
-        str=$(echo -e $str | cut -c -$COLUMNS)
-        echo -e $str
-    done;
-}
-
-####
 # google
 #
 # Google something
