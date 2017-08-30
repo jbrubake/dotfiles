@@ -44,24 +44,30 @@ function FX()
         reset)       tput sgr0 ;;
         bold)        tput bold ;;
         nobold)      echo -en "\e[22m" ;; # no tput sequence
+        dim)         tput dim ;;
+        nodim)       ;;                   # no tput sequence
         italic)      tput sitm ;;
         noitalic)    tput ritm ;;
         underline)   tput smul ;;
         nounderline) tput rmul ;;
         blink)       tput blink ;;
+        fastblink)   echo -en "\e[6m" ;;  # no tput sequence
         noblink)     echo -en "\e[25m" ;; # no tput sequence
         reverse)     tput rev ;;
         noreverse)   echo -en "\e[27m" ;; # no tput sequence
+        hidden)      echo -en "\e[8m" ;;  # no tput sequence
+        nohidden)    echo -en "\e[28m" ;; # no tput sequence
         standout)    tput smso ;;
         nostandout)  tput rmso ;;
-        dim)         tput dim ;;
-        nodim)       ;;                   # no tput sequence
+        strikeout)   echo -en "\e[9m" ;;  # no tput sequence
+        nostrikeout) echo -en "\e[29m" ;; # no tput sequence
 
         *)           echo "";
     esac
 }
 
 if test $HAS_COLOR; then
+    # TODO: Create 24bit color versions
     function FG() {
         tput setaf $1
     }
