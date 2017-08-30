@@ -146,22 +146,38 @@ function rtfm()
 }
 
 ####
-# hb/hc
-# Blinking and Reverse-Color Highlighted search for input/output
-# and files, like grep --color
+# hb/hr/hbl
+# Bold, Reverse-Video and Blinking highlighted search
 #
-# Run this:
+# Args:
+#  $1 - search string
+#  $2 - optional foreground color number
 #
-# ps | hc ".*$PPID.*" | hb ".*$$.*"
+# Examples:
+# who | hb "$USER" 1 
+# ps | hr ".*$PPID.*" | hbl ".*$$.*"
 ####
+# TODO: Make these more versatile
 function hb()
 {
-    sed "s/\($*\)/$(FX blink)\1`tput sgr0`/gI"
+    local fg
+    test $2 && fg=$( FG $2 )
+    sed "s/\($1\)/$(FX bold)$fg\1`tput sgr0`/gI"
+
 }
 
-function hc()
+function hr()
 {
-    sed "s/\($*\)/$(FX reverse)\1`tput sgr0`/gI"
+    local fg
+    test $2 && bg=$( FG $2 )
+    sed "s/\($1\)/$(FX reverse)$fg\1`tput sgr0`/gI"
+}
+
+function hbl()
+{
+    local fg
+    test $2 && fg=$( FG $2 )
+    sed "s/\($1\)/$(FX blink)$fg\1`tput sgr0`/gI"
 }
 
 ###
