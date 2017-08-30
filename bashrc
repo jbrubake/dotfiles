@@ -265,6 +265,10 @@ fi
 : ${LC_CTYPE:="en_US.UTF-8"}
 : ${LC_ALL:="en_US.UTF-8"}
 
+# Set TZ based on system timezone
+#
+TZ=$( cat /etc/timezone )
+
 # Filename completion ignores backups and vim swap files
 #
 FIGNORE="~:.swp"
