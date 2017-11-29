@@ -9,7 +9,7 @@
 # Source my environment
 #
 test -r $HOME/.shenv && . $HOME/.shenv
-export PATH=$PATH:/home/jbrubake/local/bin:/home/jbrubake/bin
+export PATH=/home/jbrubake/local/bin:/home/jbrubake/bin:$PATH
 #
 # What WM am I running?
 #
