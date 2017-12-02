@@ -6,26 +6,17 @@
 # Usage:
 #     install [OPTIONS]
 #
-<<<<<<< HEAD
 # TODO: Add an option to update only
-=======
->>>>>>> 47ef6998f7fb47b6187a9ba565aa9617cd73ea70
 # -n, --hostname         Override hostname
 # -f, --force            Overwrite existing files and links
 # -d, --destination=dest Install to dest instead of ~
 # -v, --verbose
 #
-<<<<<<< HEAD
 # TODO: Make these constants
-=======
->>>>>>> 47ef6998f7fb47b6187a9ba565aa9617cd73ea70
 # Exit codes:
 #  1 = invalid option
 #  2 = destdir not found
 #
-<<<<<<< HEAD
-=======
->>>>>>> 47ef6998f7fb47b6187a9ba565aa9617cd73ea70
 
 ## Reset just in case
 # No other security precautions. This is a trusting script
@@ -43,7 +34,6 @@ HOST=`hostname`
 IGNOREFILE=.ignore  # list of files that shouldn't be linked
 HOSTIGNORE=$IGNOREFILE.`hostname`    # host-specific ignore file
 
-<<<<<<< HEAD
 while getopts "n:fd:v" opt; do
     case $opt in
         n) HOST=$OPTARG; HOSTIGNORE="$IGNOREFILE.$h" ;;
@@ -51,16 +41,6 @@ while getopts "n:fd:v" opt; do
         d) DESTDIR=$OPTARG ;;
         v) VERBOSE='-v' ;;
         ?) exit 1 ;;
-=======
-while getopts "n:fd:i:v" opt; do
-    case $opt in
-        n) HOST=$OPTARG; HOSTIGNORE="$IGNOREFILE.$h" ;;
-	f) FORCE='-f' ;;
-	d) DESTDIR=$OPTARG ;;
-	i) INIFILE=$OPTARG ;;
-	v) VERBOSE='-v' ;;
-	?) exit 1 ;;
->>>>>>> 47ef6998f7fb47b6187a9ba565aa9617cd73ea70
     esac
 done
 
@@ -105,18 +85,10 @@ do
             echo "Backup __$f already exists. Skipping" >&2
             continue
         else
-<<<<<<< HEAD
             mv $VERBOSE $FORCE "$DESTDIR/.$f" "$DESTDIR/__$f"
-=======
-            echo mv $VERBOSE $FORCE "$DESTDIR/.$f" "$DESTDIR/__$f"
->>>>>>> 47ef6998f7fb47b6187a9ba565aa9617cd73ea70
         fi
     fi
 
     # make links
-<<<<<<< HEAD
     ln $VERBOSE -s $FORCE "$DOTPATH/$f" "$DESTDIR/.$f"
-=======
-    echo ln $VERBOSE -s $FORCE "$DOTPATH/$f" "$DESTDIR/.$f"
->>>>>>> 47ef6998f7fb47b6187a9ba565aa9617cd73ea70
 done
