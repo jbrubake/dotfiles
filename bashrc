@@ -337,20 +337,26 @@ case $(uname -o) in
 esac
 
 # Setup dircolors
-# Use system default configuration unless I have my own
 #
 if test $HAS_COLOR && command -v dircolors >/dev/null; then
-    case $TERM in
-        *256*) colorfile="$HOME/.dircolors.256" ;;
-        *)     colorfile="$HOME/.dircolors" ;;
-    esac
-    
-    if [[ ! -r $colorfile && -r '/etc/DIR_COLORS' ]]; then
+    # Use Solarized scheme if it exists
+    if test -r "$HOME/.dircolors.solarized"; then
+        colorfile="$HOME/.dircolors.solarized"
+    # Next try 256 color scheme if it exists and terminal supports it
+    elif test -r "$HOME/.dircolors.256" && [[ $TERM =~ 256 ]]; then
+        colorfile="$HOME/.dircolors.256"
+    # Next try non-256 color scheme
+    elif test -r "$HOME/.dircolors"; then
+        colorfile="$HOME/.dircolors" 
+    # Fallback to system default
+    elif test -r "/etc/DIR_COLORS"; then
         colorfile='/etc/DIR_COLORS'
+    # Leave $colorfile empty to fallback to dircolors defaults
+    else
+        colorfile=
     fi
 
-    # test -r '/etc/DIR_COLORS' && colorfile='/etc/DIR_COLORS'
-    test $colorfile && eval $(dircolors -b $colorfile)
+    eval $(dircolors $colorfile)
 
     unset colorfile
 fi
