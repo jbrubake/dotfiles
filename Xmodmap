@@ -22,7 +22,7 @@ add Control = Control_L
 ! Mod1 = Alt_L Multi_key Meta_L
 ! Mod2 = Num_Lock
 ! Mod3 = Super_R
-! Mod4 = Super_L 
+! Mod4 = Super_L
 ! Mod5 = 
 clear Mod1
 clear Mod2
