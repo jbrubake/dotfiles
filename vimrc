@@ -529,6 +529,12 @@ highlight SpecialKey ctermfg=brown
 highlight User1 ctermfg=red   ctermbg=blue
 highlight User2 ctermfg=green ctermbg=blue
 
+" Mode aware cursors
+highlight InsertCursor ctermfg=grey ctermbg=grey
+highlight VisualCursor ctermfg=grey ctermbg=grey
+highlight ReplaceCursor ctermfg=grey ctermbg=grey
+highlight CommandCursor ctermfg=grey ctermbg=grey
+
 " Powerline setup {{{1
 " ================================
 " python from powerline.vim import setup as powerline_setup
