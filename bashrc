@@ -243,6 +243,7 @@ prm () {
 # }}}
 
 # Setup PATH {{{
+# FIXME: This should be done in xsession/bash_profile
 
 # Put /usr/local/bin in PATH
 PATH="/usr/local/bin:$PATH"
@@ -257,6 +258,8 @@ MANPATH=$(puniq $MANPATH)
 # }}}
 
 # Environment {{{
+
+# TODO: Most of this should be set in .xsession/.bash_profile
 
 : ${HOME=~}
 : ${LOGNAME=$(id -un)}
@@ -485,6 +488,8 @@ alias reset=$( FX reset )        # Reset system palette
 # Additional prompts can be found in ~/.prompts
 # TODO: Probably want to eventually source that file
 #       and set a variable to select the prompt I want
+# TODO: Add bg jobs
+# TODO: Add git info
 
 # Screen auto-title escape
 #
