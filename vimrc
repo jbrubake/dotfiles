@@ -359,7 +359,6 @@ nnoremap <F8> :GundoToggle<cr>
 "=============
 
 " XXX: Don't forget Shift/C/M+Arrows
-" XXX: Don't forget C+hjkl
 
 " Help {{{
 " map: normal, visual, select, operator-pending
