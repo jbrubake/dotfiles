@@ -22,7 +22,7 @@
 " ==============
 set nocompatible
 
-helptags ALL
+" helptags ALL
 
 " Basics {{{1
 " ======
@@ -323,10 +323,10 @@ let g:snips_author = 'Jeremy Brubaker <jbru362@gmail.com>'
 
 " vim-workspace: Automated session management and file auto-save {{{
 " Make it look like Powerline
-let g:workspace_powerline_separators = 1
-let g:workspace_tab_icon = "\uf00a"
-let g:workspace_left_trunc_icon = "\uf0a8"
-let g:workspace_right_trunc_icon = "\uf0a9"
+" let g:workspace_powerline_separators = 1
+" let g:workspace_tab_icon = "\uf00a"
+" let g:workspace_left_trunc_icon = "\uf0a8"
+" let g:workspace_right_trunc_icon = "\uf0a9"
 
 noremap <C-n> :WSNext<CR>
 noremap <C-p> :WSPrev<CR>
