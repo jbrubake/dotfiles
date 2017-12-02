@@ -546,7 +546,7 @@ PS1_ERROR='$(
         [ $i -gt 0 ] && echo -n " ";
         echo -n "$RETVAL";
         [ $i -eq 2 ] && echo -n " ";
-        echo -n "]""'"$reset"'";
+        echo -n "]"'"$reset"'" ";
     fi
     )'
 
