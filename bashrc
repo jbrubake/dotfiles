@@ -519,7 +519,7 @@ if test $HAS_COLOR; then
     bracket_color='\[$(FG 4)\]'
     history_color='\[$(FG 2)\]'
     error_color='\[$(FG 7; BG 1)\]'
-    prompt_color='\[$(FX bold; FG 3)\]'
+    prompt_color='\[$(FG 3)\]'
     user_color='\[$(FG 6)\]'
     root_user_color='\[$(FG 1)\]'
 else
