@@ -68,10 +68,9 @@ DOTPATH=`pwd |sed -e "s#$DESTDIR/\?##"` # make relative links
 for f in *
 do
     # skip ignored files
-    test -e "$IGNOREFILE" &&
-        grep "$f$" "$IGNOREFILE" >/dev/null && continue
-    test -e "$HOSTIGNORE" &&
-        grep "$f$" "$HOSTIGNORE" >/dev/null && continue
+    for p in $(cat $IGNOREFILE $HOSTIGNORE 2>/dev/null); do
+        test $f = $p && continue
+    done
 
     # if file exists and -f not specified, make backups
     if test -e "$DESTDIR/.$f" || test -L "$DESTDIR/.$f" &&
