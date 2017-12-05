@@ -1,21 +1,22 @@
 #!/bin/sh
 #
-# XXX: Description
+# Create symlinks to all files in DESTDIR (defaults to $HOME).
+# excluding any files in .ignore and .ignore.<hostname>.
+# The ignore files support shell globbing. All link names have
+# a '.' prepended.
 #
 #
 # Usage:
-#     install [OPTIONS]
+#     install.sh [OPTIONS]
 #
-# TODO: Add an option to update only
 # -n, --hostname         Override hostname
 # -f, --force            Overwrite existing files and links
 # -d, --destination=dest Install to dest instead of ~
 # -v, --verbose
 #
-# TODO: Make these constants
 # Exit codes:
-#  1 = invalid option
-#  2 = destdir not found
+   ERR_INVALID_OPTION=1
+   ERR_DESTDIR_NOT_FOUND=2
 #
 
 ## Reset just in case
@@ -40,9 +41,15 @@ while getopts "n:fd:v" opt; do
         f) FORCE='-f' ;;
         d) DESTDIR=$OPTARG ;;
         v) VERBOSE='-v' ;;
-        ?) exit 1 ;;
+        ?) exit $ERR_INVALID_OPTION ;;
     esac
 done
+
+if ! test -d "$DESTDIR" && ! mkdir -p "$DESTDIR"
+then
+    echo "Could not create $DESTDIR" >&2
+    exit $ERR_DESTDIR_NOT_FOUND
+fi
 
 # FIXME: This only works if DOTDIR is under DESTDIR
 DOTPATH=`pwd |sed -e "s#$DESTDIR/\?##"` # make relative links
@@ -90,5 +97,6 @@ do
     fi
 
     # make links
+    # XXX: Is there an 'install' equivalent?
     ln $VERBOSE -s $FORCE "$DOTPATH/$f" "$DESTDIR/.$f"
 done
