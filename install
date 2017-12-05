@@ -7,7 +7,7 @@
 #
 #
 # Usage:
-#     install.sh [OPTIONS]
+#     install[OPTIONS]
 #
 # -n, --hostname         Override hostname
 # -f, --force            Overwrite existing files and links
