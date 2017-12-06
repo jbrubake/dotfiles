@@ -86,7 +86,7 @@ for f in *
 do
     # skip ignored files
     for p in $(cat $IGNOREFILE $HOSTIGNORE 2>/dev/null); do
-        test $f = $p && continue
+        test $f = $p && continue 2 # continue OUTER LOOP
     done
 
     # if file exists and -f not specified, make backups
