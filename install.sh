@@ -67,8 +67,26 @@ then
     exit $ERR_MAJOR
 fi
 
-# FIXME: This only works if DOTDIR is under DESTDIR
-DOTPATH=`pwd |sed -e "s#$DESTDIR/\?##"` # make relative links
+# FIXME: This is an ugly hack
+# strip trailing '/' from DESTDIR
+DESTDIR=$( echo $DESTDIR | sed -e 's@/$@@' )
+# make relative links into DOTPATH
+DOTPATH=$( pwd | sed -e "s#$DESTDIR/\?##" ) # make relative links
+
+# if we can't strip $DESTDIR from $DOTPATH, relative
+# links are harder
+if test $DOTPATH = $( pwd ); then
+    # how many levels up do we need to go?
+    count=$( echo "$DESTDIR" | sed -e 's@/$@@' | \
+        sed -e 's@[^/]*@ @g' | sed -e 's@\n@@g' | \
+        wc -w )
+    # prepend '../' for each level
+    for i in $( seq 1 $count ); do
+        DOTPATH="../$DOTPATH"
+    done
+    # remove the double '//'
+    DOTPATH=$( echo $DOTPATH | sed -e 's@//@/@' )
+fi
 
 # Action happens here, following these rules:
 #
