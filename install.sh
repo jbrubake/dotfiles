@@ -6,18 +6,34 @@
 # a '.' prepended.
 #
 #
-# Usage:
-#     install[OPTIONS]
-#
-# -n, --hostname         Override hostname
-# -f, --force            Overwrite existing files and links
-# -d, --destination=dest Install to dest instead of ~
-# -v, --verbose
-#
-# Exit codes:
-   ERR_INVALID_OPTION=1
-   ERR_DESTDIR_NOT_FOUND=2
-#
+# TODO: Call via 'make install'
+# TODO: Only install if dest is older
+show_help() {
+    cat <<EOF
+Usage: install.sh [OPTION]
+Install scripts and binaries to DESTDIR (default is ~/bin).
+
+    -n, --hostname         Override hostname
+    -f, --force            Overwrite existing files and links
+    -d, --destination=dest Install to dest instead of ~/bin
+    -v, --verbose
+    -h, --help
+
+Exit status:
+ 0  if OK,
+ 1  if minor problems (e.g., invalid option).
+ 2  if serious trouble (e.g., cannot create destination directory).
+EOF
+    exit
+}
+
+## Reset just in case
+# No other security precautions. This is a trusting script
+IFS='
+ 	'
+
+ERR_MINOR=1
+ERR_MAJOR=2
 
 ## Reset just in case
 # No other security precautions. This is a trusting script
@@ -33,22 +49,23 @@ VERBOSE=            # empty means not verbose
 DESTDIR="$HOME"     # where to install everything
 HOST=`hostname`
 IGNOREFILE=.ignore  # list of files that shouldn't be linked
-HOSTIGNORE=$IGNOREFILE.`hostname`    # host-specific ignore file
+HOSTIGNORE=$IGNOREFILE.$HOST    # host-specific ignore file
 
-while getopts "n:fd:v" opt; do
+while getopts "n:fd:vh" opt; do
     case $opt in
         n) HOST=$OPTARG; HOSTIGNORE="$IGNOREFILE.$h" ;;
         f) FORCE='-f' ;;
         d) DESTDIR=$OPTARG ;;
         v) VERBOSE='-v' ;;
-        ?) exit $ERR_INVALID_OPTION ;;
+        h) show_help ;;
+        ?) exit $ERR_MINOR ;;
     esac
 done
 
 if ! test -d "$DESTDIR" && ! mkdir -p "$DESTDIR"
 then
     echo "Could not create $DESTDIR" >&2
-    exit $ERR_DESTDIR_NOT_FOUND
+    exit $ERR_MAJOR
 fi
 
 # FIXME: This only works if DOTDIR is under DESTDIR
