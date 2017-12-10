@@ -190,13 +190,13 @@ ORPHAN  05;37;41
 MISSING 05;37;41
 
 # files with execute permission
-EXEC 01;31  # Unix
-.cmd 01;31  # Win
-.exe 01;31  # Win
-.com 01;31  # Win
-.bat 01;31  # Win
-.reg 01;31  # Win
-.app 01;31  # OSX
+EXEC 32  # Unix
+.cmd 32  # Win
+.exe 32  # Win
+.com 32  # Win
+.bat 32  # Win
+.reg 32  # Win
+.app 32  # OSX
 
 #############################################################################
 ### By extension
@@ -208,71 +208,71 @@ EXEC 01;31  # Unix
 ### Text formats
 
 # Text that we can edit with a regular editor
-.txt 32
-.org 32
-.md 32
-.mkd 32
+.txt 01;31
+.org 01;31
+.md 01;31
+.mkd 01;31
 
 # Source text
-.h 32
-.hpp 32
-.c 32
-.C 32
-.cc 32
-.cpp 32
-.cxx 32
-.objc 32
-.cl 32
-.sh 32
-.bash 32
-.csh 32
-.zsh 32
-.el 32
-.vim 32
-.java 32
-.pl 32
-.pm 32
-.py 32
-.rb 32
-.hs 32
-.php 32
-.htm 32
-.html 32
-.shtml 32
-.erb 32
-.haml 32
-.xml 32
-.rdf 32
-.css 32
-.sass 32
-.scss 32
-.less 32
-.js 32
-.coffee 32
-.man 32
-.0 32
-.1 32
-.2 32
-.3 32
-.4 32
-.5 32
-.6 32
-.7 32
-.8 32
-.9 32
-.l 32
-.n 32
-.p 32
-.pod 32
-.tex 32
-.go 32
-.sql 32
-.csv 32
-.sv 32
-.svh 32
-.v 32
-.vh 32
-.vhd 32
+.h 01;31
+.hpp 01;31
+.c 01;31
+.C 01;31
+.cc 01;31
+.cpp 01;31
+.cxx 01;31
+.objc 01;31
+.cl 01;31
+.sh 01;31
+.bash 01;31
+.csh 01;31
+.zsh 01;31
+.el 01;31
+.vim 01;31
+.java 01;31
+.pl 01;31
+.pm 01;31
+.py 01;31
+.rb 01;31
+.hs 01;31
+.php 01;31
+.htm 01;31
+.html 01;31
+.shtml 01;31
+.erb 01;31
+.haml 01;31
+.xml 01;31
+.rdf 01;31
+.css 01;31
+.sass 01;31
+.scss 01;31
+.less 01;31
+.js 01;31
+.coffee 01;31
+.man 01;31
+.0 01;31
+.1 01;31
+.2 01;31
+.3 01;31
+.4 01;31
+.5 01;31
+.6 01;31
+.7 01;31
+.8 01;31
+.9 01;31
+.l 01;31
+.n 01;31
+.p 01;31
+.pod 01;31
+.tex 01;31
+.go 01;31
+.sql 01;31
+.csv 01;31
+.sv 01;31
+.svh 01;31
+.v 01;31
+.vh 01;31
+.vhd 01;31
 
 ### Multimedia formats
 
