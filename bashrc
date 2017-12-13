@@ -362,6 +362,8 @@ if test $HAS_COLOR && command -v dircolors >/dev/null; then
 fi
 
 # Set default web browser
+# TODO: Set this based on whether X is running
+# TODO: Make this a generic priority list
 #
 if command -v chrome >/dev/null; then
     BROWSER='chrome'
@@ -577,6 +579,7 @@ unset NEW_PWD PS1_ERROR
 
 # Bash Completion {{{
 
+# System settings
 if ! shopt -oq posix; then
     if [ -f /usr/share/bash-completion/bash_completion ]; then
         . /usr/share/bash-completion/bash_completion
@@ -586,6 +589,11 @@ if ! shopt -oq posix; then
         . /etc/profile.d/bash-completion.sh
     fi
 fi
+
+# Personal settings
+for f in ~/share/bash_completion.d/*; do
+    . $f
+done
 
 # Allow todo.sh alias to use bash completion
 complete -F _todo t
