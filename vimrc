@@ -490,32 +490,36 @@ nmap <leader>f9 :set foldlevel=9<cr>
 
 " }}}
 
-" Autocommands {{{1
+" autocmds {{{1
 "=================
 
 " Remove everything if sourcing .vimrc again
 autocmd!
 
-au BufWritePost ~/.vimrc source ~/.vimrc
-au Filetype gitcommit set tw=68 spell
+" Source .vimrc when saving changes
+autocmd BufWritePost ~/.vimrc source ~/.vimrc
+" Set options for git commit files
+autocmd Filetype gitcommit set tw=68 spell
+" Enable C syntax higlighting in non-C files
+autocmd BufNewFile,BufRead  *xt :call TextEnableCodeSnip ('c', '@c', '@c', 'SpecialComment')
 
 " Makefiles {{{
-au Filetype make setlocal noexpandtab   " We need real tabs
-au Filetype make setlocal tabstop=8
-au Filetype make setlocal softtabstop=8
-au Filetype make setlocal shiftwidth=8
+autocmd Filetype make setlocal noexpandtab   " We need real tabs
+autocmd Filetype make setlocal tabstop=8
+autocmd Filetype make setlocal softtabstop=8
+autocmd Filetype make setlocal shiftwidth=8
 " }}}
 
 " snipMate {{{
-au Filetype snippet setlocal noexpandtab   " We need real tabs
-au Filetype snippet setlocal tabstop=8
-au Filetype snippet setlocal softtabstop=0
-au Filetype snippet setlocal tabstop=8
+autocmd Filetype snippet setlocal noexpandtab   " We need real tabs
+autocmd Filetype snippet setlocal tabstop=8
+autocmd Filetype snippet setlocal softtabstop=0
+autocmd Filetype snippet setlocal tabstop=8
 " }}}
 
 " C {{{
-au Filetype c setlocal foldmethod=syntax " Fold on comments and braces
-au Filetype c setlocal foldlevel=100     " Don't automatically fold
+autocmd Filetype c setlocal foldmethod=syntax " Fold on comments and braces
+autocmd Filetype c setlocal foldlevel=100     " Don't automatically fold
 " }}}
 
 " ================================
@@ -558,3 +562,32 @@ highlight CommandCursor ctermfg=grey ctermbg=grey
 if filereadable(expand("~/.vimrc.local"))
     source ~/.vimrc.local
 endif
+
+" Testing {{{1
+" ================================
+function! TextEnableCodeSnip(filetype,start,end,textSnipHl) abort
+    " http://vim.wikia.com/wiki/Different_syntax_highlighting_within_regions_of_a_file
+    "     by Ivan Tishchenko (2005)
+    let ft=toupper(a:filetype)
+    let group='textGroup'.ft
+    if exists('b:current_syntax')
+        let s:current_syntax=b:current_syntax
+        " Remove current syntax definition, as some syntax files (e.g. cpp.vim)
+        " do nothing if b:current_syntax is defined.
+        unlet b:current_syntax
+    endif
+    execute 'syntax include @'.group.' syntax/'.a:filetype.'.vim'
+    try
+        execute 'syntax include @'.group.' after/syntax/'.a:filetype.'.vim'
+    catch
+    endtry
+    if exists('s:current_syntax')
+        let b:current_syntax=s:current_syntax
+    else
+        unlet b:current_syntax
+    endif
+    execute 'syntax region textSnip'.ft.'
+    \ matchgroup='.a:textSnipHl.'
+    \ start="'.a:start.'" end="'.a:end.'"
+    \ contains=@'.group
+endfunction
