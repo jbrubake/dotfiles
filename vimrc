@@ -164,6 +164,19 @@ let g:rainbow_active = 1
 "
 "   :AddTabularPattern <name> <pattern> allows you to save patterns
 "
+"   Example:
+"
+"       osh/Sh6: V6 sh ports (http://v6shell.org)
+"       sent: Console "powerpoint" (http://tools.suckless.org/sent)
+"       pixie: Color picker (http://nattyware.com/pixie.php)
+"
+"       Align on *first* character only:
+"       :Tabularize /^[^:]*\zs:
+"
+"       osh/Sh6 : V6 sh ports (http://v6shell.org)
+"       sent    : Console "powerpoint" (http://tools.suckless.org/sent)
+"       pixie   : Color picker (http://nattyware.com/pixie.php)
+"
 " Custom mappings:
 " ---------------------------------
 " <Leader>t=  : = (with space)
