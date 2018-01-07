@@ -538,7 +538,7 @@ else
     root_user_color=
 fi
 
-reset=$(FX reset)
+reset='\[$(FX reset)\]'
 
 # Colorize username differently if we are root
 [ $UID == '0' ] && user_color=$root_user_color
@@ -551,7 +551,6 @@ reset=$(FX reset)
 NEW_PWD='$(
            pwd | sed 's@^@$dir_color@' | sed 's@$HOME@~@' | sed 's@/@$slash_color/$dir_color@g'
           )'
-
 # Output $? if it is non-zero
 #
 PS1_ERROR='$(
