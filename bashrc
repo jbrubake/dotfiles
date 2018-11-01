@@ -418,7 +418,7 @@ unset color_flag
 # If my pager is not less, make me think it is
 #
 test $PAGER != 'less' &&
-    alias less="$PAGER"
+    alias less="$PAGER" && alias zless="$PAGER"
 
 # Screen automatically reattaches if able
 command -v screen >/dev/null &&
