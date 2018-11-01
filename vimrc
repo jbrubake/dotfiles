@@ -20,47 +20,47 @@
 
 " Initialization {{{1
 " ==============
-set nocompatible
+" Remove all autocommands if sourcing .vimrc again
+autocmd!
 
-" helptags ALL
+set nocompatible " Don't be vi compatible
 
 " Basics {{{1
 " ======
-filetype plugin indent on           " Load filetype plugins and indent settings
+filetype plugin indent on            " Load filetype plugins and indent settings
 
-" XXX: Not sure this works
-set omnifunc=syntaxcomplete#Complete " Complete on syntax
+set omnifunc=syntaxcomplete#Complete " Complete on syntax (CTL-X CTL-O to complete)
 
-set encoding=utf8                   " Use Unicode
+set encoding=utf8                    " Use Unicode
 
-set noexrc                          " Do not source .exrc
-set autowrite                       " Write file when changing to a new file
-set wildmenu                        " Show Tab completion menu
-set wildmode=longest,list           " Tab complete longest part, then show menu
-set autochdir                       " Automatically chdir to file (needed for a.vim)
-set backspace=indent,eol,start      " What BS can delete
-set backupdir=~/.vim/backup         " Where to put backup files
-set directory=~/.vim/tmp            " Where to put swap files
-set mouse=a                         " Use mouse everywhere
-set mousehide                       " Hide mouse while typing
-set incsearch                       " Incremental search
-set nolist                          " Do not show listchars
+set noexrc                           " Do not source .exrc
+set autowrite                        " Write file when changing to a new file
+set wildmenu                         " Show Tab completion menu
+set wildmode=longest,list            " Tab complete longest part, then show menu
+set autochdir                        " Automatically chdir to file (needed for a.vim)
+set backspace=indent,eol,start       " What BS can delete
+set backupdir=~/.vim/backup          " Where to put backup files
+set directory=~/.vim/tmp             " Where to put swap files
+set mouse=a                          " Use mouse everywhere
+set mousehide                        " Hide mouse while typing
+set incsearch                        " Incremental search
+set nolist                           " Do not show listchars
 set listchars=
-set listchars+=extends:>,precedes:< " Show long line continuation chars
-set listchars+=tab:»\               " Show real tabs
-set listchars+=trail:.              " Show trailing spaces and higlight them
-set listchars+=eol:¬                " Show end of line
-set visualbell                      " Blink instead of beep
-set relativenumber                  " Show relative line number
-set number                          " Show line number of current line
-set numberwidth=4                   " Allows line numbers up to 999
-set report=0                        " Always report when a : command changes something
-set shortmess=aOstT                 " Keep messages short
-set scrolloff=10                    " Keep 10 lines at top/bottom
-set sidescrolloff=10                " Keep 10 lines at right/left
-set sidescroll=1                    " Horizontal scroll one column at a time
-set showtabline=0                   " Never show tabline
-set hidden                          " Allow hidden buffers
+set listchars+=extends:>,precedes:<  " Show long line continuation chars
+set listchars+=tab:»\                " Show real tabs
+set listchars+=trail:.               " Show trailing spaces and higlight them
+set listchars+=eol:¬                 " Show end of line
+set visualbell                       " Blink instead of beep
+set relativenumber                   " Show relative line number
+set number                           " Show line number of current line
+set numberwidth=4                    " Allows line numbers up to 999
+set report=0                         " Always report when a : command changes something
+set shortmess=aOstT                  " Keep messages short
+set scrolloff=10                     " Keep 10 lines at top/bottom
+set sidescrolloff=10                 " Keep 10 lines at right/left
+set sidescroll=1                     " Horizontal scroll one column at a time
+set showtabline=0                    " Never show tabline
+set hidden                           " Allow hidden buffers
 
 " Text Formatting/Layout {{{1
 "===========================
@@ -87,7 +87,7 @@ set statusline=                  " Clear status line
 set statusline+=%t               " Filename
 set statusline+=%m               " Modified flag
 set statusline+=%r               " Readonly flag
-set statusline+=%15.l(%L),%c     " Line and column numbers
+set statusline+=%15.l(%L),%c     " Line number (total lines), column number
 set statusline+=\ [%Y]           " Filetype
 set statusline+=\ [ASCII=%03.3b] " ASCII value of char under cursor
 
@@ -114,135 +114,185 @@ set foldtext=NeatFoldText()
 " Plugins {{{1
 "============
 " TODO: Only configure plugin if it exists
+" CCTree: Vim CCTree plugin {{{2
+" CTRL-\ > : Get forward call tree
+" CTRL-\ < : Get reverse call tree
+" CTRL-\ w : Toogle call tree window
+" CTRL-\ = : Increase depth
+" CTRL-\ - : Decrease depth
+" CTRL-p   : Preview symbol
 
-" conkyrc: Syntax files {{{
-"
-"   Used with *conkyrc and conky.conf
-" }}}
-"
-" IndentCommentPrefix: Indents comments sensibly {{{
-"
-"   >>  : Indent keeping comment prefix where it is
-"   <<  : Deindent keeping comment prefix where it is
-"   g>> : Indent, including comment prefix
-"
-"   Use single > or < in Visual mode
-"
+" Note: Folding commands work on call tree window
+
+" Automatically load database if it exists in
+" currenty directory when Vim is started
+autocmd VimEnter * if filereadable("cscope.out") 
+    \ | exec "CCTreeLoadDB cscope.out" 
+    \ | endif
+
+" conkyrc: Vim plugin for *conkyrc and conky.conf {{{2
+" No configuration needed
+
+" IndentCommentPrefix: Indents comments sensibly {{{2
+" >>  : Indent, keeping comment prefix where it is
+" <<  : Deindent, keeping comment prefix where it is
+" g>> : Indent, including comment prefix
+
+" Use single > or < in Visual mode
 
 " Comment chars in this list will *not* be left in column 1
 "let g:IndentCommentPrefix_Blacklist = ['#', '>']
 
 " Any string in this list *will* remain in column 1
 "let g:IndentCommentPrefix_Whitelist = ['REMARK:']
-" }}}
 
-" ingo-library: library functions required by IndentCommentPrefix {{{
-" No configuration here
-" }}}
+" ingo-library: library functions required by IndentCommentPrefix {{{2
+" No configuration needed
 
-" rainbow: Highlight "parentheses" with varying colors {{{
-let g:rainbow_active = 1 
-" }}}
+" nerdtree: A tree explorer plugin for vim {{{2
+" <F10> : Toggle file tree browser
+noremap <silent> <F10> :NERDTreeToggle<cr>
 
-" tabular: Smart alignment of tables {{{
+" Close Vim if last window open is NERDTree
+autocmd bufenter * if (winnr("$") == 1 &&
+    \ exists("b:NERDTree") && 
+    \ b:NERDTree.isTabTree()) | q | 
+    \ endif
+
+" nerdtree-git-plugin: A plugin of NERDTree showing git status {{{2
+" Note: currently only works if Vim is started in a git repository
 "
-"   :Tabularize /<delimiter>/<format>
+" Custom indicators
+"let g:NERDTreeIndicatorMapCustom = {
+    " \ "Modified"  : "✹",
+    " \ "Staged"    : "✚",
+    " \ "Untracked" : "✭",
+    " \ "Renamed"   : "➜",
+    " \ "Unmerged"  : "═",
+    " \ "Deleted"   : "✖",
+    " \ "Dirty"     : "✗",
+    " \ "Clean"     : "✔︎",
+    " \ 'Ignored'   : '☒',
+    " \ "Unknown"   : "?"
+    " \ }
+
+" rainbow: Highlight "parentheses" with varying colors {{{2
+let g:rainbow_active = 1 " Activate plugin
+
+"Customize configuration
+" let g:rainbow_conf = {
+"   \	'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
+" 	\	'ctermfgs': ['lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'],
+" 	\	'operators': '_,_',
+" 	\	'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
+" 	\	'separately': {
+" 	\		'*': {},
+" 	\		'tex': {
+" 	\			'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/'],
+" 	\		},
+" 	\		'lisp': {
+" 	\			'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
+" 	\		},
+" 	\		'vim': {
+" 	\			'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/', 'start=/{/ end=/}/ fold', 'start=/(/ end=/)/ containedin=vimFuncBody', 'start=/\[/ end=/\]/ containedin=vimFuncBody', 'start=/{/ end=/}/ fold containedin=vimFuncBody'],
+" 	\		},
+" 	\		'html': {
+" 	\			'parentheses': ['start=/\v\<((area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)[ >])@!\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'|[^ '."'".'"><=`]*))?)*\>/ end=#</\z1># fold'],
+" 	\		},
+" 	\		'css': 0,
+" 	\	}
+" 	\}
+
+" guifgs      : colors for gui interface, will be used in order.
+" ctermfgs    : colors for terms
+" operators   : describe the operators you want to highlight(read the vim help                                                                                                      : syn-pattern)
+" parentheses : describe what will be processed as parentheses, a pair of parentheses was described by two re pattern
+" separately  : configure for specific filetypes(decided by &ft), key `*` for filetypes without separate configuration, value `0` means disable rainbow only for this type of files
+
+" Keep a field empty to use the default setting.
+
+" tabular: Smart alignment of tables {{{2
 "
-"   <format> : (l)eft, (r)ight, (center)
-"       Each is followed by a number indicating padding
+" :Tabularize /<delimiter>/<format>
 "
-"   Example:
-"       x = 12;
-"       num = 13;
-"       var2 = 1;
+" <format> : (l)eft, (r)ight, (center)
+"     Each can be followed by a number indicating padding
 "
-"       :Tabularize /=/l0r1
+" Example:
+"     x = 12;
+"     num = 13;
+"     var2 = 1;
 "
-"       x   = 12;
-"       num = 13;
-"       var2= 1;
+"     :Tabularize /=/l0r1
 "
-"   :AddTabularPattern <name> <pattern> allows you to save patterns
+"     x   = 12;
+"     num = 13;
+"     var2= 1;
 "
-"   Example:
+" Example:
+"     osh/Sh6: V6 sh ports (http://v6shell.org)
+"     sent: Console "powerpoint" (http://tools.suckless.org/sent)
+"     pixie: Color picker (http://nattyware.com/pixie.php)
 "
-"       osh/Sh6: V6 sh ports (http://v6shell.org)
-"       sent: Console "powerpoint" (http://tools.suckless.org/sent)
-"       pixie: Color picker (http://nattyware.com/pixie.php)
+"     Align on *first* character only:
+"     :Tabularize /^[^:]*\zs:
 "
-"       Align on *first* character only:
-"       :Tabularize /^[^:]*\zs:
+"     osh/Sh6 : V6 sh ports (http://v6shell.org)
+"     sent    : Console "powerpoint" (http://tools.suckless.org/sent)
+"     pixie   : Color picker (http://nattyware.com/pixie.php)
 "
-"       osh/Sh6 : V6 sh ports (http://v6shell.org)
-"       sent    : Console "powerpoint" (http://tools.suckless.org/sent)
-"       pixie   : Color picker (http://nattyware.com/pixie.php)
+" :AddTabularPattern <name> <pattern> allows you to save patterns
 "
+
 " Custom mappings:
-" ---------------------------------
+" ----------------
 " <Leader>t=  : = (with space)
 " <Leader>t:  : : (with space)
 " <Leader>t:: : : (no space before)
 " <Leader>t,  : , (with space)
 " <Leader>t|  : | (with space)
 "
-
-nmap <Leader>t= :Tabularize /=<cr>
-vmap <Leader>t= :Tabularize /=<cr>
-nmap <Leader>t: :Tabularize /:<cr>
-vmap <Leader>t: :Tabularize /:<cr>
-nmap <Leader>t:: :Tabularize /:\zs<cr>
-vmap <Leader>t:: :Tabularize /:\zs<cr>
-nmap <Leader>t, :Tabularize /,<cr>
-vmap <Leader>t, :Tabularize /,<cr>
+nmap <Leader>t=     :Tabularize /=<cr>
+vmap <Leader>t=     :Tabularize /=<cr>
+nmap <Leader>t:     :Tabularize /:<cr>
+vmap <Leader>t:     :Tabularize /:<cr>
+nmap <Leader>t::    :Tabularize /:\zs<cr>
+vmap <Leader>t::    :Tabularize /:\zs<cr>
+nmap <Leader>t,     :Tabularize /,<cr>
+vmap <Leader>t,     :Tabularize /,<cr>
 nmap <Leader>t<Bar> :Tabularize /<Bar><cr>
 vmap <Leader>t<Bar> :Tabularize /<Bar><cr>
 
-" s:align() - automatically align '|' delimited tables {{{
-"
-" Typing '|' in insert mode, automatically
-" aligns the containing '|' delimited table
-" FIXME: Can't get it to work
-"
-"function! s:align()
-    "let p = '^\s*|\s.*\s|\s*$'
-    "if exists(':Tabularize') && getline('.') =~# '^\s*|' && (getline(line('.')-1) =~# p || getline(line('.')+1) =~# p)
-        "let column = strlen(substitute(getline('.')[0:col('.')],'[^|]','','g'))
-        "let position = strlen(matchstr(getline('.')[0:col('.')],'.*|\s*\zs.*'))
-        "Tabularize/|/l1
-        "normal! 0
-        "call search(repeat('[^|]*|',column).'\s\{-\}'.repeat('.',position),'ce',line('.'))
-    "endif
-"endfunction
-"inoremap <silent> <Bar>   <Bar><Esc>:call <SID>align()<cr>a
-" }}}
-" }}}
-
-" tagbar: Source code browser using ctags {{{
-"
-"   <F1> : display help
-"   <F9> : toggle TagBar
+" tagbar: Source code browser using ctags {{{2
+" ctags commands
+" --------------
+" CTRL-] : Jump to tag underneath cursor
+" CTRL-o : Jump back in the tag stack
+" :ts <tag> : Search for <tag>
+" :tn : Go to next definition of last tag
+" :tp : Go to previous definition of last tag
+" :ts : List all definitions of last tag
 "
 " Default settings
 " ----------------
-" let g:tagbar_left = 1
-" let g:tagbar_width = 40
+" let g:tagbar_left      = 1
+" let g:tagbar_width     = 40
 " let g:tagbar_autoclose = 0
-"
 
-" Toggle taglist window
+" <F9> : toggle TagBar
 noremap <silent> <F9> :TagbarToggle<cr>
-" }}}
 
-" tlib_vim: Utility functions required by snipMate {{{
-" No configuration here
-" }}}
+" tlib_vim: Utility functions required by snipMate {{{2
+" No configuration needed
 
-" vim-addon-mw-utils: Caching required by snipMate {{{
-" No configuration here
-" }}}
+" vem-tabline: Vim plugin to display tabs and buffers in the tabline {{{2
+let g:vem_tabline_show             = 2 " Always show the tabline
+let g:vem_tabline_multiwindow_mode = 0 " Show all buffers in a tab
 
-" vim-closetag: Easily close HTML/XML tags {{{
-"
+" vim-addon-mw-utils: Caching required by snipMate {{{2
+" No configuration needed
+
+" vim-closetag: Easily close HTML/XML tags {{{2
 "   Current content:
 "       <table|
 "   Press >:
@@ -251,129 +301,113 @@ noremap <silent> <F9> :TagbarToggle<cr>
 "       <table>
 "           |
 "       </table>
-"
 
 " Use closetag in these files
 let g:closetag_filenames = "*.html,*.xhtml,*.phtml"
-" }}}
 
-" vim-commentary: Commenting keymaps {{{
-"
-"   gc{motion} : Toggle commenting over {motion}
-"   gcc        : Toggle commenting of [count] lines
-"   {Visual}gc : Toggle commenting of highlighted lines
-"   gcu        : Uncomment current and adjacent lines
-"
+" vim-commentary: Commenting keymaps {{{2
+" gc{motion} : Toggle commenting over {motion}
+" gcc        : Toggle commenting of [count] lines
+" {Visual}gc : Toggle commenting of highlighted lines
+" gcu        : Uncomment current and adjacent lines
 
-" No configuration here
-" }}}
+" No configuration needed
 
-" vim-devicons: Patched fonts with more icons {{{
-" No configuration here
-" }}}
-
-" vim-markdown: Markdown syntax {{{
+" vim-markdown: Markdown syntax {{{2
+" Enable fenced code block syntax highlighting
 let g:markdown_fenced_languages = ['python', 'html', 'bash=sh', 'c']
-let g:markdown_fenced_languages = ['python', 'html', 'bash=sh', 'c']
-" }}}
 
-" vim-repeat: Allows '.' to repeat plugin keymaps {{{
-" No configuration here
-" }}}
+" vim-surround: Modify surrounding characters {{{2
+" ds<t>         : delete <t>
+" cs<t><r>      : change <t> to <r>
+" csw<t>        : surround current word with <t>
+" ysiw<t>       : surround current word with <t>
+" yss<t>        : surround current line with <t>
+" ys<motion><t> : surround <motion> with <t>
+" VS<t>         : surround selection with <t> on separate lines
 
-" vim-snipmate: Code snippets {{{
-" TODO: Configuration and manual
-let g:snips_author = 'Jeremy Brubaker <jbru362@gmail.com>'
-" }}}
+" Special characters for <t> and <r>
+"     ( { [ < : trim/insert spaces
+"     ) } ] > : DO NOT trim/insert spaces
+"     " ' `   : quote pairs (current line only)
+"     t       : HTML tag
+"     w, W    : word, WORD (<t> only)
+"     s       : sentence (<t> only)
+"     p       : paragraph (<t> only)
 
-" vim-space: Use <space> as smart move command {{{
-"
-"   Map <space> to repeat previous movement command and <BS> to
-"   previous backwards movement command
-"
-"   Example:
-"   /foo
-"   n
-"   N
-"
-"   becomes:
-"   /foo
-"   <space>
-"   <BS>
-"
+" Using 't' for <r>
+"     Vim will prompt for the tag to insert. Any attributes given
+"     will be stripped from the closing tag.
 
-" No configuration here
-" }}}
+" No configuration needed
 
-" vim-surround: Modify surrounding characters {{{
-"
-"   ds<t>    : delete
-"   cs<t><r> : change
-"   ys<motion><t> : surround <motion>
-"
-"   csw<r> : surround current word
-"   yss<r> : surround current line
-"   ysS<r> : put <t> on separate lines
-"
-"   Valid characters for <t> and <r>
-"       ( { [ < : trim/insert spaces
-"       ) } ] > : DO NOT trim/insert spaces
-"       " ' `   : quote pairs (current line only)
-"       t       : HTML tag
-"       w, W    : word, WORD (<t> only)
-"       s       : sentence (<t> only)
-"       p       : paragraph (<t> only)
-"
-"   Using 't' for <r>
-"       Vim will prompt for the tag to insert. Any attributes given
-"       will be stripped from the closing tag. Any attributes will be
-"       kept, unless you close the tag with >. If C-T is used, tags
-"       will appear on lines by themselves.
-"
+" vim-tmux: Vim plugin for .tmux.conf {{{2
+" No configuration needed
 
-" No configuration here
-" }}}
-
-" vim-workspace: Automated session management and file auto-save {{{
-" Make it look like Powerline
-" let g:workspace_powerline_separators = 1
-" let g:workspace_tab_icon = "\uf00a"
-" let g:workspace_left_trunc_icon = "\uf0a8"
-" let g:workspace_right_trunc_icon = "\uf0a9"
-
-noremap <C-n> :WSNext<CR>
-noremap <C-p> :WSPrev<CR>
-noremap <C-tab> :WSNext<CR>
-noremap <Leader>q :WSClose<CR>
-noremap <Leader>Q :WSClose!<CR>
-noremap <C-t> :WSTabNew<CR>
-
-" use 'bonly' as an abbreviation for WSBufOnly
-cabbrev bonly WSBufOnly
-"}}}
-
-" a.vim: Swap header and source files {{{
+" a.vim: Swap header and source files {{{2
+" :A : Switch between header and source files
+" :AS: Split and switch
+" :AV: Vertical split and switch
 "
-"   :A : Switch between header and source files
-"   :AS: Split and switch
-"   :AV: Vertical split and switch
-"
-"   Use 'set autochdir' to make it work
-"
+" Use 'set autochdir' to make it work
 
-" No configuration here
-" }}}
+" No configuration needed
 
-" gundo.vim: View Vim undo tree {{{
-nnoremap <F8> :GundoToggle<cr>
-" }}}
+" cscope_maps.vim: CSCOPE settings for vim {{{2
+" CTRL-\                   : Show search in current window
+" CTRL-<space>             : Show search in horizontal split
+" CTRL-<space> Ctl+<space> : Show search in vertical split
+" CTRL-o                   : jump back to previous locations
+
+" s : symbol - all references to token under cursor
+" g : global - global definition
+" c : calls - all calls to function
+" t : text - all instances
+" e : egrep - egrep search
+" f : file - open file
+" i : includes - files that include filename
+" d : called - functions called by this function
+
+" No configuration needed
+
+" todo-txt.vim: Vim plugin for Todo.txt {{{2
+" <LocalLeader>s   : Sort by priority
+" <LocalLeader>s+  : Sort on +Projects
+" <LocalLeader>s@  : Sort on @Contexts
+" <LocalLeader>sd  : Sort on due dates
+" <LocalLeader>sc  : Sort by context, then priority
+" <LocalLeader>scp : Sort by context, project, then priority
+" <LocalLeader>sp  : Sort by project, then priority
+" <LocalLeader>spc : Sort by project, context, then priority
+" <LocalLeader>-sd : Sort by due date. Entries with due date are at the beginning
+
+" <LocalLeader>j : Lower priority
+" <LocalLeader>k : Increase priority
+" <LocalLeader>a : Add priority (A)
+" <LocalLeader>b : Add priority (B)
+" <LocalLeader>c : Add priority (C)
+
+" <LocalLeader>d : Insert current date
+" date<tab> : (Insert mode) insert current date
+" due:      : (Insert mode) insert due: <date>
+" DUE:      : (Insert mode) insert DUE: <date>
+
+" <LocalLeader>x : Toggle done
+" <LocalLeader>C : Toggle cancelled
+" <LocalLeader>X : Mark all completed
+" <LocalLeader>D : Move completed tasks to done file
+
+"Use todo#complete as the omni complete function for todo files
+autocmd filetype todo setlocal omnifunc=todo#complete
+
+" Automatically complete + and @
+autocmd filetype todo imap <buffer> + +<C-X><C-O>
+autocmd filetype todo imap <buffer> @ @<C-X><C-O>
 
 " Mappings {{{1
 "=============
-
 " XXX: Don't forget Shift/C/M+Arrows
-
-" Help {{{
+" Help {{{2
 " map: normal, visual, select, operator-pending
 " nmap: normal
 " vmap: visual and select
@@ -388,18 +422,16 @@ nnoremap <F8> :GundoToggle<cr>
 " noremap: non-recursive mapping
 "
 " <silent> : don't echo mapping on command line
-" <expr> : mapping inserts result of {rhs} }}}
+" <expr> : mapping inserts result of {rhs}
 
-" Window Management {{{
+" Window Management {{{2
 " ======================
-
 " Switch windows with Ctl-[hjkl] {{{
 nnoremap <C-J> <C-W>j
 nnoremap <C-K> <C-W>k
 nnoremap <C-H> <C-W>h
 nnoremap <C-L> <C-W>l
 " }}}
-
 " Resize windows with M-hjkl {{{
 "   M-h : decrease vertical
 "   M-j : decrease horizontal
@@ -417,18 +449,13 @@ else
     nnoremap <M-l> <C-w>>
 endif
 " }}}
-
 " Maximize/Minimize split {{{
 " TODO: Make ^wm toggle this state
 " FIXME: Maximizing doesn't work for all splits
 noremap <C-W>M :resize<cr> :vertical resize <cr>
 nnoremap <C-W>m <C-W>=
 " }}}
-
-" }}}
-
-" Miscellaneous {{{
-
+" Miscellaneous {{{2
 " Toggle colorcolumn with <leader>c {{{
 "
 " Kevin Kuchta (www.vimbits.com/bits/317)
@@ -488,48 +515,38 @@ nmap <leader>f8 :set foldlevel=8<cr>
 nmap <leader>f9 :set foldlevel=9<cr>
 " }}}
 
-" }}}
-
 " autocmds {{{1
 "=================
-
-" Remove everything if sourcing .vimrc again
-autocmd!
-
 " Source .vimrc when saving changes
 autocmd BufWritePost ~/.vimrc source ~/.vimrc
 " Set options for git commit files
 autocmd Filetype gitcommit set tw=68 spell
 " Enable C syntax higlighting in non-C files
 autocmd BufNewFile,BufRead  *xt :call TextEnableCodeSnip ('c', '@c', '@c', 'SpecialComment')
-
 " Makefiles {{{
 autocmd Filetype make setlocal noexpandtab   " We need real tabs
 autocmd Filetype make setlocal tabstop=8
 autocmd Filetype make setlocal softtabstop=8
 autocmd Filetype make setlocal shiftwidth=8
 " }}}
-
 " snipMate {{{
 autocmd Filetype snippet setlocal noexpandtab   " We need real tabs
 autocmd Filetype snippet setlocal tabstop=8
 autocmd Filetype snippet setlocal softtabstop=0
 autocmd Filetype snippet setlocal tabstop=8
 " }}}
-
 " C {{{
 autocmd Filetype c setlocal foldmethod=syntax " Fold on comments and braces
 autocmd Filetype c setlocal foldlevel=100     " Don't automatically fold
 " }}}
 
-" ================================
-
 " Colors and Syntax Settings {{{1
 " ==========================
-" XXX: Rainbow stopped working unless this was at the end
+" Note: Rainbow doesn't working unless this is at the end
 set background=dark
 colorscheme desert256
 syntax enable
+
 set hlsearch " Highlight search matches
 
 " In-active window status line
@@ -551,43 +568,57 @@ highlight VisualCursor ctermfg=grey ctermbg=grey
 highlight ReplaceCursor ctermfg=grey ctermbg=grey
 highlight CommandCursor ctermfg=grey ctermbg=grey
 
-" Powerline setup {{{1
-" ================================
-" python from powerline.vim import setup as powerline_setup
-" python powerline_setup()
-" python del powerline_setup
+" vem-tabline {{{
+" Needs to be in the color section
+
+" Selected buffer
+highlight VemTablineSelected    ctermfg=white ctermbg=red
+" Non-selected buffers
+highlight VemTablineNormal      ctermfg=white ctermbg=darkblue
+" Non-selected buffers displayed in windows
+highlight VemTablineShown       ctermfg=white ctermbg=darkblue
+" Directory name (when present)
+" highlight VemTablineLocation    ctermfg=white ctermbg=darkblue
+" +X more text
+" highlight VemTablineSeparator   ctermfg=white ctermbg=darkblue
+" Selected tab
+" highlight VemTablineTabSelected ctermfg=white ctermbg=darkblue
+" Non-selected tab
+" highlight VemTablineTabNormal   ctermfg=white ctermbg=darkblue
+" }}}
 
 " Local Vimrc {{{1
-" ================================
+" ===========
 if filereadable(expand("~/.vimrc.local"))
     source ~/.vimrc.local
 endif
 
 " Testing {{{1
 " ================================
-function! TextEnableCodeSnip(filetype,start,end,textSnipHl) abort
-    " http://vim.wikia.com/wiki/Different_syntax_highlighting_within_regions_of_a_file
-    "     by Ivan Tishchenko (2005)
-    let ft=toupper(a:filetype)
-    let group='textGroup'.ft
-    if exists('b:current_syntax')
-        let s:current_syntax=b:current_syntax
-        " Remove current syntax definition, as some syntax files (e.g. cpp.vim)
-        " do nothing if b:current_syntax is defined.
-        unlet b:current_syntax
-    endif
-    execute 'syntax include @'.group.' syntax/'.a:filetype.'.vim'
-    try
-        execute 'syntax include @'.group.' after/syntax/'.a:filetype.'.vim'
-    catch
-    endtry
-    if exists('s:current_syntax')
-        let b:current_syntax=s:current_syntax
-    else
-        unlet b:current_syntax
-    endif
-    execute 'syntax region textSnip'.ft.'
-    \ matchgroup='.a:textSnipHl.'
-    \ start="'.a:start.'" end="'.a:end.'"
-    \ contains=@'.group
-endfunction
+" function! TextEnableCodeSnip(filetype,start,end,textSnipHl) abort
+"     " http://vim.wikia.com/wiki/Different_syntax_highlighting_within_regions_of_a_file
+"     "     by Ivan Tishchenko (2005)
+"     let ft=toupper(a:filetype)
+"     let group='textGroup'.ft
+"     if exists('b:current_syntax')
+"         let s:current_syntax=b:current_syntax
+"         " Remove current syntax definition, as some syntax files (e.g. cpp.vim)
+"         " do nothing if b:current_syntax is defined.
+"         unlet b:current_syntax
+"     endif
+"     execute 'syntax include @'.group.' syntax/'.a:filetype.'.vim'
+"     try
+"         execute 'syntax include @'.group.' after/syntax/'.a:filetype.'.vim'
+"     catch
+"     endtry
+"     if exists('s:current_syntax')
+"         let b:current_syntax=s:current_syntax
+"     else
+"         unlet b:current_syntax
+"     endif
+"     execute 'syntax region textSnip'.ft.'
+"     \ matchgroup='.a:textSnipHl.'
+"     \ start="'.a:start.'" end="'.a:end.'"
+"     \ contains=@'.group
+" endfunction
+
