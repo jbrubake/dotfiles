@@ -60,8 +60,11 @@ logerror () {
 CT_FindRelativePath() {
 # Returns relative path to $2 from $1
 #
-# https://stackoverflow.com/a/30778999
-# Ray Donnelly (https://stackoverflow.com/users/3257826/ray-donnelly)
+# This function was taken from a Stack Overflow answer
+#
+# Question: https://stackoverflow.com/q/2564634
+# Answer: https://stackoverflow.com/a/30778999
+# Answer by: Ray Donnelly (https://stackoverflow.com/users/3257826/ray-donnelly)
 
 # CHANGE:
 # If $1 or $2 exist they can be specified as relative
