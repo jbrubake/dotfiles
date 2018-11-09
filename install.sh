@@ -226,6 +226,6 @@ for f in *; do
     fi
 
     # make links
-    echo ln -s $verbose $force "$DOTPATH/$f" "$DESTDIR/.$f" 
+    ln -s $verbose $force "$DOTPATH/$f" "$DESTDIR/.$f" 
 done
 
