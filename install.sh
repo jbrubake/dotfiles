@@ -36,9 +36,6 @@
 #
 # BUGS:
 #     - None so far
-#
-# TODO:
-#     - Only install if dest is older
 #}
 print_help() {
     cat <<EOF
@@ -52,10 +49,25 @@ Install symlinks into DEST (default is ~/bin).
 EOF
 }
 #}
+logmsg () {
+    # Output messages
+    #
+    # Depends on $VERBOSE
+
+    test $VERBOSE = 'yes' && echo "$1"
+}
 logerror () {
     # Output error messages
 
     echo "$1" >&2
+}
+get_link_path () {
+    # Return the absolute path of the target of a symbolic link
+
+    local realfile=$( ls -l $1 | awk '{print $11}' )
+    local startdir=$( dirname $1 )
+
+    echo $( cd $startdir/$( dirname $realfile); pwd )/$( basename $realfile )
 }
 CT_FindRelativePath() {
 # Returns relative path to $2 from $1
@@ -145,7 +157,7 @@ CT_FindRelativePath() {
 # Flag Variables
 #
 FORCE='no'
-VERBOSE=
+VERBOSE='no'
 DESTDIR="$HOME"
 HOST=$( hostname )
 IGNOREFILE=.ignore  # list of files that shouldn't be linked
@@ -156,20 +168,32 @@ while getopts "n:fd:Vh" opt; do
         n) HOST=$OPTARG; HOSTIGNORE="$IGNOREFILE.$h" ;;
         f) FORCE='yes' ;;
         d) DESTDIR=$OPTARG ;;
-        V) VERBOSE='-v' ;;
+        V) VERBOSE='yes' ;;
         h) print_help; exit ;;
         *) print_help; exit ;;
     esac
 done
-# }
+
+# Convert flag variables to ln(1) options
+if test $VERBOSE = 'yes'; then
+    verbose='-v' # ln(1) verbose flag
+else
+    verbose=
+fi
+
+if test $FORCE = 'yes'; then
+    force='-f'
+else
+    force='-b' # ln(1) backup
+fi
 
 if ! test -d "$DESTDIR" && ! mkdir -p "$DESTDIR"; then
     logerror "FATAL: Could not create $DESTDIR. Exiting!"
     exit
 fi
-
+# }
 # Get relative path to dotfiles from DESTDIR
-DOTPATH=$( CT_FindRelativePath $DESTDIR `pwd`)
+DOTPATH=$( CT_FindRelativePath $DESTDIR $( pwd ) )
 
 # Action happens here, following these rules:
 #
@@ -186,18 +210,22 @@ for f in *; do
         test $f = $p && continue 2 # continue OUTER LOOP
     done
 
-    if test $FORCE = 'yes'; then
-        force='-f' # ln(1) force
-    else
-        force='-b' # ln(1) backup
-        if test -e "$DESTDIR/.$f~"; then
-            # skip if -f not specified and backup exists
-            logerror "Backup .$f~ already exists. Skipping"
+    # Test if an already existing link points
+    # to the right file already
+    if test -L "$DESTDIR/.$f"; then
+        if test $( get_link_path "$DESTDIR/.$f" ) = $( pwd )/$f; then
+            logmsg "$f is already linked. SKipping"
             continue
         fi
     fi
 
+    if test $FORCE = 'no' && test -e "$DESTDIR/.$f~"; then
+        # skip if -f not specified and backup exists
+        logmsg "Backup .$f~ already exists. Skipping"
+        continue
+    fi
+
     # make links
-    echo ln -s $VERBOSE $force "$DOTPATH/$f" "$DESTDIR/.$f" 
+    echo ln -s $verbose $force "$DOTPATH/$f" "$DESTDIR/.$f" 
 done
 
