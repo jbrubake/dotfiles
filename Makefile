@@ -1,2 +1,2 @@
 install:
-	./install.sh -v
+	./install.sh -V
