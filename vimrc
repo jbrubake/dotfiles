@@ -179,38 +179,7 @@ autocmd bufenter * if (winnr("$") == 1 &&
 " rainbow: Highlight "parentheses" with varying colors {{{2
 let g:rainbow_active = 1 " Activate plugin
 
-"Customize configuration
-" let g:rainbow_conf = {
-"   \	'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
-" 	\	'ctermfgs': ['lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'],
-" 	\	'operators': '_,_',
-" 	\	'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
-" 	\	'separately': {
-" 	\		'*': {},
-" 	\		'tex': {
-" 	\			'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/'],
-" 	\		},
-" 	\		'lisp': {
-" 	\			'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
-" 	\		},
-" 	\		'vim': {
-" 	\			'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/', 'start=/{/ end=/}/ fold', 'start=/(/ end=/)/ containedin=vimFuncBody', 'start=/\[/ end=/\]/ containedin=vimFuncBody', 'start=/{/ end=/}/ fold containedin=vimFuncBody'],
-" 	\		},
-" 	\		'html': {
-" 	\			'parentheses': ['start=/\v\<((area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)[ >])@!\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'|[^ '."'".'"><=`]*))?)*\>/ end=#</\z1># fold'],
-" 	\		},
-" 	\		'css': 0,
-" 	\	}
-" 	\}
-
-" guifgs      : colors for gui interface, will be used in order.
-" ctermfgs    : colors for terms
-" operators   : describe the operators you want to highlight(read the vim help                                                                                                      : syn-pattern)
-" parentheses : describe what will be processed as parentheses, a pair of parentheses was described by two re pattern
-" separately  : configure for specific filetypes(decided by &ft), key `*` for filetypes without separate configuration, value `0` means disable rainbow only for this type of files
-
-" Keep a field empty to use the default setting.
-
+" NOTE: See 'Colors and Syntax Settings' for more
 " tabular: Smart alignment of tables {{{2
 "
 " :Tabularize /<delimiter>/<format>
@@ -289,6 +258,7 @@ noremap <silent> <F9> :TagbarToggle<cr>
 let g:vem_tabline_show             = 2 " Always show the tabline
 let g:vem_tabline_multiwindow_mode = 0 " Show all buffers in a tab
 
+" NOTE: See 'Colors and Syntax Settings' for more
 " vim-addon-mw-utils: Caching required by snipMate {{{2
 " No configuration needed
 
@@ -426,13 +396,13 @@ autocmd filetype todo imap <buffer> @ @<C-X><C-O>
 
 " Window Management {{{2
 " ======================
-" Switch windows with Ctl-[hjkl] {{{
+" Switch windows with CTRL-[hjkl] {{{
 nnoremap <C-J> <C-W>j
 nnoremap <C-K> <C-W>k
 nnoremap <C-H> <C-W>h
 nnoremap <C-L> <C-W>l
 " }}}
-" Resize windows with M-hjkl {{{
+" Resize windows with M-[hjkl] {{{
 "   M-h : decrease vertical
 "   M-j : decrease horizontal
 "   M-k : increase horizontal
@@ -449,11 +419,21 @@ else
     nnoremap <M-l> <C-w>>
 endif
 " }}}
-" Maximize/Minimize split {{{
-" TODO: Make ^wm toggle this state
-" FIXME: Maximizing doesn't work for all splits
-noremap <C-W>M :resize<cr> :vertical resize <cr>
-nnoremap <C-W>m <C-W>=
+" Maximize/Minimize window with CTRL-W m  {{{
+"
+" pmalek (github.com/pmalek/toggle-maximize.vim)
+let t:maximizeCurrentWindow = 0
+function! ToggleMaximizeCurrentWindow()
+    if t:maximizeCurrentWindow == 0
+        :vertical resize
+        :resize
+        let t:maximizeCurrentWindow = 1
+    else
+        :exe "normal \<C-W>="
+        let t:maximizeCurrentWindow = 0
+    endif
+endfunction
+map <silent> <C-W>m :call ToggleMaximizeCurrentWindow() <cr>
 " }}}
 " Miscellaneous {{{2
 " Toggle colorcolumn with <leader>c {{{
@@ -521,19 +501,11 @@ nmap <leader>f9 :set foldlevel=9<cr>
 autocmd BufWritePost ~/.vimrc source ~/.vimrc
 " Set options for git commit files
 autocmd Filetype gitcommit set tw=68 spell
-" Enable C syntax higlighting in non-C files
-autocmd BufNewFile,BufRead  *xt :call TextEnableCodeSnip ('c', '@c', '@c', 'SpecialComment')
 " Makefiles {{{
 autocmd Filetype make setlocal noexpandtab   " We need real tabs
 autocmd Filetype make setlocal tabstop=8
 autocmd Filetype make setlocal softtabstop=8
 autocmd Filetype make setlocal shiftwidth=8
-" }}}
-" snipMate {{{
-autocmd Filetype snippet setlocal noexpandtab   " We need real tabs
-autocmd Filetype snippet setlocal tabstop=8
-autocmd Filetype snippet setlocal softtabstop=0
-autocmd Filetype snippet setlocal tabstop=8
 " }}}
 " C {{{
 autocmd Filetype c setlocal foldmethod=syntax " Fold on comments and braces
@@ -542,7 +514,7 @@ autocmd Filetype c setlocal foldlevel=100     " Don't automatically fold
 
 " Colors and Syntax Settings {{{1
 " ==========================
-" Note: Rainbow doesn't working unless this is at the end
+" NOTE: Rainbow doesn't work unless this is at the end
 set background=dark
 colorscheme desert256
 syntax enable
@@ -586,39 +558,73 @@ highlight VemTablineShown       ctermfg=white ctermbg=darkblue
 " Non-selected tab
 " highlight VemTablineTabNormal   ctermfg=white ctermbg=darkblue
 " }}}
+" rainbow {{{
+" let g:rainbow_conf = {
+"   \	'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
+" 	\	'ctermfgs': ['lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'],
+" 	\	'operators': '_,_',
+" 	\	'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
+" 	\	'separately': {
+" 	\		'*': {},
+" 	\		'tex': {
+" 	\			'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/'],
+" 	\		},
+" 	\		'lisp': {
+" 	\			'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
+" 	\		},
+" 	\		'vim': {
+" 	\			'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/', 'start=/{/ end=/}/ fold', 'start=/(/ end=/)/ containedin=vimFuncBody', 'start=/\[/ end=/\]/ containedin=vimFuncBody', 'start=/{/ end=/}/ fold containedin=vimFuncBody'],
+" 	\		},
+" 	\		'html': {
+" 	\			'parentheses': ['start=/\v\<((area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)[ >])@!\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'|[^ '."'".'"><=`]*))?)*\>/ end=#</\z1># fold'],
+" 	\		},
+" 	\		'css': 0,
+" 	\	}
+" 	\}
 
+" guifgs      : colors for gui interface, will be used in order.
+" ctermfgs    : colors for terms
+" operators   : describe the operators you want to highlight(read the vim help                                                                                                      : syn-pattern)
+" parentheses : describe what will be processed as parentheses, a pair of parentheses was described by two re pattern
+" separately  : configure for specific filetypes(decided by &ft), key `*` for filetypes without separate configuration, value `0` means disable rainbow only for this type of files
+
+" Keep a field empty to use the default setting.
+" }}}
 " Local Vimrc {{{1
 " ===========
 if filereadable(expand("~/.vimrc.local"))
     source ~/.vimrc.local
 endif
 
-" Testing {{{1
-" ================================
-" function! TextEnableCodeSnip(filetype,start,end,textSnipHl) abort
-"     " http://vim.wikia.com/wiki/Different_syntax_highlighting_within_regions_of_a_file
-"     "     by Ivan Tishchenko (2005)
-"     let ft=toupper(a:filetype)
-"     let group='textGroup'.ft
-"     if exists('b:current_syntax')
-"         let s:current_syntax=b:current_syntax
-"         " Remove current syntax definition, as some syntax files (e.g. cpp.vim)
-"         " do nothing if b:current_syntax is defined.
-"         unlet b:current_syntax
-"     endif
-"     execute 'syntax include @'.group.' syntax/'.a:filetype.'.vim'
-"     try
-"         execute 'syntax include @'.group.' after/syntax/'.a:filetype.'.vim'
-"     catch
-"     endtry
-"     if exists('s:current_syntax')
-"         let b:current_syntax=s:current_syntax
-"     else
-"         unlet b:current_syntax
-"     endif
-"     execute 'syntax region textSnip'.ft.'
-"     \ matchgroup='.a:textSnipHl.'
-"     \ start="'.a:start.'" end="'.a:end.'"
-"     \ contains=@'.group
-" endfunction
+" Other {{{1
+" Highlight code in different filetypes {{{2
+"
+" Ivan Tischenko (vim.wikia.com/wiki/Different_syntax_highlighting_within_regions_of_a_file)
+function! TextEnableCodeSnip(filetype,start,end,textSnipHl) abort
+  let ft=toupper(a:filetype)
+  let group='textGroup'.ft
+  if exists('b:current_syntax')
+    let s:current_syntax=b:current_syntax
+    " Remove current syntax definition, as some syntax files (e.g. cpp.vim)
+    " do nothing if b:current_syntax is defined.
+    unlet b:current_syntax
+  endif
+  execute 'syntax include @'.group.' syntax/'.a:filetype.'.vim'
+  try
+    execute 'syntax include @'.group.' after/syntax/'.a:filetype.'.vim'
+  catch
+  endtry
+  if exists('s:current_syntax')
+    let b:current_syntax=s:current_syntax
+  else
+    unlet b:current_syntax
+  endif
+  execute 'syntax region textSnip'.ft.'
+  \ matchgroup='.a:textSnipHl.'
+  \ keepend
+  \ start="'.a:start.'" end="'.a:end.'"
+  \ contains=@'.group
+endfunction
 
+" Enable C syntax higlighting in non-C files
+autocmd BufNewFile,BufRead  * :call TextEnableCodeSnip ('c', '@c', '@c', 'SpecialComment')
