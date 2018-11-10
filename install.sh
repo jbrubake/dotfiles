@@ -54,12 +54,12 @@ logmsg () {
     #
     # Depends on $VERBOSE
 
-    test $VERBOSE = 'yes' && echo "$1"
+    test $VERBOSE = 'yes' && echo "$*"
 }
 logerror () {
     # Output error messages
 
-    echo "$1" >&2
+    echo "$*" >&2
 }
 get_link_path () {
     # Return the absolute path of the target of a symbolic link
