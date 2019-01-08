@@ -1,5 +1,118 @@
 #!/bin/bash
 
+# TODO: This should be sourced from .xsession/.xinitrc
+
+# Environment {{{
+
+: ${HOME=~}
+: ${LOGNAME=$(id -un)}
+: ${UNAME=$(uname)}
+
+# Non-interactive shells should source .bashrc
+# and *not* source aliases and functions
+BASH_ENV=~/.bashrc
+
+# Always use my .inputrc
+if [ -z $INPUTRC ] && [ -r "$HOME/.inputrc" ]; then
+    INPUTRC="$HOME/.inputrc"
+fi
+
+# Locale settings default to en_US with utf-8 unless
+# already set
+#
+: ${LANG:="en_US.UTF-8"}
+: ${LANGUAGE:="en_US.UTF-8"}
+: ${LC_CTYPE:="en_US.UTF-8"}
+: ${LC_ALL:="en_US.UTF-8"}
+
+# Set TZ based on system timezone
+#
+TZ=$( cat /etc/timezone )
+
+# Filename completion ignores backups and vim swap files
+#
+FIGNORE="~:.swp"
+
+# History stuff
+#
+HISTSIZE=20               # Max commands in history
+HISTFILESIZE=50           # Max lines in history
+HISTCONTROL="ignoredups"  # No duplicate history entries
+HISTIGNORE="&:[bf]g:exit" # History ignores these matches
+
+# EDITOR/VISUAL
+#
+if command -v vim >/dev/null; then
+    EDITOR=vim
+elif command -v vi >/dev/null; then
+    EDITOR=vi
+else
+    EDITOR=ed
+fi
+VISUAL=$EDITOR
+
+# PAGER/MANPAGER
+#
+if command -v vimpager >/dev/null; then
+    PAGER=`command -v vimpager` # Only works with git if I set the whole path
+elif command -v less >/dev/null; then
+    PAGER=less
+else
+    PAGER=more
+fi
+MANPAGER=$PAGER
+ACK_PAGER=$PAGER
+ACK_PAGER_COLOR=$PAGER
+
+# Development
+#
+case $(uname -o) in
+    Cygwin*)
+        LD=gcc # Cygwin won't build without this. Weird
+        ;;
+esac
+
+# Setup dircolors
+#
+if test $HAS_COLOR && command -v dircolors >/dev/null; then
+    # Use Solarized scheme if it exists
+    if test -r "$HOME/.dircolors.solarized"; then
+        colorfile="$HOME/.dircolors.solarized"
+    # Next try 256 color scheme if it exists and terminal supports it
+    elif test -r "$HOME/.dircolors.256" && [[ $TERM =~ 256 ]]; then
+        colorfile="$HOME/.dircolors.256"
+    # Next try non-256 color scheme
+    elif test -r "$HOME/.dircolors"; then
+        colorfile="$HOME/.dircolors" 
+    # Fallback to system default
+    elif test -r "/etc/DIR_COLORS"; then
+        colorfile='/etc/DIR_COLORS'
+    # Leave $colorfile empty to fallback to dircolors defaults
+    else
+        colorfile=
+    fi
+
+    eval $(dircolors $colorfile)
+
+    unset colorfile
+fi
+
+# Set default web browser
+# TODO: Set this based on whether X is running
+# TODO: Make this a generic priority list
+#
+if command -v chrome >/dev/null; then
+    BROWSER='chrome'
+elif command -v chromium >/dev/null; then
+    BROWSER='chromium'
+elif command -v firefox >/dev/null; then
+    BROWSER='firefox'
+elif command -v uzbl-browser >/dev/null; then
+    BROWSER='uzbl-browser'
+fi
+
+# }}}
+
 # Color Themes {{{
 
 case $(uname -o) in
