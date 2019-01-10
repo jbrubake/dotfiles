@@ -4,6 +4,9 @@
 #
 # Some stuff ripped from Ryan Tomayko <tomayko.com/about>
 
+# If not running interactively, don't do anything
+[ -z "$PS1" ] && return
+
 # Setup {{{
 
 # Source additional files
@@ -220,6 +223,37 @@ pls () {
     eval echo \$${1:-PATH} |tr : '\n';
 }
 
+# Usage: pshift [-n <num>] [<var>]
+# Shift <num> entries off the front of PATH or environment var <var>.
+# with the <var> option. Useful: pshift $(pwd)
+pshift () {
+    local n=1
+    [ "$1" = "-n" ] && { n=$(( $2 + 1 )); shift 2; }
+    eval "${1:-PATH}='$(pls |tail -n +$n |tr '\n' :)'"
+}
+
+# Usage: ppop [-n <num>] [<var>]
+# Pop <num> entries off the end of PATH or environment variable <var>.
+ppop () {
+    local n=1 i=0
+    [ "$1" = "-n" ] && { n=$2; shift 2; }
+    while [ $i -lt $n ]
+    do eval "${1:-PATH}='\${${1:-PATH}%:*}'"
+       i=$(( i + 1 ))
+    done
+}
+
+# Usage: punshift <path> [<var>]
+# Shift <path> onto the beginning of PATH or environment variable <var>.
+punshift () {
+    eval "${2:-PATH}='$1:$(eval echo \$${2:-PATH})'"
+}
+
+# Usage: ppush <path> [<var>]
+ppush () {
+    eval "${2:-PATH}='$(eval echo \$${2:-PATH})':$1"
+}
+
 # Usage: puniq [<path>]
 # Remove duplicate entries from a PATH style value while retaining
 # the original order. Use PATH if no <path> is given.
@@ -286,6 +320,8 @@ shopt -s no_empty_cmd_completion # Don't TAB complete a blank line
 
 set   +o ignoreeof    # Ctl+D does not exit shell
 
+# the default umask is set in /etc/profile; for setting the umask
+# for ssh logins, install and configure the libpam-umask package.
 umask 022
 
 # }}}
