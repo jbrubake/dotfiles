@@ -7,8 +7,8 @@
 # TODO: This should be sourced from .xsession/.xinitrc
 
 . "$HOME/.env"
-. "$HOME/.alias"
-. "$HOME/.functions"
+. "$HOME/.functions" # Functions might depend on environment
+. "$HOME/.alias" # Aliases might depend on functions and environment
 
 # bash specific
 if [ -n "$BASH" ]; then
