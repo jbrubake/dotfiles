@@ -23,7 +23,7 @@
 # Changed to use functions instead of hashes for speed
 # Changed to use tput(1) as much as possible
 ###################################################
-function FX()
+FX()
 {
     case "$1" in
         reset)       tput sgr0 ;;
@@ -51,22 +51,22 @@ function FX()
     esac
 }
 
-if test $HAS_COLOR; then
+if test $( tput colors ) -ge 0; then
     # TODO: Create 24bit color versions
-    function FG() {
+    FG() {
         tput setaf $1
     }
 
-    function BG()
+    BG()
     {
         tput setab $1
     }
 else
-    function FG() {
+    FG() {
         :
     }
 
-    function BG() {
+    BG() {
         :
     }
 fi
@@ -84,7 +84,7 @@ fi
 #
 ###
 # TODO: Make this consistent with my ls aliases
-function lsp ()
+lsp ()
 {
     command ls -lh --time-style '+%m/%d/%y %I:%M %p' --color=always $@ | \
         awk '{k=0;for(i=0;i<=8;i++)k+=((substr($1,i+2,1)~/[rwx]/)\
@@ -99,7 +99,7 @@ function lsp ()
 # Expects: a google search string, just like
 #          you would enter it at the website
 ####
-function google ()
+google ()
 {
     # Create search string if arguments were passed
     if [[ "$*" ]]; then
@@ -122,13 +122,13 @@ function google ()
 #
 # Define words and phrases with google
 ####
-function define()
+define()
 {
     local y="$@"
     curl -sA"Opera" "http://www.google.com/search?q=define:${y// /+}"|grep -Eo '<li>[^<]+'|sed 's/^<li>//g'|nl|/usr/bin/perl -MHTML::Entities -pe 'decode_entities($_)'
 }
 
-function rtfm()
+rtfm()
 {
     man "$@" || [[ -f "/usr/share/info/$@.info*" ]] && info "$@" ||
         echo "No info entry for $@" >/dev/stderr && "$@" --help ||
@@ -148,7 +148,7 @@ function rtfm()
 # ps | hr ".*$PPID.*" | hbl ".*$$.*"
 ####
 # TODO: Make these more versatile
-function hb()
+hb()
 {
     local fg
     test $2 && fg=$( FG $2 )
@@ -156,14 +156,14 @@ function hb()
 
 }
 
-function hr()
+hr()
 {
     local fg
     test $2 && bg=$( FG $2 )
     sed "s/\($1\)/$(FX reverse)$fg\1`tput sgr0`/gI"
 }
 
-function hbl()
+hbl()
 {
     local fg
     test $2 && fg=$( FG $2 )
@@ -175,7 +175,7 @@ function hbl()
 #
 # List last "n" commands in history
 ###
-function lh()
+lh()
 {
     history | tail -"$1"
 }
