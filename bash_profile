@@ -1,10 +1,8 @@
 #!/bin/bash
 
 # Color Themes {{{
-
 case $(uname -o) in
-    Cygwin*)
-
+    Cygwin*) # {{{
         # Set scheme to whatever color scheme you want
         #
         # Currently supports:
@@ -23,7 +21,7 @@ case $(uname -o) in
         #  6 cyan     E bold cyan
         #  7 white    F bold white 
         case $scheme in
-            custom*)
+            custom*) # {{{
                 echo -en "\e]P0222222" # black
                 echo -en "\e]P8222222" # bold black
                 echo -en "\e]P1803232" # red
@@ -40,8 +38,8 @@ case $(uname -o) in
                 echo -en "\e]PEa1cdcd" # bold cyan
                 echo -en "\e]P7ffffff" # white
                 echo -en "\e]PFdedede" # bold white
-                ;;
-            solar)
+                ;; # }}}
+            solar) # {{{
                 echo -en '\e]P1DC322F\a'   # red
                 echo -en '\e]P2859900\a'   # green
                 echo -en '\e]P3B58900\a'   # yellow
@@ -56,15 +54,27 @@ case $(uname -o) in
                 echo -en '\e]PD6C71C4\a'  # bold magenta -> violet
                 echo -en '\e]PE93A1A1\a'  # bold cyan -> base1
                 echo -en '\e]PFFDFDE3\a'  # bold white -> Base3
-                ;;
-            default)
-                ;;
-            esac
+                ;; # }}}
+            default) # {{{
+                ;; # }}}
+        esac
+
         # Clear screen to prevent background artifacting
         echo -en "\e[2J\e[H" # Use escape codes since clear(1) may not exist
         ;;
+    # }}}
 esac
 # }}}
 
 # Everything is in .bashrc
 source $HOME/.bashrc
+
+# Print motd
+if test  -e /run/motd.dynamic; then
+    cat /run/motd.dynamic
+else
+    uname -npsr
+    uptime=$( uptime )
+    echo "Uptime: $uptime\n"
+fi
+
