@@ -123,7 +123,7 @@ unset dir_color slash_color hostname_color at_color bracket_color
 unset history_color error_color prompt_color user_color root_user_color
 unset reset
 unset screen_esc 
-unset NEW_PWD PS1_ERROR
+unset NEW_PWD PS1_ERROR HAS_COLOR
 # }}}
 # Bash Completion {{{
 # System settings
