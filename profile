@@ -10,6 +10,10 @@
 . "$HOME/.functions" # Functions might depend on environment
 . "$HOME/.alias" # Aliases might depend on functions and environment
 
+# the default umask is set in /etc/profile; for setting the umask
+# for ssh logins, install and configure the libpam-umask package.
+umask 022
+
 # bash specific
 if [ -n "$BASH" ]; then
 	source "$HOME/.bashrc" # not sourced by default
@@ -91,7 +95,6 @@ if test  -e /run/motd.dynamic; then
     cat /run/motd.dynamic
 else
     uname -npsr
-    uptime=$( uptime )
-    echo "Uptime: $uptime\n"
+    echo "Uptime: $( uptime )\n"
 fi
 # }}}

@@ -7,19 +7,6 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
-# Setup {{{
-
-# Source additional files
-#
-test -r /etc/bashrc && . /etc/bashrc
-test -r /etc/bash.bashrc && . /etc/bash.bashrc
-
-# Determine if terminal supports color
-#
-test $( tput colors ) -ge 0 && HAS_COLOR=yes
-
-# }}}
-
 # Setup PATH {{{
 # FIXME: This should be done in xsession/bash_profile
 
@@ -34,25 +21,7 @@ PATH=$(puniq $PATH)
 MANPATH=$(puniq $MANPATH)
 
 # }}}
-
-# Environment {{{
-
-# detect interactive shell
-case "$-" in
-    *i*) INTERACTIVE=yes ;;
-    *)   unset INTERACTIVE ;;
-esac
-
-# detect login shell
-case "$0" in
-    -*) LOGIN=yes ;;
-    *)  unset LOGIN ;;
-esac
-
-# }}}
-
 # Shell options {{{
-
 shopt -s cdspell      # Fix spelling errors in cd commands
 shopt -s extglob      # Advanced pathname expansion
 shopt -s histappend   # Append to HISTFIL on exit - don't clobber it
@@ -63,14 +32,11 @@ shopt -s histverify   # Allow verification of history substitution
 shopt -s no_empty_cmd_completion # Don't TAB complete a blank line
 
 set   +o ignoreeof    # Ctl+D does not exit shell
-
-# the default umask is set in /etc/profile; for setting the umask
-# for ssh logins, install and configure the libpam-umask package.
-umask 022
-
 # }}}
-
 # Prompts {{{
+# Determine if terminal supports color
+#
+test $( tput colors ) -ge 0 && HAS_COLOR=yes
 
 # Put code for my current prompt here
 #
@@ -154,11 +120,8 @@ unset history_color error_color prompt_color user_color root_user_color
 unset reset
 unset screen_esc 
 unset NEW_PWD PS1_ERROR
-
 # }}}
-
 # Bash Completion {{{
-
 # System settings
 if ! shopt -oq posix; then
     if [ -f /usr/share/bash-completion/bash_completion ]; then
@@ -182,20 +145,5 @@ complete -F _todo t
 if [[ -z $HOSTFILE && -r "$HOME/.ssh/known_hosts" ]]; then
     HOSTFILE="$HOME/.ssh/known_hosts"
 fi
-
 # }}}
 
-# Unset Variables {{{
-
-# TODO: Make variables local instead?
-unset HAS_COLOR
-unset INTERACITIVE
-unset LOGIN
-
-# }}}
-
-PATH="/home/jbrubake/perl5/bin${PATH:+:${PATH}}"; export PATH;
-PERL5LIB="/home/jbrubake/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
-PERL_LOCAL_LIB_ROOT="/home/jbrubake/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
-PERL_MB_OPT="--install_base \"/home/jbrubake/perl5\""; export PERL_MB_OPT;
-PERL_MM_OPT="INSTALL_BASE=/home/jbrubake/perl5"; export PERL_MM_OPT;
