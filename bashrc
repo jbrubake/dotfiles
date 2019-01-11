@@ -4,6 +4,9 @@
 #
 # Some stuff ripped from Ryan Tomayko <tomayko.com/about>
 
+# If not running interactively, don't do anything
+[ -z "$PS1" ] && return
+
 # Setup {{{
 
 # Source additional files
@@ -220,6 +223,37 @@ pls () {
     eval echo \$${1:-PATH} |tr : '\n';
 }
 
+# Usage: pshift [-n <num>] [<var>]
+# Shift <num> entries off the front of PATH or environment var <var>.
+# with the <var> option. Useful: pshift $(pwd)
+pshift () {
+    local n=1
+    [ "$1" = "-n" ] && { n=$(( $2 + 1 )); shift 2; }
+    eval "${1:-PATH}='$(pls |tail -n +$n |tr '\n' :)'"
+}
+
+# Usage: ppop [-n <num>] [<var>]
+# Pop <num> entries off the end of PATH or environment variable <var>.
+ppop () {
+    local n=1 i=0
+    [ "$1" = "-n" ] && { n=$2; shift 2; }
+    while [ $i -lt $n ]
+    do eval "${1:-PATH}='\${${1:-PATH}%:*}'"
+       i=$(( i + 1 ))
+    done
+}
+
+# Usage: punshift <path> [<var>]
+# Shift <path> onto the beginning of PATH or environment variable <var>.
+punshift () {
+    eval "${2:-PATH}='$1:$(eval echo \$${2:-PATH})'"
+}
+
+# Usage: ppush <path> [<var>]
+ppush () {
+    eval "${2:-PATH}='$(eval echo \$${2:-PATH})':$1"
+}
+
 # Usage: puniq [<path>]
 # Remove duplicate entries from a PATH style value while retaining
 # the original order. Use PATH if no <path> is given.
@@ -259,121 +293,17 @@ MANPATH=$(puniq $MANPATH)
 
 # Environment {{{
 
-# TODO: Most of this should be set in .xsession/.bash_profile
-
-: ${HOME=~}
-: ${LOGNAME=$(id -un)}
-: ${UNAME=$(uname)}
-
-# Non-interactive shells should source .bashrc
-# XXX: If I move functions and aliases to a separate
-# XXX: file that would work better. Also need
-# XXX: expand_aliases
-BASH_ENV=~/.bashrc
-
-# Always use my .inputrc
-if [[ -z $INPUTRC && -r "$HOME/.inputrc" ]]; then
-    INPUTRC="$HOME/.inputrc"
-fi
-
-# Hostnames for bash-completion
-if [[ -z $HOSTFILE && -r "$HOME/.ssh/known_hosts" ]]; then
-    HOSTFILE="$HOME/.ssh/known_hosts"
-fi
-
-# Locale settings default to en_US with utf-8 unless
-# already set
-#
-: ${LANG:="en_US.UTF-8"}
-: ${LANGUAGE:="en_US.UTF-8"}
-: ${LC_CTYPE:="en_US.UTF-8"}
-: ${LC_ALL:="en_US.UTF-8"}
-
-# Set TZ based on system timezone
-#
-TZ=$( cat /etc/timezone )
-
-# Filename completion ignores backups and vim swap files
-#
-FIGNORE="~:.swp"
-
-# History stuff
-#
-HISTSIZE=20               # Max commands in history
-HISTFILESIZE=50           # Max lines in history
-HISTCONTROL="ignoredups"  # No duplicate history entries
-HISTIGNORE="&:[bf]g:exit" # History ignores these matches
-
-# EDITOR/VISUAL
-#
-if command -v vim >/dev/null; then
-    EDITOR=vim
-elif command -v vi >/dev/null; then
-    EDITOR=vi
-else
-    EDITOR=ed
-fi
-VISUAL=$EDITOR
-
-# PAGER/MANPAGER
-#
-if command -v vimpager >/dev/null; then
-    PAGER=`command -v vimpager` # Only works with git if I set the whole path
-elif command -v less >/dev/null; then
-    PAGER=less
-else
-    PAGER=more
-fi
-MANPAGER=$PAGER
-ACK_PAGER=$PAGER
-ACK_PAGER_COLOR=$PAGER
-
-# Development
-#
-case $(uname -o) in
-    Cygwin*)
-        LD=gcc # Cygwin won't build without this. Weird
-        ;;
+# detect interactive shell
+case "$-" in
+    *i*) INTERACTIVE=yes ;;
+    *)   unset INTERACTIVE ;;
 esac
 
-# Setup dircolors
-#
-if test $HAS_COLOR && command -v dircolors >/dev/null; then
-    # Use Solarized scheme if it exists
-    if test -r "$HOME/.dircolors.solarized"; then
-        colorfile="$HOME/.dircolors.solarized"
-    # Next try 256 color scheme if it exists and terminal supports it
-    elif test -r "$HOME/.dircolors.256" && [[ $TERM =~ 256 ]]; then
-        colorfile="$HOME/.dircolors.256"
-    # Next try non-256 color scheme
-    elif test -r "$HOME/.dircolors"; then
-        colorfile="$HOME/.dircolors" 
-    # Fallback to system default
-    elif test -r "/etc/DIR_COLORS"; then
-        colorfile='/etc/DIR_COLORS'
-    # Leave $colorfile empty to fallback to dircolors defaults
-    else
-        colorfile=
-    fi
-
-    eval $(dircolors $colorfile)
-
-    unset colorfile
-fi
-
-# Set default web browser
-# TODO: Set this based on whether X is running
-# TODO: Make this a generic priority list
-#
-if command -v chrome >/dev/null; then
-    BROWSER='chrome'
-elif command -v chromium >/dev/null; then
-    BROWSER='chromium'
-elif command -v firefox >/dev/null; then
-    BROWSER='firefox'
-elif command -v uzbl-browser >/dev/null; then
-    BROWSER='uzbl-browser'
-fi
+# detect login shell
+case "$0" in
+    -*) LOGIN=yes ;;
+    *)  unset LOGIN ;;
+esac
 
 # }}}
 
@@ -390,6 +320,8 @@ shopt -s no_empty_cmd_completion # Don't TAB complete a blank line
 
 set   +o ignoreeof    # Ctl+D does not exit shell
 
+# the default umask is set in /etc/profile; for setting the umask
+# for ssh logins, install and configure the libpam-umask package.
 umask 022
 
 # }}}
@@ -417,7 +349,7 @@ unset color_flag
 
 # If my pager is not less, make me think it is
 #
-test $PAGER != 'less' &&
+test "x$PAGER" != 'xless' &&
     alias less="$PAGER" && alias zless="$PAGER"
 
 # Screen automatically reattaches if able
@@ -598,11 +530,19 @@ done
 # Allow todo.sh alias to use bash completion
 complete -F _todo t
 
+# Hostnames for bash-completion
+if [[ -z $HOSTFILE && -r "$HOME/.ssh/known_hosts" ]]; then
+    HOSTFILE="$HOME/.ssh/known_hosts"
+fi
+
 # }}}
 
 # Unset Variables {{{
 
+# TODO: Make variables local instead?
 unset HAS_COLOR
+unset INTERACITIVE
+unset LOGIN
 
 # }}}
 

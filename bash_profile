@@ -1,4 +1,24 @@
-#!/bin/bash
+#!/bin/sh vim: foldlevel=0
+#
+# ~/.profile: executed by the command interpreter for login shells.
+#
+# ~/.bash_profile and ~/.bash_login MUST NOT exist
+
+# TODO: This should be sourced from .xsession/.xinitrc
+
+. "$HOME/.env"
+. "$HOME/.alias"
+. "$HOME/.functions"
+
+# bash specific
+if [ -n "$BASH" ]; then
+	source "$HOME/.bashrc" # not sourced by default
+    BASH_ENV="$HOME/.env"  # non-interactive setup
+# sh specific
+else
+    ENV="$HOME/.shinit" # equivalent to .bashrc
+    export ENV
+fi
 
 # Color Themes {{{
 case $(uname -o) in
@@ -65,11 +85,8 @@ case $(uname -o) in
     # }}}
 esac
 # }}}
-
-# Everything is in .bashrc
-source $HOME/.bashrc
-
-# Print motd
+# MOTD {{{
+# TODO: tmux currently shows this for *every* new shell
 if test  -e /run/motd.dynamic; then
     cat /run/motd.dynamic
 else
@@ -77,4 +94,4 @@ else
     uptime=$( uptime )
     echo "Uptime: $uptime\n"
 fi
-
+# }}}
