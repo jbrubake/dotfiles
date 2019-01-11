@@ -3,3 +3,7 @@
 # Jeremy Brubaker <jbru362@gmail.com>
 #
 # Some stuff ripped from Ryan Tomayko <tomayko.com/about>
+
+. "$HOME/.functions"
+. "$HOME/.alias" # Aliases might depend on functions
+
