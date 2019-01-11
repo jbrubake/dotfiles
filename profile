@@ -2,24 +2,17 @@
 #
 # ~/.profile: executed by the command interpreter for login shells.
 #
-# ~/.bash_profile and ~/.bash_login MUST NOT exist
 
 # TODO: This should be sourced from .xsession/.xinitrc
 
 . "$HOME/.env"
-. "$HOME/.functions" # Functions might depend on environment
-. "$HOME/.alias" # Aliases might depend on functions and environment
 
 # the default umask is set in /etc/profile; for setting the umask
 # for ssh logins, install and configure the libpam-umask package.
 umask 022
 
-# bash specific
-if [ -n "$BASH" ]; then
-	source "$HOME/.bashrc" # not sourced by default
-    BASH_ENV="$HOME/.env"  # non-interactive setup
 # sh specific
-else
+if [ -z "$BASH" ]; then
     ENV="$HOME/.shinit" # equivalent to .bashrc
     export ENV
 fi
