@@ -1,20 +1,19 @@
 #!/bin/sh vim: foldlevel=0
 #
 # Jeremy Brubaker <jbru362@gmail.com>
-#
-# Some stuff ripped from Ryan Tomayko <tomayko.com/about>
 
-test $HAS_COLOR && color_flag='--color=auto'
+# Color flag for ls and grep
+test $( tput colors ) -ge 0 && color_flag='--color=auto'
 
 # My standard ls aliases
 #
-LS_OPTS="$color_flag --group-directories-first -XF --dereference-command-line-symlink-to-dir"
-alias ls="command  ls $LS_OPTS"
-alias la="command  ls $LS_OPTS -A"
-alias ll="command  ls $LS_OPTS -lh"
-alias lal="command ls $LS_OPTS -lhA"
-alias l.="command  ls $LS_OPTS -d .*"
-unset LS_OPTS
+ls_opts="$color_flag --group-directories-first -XF --dereference-command-line-symlink-to-dir"
+alias ls="command  ls $ls_opts"
+alias la="command  ls $ls_opts -A"
+alias ll="command  ls $ls_opts -lh"
+alias lal="command ls $ls_opts -lhA"
+alias l.="command  ls $ls_opts -d .*"
+unset ls_opts
 
 # Force color in *grep
 #
@@ -32,16 +31,18 @@ test "x$PAGER" != 'xless' &&
 command -v screen >/dev/null &&
     alias screen='screen -dR'
 
+# Tmux automatically reattaches if able
+command -v tmux >/dev/null &&
+    alias tmux='tmux attach'
+
 # OS specific aliases
 #
 case $(uname -o) in
-    # Cygwin only
     Cygwin*) 
         # Use ssh to emulate su(1)
         # TODO: Work out how to emulate 'su command', etc.
         alias su='ssh Administrator@localhost'
         ;;
-    # Everything else
     *)
         ;;
 esac
@@ -51,7 +52,7 @@ esac
 command -v clear >/dev/null ||
     alias clear='echo -en "\e[2J\e[H"'
 
-# Display latest xkcd comic if I have # feh and curl available
+# Display latest xkcd comic if I have feh and curl available
 #
 if command -v feh >/dev/null && command -v curl >/dev/null; then
     alias xkcd="curl -s 'http://xkcd.com/' | sed -n 's/Image URL.*: \(.*\)/\1/p' | feh -"
@@ -61,16 +62,12 @@ fi
 command -v toilet >/dev/null &&
    alias colfortune="fortune | toilet --metal -f term"
 
-# Use pretty_make and colorgcc
+# Use pretty_make
 #
 command -v pretty_make >/dev/null &&
     alias make=pretty_make
 
-command -v colorgcc >/dev/null && test $HAS_COLOR &&
-    alias gcc=colorgcc
-
-# If todo.txt is installed, make it simpler
-# to access
+# If todo.txt is installed, make it simpler to access
 command -v todo.sh >/dev/null &&
     alias t=todo.sh
 

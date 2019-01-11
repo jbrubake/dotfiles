@@ -1,13 +1,12 @@
 #!/bin/sh vim: foldlevel=0
 #
-: ${HOME=~}
-: ${LOGNAME=$(id -un)}
-: ${UNAME=$(uname)}
+# ~/.env: environment variables
 
-# Always use my .inputrc
-if [ -z $INPUTRC ] && [ -r "$HOME/.inputrc" ]; then
-    INPUTRC="$HOME/.inputrc"
-fi
+# Sane defaults
+#
+: ${HOME:=~}
+: ${LOGNAME:=$(id -un)}
+: ${UNAME:=$(uname)}
 
 # Locale settings default to en_US with utf-8 unless already set
 #
@@ -16,20 +15,15 @@ fi
 : ${LC_CTYPE:="en_US.UTF-8"}
 : ${LC_ALL:="en_US.UTF-8"}
 
-# Set TZ based on system timezone
-#
-TZ=$( cat /etc/timezone )
+# Always use my .inputrc
+if [ -r "$HOME/.inputrc" ]; then
+    INPUTRC="$HOME/.inputrc"
+fi
 
-# Filename completion ignores backups and vim swap files
-#
-FIGNORE="~:.swp"
-
-# History stuff
+# Other
 #
 HISTSIZE=20               # Max commands in history
-HISTFILESIZE=50           # Max lines in history
-HISTCONTROL="ignoredups"  # No duplicate history entries
-HISTIGNORE="&:[bf]g:exit" # History ignores these matches
+TZ=$( cat /etc/timezone ) # Set TZ based on system timezone
 
 # EDITOR/VISUAL
 #
@@ -37,6 +31,10 @@ if command -v vim >/dev/null; then
     EDITOR=vim
 elif command -v vi >/dev/null; then
     EDITOR=vi
+elif command -v nano >/dev/null; then
+    EDITOR=nano
+elif command -v pico >/dev/null; then
+    EDITOR=pico
 else
     EDITOR=ed
 fi
@@ -52,22 +50,16 @@ else
     PAGER=more
 fi
 MANPAGER=$PAGER
-ACK_PAGER=$PAGER
-ACK_PAGER_COLOR=$PAGER
-
-# Development
-#
-case $(uname -o) in
-    Cygwin*)
-        LD=gcc # Cygwin won't build without this. Weird
-        ;;
-esac
+if command -v ack >/dev/null; then
+    ACK_PAGER=$PAGER
+    ACK_PAGER_COLOR=$PAGER
+fi
 
 # Setup dircolors
 #
-if test $HAS_COLOR && command -v dircolors >/dev/null; then
-    # Use Solarized scheme if it exists
-    if test -r "$HOME/.dircolors.solarized"; then
+if test $( tput setaf ) -ge 0 && command -v dircolors >/dev/null; then
+    # Use Solarized scheme if it exists and terminal supports it
+    if test -r "$HOME/.dircolors.solarized" && [[ $TERM =~ 256 ]]; then
         colorfile="$HOME/.dircolors.solarized"
     # Next try 256 color scheme if it exists and terminal supports it
     elif test -r "$HOME/.dircolors.256" && [[ $TERM =~ 256 ]]; then
@@ -104,8 +96,29 @@ fi
 
 # Perl configuration
 #
-PATH="/home/jbrubake/perl5/bin${PATH:+:${PATH}}"; export PATH;
-PERL5LIB="/home/jbrubake/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
-PERL_LOCAL_LIB_ROOT="/home/jbrubake/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
-PERL_MB_OPT="--install_base \"/home/jbrubake/perl5\""; export PERL_MB_OPT;
-PERL_MM_OPT="INSTALL_BASE=/home/jbrubake/perl5"; export PERL_MM_OPT;
+if test -d "$HOME/perl5/"; then
+    PATH="$HOME/perl5/bin${PATH:+:${PATH}}"; export PATH;
+    PERL5LIB="$HOME/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+    PERL_LOCAL_LIB_ROOT="$HOME/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+    PERL_MB_OPT="--install_base \"$HOME/perl5\""; export PERL_MB_OPT;
+    PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"; export PERL_MM_OPT;
+fi
+
+# Cygwin specific
+#
+if [[ $(uname -o) =~ "Cygwin" ]]; then
+    LD=gcc # Cygwin won't build without this. Weird
+fi
+
+if [ -n "$BASH" ]; then
+    # Filename completion ignores backups and vim swap files
+    #
+    FIGNORE="~:.swp"
+
+    # History stuff
+    #
+    HISTFILESIZE=50           # Max lines in history
+    HISTCONTROL="ignoredups"  # No duplicate history entries
+    HISTIGNORE="&:[bf]g:exit" # History ignores these matches
+fi
+

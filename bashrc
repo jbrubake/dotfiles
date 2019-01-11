@@ -7,11 +7,12 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
-. "$HOME/.functions"
-. "$HOME/.alias" # Aliases might depend on functions
+source "$HOME/.functions"
+source "$HOME/.alias" # Aliases might depend on functions
 
 # Setup PATH {{{
-# FIXME: This should be done in xsession/bash_profile
+
+# FIXME: This is here so the necessary functions are already sourced
 
 # Put /usr/local/bin in PATH
 PATH="/usr/local/bin:$PATH"
