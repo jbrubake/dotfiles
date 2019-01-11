@@ -7,6 +7,9 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
+. "$HOME/.functions"
+. "$HOME/.alias" # Aliases might depend on functions
+
 # Setup PATH {{{
 # FIXME: This should be done in xsession/bash_profile
 
