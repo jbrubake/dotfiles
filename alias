@@ -1,0 +1,98 @@
+#!/bin/sh vim: foldlevel=0
+#
+# Jeremy Brubaker <jbru362@gmail.com>
+#
+# Some stuff ripped from Ryan Tomayko <tomayko.com/about>
+
+test $HAS_COLOR && color_flag='--color=auto'
+
+# My standard ls aliases
+#
+LS_OPTS="$color_flag --group-directories-first -XF --dereference-command-line-symlink-to-dir"
+alias ls="command  ls $LS_OPTS"
+alias la="command  ls $LS_OPTS -A"
+alias ll="command  ls $LS_OPTS -lh"
+alias lal="command ls $LS_OPTS -lhA"
+alias l.="command  ls $LS_OPTS -d .*"
+unset LS_OPTS
+
+# Force color in *grep
+#
+alias grep="grep $color_flag"
+alias fgrep="fgrep $color_flag"
+alias egrep="egrep $color_flag"
+unset color_flag
+
+# If my pager is not less, make me think it is
+#
+test "x$PAGER" != 'xless' &&
+    alias less="$PAGER" && alias zless="$PAGER"
+
+# Screen automatically reattaches if able
+command -v screen >/dev/null &&
+    alias screen='screen -dR'
+
+# OS specific aliases
+#
+case $(uname -o) in
+    # Cygwin only
+    Cygwin*) 
+        # Use ssh to emulate su(1)
+        # TODO: Work out how to emulate 'su command', etc.
+        alias su='ssh Administrator@localhost'
+        ;;
+    # Everything else
+    *)
+        ;;
+esac
+
+# Emulate clear(1) if I don't have it
+#
+command -v clear >/dev/null ||
+    alias clear='echo -en "\e[2J\e[H"'
+
+# Display latest xkcd comic if I have # feh and curl available
+#
+if command -v feh >/dev/null && command -v curl >/dev/null; then
+    alias xkcd="curl -s 'http://xkcd.com/' | sed -n 's/Image URL.*: \(.*\)/\1/p' | feh -"
+fi
+
+# Fancy fortunes if toilet(1) exists
+command -v toilet >/dev/null &&
+   alias colfortune="fortune | toilet --metal -f term"
+
+# Use pretty_make and colorgcc
+#
+command -v pretty_make >/dev/null &&
+    alias make=pretty_make
+
+command -v colorgcc >/dev/null && test $HAS_COLOR &&
+    alias gcc=colorgcc
+
+# If todo.txt is installed, make it simpler
+# to access
+command -v todo.sh >/dev/null &&
+    alias t=todo.sh
+
+# Keep uzbl-browser from polluting the terminal
+if command -v uzbl >/dev/null; then
+    alias uzbl="uzbl-browser $@ &> /dev/null &"
+    alias uzblt="uzbl-tabbed &> /dev/null &"
+fi
+
+# Get my real IP
+#
+if command -v wget >/dev/null; then
+    alias myip='wget http://ipecho.net/plain -O - -q'
+elif command -v curl >/dev/null; then
+    alias myip='curl http://ipecho.net/plain'
+else
+    alias myip="wget or curl not available"
+fi
+
+# Miscellaneous
+#
+alias dut='du -h --max-depth=1'  # du(1) prints totals for one level down
+alias df='df -hT'                # Make df output nicer
+alias reset=$( FX reset )        # Reset system palette
+
