@@ -8,6 +8,8 @@
 : ${LOGNAME:=$(id -un)}
 : ${UNAME:=$(uname)}
 
+export HOME LOGNAME UNAME
+
 # Locale settings default to en_US with utf-8 unless already set
 #
 : ${LANG:="en_US.UTF-8"}
@@ -15,15 +17,19 @@
 : ${LC_CTYPE:="en_US.UTF-8"}
 : ${LC_ALL:="en_US.UTF-8"}
 
+export LANG LANGUAGE LC_CTYPE LC_ALL
+
 # Always use my .inputrc
 if [ -r "$HOME/.inputrc" ]; then
     INPUTRC="$HOME/.inputrc"
+    export INPUTRC
 fi
 
 # Other
 #
 HISTSIZE=20               # Max commands in history
 TZ=$( cat /etc/timezone ) # Set TZ based on system timezone
+export HISTSIZE TZ
 
 # EDITOR/VISUAL
 #
@@ -39,6 +45,7 @@ else
     EDITOR=ed
 fi
 VISUAL=$EDITOR
+export VISUAL EDITOR
 
 # PAGER/MANPAGER
 #
@@ -53,7 +60,9 @@ MANPAGER=$PAGER
 if command -v ack >/dev/null; then
     ACK_PAGER=$PAGER
     ACK_PAGER_COLOR=$PAGER
+    export ACK_PAGER ACK_PAGER_COLOR
 fi
+export PAGER MANPAGER
 
 # Setup dircolors
 #
@@ -93,21 +102,24 @@ elif command -v firefox >/dev/null; then
 elif command -v uzbl-browser >/dev/null; then
     BROWSER='uzbl-browser'
 fi
+export BROWSER
 
 # Perl configuration
 #
 if test -d "$HOME/perl5/"; then
-    PATH="$HOME/perl5/bin${PATH:+:${PATH}}"; export PATH;
-    PERL5LIB="$HOME/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
-    PERL_LOCAL_LIB_ROOT="$HOME/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
-    PERL_MB_OPT="--install_base \"$HOME/perl5\""; export PERL_MB_OPT;
-    PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"; export PERL_MM_OPT;
+    PATH="$HOME/perl5/bin${PATH:+:${PATH}}"
+    PERL5LIB="$HOME/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"
+    PERL_LOCAL_LIB_ROOT="$HOME/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"
+    PERL_MB_OPT="--install_base \"$HOME/perl5\""
+    PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"
+    export PATH PERL5LIB PERL_LOCAL_LIB_ROOT PERL_MB_OPT PERL_MM_OPT
 fi
 
 # Cygwin specific
 #
 if [[ $(uname -o) =~ "Cygwin" ]]; then
     LD=gcc # Cygwin won't build without this. Weird
+    export LD
 fi
 
 if [ -n "$BASH" ]; then
@@ -120,5 +132,7 @@ if [ -n "$BASH" ]; then
     HISTFILESIZE=50           # Max lines in history
     HISTCONTROL="ignoredups"  # No duplicate history entries
     HISTIGNORE="&:[bf]g:exit" # History ignores these matches
+
+    export FIGNORE HISTFILESIZE HISTCONTROL HISTIGNORE
 fi
 
