@@ -57,7 +57,7 @@ fi
 
 # Setup dircolors
 #
-if test $( tput setaf ) -ge 0 && command -v dircolors >/dev/null; then
+if test $( tput colors ) -ge 0 && command -v dircolors >/dev/null; then
     # Use Solarized scheme if it exists and terminal supports it
     if test -r "$HOME/.dircolors.solarized" && [[ $TERM =~ 256 ]]; then
         colorfile="$HOME/.dircolors.solarized"
