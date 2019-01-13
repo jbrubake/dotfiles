@@ -5,13 +5,11 @@
 
 # TODO: This should be sourced from .xsession/.xinitrc
 
-. "$HOME/.env" # common environment
+. "$HOME/.env"      # common environment
+ENV="$HOME/.shinit" # equivalent to .bashrc for sh
+export ENV          # must be set here, in case we run
+                    # sh from within bash
 
-# sh-specific
-if [ -z "$BASH" ]; then
-    ENV="$HOME/.shinit" # equivalent to .bashrc
-    export ENV
-fi
 # Mintty Color Themes {{{
 if [[ $(uname -o) =~ "Cygwin" ]]; then
     # Set scheme to whatever color scheme you want
@@ -85,3 +83,4 @@ else
     echo "Uptime: $( uptime )\n"
 fi
 # }}}
+
