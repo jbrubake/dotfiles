@@ -31,10 +31,6 @@ test "x$PAGER" != 'xless' &&
 command -v screen >/dev/null &&
     alias screen='screen -dR'
 
-# Tmux automatically reattaches if able
-command -v tmux >/dev/null &&
-    alias tmux='tmux attach'
-
 # OS specific aliases
 #
 case $(uname -o) in
