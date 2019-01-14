@@ -10,6 +10,20 @@ ENV="$HOME/.shinit" # equivalent to .bashrc for sh
 export ENV          # must be set here, in case we run
                     # sh from within bash
 
+# Setup PATH {{{
+. "$HOME/.functions" # we need PATH manipulation functions
+
+# Put /usr/local/bin in PATH
+PATH="/usr/local/bin:$PATH"
+
+# Put ~/bin in PATH if it exists
+test -d "$HOME/bin" &&
+    PATH="$HOME/bin:$PATH"
+
+PATH=$(puniq $PATH)
+MANPATH=$(puniq $MANPATH)
+
+# }}}
 # Mintty Color Themes {{{
 if [[ $(uname -o) =~ "Cygwin" ]]; then
     # Set scheme to whatever color scheme you want
