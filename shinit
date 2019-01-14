@@ -7,23 +7,10 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
-. "$HOME/.functions"
+command -v pls ||
+    . "$HOME/.functions" # don't source twice
 . "$HOME/.alias" # Aliases might depend on functions
 
-# Setup PATH {{{
-#
-# FIXME: This is here so the necessary functions are already sourced
-
-# Put /usr/local/bin in PATH
-PATH="/usr/local/bin:$PATH"
-
-# Put ~/bin in PATH if it exists
-test -d "$HOME/bin" &&
-    PATH="$HOME/bin:$PATH"
-
-PATH=$(puniq $PATH)
-MANPATH=$(puniq $MANPATH)
-# }}}
 # Prompts {{{
 # Determine if terminal supports color
 #
@@ -61,7 +48,7 @@ fi
 reset='$(FX reset)'
 
 # Colorize username differently if we are root
-[ $UID == '0' ] && user_color=$root_user_color
+[ "x$UID" = "0" ] && user_color=$root_user_color
 
 PS1="$reset$dir_color$(pwd) $bracket_color<$user_color$(whoami)$at_color@$hostname_color$(hostname)$bracket_color> $prompt_color$ $reset"
 
