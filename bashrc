@@ -7,24 +7,10 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
-source "$HOME/.functions"
+command -v pls 2>&1 >/dev/null || # Don't source twice
+    source "$HOME/.functions"
 source "$HOME/.alias" # Aliases might depend on functions
 
-# Setup PATH {{{
-
-# FIXME: This is here so the necessary functions are already sourced
-
-# Put /usr/local/bin in PATH
-PATH="/usr/local/bin:$PATH"
-
-# Put ~/bin in PATH if it exists
-test -d "$HOME/bin" &&
-    PATH="$HOME/bin:$PATH"
-
-PATH=$(puniq $PATH)
-MANPATH=$(puniq $MANPATH)
-
-# }}}
 # Shell options {{{
 shopt -s cdspell      # Fix spelling errors in cd commands
 shopt -s extglob      # Advanced pathname expansion
