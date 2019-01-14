@@ -90,18 +90,18 @@ if test $( tput colors ) -ge 0 && command -v dircolors >/dev/null; then
 fi
 
 # Set default web browser
-# TODO: Set this based on whether X is running
-# TODO: Make this a generic priority list
 #
-if command -v chrome >/dev/null; then
-    BROWSER='chrome'
-elif command -v chromium >/dev/null; then
-    BROWSER='chromium'
-elif command -v firefox >/dev/null; then
-    BROWSER='firefox'
-elif command -v uzbl-browser >/dev/null; then
-    BROWSER='uzbl-browser'
+if test -n "$DISPLAY"; then
+    browsers="chrome chromium firefox uzbl-browser"
+else
+    browsers="links lynx"
 fi
+
+for b in $browsers; do
+    command -v $b >/dev/null &&
+        BROWSER=$b
+done
+unset browsers
 export BROWSER
 
 # Perl configuration
