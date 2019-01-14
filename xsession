@@ -3,7 +3,7 @@
 # vim: filetype=sh
 
 # FIXME: Make this more robust. Set options through
-#        variables at the begining. Maybe have app lists?
+# FIXME: variables at the begining. Maybe have app lists?
 
 #
 # Source my environment
