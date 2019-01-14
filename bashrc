@@ -32,7 +32,7 @@ test $( tput colors ) -ge 0 && HAS_COLOR=yes
 #
 # Additional prompts can be found in ~/.prompts
 # TODO: Probably want to eventually source that file
-#       and set a variable to select the prompt I want
+# TODO  and set a variable to select the prompt I want
 # TODO: Add bg jobs
 # TODO: Add git info
 
