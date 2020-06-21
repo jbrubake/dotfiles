@@ -1,0 +1,232 @@
+#!/bin/sh vim: foldlevel=0
+
+# Titlebar prompt {{{1
+
+#   On an idea (and using much of the basics from) S�rgio Vale e Pace.
+#   Created 8 January 99. 
+#
+#   Stuff that only needs to be done once:
+
+prompt_command () {
+    local PromUserName="$(whoami)"
+    local PromCurTTY=$(tty | sed -e "s/.*tty\(.*\)/\1/")
+    local PromHostName=$(echo -n $HOSTNAME | sed -e "s/[\.].*//")
+
+    local PromWHITE="\033[1;37m"
+    local PromBLUE_BACK="\033[44m"
+    local PromYELLOW="\033[1;33m"
+    local PromLIGHT_GREEN="\033[1;32m"
+    local PromLIGHT_CYAN="\033[1;36m"
+    local PromNO_COLOUR="\033[0m"
+
+    local COLUMNS=$(tput cols)
+
+    #   Enter your preferred date format here:
+    PromCurDate="$(echo -n $(date "+%H%M"))"
+    let PromCurDateLoc=$COLUMNS-$(echo -n "${PromCurDate}" \
+        | wc -c | tr -d " ")
+    let local BarTextSize=$(echo -n \
+        " $PromUserName@$PromHostName:$PromCurTTY ${PWD} ${PromCurDate} " \
+        | wc -c | tr -d " ")
+    if [ "$BarTextSize" -gt "$COLUMNS" ]
+    then
+        let cut=$BarTextSize-$COLUMNS+5
+        #   Why do I need to add 5 not 3 (the number of dots) here?
+        PromNewPWD="...$(echo -n $PWD | sed -e "s/\(^.\{$cut\}\)\(.*\)/\2/")"
+    else
+        PromNewPWD="$(echo -n $PWD)";
+    fi
+}
+
+PROMPT_COMMAND=prompt_command
+
+#   Because most of the action goes on in the blue bar at the top of the 
+#   screen, which is already considered to be a "non-printing" area by the
+#   prompt, the local COLOURs don't have to be surrounded by \[ and \] .
+
+sergio () {
+    PS1="\[\033[s\
+        \033[H\033[K\
+        $PromBLUE_BACK$PromWHITE\
+        \$PromUserName@\$PromHostName:\$PromCurTTY \
+        $PromLIGHT_GREEN\$PromNewPWD\033[K  \
+        \033[0;\${PromCurDateLoc}H$PromYELLOW\${PromCurDate} \
+        \033[K\
+        \033[u\033[1A\033[1B\
+        $PromLIGHT_CYAN\]>\[$PromNO_COLOUR\] "
+
+    PS2="\[$PromLIGHT_CYAN\]-\[$PromNO_COLOUR\] "
+}
+
+# Prompt functions {{{1
+# prompt_detached: Determine number of detached screen/tmux sessions {{{2
+prompt_detached () {
+    n_screen=$(screen -ls 2> /dev/null | grep -c '[Dd]etach[^)]*)$')
+    n_tmux=$(tmux list-sessions 2> /dev/null | grep -cv attached)
+    detached=$(( $n_screen + $n_tmux ))
+    if [[ $detached != "0" ]]; then
+        echo -n "${detached}d"
+    fi
+}
+
+# prompt_jobs: Get running and stopped jobs {{{2
+# Only works under Bash
+prompt_jobs () {
+    stopped=$( jobs -s | wc -l | tr -d " " )
+    running=$( jobs -r | wc -l | tr -d " " )
+    printf "%s" "${running}&/${stopped}z"
+}
+# prompt_load: Get system load {{{2
+prompt_load () {
+    read one five rest < /proc/loadavg
+    echo -n "$one:$five"
+}
+
+# prompt_uptime: Get uptime {{{2
+prompt_uptime () {
+    uptime=$(</proc/uptime)
+    uptime=${uptime%%.*}
+
+    mins=$(( uptime/60%60 ))
+    hours=$(( uptime/60/60%24 ))
+    days=$(( uptime/60/60/24 ))
+
+    if [ "$days" -ne "0" ]
+    then
+        echo -n "${days}d"
+    fi
+    echo -n "${hours}h${mins}m"
+}
+
+# prompt_user: Determine if root or not logged in user {{{2
+prompt_user () {
+    if [ "x$EUID" = 'x0' ]; then
+        echo -n 'root'
+    elif [ $USER != `logname 2>/dev/null` ]; then
+        echo -n "su to $USER"
+    else
+        echo -n $USER
+    fi
+}
+
+# prompt_ssh: Determine if running under ssh {{{2
+prompt_ssh () {
+    if [ -n "$SSH_CLIENT$SSH2_CLIENT$SSH_TTY" ]; then
+        echo -n ssh
+    else
+        echo -n local
+    fi
+}
+
+# prompt_tty: Get tty {{{2
+prompt_tty () {
+    tty | sed -e 's:/dev/::'
+}
+
+
+# Prompts {{{1
+# Determine if terminal supports color
+#
+test $( tput colors ) -ge 0 && HAS_COLOR=yes
+
+#############################################
+# This prompt looks roughly like this:
+#
+# 'pwd'
+# 'user@host (ssh)
+# '{jobs} [history] [$?]'
+# '$ '
+#############################################
+
+# Prompt color definitions
+#
+if test $HAS_COLOR; then
+    dir_clr='\[$(FG 2)\]'
+    slash_clr='\[$(FG 1)\]'
+    user_clr='\[$(FG 6)\]'
+    root_user_clr='\[$(FG 1)\]'
+    at_clr='\[$(FG 4)\]'
+    hostname_clr='\[$(FG 5)\]'
+    ssh_clr='\[$(FG 3)\]'
+    jobs_clr='\[$(FG 7)\]'
+    history_clr='\[$(FG 2)\]'
+    error_clr='\[$(FG 7; BG 1)\]'
+    prompt_clr='\[$(FG 3)\]'
+    bracket_clr='\[$(FG 4)\]'
+    reset='\[$(FX reset)\]'
+
+    # Colorize username differently if we are root
+    [ $UID == '0' ] && user_clr=$root_user_clr
+else
+    dir_clr=
+    slash_clr=
+    user_clr=
+    root_user_clr=
+    at_clr=
+    hostname_clr=
+    ssh_clr=
+    jobs_clr=
+    history_clr=
+    error_clr=
+    prompt_clr=
+    bracket_clr=
+    reset=
+fi
+
+
+#
+# new_pwd and ps1_error modified from Yu-Jie Lin's example <libb.wordpress.com>
+#
+
+# Print pwd with ~ and highlighted /'s
+new_pwd='$(
+           pwd | sed 's@^@$dir_clr@' | sed 's@$HOME@~@' | sed 's@/@$slash_clr/$dir_clr@g'
+          )'
+# Output $? if it is non-zero
+#
+ps1_error='$(
+    if [ $RETVAL -gt 0 ]; then (( i = 3 - ${#RETVAL} ));
+        echo -n "'"$error_clr"'[";
+        [ $i -gt 0 ] && echo -n " ";
+        echo -n "$RETVAL";
+        [ $i -eq 2 ] && echo -n " ";
+        echo -n "']"$reset"'";
+    fi
+    )'
+
+PS1="\
+$reset$new_pwd
+$user_clr$(prompt_user)$at_clr@$hostname_clr\h $bracket_clr($ssh_clr$(prompt_ssh)$bracket_clr)
+$bracket_clr{$jobs_clr\$(prompt_jobs)$bracket_clr} $bracket_clr!$history_clr\! $ps1_error
+$prompt_clr$ $reset"
+
+# Need to save $? here so that ps1_error can occur anywhere in the prompt
+# Otherwise, new_pwd will clobber the value of $? that we want
+PROMPT_COMMAND='RETVAL=$?;'
+
+unset dir_clr slash_clr hostname_clr at_clr bracket_clr
+unset history_clr error_clr prompt_clr user_clr root_user_clr
+unset ssh_clr jobs_clr
+unset reset
+unset screen_esc 
+unset new_pwd ps1_error HAS_COLOR
+
+# Test code {{{1
+# echo -n "jobs: "
+# prompt_jobs
+# echo
+# echo -n "load: "
+# prompt_load
+# echo
+# echo -n "uptime: "
+# prompt_uptime
+# echo
+# echo -n "user: "
+# prompt_user
+# echo
+# echo -n "ssh: "
+# prompt_ssh
+# echo
+# echo -n "tty: "
+# prompt_tty
+
