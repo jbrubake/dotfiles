@@ -20,7 +20,7 @@
 	pg  = "!sh -c 'git ls-files -m | grep $1 | xargs -r git diff --cached' -"
 	rmg = "!sh -c 'git ls-files -d | grep $1 | xargs -r git rm' -"
 	rsg = "!sh -c 'git ls-files -c | grep $1 | xargs -r git reset' -"
-	lg  = log --graph --pretty=oneline --abbrev-commit --decorate
+    lg = log --color --graph --date=format:'%Y-%m-%d %H:%M:%S' --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset'
 	si  = !git svn show-ignore > .git/info/exclude
 	sh  = !git-sh
     ; Print out last commit message from current branch for each file/directory in pwd
