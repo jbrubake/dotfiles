@@ -38,7 +38,9 @@ fi
 
 # Personal settings
 for f in ~/share/bash_completion.d/*; do
-    . $f
+    if test -e $f; then
+        . $f
+    fi
 done
 
 # Allow todo.sh alias to use bash completion
