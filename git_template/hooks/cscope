@@ -1,0 +1,8 @@
+#!/bin/sh
+set -e
+PATH="usr/local/bin:$PATH"
+trap 'rm -f "$$.tags"' EXIT
+git ls-files | \
+    cscope -b -R -f"$$.cscope.out"
+mv "$$.cscope.out" "cscope.out"
+
