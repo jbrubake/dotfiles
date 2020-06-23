@@ -9,7 +9,6 @@
     branch = auto
 [github]
 	user  = "jbrubake"
-	token = %GHTOKEN%
 [alias]
 	aa  = !git ls-files -d | xargs -r git rm && git ls-files -m -o --exclude-standard | xargs -r git add
 	aup = "!sh -c 'git ls-files -m | grep $1 | xargs -r git add' -"
@@ -29,7 +28,7 @@
     ; I like git add --patch better
     ap = add --patch
 [credential]
-	helpder = cache
+	helper = store
 [core]
 	excludesfile = ~/.cvsignore
 [init]
