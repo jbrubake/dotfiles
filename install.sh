@@ -40,10 +40,10 @@
 print_help() {
     cat <<EOF
 Usage: install.sh [OPTION]
-Install symlinks into DEST (default is ~/bin).  
+Install symlinks into DEST (default is $HOME).  
  -n=HOST       use HOST as the hostname
  -f            overwrite existing files and links
- -d=DEST       install to DEST instead of ~/bin
+ -d=DEST       install to DEST instead of $HOME
  -V            explain what is being done
  -h            display this help and exit
 EOF
