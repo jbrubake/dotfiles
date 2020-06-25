@@ -58,27 +58,16 @@ fi
 command -v toilet >/dev/null &&
    alias colfortune="fortune | toilet --metal -f term"
 
-# Use pretty_make
-#
-command -v pretty_make >/dev/null &&
-    alias make=pretty_make
-
 # If todo.txt is installed, make it simpler to access
 command -v todo.sh >/dev/null &&
     alias t=todo.sh
 
-# Keep uzbl-browser from polluting the terminal
-if command -v uzbl >/dev/null; then
-    alias uzbl="uzbl-browser $@ &> /dev/null &"
-    alias uzblt="uzbl-tabbed &> /dev/null &"
-fi
-
 # Get my real IP
 #
 if command -v wget >/dev/null; then
-    alias myip='wget http://ipecho.net/plain -O - -q'
+    alias myip='wget http://ipecho.net/plain -O - -q; echo'
 elif command -v curl >/dev/null; then
-    alias myip='curl http://ipecho.net/plain'
+    alias myip='curl http://ipecho.net/plain; echo'
 else
     alias myip="wget or curl not available"
 fi
@@ -87,5 +76,5 @@ fi
 #
 alias dut='du -h --max-depth=1'  # du(1) prints totals for one level down
 alias df='df -hT'                # Make df output nicer
-alias reset=$( FX reset )        # Reset system palette
+alias reset=$( tput sgr0 )       # Reset system palette
 
