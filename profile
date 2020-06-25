@@ -11,7 +11,8 @@ export ENV          # must be set here, in case we run
                     # sh from within bash
 
 # Setup PATH {{{
-. "$HOME/.functions" # we need PATH manipulation functions
+command -v puniq 2>&1 >/dev/null || # Don't source twice
+    source "$HOME/.functions"
 
 # Put /usr/local/bin in PATH
 PATH="/usr/local/bin:$PATH"
