@@ -3,60 +3,61 @@
 # Prompt functions {{{1
 # prompt_detached: Determine number of detached screen/tmux sessions {{{2
 prompt_detached () {
-    n_screen=$(screen -ls 2> /dev/null | grep -c '[Dd]etach[^)]*)$')
-    n_tmux=$(tmux list-sessions 2> /dev/null | grep -cv attached)
-    detached=$(( $n_screen + $n_tmux ))
+    local n_screen=$(screen -ls 2> /dev/null | grep -c '[Dd]etach[^)]*)$')
+    local n_tmux=$(tmux list-sessions 2> /dev/null | grep -cv attached)
+    local detached=$(( $n_screen + $n_tmux ))
     if [[ $detached != "0" ]]; then
-        echo -n "${detached}d"
+        printf "%sd" "${detached}"
     fi
 }
 
 # prompt_jobs: Get running and stopped jobs {{{2
 # Only works under Bash
 prompt_jobs () {
-    stopped=$( jobs -s | wc -l | tr -d " " )
-    running=$( jobs -r | wc -l | tr -d " " )
-    printf "%s" "${running}&/${stopped}z"
+    printf "%s&/%sz" $( jobs -r | wc -l | tr -d " " ) $( jobs -s | wc -l | tr -d " " )
 }
 # prompt_load: Get system load {{{2
 prompt_load () {
+    local one=
+    local five=
+    local rest=
     read one five rest < /proc/loadavg
-    echo -n "$one:$five"
+    printf "%s:%s" "$one" "$five"
 }
 
 # prompt_uptime: Get uptime {{{2
 prompt_uptime () {
-    uptime=$(</proc/uptime)
+    local uptime=$(</proc/uptime)
     uptime=${uptime%%.*}
 
-    mins=$(( uptime/60%60 ))
-    hours=$(( uptime/60/60%24 ))
-    days=$(( uptime/60/60/24 ))
+    local mins=$(( uptime/60%60 ))
+    local hours=$(( uptime/60/60%24 ))
+    local days=$(( uptime/60/60/24 ))
 
     if [ "$days" -ne "0" ]
     then
-        echo -n "${days}d"
+        printf "%sd " "${days}"
     fi
-    echo -n "${hours}h${mins}m"
+    printf "%s:%s" "${hours}" "${mins}"
 }
 
 # prompt_user: Determine if root or not logged in user {{{2
 prompt_user () {
     if [ "x$EUID" = 'x0' ]; then
-        echo -n 'root'
+        printf "%s" 'root'
     elif [ $USER != `logname 2>/dev/null` ]; then
-        echo -n "su to $USER"
+        printf "su to %s" "$USER"
     else
-        echo -n $USER
+        printf "%s" $USER
     fi
 }
 
 # prompt_ssh: Determine if running under ssh {{{2
 prompt_ssh () {
     if [ -n "$SSH_CLIENT$SSH2_CLIENT$SSH_TTY" ]; then
-        echo -n ssh
+        printf "%s" 'ssh'
     else
-        echo -n local
+        printf "%s" 'local'
     fi
 }
 
@@ -65,37 +66,58 @@ prompt_tty () {
     tty | sed -e 's:/dev/::'
 }
 
+# prompt_pwd: Print pwd with colors {{{2
+#
+# prompt_pwd modified from Yu-Jie Lin's example <libb.wordpress.com>
+#
+# Arguments:
+#   $1 : directory color
+#   $2 : slash color
+prompt_pwd () {
+    local dir_clr=$1
+    local slash_clr=$2
+    echo $(pwd | sed "s@^@$dir_clr@" | sed "s@$HOME@~@" | sed "s@/@$slash_clr/$dir_clr@g")
+}
 
-# Prompts {{{1
+# prompt_error: Print exit value of last command if it is non-zero {{{2
+#
+# prompt_error modified from Yu-Jie Lin's example <libb.wordpress.com>
+#
+# Arguments:
+#   $1: output color
+prompt_error () {
+    local error_clr=$1
+
+    if [ $RETVAL -gt 0 ]; then (( i = 3 - ${#RETVAL} ));
+        printf "%s" "$error_clr[";
+        [ $i -gt 0 ] && printf "%s" " ";
+        printf "%s" "$RETVAL";
+        [ $i -eq 2 ] && printf "%s" " ";
+        printf "%s" "]$(FX reset)";
+    fi
+}
+
+# Prompt color definitions {{{1
+#
+
 # Determine if terminal supports color
 #
 test $( tput colors ) -ge 0 && HAS_COLOR=yes
 
-#############################################
-# This prompt looks roughly like this:
-#
-# 'pwd'
-# 'user@host (ssh)
-# '{jobs} [history] [$?]'
-# '$ '
-#############################################
-
-# Prompt color definitions
-#
 if test $HAS_COLOR; then
-    dir_clr='\[$(FG 2)\]'
-    slash_clr='\[$(FG 1)\]'
-    user_clr='\[$(FG 6)\]'
-    root_user_clr='\[$(FG 1)\]'
-    at_clr='\[$(FG 4)\]'
-    hostname_clr='\[$(FG 5)\]'
-    ssh_clr='\[$(FG 3)\]'
-    jobs_clr='\[$(FG 7)\]'
-    history_clr='\[$(FG 2)\]'
-    error_clr='\[$(FG 7; BG 1)\]'
-    prompt_clr='\[$(FG 3)\]'
-    bracket_clr='\[$(FG 4)\]'
-    reset='\[$(FX reset)\]'
+    dir_clr="\[$(FG 2)\]"
+    slash_clr="\[$(FG 1)\]"
+    user_clr="\[$(FG 6)\]"
+    root_user_clr="\[$(FG 1)\]"
+    at_clr="\[$(FG 4)\]"
+    hostname_clr="\[$(FG 5)\]"
+    ssh_clr="\[$(FG 3)\]"
+    jobs_clr="\[$(FG 7)\]"
+    history_clr="\[$(FG 2)\]"
+    error_clr="\[$(FG 7; BG 1)\]"
+    prompt_clr="\[$(FG 3)\]"
+    bracket_clr="\[$(FG 4)\]"
+    reset="\[$(FX reset)\]"
 
     # Colorize username differently if we are root
     [ $UID == '0' ] && user_clr=$root_user_clr
@@ -115,35 +137,25 @@ else
     reset=
 fi
 
+# Prompts {{{1
 
+#############################################
+# This prompt looks roughly like this:
 #
-# new_pwd and ps1_error modified from Yu-Jie Lin's example <libb.wordpress.com>
-#
-
-# Print pwd with ~ and highlighted /'s
-new_pwd='$(
-           pwd | sed 's@^@$dir_clr@' | sed 's@$HOME@~@' | sed 's@/@$slash_clr/$dir_clr@g'
-          )'
-# Output $? if it is non-zero
-#
-ps1_error='$(
-    if [ $RETVAL -gt 0 ]; then (( i = 3 - ${#RETVAL} ));
-        echo -n "'"$error_clr"'[";
-        [ $i -gt 0 ] && echo -n " ";
-        echo -n "$RETVAL";
-        [ $i -eq 2 ] && echo -n " ";
-        echo -n "']"$reset"'";
-    fi
-    )'
+# 'pwd'
+# 'user@host (ssh)
+# '{jobs} [history] [$?]'
+# '$ '
+#############################################
 
 PS1="\
-$reset$new_pwd
+$reset\$(prompt_pwd $dir_clr $slash_clr)
 $user_clr$(prompt_user)$at_clr@$hostname_clr\h $bracket_clr($ssh_clr$(prompt_ssh)$bracket_clr)
-$bracket_clr{$jobs_clr\$(prompt_jobs)$bracket_clr} $bracket_clr!$history_clr\! $ps1_error
+$brackrt_clr{$jobs_clr\$(prompt_jobs)$bracket_clr} $bracket_clr!$history_clr\! \$(prompt_error $error_clr)
 $prompt_clr$ $reset"
 
-# PROMPT_COMMAND
-#
+# PROMPT_COMMAND {{{1
+
 # Need to save $? here so that ps1_error can occur anywhere in the prompt
 # Otherwise, new_pwd will clobber the value of $? that we want
 #
@@ -151,10 +163,10 @@ $prompt_clr$ $reset"
 #
 PROMPT_COMMAND='RETVAL=$?; history -a'
 
+# Clean up {{{1
 unset dir_clr slash_clr hostname_clr at_clr bracket_clr
 unset history_clr error_clr prompt_clr user_clr root_user_clr
 unset ssh_clr jobs_clr
 unset reset
-unset screen_esc 
-unset new_pwd ps1_error HAS_COLOR
+unset HAS_COLOR
 
