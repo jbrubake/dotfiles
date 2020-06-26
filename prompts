@@ -142,9 +142,14 @@ $user_clr$(prompt_user)$at_clr@$hostname_clr\h $bracket_clr($ssh_clr$(prompt_ssh
 $bracket_clr{$jobs_clr\$(prompt_jobs)$bracket_clr} $bracket_clr!$history_clr\! $ps1_error
 $prompt_clr$ $reset"
 
+# PROMPT_COMMAND
+#
 # Need to save $? here so that ps1_error can occur anywhere in the prompt
 # Otherwise, new_pwd will clobber the value of $? that we want
-PROMPT_COMMAND='RETVAL=$?;'
+#
+# history -a allows multiple shells to write to the same history file
+#
+PROMPT_COMMAND='RETVAL=$?; history -a'
 
 unset dir_clr slash_clr hostname_clr at_clr bracket_clr
 unset history_clr error_clr prompt_clr user_clr root_user_clr
