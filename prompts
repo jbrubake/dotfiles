@@ -158,22 +158,3 @@ unset reset
 unset screen_esc 
 unset new_pwd ps1_error HAS_COLOR
 
-# Test code {{{1
-# echo -n "jobs: "
-# prompt_jobs
-# echo
-# echo -n "load: "
-# prompt_load
-# echo
-# echo -n "uptime: "
-# prompt_uptime
-# echo
-# echo -n "user: "
-# prompt_user
-# echo
-# echo -n "ssh: "
-# prompt_ssh
-# echo
-# echo -n "tty: "
-# prompt_tty
-
