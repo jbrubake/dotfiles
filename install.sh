@@ -27,12 +27,16 @@
 #         (see print_help() below for more)
 #
 # DESCRIPTION:
-#     Install dotfile symlinks
+#     Install dotfile directory tree and symlinks
 #
-#     Create symlinks in DESTDIR (defaults to $HOME) to all files
-#     in local directory, excluding any files in .ignore and
-#     .ignore.<hostname>. The ignore files support shell globbing.
-#     All link names have a '.' prepended.
+#     Duplicate the directory structure in the local directory into
+#     DESTDIR (defaults to $HOME) and create symlinks in DESTDIR to
+#     all files in the local directory structure. Ignore any files
+#     in .ignore and .ignore.<hostname>. The ignore files support
+#     shell globbing.
+#
+#     All top-level directories and files have a '.' prepended to
+#     their name.
 #
 # BUGS:
 #     - None so far
@@ -41,9 +45,9 @@ print_help() {
     cat <<EOF
 Usage: install.sh [OPTION]
 Install symlinks into DEST (default is $HOME).  
- -n=HOST       use HOST as the hostname
+ -n HOST       use HOST as the hostname
  -f            overwrite existing files and links
- -d=DEST       install to DEST instead of $HOME
+ -d DEST       install to DEST instead of $HOME
  -V            explain what is being done
  -h            display this help and exit
 EOF
@@ -60,14 +64,6 @@ logerror () {
     # Output error messages
 
     echo "$*" >&2
-}
-get_link_path () {
-    # Return the absolute path of the target of a symbolic link
-
-    local realfile=$( ls -l $1 | awk '{print $11}' )
-    local startdir=$( dirname $1 )
-
-    echo $( cd $startdir/$( dirname $realfile); pwd )/$( basename $realfile )
 }
 CT_FindRelativePath() {
 # Returns relative path to $2 from $1
@@ -174,7 +170,7 @@ while getopts "n:fd:Vh" opt; do
     esac
 done
 
-# Convert flag variables to ln(1) options
+# Convert flag variables to ln(1) and mkdir options
 if test $VERBOSE = 'yes'; then
     verbose='-v' # ln(1) verbose flag
 else
@@ -192,40 +188,57 @@ if ! test -d "$DESTDIR" && ! mkdir -p "$DESTDIR"; then
     exit
 fi
 # }
-# Get relative path to dotfiles from DESTDIR
-DOTPATH=$( CT_FindRelativePath $DESTDIR $( pwd ) )
+# Replicate directory tree
+#
+# Find all non-hidden sub-directories and strip the leading "./"
+for d in $(find . -mindepth 1 \( ! -path '*/.*' \) -type d -print | sed -e 's#./##'); do
+    mkdir -p $verbose "$DESTDIR/.$d"
+done
 
-# Action happens here, following these rules:
+# Link files, following these rules:
 #
 # - skip files in .ignore and .ignore.<host>
+# - skip if link exists and already points to the correct file
 # - if -f was *not* specified
 # -     Skip if backup exists
 # -     Backup existing files
 # - else -f *was* specified
 # -     Overwrite existing links and files
 #
-for f in *; do
+# Find all non-hidden files in current and non-hidden
+# sub-directories and strip the leading "./"
+for f in $(find . \( ! -path '*/.*' \) -type f -print | sed -e 's#./##'); do
     # skip ignored files
     for p in $(cat $IGNOREFILE $HOSTIGNORE 2>/dev/null); do
         test $f = $p && continue 2 # continue OUTER LOOP
     done
 
+    # get relative path to the file from its new location in DESTDIR
+    linkpath=$( CT_FindRelativePath $DESTDIR/$( dirname $f) $( dirname $f ) )
+
+    # create the link name and make it hidden
+    if test $( dirname $f ) = '.'; then
+        linkname=".$( basename $f )"
+    else
+        linkname=".$( dirname $f )/$( basename $f )"
+    fi
+
     # Test if an already existing link points
     # to the right file already
-    if test -L "$DESTDIR/.$f"; then
-        if test $( get_link_path "$DESTDIR/.$f" ) = $( pwd )/$f; then
-            logmsg "$f is already linked. SKipping"
+    if test -L "$DESTDIR/$linkname"; then
+        if test $(realpath $(readlink -f -- "$DESTDIR/$linkname")) = \
+                $(realpath $f); then
+            logmsg "${linkname} is already linked. Skipping"
             continue
         fi
     fi
 
-    if test $FORCE = 'no' && test -e "$DESTDIR/.$f~"; then
+    if test $FORCE = 'no' && test -e "$DESTDIR/$linkname~"; then
         # skip if -f not specified and backup exists
-        logmsg "Backup .$f~ already exists. Skipping"
+        logmsg "Backup ${linkname}~ already exists. Skipping"
         continue
     fi
 
     # make links
-    ln -s $verbose $force "$DOTPATH/$f" "$DESTDIR/.$f" 
+    ln -s $verbose $force "$linkpath/$(basename $f)" "$DESTDIR/$linkname"
 done
-
