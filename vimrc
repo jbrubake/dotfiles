@@ -111,6 +111,22 @@ function! NeatFoldText()
     return foldtextstart . repeat(foldchar, winwidth(0)-foldtextlength) .  foldtextend
 endfunction
 set foldtext=NeatFoldText()
+
+" Fold C-like languages on the function prototype when braces are in the first column
+"
+" https://vim.fandom.com/wiki/Folding_functions_with_the_prototype_included
+function FoldBrace()
+    if getline(v:lnum+1)[0] == '{'
+        return 1
+    endif
+    if getline(v:lnum) =~ '{'
+        return 1
+    endif
+    if getline(v:lnum)[0] =~ '}'
+        return '<1'
+    endif
+    return -1
+endfunction
 " Plugins {{{1
 "============
 " TODO: Only configure plugin if it exists
@@ -497,6 +513,8 @@ nmap <leader>f9 :set foldlevel=9<cr>
 
 " autocmds {{{1
 "=================
+" Clear everything
+autocmd!
 " Source .vimrc when saving changes
 autocmd BufWritePost ~/.vimrc source ~/.vimrc
 " Set options for git commit files
@@ -507,9 +525,9 @@ autocmd Filetype make setlocal tabstop=8
 autocmd Filetype make setlocal softtabstop=8
 autocmd Filetype make setlocal shiftwidth=8
 " }}}
-" C {{{
-autocmd Filetype c setlocal foldmethod=syntax " Fold on comments and braces
-autocmd Filetype c setlocal foldlevel=100     " Don't automatically fold
+" C-like Folding {{{
+autocmd Filetype c,cpp,perl setlocal foldexpr=FoldBrace() " Use custom folding function
+autocmd Filetype c,cpp,perl setlocal foldmethod=expr      " for C code
 " }}}
 
 " Colors and Syntax Settings {{{1
