@@ -108,7 +108,6 @@ FX()
 }
 
 if test $( tput colors ) -ge 0; then
-    # TODO: Create 24bit color versions
     FG() {
         tput setaf $1
     }
