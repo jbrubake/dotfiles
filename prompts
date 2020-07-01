@@ -97,6 +97,53 @@ prompt_error () {
     fi
 }
 
+# prompt_git: Print current git branch and the following status codes: {{{2
+#  +    Uncommitted changes
+#  !    Unstaged changes
+#  ?    Untracked files
+#  $    Stashed files
+#
+#
+# Arguments:
+#   $1: String to print immediately before branch name
+#   $2: String to print immediately after branch name
+prompt_git() {
+	local s=''
+	local branchName=''
+
+	# Check if the current directory is in a Git repository.
+	git rev-parse --is-inside-work-tree &>/dev/null || return
+
+	# Check for what branch we’re on.
+	# Get the short symbolic ref. If HEAD isn’t a symbolic ref, get a
+	# tracking remote branch or tag. Otherwise, get the
+	# short SHA for the latest commit, or give up.
+	branchName=$(git symbolic-ref --quiet --short HEAD 2> /dev/null || \
+		git describe --all --exact-match HEAD 2> /dev/null || \
+		git rev-parse --short HEAD 2> /dev/null || \
+		printf '%s' '(unknown)')
+
+    # Check for uncommitted changes in the index.
+    if ! $(git diff --quiet --ignore-submodules --cached); then
+        s+='+'
+    fi;
+    # Check for unstaged changes.
+    if ! $(git diff-files --quiet --ignore-submodules --); then
+        s+='!'
+    fi;
+    # Check for untracked files.
+    if [ -n "$(git ls-files --others --exclude-standard)" ]; then
+        s+='?';
+    fi;
+    # Check for stashed files.
+    if $(git rev-parse --verify refs/stash &>/dev/null); then
+        s+='$';
+    fi;
+
+	[ -n "${s}" ] && s=" [${s}]";
+
+	echo -e "${1}${branchName}${2}${s}";
+}
 # Prompt color definitions {{{1
 #
 
@@ -107,11 +154,13 @@ test $( tput colors ) -ge 0 && HAS_COLOR=yes
 if test $HAS_COLOR; then
     dir_clr="\[$(FG 2)\]"
     slash_clr="\[$(FG 1)\]"
+    git_branch_clr="\[$(FG 12)\]"
+    git_status_clr="\[$(FG 11)\]"
     user_clr="\[$(FG 6)\]"
     root_user_clr="\[$(FG 1)\]"
     at_clr="\[$(FG 4)\]"
     hostname_clr="\[$(FG 5)\]"
-    ssh_clr="\[$(FG 3)\]"
+    ssh_clr="\[$(FG 11)\]"
     jobs_clr="\[$(FG 7)\]"
     history_clr="\[$(FG 2)\]"
     error_clr="\[$(FG 7; BG 1)\]"
@@ -142,14 +191,14 @@ fi
 #############################################
 # This prompt looks roughly like this:
 #
-# 'pwd'
+# 'pwd (git branch) [git status]'
 # 'user@host (ssh)
 # '{jobs} [history] [$?]'
 # '$ '
 #############################################
 
 PS1="\
-$reset\$(prompt_pwd $dir_clr $slash_clr)
+$reset\$(prompt_pwd $dir_clr $slash_clr) \$(prompt_git $git_branch_clr $git_status_clr)
 $user_clr$(prompt_user)$at_clr@$hostname_clr\h $bracket_clr($ssh_clr$(prompt_ssh)$bracket_clr)
 $brackrt_clr{$jobs_clr\$(prompt_jobs)$bracket_clr} $bracket_clr!$history_clr\! \$(prompt_error $error_clr)
 $prompt_clr$ $reset"
