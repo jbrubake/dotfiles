@@ -7,13 +7,18 @@ test $( tput colors ) -ge 0 && color_flag='--color=auto'
 
 # My standard ls aliases
 #
-ls_opts="$color_flag --group-directories-first -XF --dereference-command-line-symlink-to-dir"
-alias ls="command  ls $ls_opts"
-alias la="command  ls $ls_opts -A"
-alias ll="command  ls $ls_opts -lh"
-alias lal="command ls $ls_opts -lhA"
-alias l.="command  ls $ls_opts -d .*"
+ls_opts="--group-directories-first -XF --dereference-command-line-symlink-to-dir"
+alias ls="command  ls $color_flag $ls_opts"
+alias la="command  ls $color_flag $ls_opts -A"
+alias ll="command  ls $color_flag $ls_opts -lh"
+alias lal="command ls $color_flag $ls_opts -lhA"
+alias l.="command  ls $color_flag $ls_opts -d .*"
 unset ls_opts
+
+# Easier navigation
+alias ..="cd .."
+alias ...="cd ../.."
+alias -- -="cd -"
 
 # Force color in *grep
 #
