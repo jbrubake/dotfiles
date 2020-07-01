@@ -527,7 +527,8 @@ autocmd Filetype make setlocal shiftwidth=8
 " }}}
 " C-like Folding {{{
 autocmd Filetype c,cpp,perl setlocal foldexpr=FoldBrace() " Use custom folding function
-autocmd Filetype c,cpp,perl setlocal foldmethod=expr      " for C code
+autocmd Filetype c,cpp,perl setlocal foldmethod=expr      "  for C/C++ code
+autocmd Filetype c,cpp,perl setlocal foldlevel=99         " Don't fold at start
 " }}}
 
 " Colors and Syntax Settings {{{1
