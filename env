@@ -88,6 +88,20 @@ if test $( tput colors ) -ge 0 && command -v dircolors >/dev/null; then
     unset colorfile
 fi
 
+# Configure tldr client
+#
+if command -v tldr >/dev/null; then
+    TLDR_PARAM='green'
+    TLDR_EPARAM='bold green'
+    TLDR_CODE='green'
+    TLDR_DESCRIPTION='white'
+    TLDR_HEADER='bold yellow'
+    TLDR_QUOTE='underline bold blue'
+
+    export TLDR_PARAM TLDR_EPARAM TLDR_CODE
+    export TLDR_DESCRIPTION TLDR_HEADER TLDR_QUOTE
+fi
+
 # Set default web browser
 #
 if test -n "$DISPLAY"; then
