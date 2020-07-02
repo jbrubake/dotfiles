@@ -6,4 +6,5 @@ and had a few instances where I wished I had a revision history.
 
 TODO
 ====
-Make xsession and xinitrc the same *without* using symlinks
+- Backup files to a directory instead of renaming (easier to delete/recover)
+
