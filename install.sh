@@ -49,6 +49,7 @@ Install symlinks into DEST (default is $HOME).
  -f            overwrite existing files and links
  -d DEST       install to DEST instead of $HOME
  -V            explain what is being done
+ -t            print what would be done
  -h            display this help and exit
 EOF
 }
@@ -158,13 +159,15 @@ DESTDIR="$HOME"
 HOST=$( hostname )
 IGNOREFILE=.ignore  # list of files that shouldn't be linked
 HOSTIGNORE=$IGNOREFILE.$HOST    # host-specific ignore file
+DRY_RUN=
 
-while getopts "n:fd:Vh" opt; do
+while getopts "n:fd:Vth" opt; do
     case $opt in
         n) HOST=$OPTARG; HOSTIGNORE="$IGNOREFILE.$h" ;;
         f) FORCE='yes' ;;
         d) DESTDIR=$OPTARG ;;
         V) VERBOSE='yes' ;;
+        t) DRY_RUN='echo' ;;
         h) print_help; exit ;;
         *) print_help; exit ;;
     esac
@@ -192,7 +195,7 @@ fi
 #
 # Find all non-hidden sub-directories and strip the leading "./"
 for d in $(find . -mindepth 1 \( ! -path '*/.*' \) -type d -print | sed -e 's#./##'); do
-    mkdir -p $verbose "$DESTDIR/.$d"
+    $DRY_RUN mkdir -p $verbose "$DESTDIR/.$d"
 done
 
 # Link files, following these rules:
@@ -240,5 +243,5 @@ for f in $(find . \( ! -path '*/.*' \) -type f -print | sed -e 's#./##'); do
     fi
 
     # make links
-    ln -s $verbose $force "$linkpath/$(basename $f)" "$DESTDIR/$linkname"
+    $DRY_RUN ln -s $verbose $force "$linkpath/$(basename $f)" "$DESTDIR/$linkname"
 done
