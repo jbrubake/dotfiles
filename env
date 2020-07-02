@@ -27,9 +27,8 @@ fi
 
 # Other
 #
-HISTSIZE=20               # Max commands in history
 TZ=$( cat /etc/timezone ) # Set TZ based on system timezone
-export HISTSIZE TZ
+export TZ
 
 # EDITOR/VISUAL
 #
