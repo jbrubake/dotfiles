@@ -1,5 +1,4 @@
-# the following line is actually
-# equivalent to "\C-?": delete-char
+# The following line is actually equivalent to "\C-?": delete-char
 "\e[3~": delete-char
 
 # VT
@@ -31,8 +30,13 @@ set bell-style visible
 set horizontal-scroll-mode Off
 
 # Only need to press Tab once for Tab completion
-#set completion-ignore-case on
 set show-all-if-ambiguous on
+# Color the common prefix differently
+set colored-completion-prefix on
+# Color completions according to LS_COLORS
+set colored-stats on
+# Append ls -F character to Tab completion
+set visible-stats on
 
 # Expand homedir name
 set expand-tilde on
@@ -40,20 +44,25 @@ set expand-tilde on
 # Tab completion on symlinked directories adds the '/'
 set mark-symlinked-directories on
 
-# Match all files
-#set match-hidden-files on
-
 # 'Magic Space'
 # Insert a space character then performs
 # a history expansion in the line
-#Space: magic-space
+$if Bash
+    Space: magic-space
+$endif
 
-# Append ls -F character to Tab completion
-set visible-stats on
+# Use Ctl+P/Ctl+N for incremental search
+# Up/Down still work normally
+"\C-P": history-search-backward
+"\C-N": history-search-forward
 
-"\e[A": history-search-backward
-"\e[B": history-search-forward
+# FIXME: This does not work with 'set meta-convert off'
+# FIXME: but that is required for Unicode characters
+# Set Alt+o to load previous command and
+# position cursor to add an option
+# "\C-g": "\C-p\C-a\C-f "
+"\M-o": "\C-p\C-a\M-f "
 
-# Use vi bindings
-#set editing-mode vi
-#set keymap vi
+# Make Alt+s cycle through Tab completion list
+"\M-s": menu-complete
+
