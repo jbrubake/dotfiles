@@ -4,15 +4,11 @@
 # FIXME: variables at the begining. Maybe have app lists?
 
 #
-# Source my environment
-#
-test -r $HOME/.shenv && . $HOME/.shenv
-export PATH=/home/jbrubake/local/bin:/home/jbrubake/bin:$PATH
-#
 # What WM am I running?
 #
 # Currently supports:
 #   dwm
+
 #   Any WM that is run as a single command with no arguments
 #
 # Defaults to twm
