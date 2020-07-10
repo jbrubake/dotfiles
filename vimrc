@@ -17,14 +17,12 @@
 " za    toggle fold at cursor position
 " zj    move down to start of next fold
 " zk    move up to end of previous fold
-
 " Initialization {{{1
 " ==============
 " Remove all autocommands if sourcing .vimrc again
 autocmd!
 
 set nocompatible " Don't be vi compatible
-
 " Basics {{{1
 " ======
 filetype plugin indent on            " Load filetype plugins and indent settings
@@ -127,6 +125,9 @@ function FoldBrace()
     endif
     return -1
 endfunction
+autocmd Filetype c,cpp,perl setlocal foldexpr=FoldBrace() " Use custom folding function
+autocmd Filetype c,cpp,perl setlocal foldmethod=expr      "  for C/C++ code
+autocmd Filetype c,cpp,perl setlocal foldlevel=99         " Don't fold at start
 " Plugins {{{1
 "============
 " TODO: Only configure plugin if it exists
@@ -146,23 +147,23 @@ autocmd VimEnter * if filereadable("cscope.out")
     \ | exec "CCTreeLoadDB cscope.out" 
     \ | endif
 
-" conkyrc: Vim plugin for *conkyrc and conky.conf {{{2
 " No configuration needed
 
-" IndentCommentPrefix: Indents comments sensibly {{{2
-" >>  : Indent, keeping comment prefix where it is
-" <<  : Deindent, keeping comment prefix where it is
-" g>> : Indent, including comment prefix
+" cscope_maps.vim: CSCOPE settings for vim {{{2
+" CTRL-\                   : Show search in current window
+" CTRL-<space>             : Show search in horizontal split
+" CTRL-<space> Ctl+<space> : Show search in vertical split
+" CTRL-o                   : jump back to previous locations
 
-" Use single > or < in Visual mode
+" s : symbol - all references to token under cursor
+" g : global - global definition
+" c : calls - all calls to function
+" t : text - all instances
+" e : egrep - egrep search
+" f : file - open file
+" i : includes - files that include filename
+" d : called - functions called by this function
 
-" Comment chars in this list will *not* be left in column 1
-"let g:IndentCommentPrefix_Blacklist = ['#', '>']
-
-" Any string in this list *will* remain in column 1
-"let g:IndentCommentPrefix_Whitelist = ['REMARK:']
-
-" ingo-library: library functions required by IndentCommentPrefix {{{2
 " No configuration needed
 
 " nerdtree: A tree explorer plugin for vim {{{2
@@ -299,9 +300,33 @@ let g:closetag_filenames = "*.html,*.xhtml,*.phtml"
 
 " No configuration needed
 
+" vim-gist: Edit github.com gists with vim {{{2
+" No configuration needed
+
+" vim-IndentCommentPrefix: Indents comments sensibly {{{2
+" >>  : Indent, keeping comment prefix where it is
+" <<  : Deindent, keeping comment prefix where it is
+" g>> : Indent, including comment prefix
+
+" Use single > or < in Visual mode
+
+" Comment chars in this list will *not* be left in column 1
+"let g:IndentCommentPrefix_Blacklist = ['#', '>']
+
+" Any string in this list *will* remain in column 1
+"let g:IndentCommentPrefix_Whitelist = ['REMARK:']
+
+" vim-ingo-library: library functions required by IndentCommentPrefix {{{2
+" No configuration needed
+
+" vim-markdown-folding: Fold Markdown files on headers {{{2
+" Use .mdp extentions for mdp presentations
+autocmd BufRead,BufNewFile *.mdp setfiletype markdown
+" Use Nested folding for all Markdown files
+autocmd Filetype markdown setlocal foldexpr=NestedMarkdownFolds()
 " vim-markdown: Markdown syntax {{{2
 " Enable fenced code block syntax highlighting
-let g:markdown_fenced_languages = ['python', 'html', 'bash=sh', 'c']
+" let g:markdown_fenced_languages = ['python', 'html', 'bash=sh', 'c']
 
 " vim-surround: Modify surrounding characters {{{2
 " ds<t>         : delete <t>
@@ -382,6 +407,15 @@ autocmd filetype todo setlocal omnifunc=todo#complete
 " Automatically complete + and @
 autocmd filetype todo imap <buffer> + +<C-X><C-O>
 autocmd filetype todo imap <buffer> @ @<C-X><C-O>
+
+" a.vim: Swap header and source files {{{2
+" :A : Switch between header and source files
+" :AS: Split and switch
+" :AV: Vertical split and switch
+"
+" Use 'set autochdir' to make it work
+
+" No configuration needed
 
 " Mappings {{{1
 "=============
@@ -495,24 +529,20 @@ nmap <leader>f9 :set foldlevel=9<cr>
 
 " autocmds {{{1
 "=================
-" Clear everything
-autocmd!
+" All autocmds were cleared at the top of the file
+
 " Source .vimrc when saving changes
 autocmd BufWritePost ~/.vimrc source ~/.vimrc
 " Set options for git commit files
 autocmd Filetype gitcommit set tw=68 spell
+" Use .mdp extentions for mdp presentations
+autocmd BufRead,BufNewFile *.mdp setfiletype markdown
 " Makefiles {{{
 autocmd Filetype make setlocal noexpandtab   " We need real tabs
 autocmd Filetype make setlocal tabstop=8
 autocmd Filetype make setlocal softtabstop=8
 autocmd Filetype make setlocal shiftwidth=8
 " }}}
-" C-like Folding {{{
-autocmd Filetype c,cpp,perl setlocal foldexpr=FoldBrace() " Use custom folding function
-autocmd Filetype c,cpp,perl setlocal foldmethod=expr      "  for C/C++ code
-autocmd Filetype c,cpp,perl setlocal foldlevel=99         " Don't fold at start
-" }}}
-
 " Colors and Syntax Settings {{{1
 " ==========================
 " NOTE: Rainbow doesn't work unless this is at the end
