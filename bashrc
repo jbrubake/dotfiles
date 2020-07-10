@@ -7,9 +7,7 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
-command -v pls 2>&1 >/dev/null || # Don't source twice
-    source "$HOME/.functions"
-source "$HOME/.alias" # Aliases might depend on functions
+source "$HOME/.shinit" # common interactive shell configuration
 
 # Shell options {{{
 shopt -s cdspell      # Fix spelling errors in cd commands
@@ -23,7 +21,6 @@ shopt -s no_empty_cmd_completion # Don't TAB complete a blank line
 
 set   +o ignoreeof    # Ctl+D does not exit shell
 # }}}
-source "$HOME/.prompts"
 # Bash Completion {{{
 # System settings
 if ! shopt -oq posix; then

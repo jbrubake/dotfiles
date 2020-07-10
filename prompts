@@ -1,6 +1,7 @@
 #!/bin/sh vim: foldlevel=0
 
 # Prompt functions {{{1
+if test -n "$BASH"; then
 # prompt_detached: Determine number of detached screen/tmux sessions {{{2
 prompt_detached () {
     local n_screen=$(screen -ls 2> /dev/null | grep -c '[Dd]etach[^)]*)$')
@@ -10,7 +11,6 @@ prompt_detached () {
         printf "%sd" "${detached}"
     fi
 }
-
 # prompt_jobs: Get running and stopped jobs {{{2
 # Only works under Bash
 prompt_jobs () {
@@ -144,6 +144,8 @@ prompt_git() {
 
 	echo -e "${1}${branchName}${2}${s}";
 }
+
+fi # End bash-specific section
 # Prompt color definitions {{{1
 #
 
@@ -169,7 +171,41 @@ if test $HAS_COLOR; then
     reset="\[$(FX reset)\]"
 
     # Colorize username differently if we are root
-    [ $UID == '0' ] && user_clr=$root_user_clr
+    test "$UID" = "0" && user_clr=$root_user_clr
+
+    # Strip the non-printing escapes if not running in bash {{{
+    if test -z "$BASH"; then 
+        dir_clr=${dir_clr#\\[}
+        slash_clr=${slash_clr#\\[}
+        git_branch_clr=${git_branch_clr#\\[}
+        git_status_clr=${git_status_clr#\\[}
+        user_clr=${user_clr#\\[}
+        root_user_clr=${root_user_clr#\\[}
+        at_clr=${at_clr#\\[}
+        hostname_clr=${hostname_clr#\\[}
+        ssh_clr=${ssh_clr#\\[}
+        jobs_clr=${jobs_clr#\\[}
+        history_clr=${history_clr#\\[}
+        error_clr=${error_clr#\\[}
+        prompt_clr=${prompt_clr#\\[}
+        bracket_clr=${bracket_clr#\\[}
+        reset=${reset#\\[}
+        dir_clr=${dir_clr%\\]}
+        slash_clr=${slash_clr%\\]}
+        git_branch_clr=${git_branch_clr%\\]}
+        git_status_clr=${git_status_clr%\\]}
+        user_clr=${user_clr%\\]}
+        root_user_clr=${root_user_clr%\\]}
+        at_clr=${at_clr%\\]}
+        hostname_clr=${hostname_clr%\\]}
+        ssh_clr=${ssh_clr%\\]}
+        jobs_clr=${jobs_clr%\\]}
+        history_clr=${history_clr%\\]}
+        error_clr=${error_clr%\\]}
+        prompt_clr=${prompt_clr%\\]}
+        bracket_clr=${bracket_clr%\\]}
+        reset=${reset%\\]}
+    fi # }}}
 else
     dir_clr=
     slash_clr=
@@ -187,7 +223,8 @@ else
 fi
 
 # Prompts {{{1
-
+# Bash prompt {{{2
+if test -n "$BASH"; then
 #############################################
 # This prompt looks roughly like this:
 #
@@ -198,12 +235,10 @@ fi
 #############################################
 
 PS1="\
-$reset\$(prompt_pwd $dir_clr $slash_clr) \$(prompt_git $git_branch_clr $git_status_clr)
+$reset\$(prompt_pwd $dir_clr $slash_clr) \$(prompt_git "$git_branch_clr\\\(" "\\\)$git_status_clr")
 $user_clr$(prompt_user)$at_clr@$hostname_clr\h $bracket_clr($ssh_clr$(prompt_ssh)$bracket_clr)
 $brackrt_clr{$jobs_clr\$(prompt_jobs)$bracket_clr} $bracket_clr!$history_clr\! \$(prompt_error $error_clr)
 $prompt_clr$ $reset"
-
-# PROMPT_COMMAND {{{1
 
 # Need to save $? here so that ps1_error can occur anywhere in the prompt
 # Otherwise, new_pwd will clobber the value of $? that we want
@@ -211,11 +246,23 @@ $prompt_clr$ $reset"
 # history -a allows multiple shells to write to the same history file
 #
 PROMPT_COMMAND='RETVAL=$?; history -a'
+# sh prompt {{{2
+else # End bash / start sh
+#############################################
+# This prompt looks roughly like this:
+#
+# 'pwd
+# <username@hostname> $'
+#############################################
 
+PS1="$reset$dir_clr\$(pwd)
+$bracket_clr<$user_clr$(whoami)$at_clr@$hostname_clr$(hostname)$bracket_clr> $prompt_clr$ $reset"
+fi # End sh-specific section
+# }}}
 # Clean up {{{1
-unset dir_clr slash_clr hostname_clr at_clr bracket_clr
-unset history_clr error_clr prompt_clr user_clr root_user_clr
-unset ssh_clr jobs_clr
-unset reset
-unset HAS_COLOR
+ unset dir_clr slash_clr hostname_clr at_clr bracket_clr
+ unset history_clr error_clr prompt_clr user_clr root_user_clr
+ unset ssh_clr jobs_clr
+ unset reset
+ unset HAS_COLOR
 

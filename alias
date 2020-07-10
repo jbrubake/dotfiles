@@ -18,7 +18,11 @@ unset ls_opts
 # Easier navigation
 alias ..="cd .."
 alias ...="cd ../.."
-alias -- -="cd -"
+if test -n "$BASH"; then
+    alias -- -="cd -"
+else
+    alias -="cd -"
+fi
 
 # Force color in *grep
 #

@@ -7,53 +7,7 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
-command -v pls ||
-    . "$HOME/.functions" # don't source twice
-. "$HOME/.alias" # Aliases might depend on functions
+. "$HOME/.functions"
+. "$HOME/.alias"
+. "$HOME/.prompts"
 
-# Prompts {{{
-# Determine if terminal supports color
-#
-test $( tput colors ) -ge 0 && HAS_COLOR=yes
-
-#############################################
-# This prompt looks roughly like this:
-#
-# 'pwd <username@hostname> $'
-#############################################
-
-# Prompt color definitions
-#
-if test $HAS_COLOR; then
-    dir_color='$(FG 2)'
-    hostname_color='$(FG 5)'
-    at_color='$(FG 4)'
-    bracket_color='$(FG 4)'
-    prompt_color='$(FG 3)'
-    user_color='$(FG 6)'
-    root_user_color='$(FG 1)'
-else
-    dir_color=
-    slash_color=
-    hostname_color=
-    at_color=
-    bracket_color=
-    history_color=
-    error_color=
-    prompt_color=
-    user_color=
-    root_user_color=
-fi
-
-reset='$(FX reset)'
-
-# Colorize username differently if we are root
-[ "x$UID" = "0" ] && user_color=$root_user_color
-
-PS1="$reset$dir_color\$(pwd)
-$bracket_color<$user_color$(whoami)$at_color@$hostname_color$(hostname)$bracket_color> $prompt_color$ $reset"
-
-unset dir_color slash_color hostname_color at_color bracket_color
-unset history_color error_color prompt_color user_color root_user_color
-unset reset
-# }}}

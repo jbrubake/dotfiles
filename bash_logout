@@ -1,6 +1,5 @@
 #!/bin/bash
 
-#
 # If I am logging out completely, clear the screen
 #
 if [ "$SHLVL" = 1 ]; then
