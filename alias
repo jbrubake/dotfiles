@@ -74,7 +74,7 @@ if command -v wget >/dev/null; then
 elif command -v curl >/dev/null; then
     alias myip='curl http://ipecho.net/plain; echo'
 else
-    alias myip="wget or curl not available"
+    alias myip="echo 'wget or curl not available'"
 fi
 
 # Miscellaneous
