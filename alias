@@ -83,3 +83,4 @@ alias dut='du -h --max-depth=1'  # du(1) prints totals for one level down
 alias df='df -hT'                # Make df output nicer
 alias reset=$( tput sgr0 )       # Reset system palette
 alias sudo='sudo '               # Enable aliases to be sudo’ed
+alias jobs='jobs -l'             # List PID
