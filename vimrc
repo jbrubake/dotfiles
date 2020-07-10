@@ -330,30 +330,23 @@ let g:markdown_fenced_languages = ['python', 'html', 'bash=sh', 'c']
 " vim-tmux: Vim plugin for .tmux.conf {{{2
 " No configuration needed
 
-" a.vim: Swap header and source files {{{2
-" :A : Switch between header and source files
-" :AS: Split and switch
-" :AV: Vertical split and switch
-"
-" Use 'set autochdir' to make it work
+" vim-tmux-pilot: Unified navigation of splits and tabs in nvim and tmux {{{2
 
-" No configuration needed
-
-" cscope_maps.vim: CSCOPE settings for vim {{{2
-" CTRL-\                   : Show search in current window
-" CTRL-<space>             : Show search in horizontal split
-" CTRL-<space> Ctl+<space> : Show search in vertical split
-" CTRL-o                   : jump back to previous locations
-
-" s : symbol - all references to token under cursor
-" g : global - global definition
-" c : calls - all calls to function
-" t : text - all instances
-" e : egrep - egrep search
-" f : file - open file
-" i : includes - files that include filename
-" d : called - functions called by this function
-
+" Use Alt+[hjkl] to navigate windows
+if has ('unix') " set convert-meta off in .inputrc makes Alt not the Meta key
+    let g:pilot_key_h='h'
+    let g:pilot_key_j='j'
+    let g:pilot_key_k='k'
+    let g:pilot_key_l='l'
+    let g:pilot_key_p='\'
+else
+    let g:pilot_key_h='<a-h>'
+    let g:pilot_key_j='<a-j>'
+    let g:pilot_key_k='<a-k>'
+    let g:pilot_key_l='<a-l>'
+    let g:pilot_key_p='<a-\>'
+endif
+" webapi-vim: Needed for vim-gist {{{2
 " No configuration needed
 
 " todo-txt.vim: Vim plugin for Todo.txt {{{2
@@ -412,28 +405,17 @@ autocmd filetype todo imap <buffer> @ @<C-X><C-O>
 
 " Window Management {{{2
 " ======================
-" Switch windows with CTRL-[hjkl] {{{
-nnoremap <C-J> <C-W>j
-nnoremap <C-K> <C-W>k
-nnoremap <C-H> <C-W>h
-nnoremap <C-L> <C-W>l
-" }}}
-" Resize windows with M-[hjkl] {{{
-"   M-h : decrease vertical
-"   M-j : decrease horizontal
-"   M-k : increase horizontal
-"   M-l : increase vertical
-if has ('unix') " Doesn't work otherwise
-    nnoremap j <C-w>-
-    nnoremap k <C-w>+
-    nnoremap h <C-w><
-    nnoremap l <C-w>>
-else
-    nnoremap <M-j> <C-w>-
-    nnoremap <M-k> <C-w>+
-    nnoremap <M-h> <C-w><
-    nnoremap <M-l> <C-w>>
-endif
+" See vim-tmux-pilot configuration
+" Resize windows with C-[hjkl] {{{
+"   C-h : decrease vertical
+"   C-j : decrease horizontal
+"   C-k : increase horizontal
+"   C-l : increase vertical
+
+nnoremap <C-j> <C-w>-
+nnoremap <C-k> <C-w>+
+nnoremap <C-h> <C-w><
+nnoremap <C-l> <C-w>>
 " }}}
 " Maximize/Minimize window with CTRL-W m  {{{
 "
