@@ -18,6 +18,11 @@
 "\eOF": end-of-line
 
 # Allow 8-bit input/output
+#
+# Setting convert-meta to off stops the Alt
+# key from being the Meta key. Bindings using
+# Alt need to use the format \eK for Alt+K
+# instead of \M-K
 set meta-flag on
 set convert-meta off
 set input-meta on
@@ -56,12 +61,9 @@ $endif
 "\C-P": history-search-backward
 "\C-N": history-search-forward
 
-# FIXME: This does not work with 'set meta-convert off'
-# FIXME: but that is required for Unicode characters
 # Set Alt+o to load previous command and
 # position cursor to add an option
-# "\C-g": "\C-p\C-a\C-f "
-"\M-o": "\C-p\C-a\M-f "
+"\eo": "\C-p\C-a\ef "
 
 # Make Alt+s cycle through Tab completion list
 "\M-s": menu-complete
