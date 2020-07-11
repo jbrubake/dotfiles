@@ -50,6 +50,8 @@ export VISUAL EDITOR
 #
 if command -v vimpager >/dev/null; then
     PAGER=`command -v vimpager` # Only works with git if I set the whole path
+    VIMPAGER_RC="$HOME/.vimrc"
+    export VIMPAGER_RC
 elif command -v less >/dev/null; then
     PAGER=less
 else
