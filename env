@@ -136,6 +136,13 @@ if test -d "$HOME/perl5/"; then
     export PATH PERL5LIB PERL_LOCAL_LIB_ROOT PERL_MB_OPT PERL_MM_OPT
 fi
 
+# ARM cross-compiler PATH
+#
+if test -d "$HOME/opt/arm-none-eabi/"; then
+    PATH="$HOME/opt/arm-none-eabi/bin:$PATH"
+    PATH="$HOME/opt/aarch64-elf/bin:$PATH"
+fi
+
 # Cygwin specific
 #
 case "$(uname -o)" in
