@@ -107,6 +107,7 @@ prompt_error () {
 # Arguments:
 #   $1: String to print immediately before branch name
 #   $2: String to print immediately after branch name
+#   $3: String to print immediately after repo status
 prompt_git() {
 	local s=''
 	local branchName=''
@@ -140,9 +141,9 @@ prompt_git() {
         s+='$';
     fi;
 
-	[ -n "${s}" ] && s=" [${s}]";
+	[ -n "${s}" ] && s=" ${s}";
 
-	echo -e "${1}${branchName}${2}${s}";
+	echo -e "${1}${branchName}${2}${s}${3}";
 }
 
 fi # End bash-specific section
@@ -235,7 +236,7 @@ if test -n "$BASH"; then
 #############################################
 
 PS1="\
-$reset\$(prompt_pwd $dir_clr $slash_clr) \$(prompt_git "$git_branch_clr\\\(" "\\\)$git_status_clr")
+$reset\$(prompt_pwd $dir_clr $slash_clr) \$(prompt_git "$git_branch_clr\\\(" "$git_status_clr" "$git_branch_clr\\\)")
 $user_clr$(prompt_user)$at_clr@$hostname_clr\h $bracket_clr($ssh_clr$(prompt_ssh)$bracket_clr)
 $brackrt_clr{$jobs_clr\$(prompt_jobs)$bracket_clr} $bracket_clr!$history_clr\! \$(prompt_error $error_clr)
 $prompt_clr$ $reset"
