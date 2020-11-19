@@ -1,9 +1,11 @@
-% -*- slang -*-
+% vim: filetype=slang
 
 % Generate From:
 set username "jbru362"
-set hostname "gmail.com"
+set hostname "orionarts.io.invalid"
 set realname "Jeremy Brubaker"
+
+set replyto "jbru362@gmail.com"
 
 set Xbrowser "firefox '%s' &" % use firefox
 
@@ -12,7 +14,7 @@ set Xbrowser "firefox '%s' &" % use firefox
 set editor_command "vim 'set tw=72' +%d '%s'"
 
 % You can have separate commands for editing posts, mail, and score files.
-set post_editor_command "randsig.sh >> %s;vim 'set tw=72' +%d '%s'"
+set post_editor_command "randsig >> %s;vim 'set tw=72' +%d '%s'"
 
 % If non-zero, abort posting or email operation if the file was not modified
 % by the editor.
