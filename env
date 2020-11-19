@@ -125,6 +125,11 @@ done
 unset browsers
 export BROWSER
 
+# Set news server
+#
+NNTPSERVER=nntp.aioe.org
+export NNTPSERVER
+
 # Perl configuration
 #
 if test -d "$HOME/perl5/"; then
