@@ -127,8 +127,8 @@ export BROWSER
 
 # Set news server
 #
-NNTP_SERVER=nntp.aioe.org
-export NNTP_SERVER
+NNTPSERVER=nntp.aioe.org
+export NNTPSERVER
 
 # Perl configuration
 #
