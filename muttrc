@@ -1,0 +1,177 @@
+set ispell="aspell -e -c"       # Use aspell for spell checking
+set hostname=aragorn            # Name of the localhost
+set alias_file=~/.mutt/aliases  # Alias file
+set pager_stop                  # Do not page to the next message
+unset mark_old                  # Unread messages are still "new"
+set edit_headers                # Allow editing of headers when editing message
+set fast_reply                  # Don't ask for useless headers when replying/forwarding
+set sort="threads"                # Sort by thread
+set sort_aux="reverse-last-date-received"          # Then sort by date sent
+# Send outgoing mail to dated folders
+#set record="=sent-mail-`date +%b-%Y`"
+
+# Format strings
+set date_format="!%a, %d %b %y at %H:%M:%S %Z"
+# <msg-number> <flags> <date> at <time> <sender-name> (line-count) <subject>
+set index_format="%4C %Z %{%d %b at %H:%M} %-20.20F (%5l) %s"
+
+# auto_view text/html             # Automatically view HTML email (bastards)
+
+# Configure the From: header
+set from             = jbru362@gmail.com # From: address
+set realname         = "Jeremy Brubaker" # My name
+set reverse_name     = yes               # Use To: to build From:
+set reverse_realname = no                # Always use realname
+#set use_from                    # Mutt generates From: header
+#set envelope_from               # Mutt generates message's envelope sender
+
+####
+# IMAP/SMTP settings
+source ~/.mutt/auth # IMAP and SMTP passwords
+set imap_user = "jbru362@gmail.com"
+set smtp_url  = "smtp://jbru362@smtp.gmail.com:465/"
+set folder    = "imaps://imap.gmail.com:993"
+set spoolfile = "+INBOX"
+#set imap_check_subscribed ## Mutt 1.5: aboiveds set mailbox lines
+#set sendmail="/usr/sbin/ssmtp"
+####
+
+set record    = "=Inbox"          # FCC: me when I send emails
+set postponed = "+[Gmail]/Drafts" # Drafts
+
+####
+# Caches
+# (Previously do: mkdir -p ~/.mutt/cache/{headers,bodies})
+set header_cache     = "~/.mutt/cache/headers"
+set message_cachedir = "~/.mutt/cache/bodies"
+set certificate_file = ~/.mutt/certificates
+####
+
+set move            = no  # Do not move read messages
+set delete          = yes # Delete messages when closing/syncing 
+set edit_headers    = yes # May edit headers along with body
+set editor          = "vim +/^$ ++1" # Start vim below subject line
+set include         = yes # Quote in replies
+set reply_to        = yes # Automatically use Reply-To:
+set abort_nosubject = no  # Allow composing messages with no Subject:
+set menu_scroll     = yes # Scroll one line at a time
+
+set index_format = "%4C %Z %{%m/%d} %-15.15F (%4c) %s"
+
+set signature = "randsig.sh |"
+#set signature="rand_sig.pl ~/.sig ~/.quotes|"
+
+set query_command = "abook --mutt-query '%s'"
+
+####
+# t-prot configuration
+set display_filter='t-prot -cmekatl --max-lines=250 --bigq --pgp-move-vrf -Mmutt -L/etc/t-prot/footers -A/etc/t-prot/ads'
+ 
+# set it to '' to turn it off by default
+
+# toggle TOFU protection with ESC-0 (off) and ESC-1 (on)
+macro generic \e0 ":unset display_filter\n" "Turn TOFU protection off"
+macro generic \e1 ":set display_filter='t-prot -cmekatlS --max-lines=250 --bigq --pgp-move-vrf -Mmutt -L/etc/t-prot/footers -A/etc/t-prot/ads'\n" "Turn TOFU protection on"
+
+# same in pager mode - ugly but what the hell...
+macro pager \e0 ":unset display_filter; exec exit\n:exec display-message\n" "Turn TOFU protection off"
+macro pager \e1 ":set display_filter='t-prot -cmekatlS --max-lines=250 --bigq --pgp-move-vrf -Mmutt -L/etc/t-prot/footers -A/etc/t-prot/ads'; exec exit\n:exec display-message\n" "Turn TOFU protection on"
+
+# highlight TOFU protection:
+color body	brightmagenta		black	"^\\[---.*"
+color body	green			black	"^#v[-+]"
+####
+
+####
+# Header configuration
+ignore *
+unignore  From: Date: User-Agent: X-Mailer To: Cc: Reply-To: Subject:
+hdr_order From: Date: User-Agent: X-Mailer To: Cc: Reply-To: Subject:
+
+# Send an X-Face header
+#my_hdr X-Face: %:E?hi\#5d\"0Gl\#G7W[8GCh}:eTM&=^E!w,HbKw:\#/)\\N1cn~B{y8\`%DN6Oh9a?IfJg(TN,{TLuNQ>blvYtnBd=vlHCMT9g5pvHg!c:iL]\#lcyIe7=6w{N05{{Qf'GSsK\#F=LH5SEcxQYUS1i,CD^nJVfn]\;~JqDUTY%AQC[aR?n@'2D4Ni9Devk!P/:ge~Zx8\`T\$XP\#n)\;Q?}W>0(_BJ@BjIO}fZ>fF2N\$QHLS]n2XltUky2|dy6[n\#[:d/6\;TsL\`\\,L|~QtiKg_xk6\\H[BxIQkhs$5JJhz<
+####
+
+#send-hook . 'set realname="Jeremy Brubaker"'
+
+####
+# Hack to make  $reverse_name and 'my_hdr From:' work ok (eg mlists)
+#send-hook . 'set from=jbru362@gmail.com'
+#send-hook . 'unmy_hdr From:'
+####
+
+####
+# Configure sidebar
+set sidebar_width=15   # sidebar is 12 chars wide
+set sidebar_visible=yes # sidebar hidden by default
+# set sidebar_delim='|'  # sidebar delimiter
+
+# bind ctrl-n, ctrl-p to select next, prev folder
+# bind ctrl-o to open folder
+bind index \CP sidebar-prev
+bind index \CN sidebar-next
+bind index \CO sidebar-open
+bind pager \CP sidebar-prev
+bind pager \CN sidebar-next
+bind pager \CO sidebar-open
+
+# b toggles sidebar visibility
+macro index b '<enter-command>toggle sidebar_visible<enter>'
+macro pager b '<enter-command>toggle sidebar_visible<enter>'
+# remap bounce-message to 'B'
+bind index B bounce-message
+
+# which mailboxes to list in sidebar
+mailboxes =Inbox =AWAW =AWAW/GS =AWAW/Warplanner =EiH =Family \
+    =Family/Jackie "=Kralle FW" =Newsletters =Shopping =ToME \
+    =TWS =[Gmail]/Starred =[Gmail]/Drafts "=[Gmail]/Sent Mail" =[Gmail]/Trash
+####
+
+## Set up GnuPG
+## Decode application/pgp
+#set pgp_decode_command="gpg %?p?--passphrase-fd 0? --no-verbose --batch --output - %f"
+## Verify a pgp/mime signature
+#set pgp_verify_command="gpg --no-verbose --batch --output - --verify %s %f"
+## Decrypt a pgp/mime attachment
+#set pgp_decrypt_command="gpg --passphrase-fd 0 --no-verbose --batch --output - %f"
+
+## Create a pgp/mime signed attachment
+#set pgp_sign_command="gpg --no-verbose --batch --output - --passphrase-fd 0 --armor --detach-sign --textmode %?a?-u %a? %f"
+## Create a pgp/mime encrypted attachment
+#set pgp_encrypt_only_command="pgpewrap gpg --batch --quiet --no-verbose --output - --encrypt --textmode --armor --always-trust --encrypt-to 0xC9C40C31 -- -r %r -- %f"
+## Create a pgp/mime encrypted and signed attachment
+#set pgp_encrypt_sign_command="pgpewrap gpg --passphrase-fd 0 --batch --quiet --no-verbose --textmode --output - --encrypt --sign %?a?-u %a? --armor --always-trust --encrypt-to 0xC9C40C31 -- -r %r -- %f"
+
+## Import a key into the public keyring
+#set pgp_import_command="gpg --no-verbose --import -v %f"
+## Export a key from the public key ring
+#set pgp_export_command="gpg --no-verbose --export --armor %r"
+## Verify a key
+#set pgp_verify_key_command="gpg --no-verbose --batch --fingerprint --check-sigs %r"
+## Read in the public key ring
+#set pgp_list_pubring_command="gpg --no-verbose --batch --with-colons --list-keys %r"
+## Read in the secret key ring
+#set pgp_list_secring_command="gpg --no-verbose --batch --with-colons --list-secret-keys %r"
+## Automatically sign outgoing mail
+#set pgp_autosign=yes
+## Automatically encrypt replies to encrypted messages
+#set pgp_replyencrypt=yes
+## Automatically sign replies to signed messages
+#set pgp_replysign=yes
+## Automatically sign replies to encrypted messages
+#set pgp_replysignencrypted=yes
+## Cache passphrases for 5 minutes
+#set pgp_timeout=300
+## How to recognize a good signature
+#set pgp_good_sign="^gpg: Good signature from"
+
+####
+# Color configuration
+source ~/.mutt/colors           # Source colors
+
+# Source other files
+source ~/.mutt/aliases          # Source aliases
+source ~/.mutt/headers          # Source header ignores
+source ~/.mutt/address_book     # Source address book
+source ~/.mutt/mailing_lists    # Mailing lists I'm subscribed to
+source ~/.mutt/keys             # Key configuration

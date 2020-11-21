@@ -191,14 +191,15 @@ if ! test -d "$DESTDIR" && ! mkdir -p "$DESTDIR"; then
     exit
 fi
 # }
-# Replicate directory tree
+# Replicate directory tree {
 #
 # Find all non-hidden sub-directories and strip the leading "./"
 for d in $(find . -mindepth 1 \( ! -path '*/.*' \) -type d -print | sed -e 's#./##'); do
     $DRY_RUN mkdir -p $verbose "$DESTDIR/.$d"
 done
-
-# Link files, following these rules:
+# }
+# Link files {
+#  following these rules:
 #
 # - skip files in .ignore and .ignore.<host>
 # - skip if link exists and already points to the correct file
@@ -245,3 +246,37 @@ for f in $(find . \( ! -path '*/.*' \) -type f -print | sed -e 's#./##'); do
     # make links
     $DRY_RUN ln -s $verbose $force "$linkpath/$(basename $f)" "$DESTDIR/$linkname"
 done
+# }
+# Custom installation {
+# TODO: Add better custom installation framework
+if ! test -e ~/.mutt/auth; then
+    cat <<END > ~/.mutt/auth
+# vi: filetype=muttrc
+#
+# Gmail application password
+set imap_pass = "GOOGLEAPPPWD"
+set smtp_pass = "GOOGLEAPPPWD"
+END
+if ! test -e ~/.mutt/address_book; then
+    cat <<END > ~/.mutt/address_book
+# vi: filetype=muttrc
+#
+# Address book for mutt
+
+# Add address book aliases like this:
+# alias alias-name "full-name" <email-address>
+
+END
+fi
+if ! test -e ~/.mutt/mailing_lists; then
+    cat <<END > ~/.mutt/mailing_lists
+# vi: filetype=muttrc
+#
+# Mutt mailing lists
+
+# lists       <list@list.com>
+# subscribe   <list@list.com>
+
+END
+fi
+# }
