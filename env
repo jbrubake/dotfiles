@@ -112,15 +112,16 @@ fi
 
 # Set default web browser
 #
+browsers="elinks links w3m lynx"
 if test -n "$DISPLAY"; then
-    browsers="chrome chromium firefox"
-else
-    browsers="links lynx"
+    browsers="chrome chromium firefox $browsers"
 fi
 
 for b in $browsers; do
-    command -v $b >/dev/null &&
+    if command -v $b >/dev/null; then
         BROWSER=$b
+        break
+    fi
 done
 unset browsers
 export BROWSER
