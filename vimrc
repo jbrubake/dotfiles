@@ -505,10 +505,11 @@ vnoremap Q gq
 cnoremap <C-P> <Up>
 cnoremap <C-N> <Down>
 
-" Underline current line with '=' or '-'
+" Underline current line with '=', '-' or '#'
 " TODO: Make this work with comments
 nnoremap <leader>= yyp^v$r=
 nnoremap <leader>- yyp^v$r-
+nnoremap <leader># yyp^v$r#
 
 " Easier horizontal scrolling
 map zl zL
