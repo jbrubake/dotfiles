@@ -41,7 +41,12 @@ for f in ~/share/bash_completion.d/*; do
 done
 
 # Allow todo.sh alias to use bash completion
-complete -F _todo t
+command -v todo.sh >/dev/null &&
+    complete -F _todo t
+
+# tldr completion
+command -v tldr >/dev/null &&
+    complete -W "$(tldr 2>/dev/null --list)" tldr
 
 # Hostnames for bash-completion
 if [[ -z $HOSTFILE && -r "$HOME/.ssh/known_hosts" ]]; then
