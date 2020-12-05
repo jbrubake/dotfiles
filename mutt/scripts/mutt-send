@@ -1,0 +1,14 @@
+#!/bin/sh
+#
+# Wrap MIMEmbellish and msmtp because mutt appends To:
+# addresses to its 'sendmail' command instead of allowing
+# me to put those variables in the setting where I want them
+#
+# Based on https://nosubstance.me/post/mutt-secret-sauce/
+#
+# The sed(1) command is a hack to properly format a standard
+# signature marker. It was easier than modifying MIMEmbellish
+
+account=$1
+shift
+MIMEmbellish | sed -e 's@^<p>– @<p>-- <br>@' | msmtpq -a $account $@

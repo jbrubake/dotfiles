@@ -1,177 +1,753 @@
-set ispell="aspell -e -c"       # Use aspell for spell checking
-set hostname=aragorn            # Name of the localhost
-set alias_file=~/.mutt/aliases  # Alias file
-set pager_stop                  # Do not page to the next message
-unset mark_old                  # Unread messages are still "new"
-set edit_headers                # Allow editing of headers when editing message
-set fast_reply                  # Don't ask for useless headers when replying/forwarding
-set sort="threads"                # Sort by thread
-set sort_aux="reverse-last-date-received"          # Then sort by date sent
-# Send outgoing mail to dated folders
-#set record="=sent-mail-`date +%b-%Y`"
+# vim: foldlevel=0
+#                  _   _            
+#  _ __ ___  _   _| |_| |_ _ __ ___ 
+# | '_ ` _ \| | | | __| __| '__/ __|
+# | | | | | | |_| | |_| |_| | | (__ 
+# |_| |_| |_|\__,_|\__|\__|_|  \___|
+#                                 
+#   Jeremy Brubaker's .muttrc. Some stuff in here was shame-
+#   lessly ripped from places I completely forget about.
+#
+#   https://github.com/jbrubake/dotfiles/blob/master/muttrc
 
-# Format strings
-set date_format="!%a, %d %b %y at %H:%M:%S %Z"
-# <msg-number> <flags> <date> at <time> <sender-name> (line-count) <subject>
-set index_format="%4C %Z %{%d %b at %H:%M} %-20.20F (%5l) %s"
+# Folding cheet sheet (because I always forget)
+# zR    open all folds
+# zM    close all folds
+# za    toggle fold at cursor position
+# zj    move down to start of next fold
+# zk    move up to end of previous fold
+# Accounts {{{1
+# ========
+set folder    = "~/.maildir" # Root mailbox folder
+set mbox_type = Maildir     # Mailboxes are in Maildir format
 
-# auto_view text/html             # Automatically view HTML email (bastards)
+# Hooks to account-specific configuration
+#  (https://webgefrickel.de/blog/a-modern-mutt-setup-part-two)
+folder-hook jbru362@gmail.com/*           source ~/.mutt/accounts/jbru362@gmail.com
+folder-hook jeremy.d.brubaker@gmail.com/* source ~/.mutt/accounts/jeremy.d.brubaker@gmail.com
+source ~/.mutt/accounts/jbru362@gmail.com # Source the default account
+
+# Basic setup {{{1
+# ===========
+set my_bin = "~/.mutt/scripts"
+# Cache message headers and bodies
+#  These directories must be created manually)
+set header_cache     = "~/.cache/mutt/headers"
+set message_cachedir = "~/.cache/mutt/bodies"
+set tmpdir           = "~/.cache/mutt/tmp" # Where to write temporary files
+
+# XXX: Is this necessary?
+set certificate_file = ~/.mutt/certificates
 
 # Configure the From: header
-set from             = jbru362@gmail.com # From: address
 set realname         = "Jeremy Brubaker" # My name
 set reverse_name     = yes               # Use To: to build From:
 set reverse_realname = no                # Always use realname
-#set use_from                    # Mutt generates From: header
-#set envelope_from               # Mutt generates message's envelope sender
+#set use_from # Mutt generates From: header
+#set envelope_from_address # Mutt generates message's envelope sender
+#set mime_forward = no # forward attachments as part of the body
 
-####
-# IMAP/SMTP settings
-source ~/.mutt/auth # IMAP and SMTP passwords
-set imap_user = "jbru362@gmail.com"
-set smtp_url  = "smtp://jbru362@smtp.gmail.com:465/"
-set folder    = "imaps://imap.gmail.com:993"
-set spoolfile = "+INBOX"
-#set imap_check_subscribed ## Mutt 1.5: aboiveds set mailbox lines
-#set sendmail="/usr/sbin/ssmtp"
-####
+set sort     = "threads"                    # Sort by thread,
+set sort_aux = "reverse-last-date-received" #  then sort by date sent
+set sort_re  = yes                          # Intelligent threading by subject
 
-set record    = "=Inbox"          # FCC: me when I send emails
-set postponed = "+[Gmail]/Drafts" # Drafts
+set move       = no # Do not move read messages to spoolfile
+set delete     = yes # Delete messages when closing/syncing 
+set sleep_time = 0  # Do not pause when switching mailboxes
+set wait_key   = no # Do not wait for a keypress after external commands that succeed
+set beep_new   = yes # Beep on new mail
 
-####
-# Caches
-# (Previously do: mkdir -p ~/.mutt/cache/{headers,bodies})
-set header_cache     = "~/.mutt/cache/headers"
-set message_cachedir = "~/.mutt/cache/bodies"
-set certificate_file = ~/.mutt/certificates
-####
+set mail_check                = 5 # Check for new mail every 5 seconds
+set mail_check_stats          = yes # Periodically calculate unread, flagged and total messages
+set mail_check_stats_interval = 60 # Calculate stats once a minute
 
-set move            = no  # Do not move read messages
-set delete          = yes # Delete messages when closing/syncing 
-set edit_headers    = yes # May edit headers along with body
-set editor          = "vim +/^$ ++1" # Start vim below subject line
-set include         = yes # Quote in replies
-set reply_to        = yes # Automatically use Reply-To:
+# set sendmail_wait = 0 # block when sending emails
+set sendmail_wait = 1 # do not block when sending emails
+
+# set confirmappend = no # Do not ask before appending to existing mailbox
+# set mark_old = yes # Mark old unread messages with an "O"
+
+set edit_headers = yes # May edit headers along with body
+set fast_reply   = yes # Don't ask for useless headers when replying/forwarding
+# set autoedit 
+set askcc        = yes # Prompt for Cc before editing
+set askbcc       = yes # Prompt for Bcc before editing
+set fcc_attach   = yes # Save attachments with sent messages
+# set forward_format = # Fwd: format
+# set forward_decode = yes # decode when forwarding
+# set forward_quote = yes # include message in forwards
+# set attribution = # Reply string
+set reply_to     = yes # Automatically use Reply-To:
+set reverse_name = yes # Reply as whomever message was to
+set include      = yes # Include original message when replying
+set text_flowed  = yes # Generate format=flowed emails (editor needs configured for this)
+
+set background_edit = yes
+set editor = "$my_bin/bgedit-screen-tmux.sh $my_bin/mutt-edit %s"
 set abort_nosubject = no  # Allow composing messages with no Subject:
-set menu_scroll     = yes # Scroll one line at a time
 
-set index_format = "%4C %Z %{%m/%d} %-15.15F (%4c) %s"
+set mailcap_path = "~/.mailcap"
+auto_view text/html # Automatically view HTML email (bastards)
+# auto_view text/* application/* image/* audio/* # For lesspipe.sh
+alternative_order text/plain text/enriched text/html
 
-set signature = "randsig.sh |"
-#set signature="rand_sig.pl ~/.sig ~/.quotes|"
+set ispell="aspell -e -c"       # Use aspell for spell checking
 
-set query_command = "abook --mutt-query '%s'"
-
-####
-# t-prot configuration
-set display_filter='t-prot -cmekatl --max-lines=250 --bigq --pgp-move-vrf -Mmutt -L/etc/t-prot/footers -A/etc/t-prot/ads'
- 
-# set it to '' to turn it off by default
-
-# toggle TOFU protection with ESC-0 (off) and ESC-1 (on)
-macro generic \e0 ":unset display_filter\n" "Turn TOFU protection off"
-macro generic \e1 ":set display_filter='t-prot -cmekatlS --max-lines=250 --bigq --pgp-move-vrf -Mmutt -L/etc/t-prot/footers -A/etc/t-prot/ads'\n" "Turn TOFU protection on"
-
-# same in pager mode - ugly but what the hell...
-macro pager \e0 ":unset display_filter; exec exit\n:exec display-message\n" "Turn TOFU protection off"
-macro pager \e1 ":set display_filter='t-prot -cmekatlS --max-lines=250 --bigq --pgp-move-vrf -Mmutt -L/etc/t-prot/footers -A/etc/t-prot/ads'; exec exit\n:exec display-message\n" "Turn TOFU protection on"
-
-# highlight TOFU protection:
-color body	brightmagenta		black	"^\\[---.*"
-color body	green			black	"^#v[-+]"
-####
-
-####
-# Header configuration
+# What parts of the header to show
 ignore *
-unignore  From: Date: User-Agent: X-Mailer To: Cc: Reply-To: Subject:
-hdr_order From: Date: User-Agent: X-Mailer To: Cc: Reply-To: Subject:
+unignore from: \
+         to: \
+         date: \
+         subject: \
+         cc: \
+         bcc:
+unhdr_order *
+hdr_order from: to: cc: bcc: date: subject:
 
-# Send an X-Face header
-#my_hdr X-Face: %:E?hi\#5d\"0Gl\#G7W[8GCh}:eTM&=^E!w,HbKw:\#/)\\N1cn~B{y8\`%DN6Oh9a?IfJg(TN,{TLuNQ>blvYtnBd=vlHCMT9g5pvHg!c:iL]\#lcyIe7=6w{N05{{Qf'GSsK\#F=LH5SEcxQYUS1i,CD^nJVfn]\;~JqDUTY%AQC[aR?n@'2D4Ni9Devk!P/:ge~Zx8\`T\$XP\#n)\;Q?}W>0(_BJ@BjIO}fZ>fF2N\$QHLS]n2XltUky2|dy6[n\#[:d/6\;TsL\`\\,L|~QtiKg_xk6\\H[BxIQkhs$5JJhz<
-####
+# Generate X-Face: header
+my_hdr X-Face: $(compface ~/share/avatars/me.xbm | $my_bin/mutt-quote-x-face)
 
-#send-hook . 'set realname="Jeremy Brubaker"'
+# Address book {{{1
+# ============
+set query_command = "goobook query '%s'" # Use goobook to search Google contacts
 
-####
-# Hack to make  $reverse_name and 'my_hdr From:' work ok (eg mlists)
-#send-hook . 'set from=jbru362@gmail.com'
-#send-hook . 'unmy_hdr From:'
-####
+# Display formats {{{1
+# ===============
+set pager_index_lines = 11 # Show 10 emails in a mini-index while in the pager
+set menu_scroll       = yes # Scroll one line at a time
+set tilde             = yes # Pad trailing blank lines in the pager with "~"
 
-####
-# Configure sidebar
-set sidebar_width=15   # sidebar is 12 chars wide
-set sidebar_visible=yes # sidebar hidden by default
-# set sidebar_delim='|'  # sidebar delimiter
+set pager_stop        = yes # Do not page to the next message
 
-# bind ctrl-n, ctrl-p to select next, prev folder
-# bind ctrl-o to open folder
-bind index \CP sidebar-prev
-bind index \CN sidebar-next
-bind index \CO sidebar-open
-bind pager \CP sidebar-prev
-bind pager \CN sidebar-next
-bind pager \CO sidebar-open
+set markers           = no # Do not prepend continued lines with a '+'
 
-# b toggles sidebar visibility
-macro index b '<enter-command>toggle sidebar_visible<enter>'
-macro pager b '<enter-command>toggle sidebar_visible<enter>'
-# remap bounce-message to 'B'
-bind index B bounce-message
+# Index entry format:
+#
+# %Z: new/read/reply delete/encrypt tag/flag/to_chars
+# %X: attachment marker
+# @date@: date based on message age
+# %F: sender name (or recipient if I sent it)
+# @subj_tag@: tag based on subject
+# %s: subject
+set index_format="%Z%?X?📎&  ? %-6@date@ %-30.30F %@subj_tag@%s"
 
-# which mailboxes to list in sidebar
-mailboxes =Inbox =AWAW =AWAW/GS =AWAW/Warplanner =EiH =Family \
-    =Family/Jackie "=Kralle FW" =Newsletters =Shopping =ToME \
-    =TWS =[Gmail]/Starred =[Gmail]/Drafts "=[Gmail]/Sent Mail" =[Gmail]/Trash
-####
+# Format @date@ based on message age:
+index-format-hook date "~d<1d" "%[ %H:%M]" # 1 day     09:30
+index-format-hook date "~d<1w" "%[%a %d]" # 1 week    Sun 29
+index-format-hook date "~d<1y" "%[%b-%d]" # 1 year    Nov-12
+index-format-hook date "~A"    "%[ %m/%y]" # > 1 year  11/19
 
-## Set up GnuPG
-## Decode application/pgp
-#set pgp_decode_command="gpg %?p?--passphrase-fd 0? --no-verbose --batch --output - %f"
-## Verify a pgp/mime signature
-#set pgp_verify_command="gpg --no-verbose --batch --output - --verify %s %f"
-## Decrypt a pgp/mime attachment
-#set pgp_decrypt_command="gpg --passphrase-fd 0 --no-verbose --batch --output - %f"
+# Tags based on subject
+index-format-hook subj_tag "~f jbru0513@gmail.com"    "** BOSS ** "
 
-## Create a pgp/mime signed attachment
-#set pgp_sign_command="gpg --no-verbose --batch --output - --passphrase-fd 0 --armor --detach-sign --textmode %?a?-u %a? %f"
-## Create a pgp/mime encrypted attachment
-#set pgp_encrypt_only_command="pgpewrap gpg --batch --quiet --no-verbose --output - --encrypt --textmode --armor --always-trust --encrypt-to 0xC9C40C31 -- -r %r -- %f"
-## Create a pgp/mime encrypted and signed attachment
-#set pgp_encrypt_sign_command="pgpewrap gpg --passphrase-fd 0 --batch --quiet --no-verbose --textmode --output - --encrypt --sign %?a?-u %a? --armor --always-trust --encrypt-to 0xC9C40C31 -- -r %r -- %f"
+# Status bar format
+#
+# %M: number of messages that match current limit
+# %m: total numer of messages
+# %n: number of new messages
+# %>-: right justify with '─'
+set status_format = "─────(%?M?%M/?%m messages%?n? [%n new]?)────%>─(%v)─────"
+bind index <f2> toggle-new
 
-## Import a key into the public keyring
-#set pgp_import_command="gpg --no-verbose --import -v %f"
-## Export a key from the public key ring
-#set pgp_export_command="gpg --no-verbose --export --armor %r"
-## Verify a key
-#set pgp_verify_key_command="gpg --no-verbose --batch --fingerprint --check-sigs %r"
-## Read in the public key ring
-#set pgp_list_pubring_command="gpg --no-verbose --batch --with-colons --list-keys %r"
-## Read in the secret key ring
-#set pgp_list_secring_command="gpg --no-verbose --batch --with-colons --list-secret-keys %r"
-## Automatically sign outgoing mail
-#set pgp_autosign=yes
-## Automatically encrypt replies to encrypted messages
-#set pgp_replyencrypt=yes
-## Automatically sign replies to signed messages
-#set pgp_replysign=yes
-## Automatically sign replies to encrypted messages
-#set pgp_replysignencrypted=yes
-## Cache passphrases for 5 minutes
-#set pgp_timeout=300
-## How to recognize a good signature
-#set pgp_good_sign="^gpg: Good signature from"
+# Pager bar format
+#
+# %Z : 3-character status flags
+# %C : message number
+# %m : total messages
+# %n : sender's real name
+# %s : subject
+# %* : soft-fill with ' '
+# %P : percentage through pager
+set pager_format = "─────(%Z)─────(%C/%m)─────[%F] %s%*─────(%P)─────"
 
-####
+# Sidebar {{{1
+# =======
+set sidebar_width          = 25
+set sidebar_visible        = yes
+set sidebar_delim_chars    = "/"
+set sidebar_short_path     = yes
+set sidebar_folder_indent  = yes
+set sidebar_indent_string  = '  '
+set sidebar_divider_char   = "│" # That's a box character, not a pipe
+# Sidebar format
+#
+# %B: mailbox name
+# $* : pad right with ' '
+# %N: # new
+set sidebar_format = "%B %* %?N?[%N]? "
+
+mailboxes -label jbru362 "=jbru362@gmail.com"
+mailboxes                "=jbru362@gmail.com/Army"
+mailboxes                "=jbru362@gmail.com/Boardgames"
+mailboxes                "=jbru362@gmail.com/Boardgames/ASL"
+mailboxes                "=jbru362@gmail.com/Boardgames/ASL/Games"
+mailboxes                "=jbru362@gmail.com/Boardgames/ASL/VASL Maps"
+mailboxes                "=jbru362@gmail.com/Boardgames/AWAW"
+mailboxes                "=jbru362@gmail.com/Boardgames/AWAW/Games"
+mailboxes                "=jbru362@gmail.com/Boardgames/AWAW/A3R&-RS"
+mailboxes                "=jbru362@gmail.com/Boardgames/AWAW/VASSL Mod"
+mailboxes                "=jbru362@gmail.com/Boardgames/AWAW/Warplanner"
+mailboxes                "=jbru362@gmail.com/Boardgames/EiA"
+mailboxes                "=jbru362@gmail.com/Boardgames/Games"
+mailboxes                "=jbru362@gmail.com/Starred"
+mailboxes                "=jbru362@gmail.com/Sent"
+mailboxes                "=jbru362@gmail.com/Drafts"
+mailboxes                "=jbru362@gmail.com/Trash"
+mailboxes                "=jbru362@gmail.com/Spam"
+
+mailboxes -label jeremy.d.brubaker "=jeremy.d.brubaker@gmail.com"
+mailboxes                          "=jeremy.d.brubaker@gmail.com/Starred"
+mailboxes                          "=jeremy.d.brubaker@gmail.com/Sent"
+mailboxes                          "=jeremy.d.brubaker@gmail.com/Drafts"
+mailboxes                          "=jeremy.d.brubaker@gmail.com/Trash"
+mailboxes                          "=jeremy.d.brubaker@gmail.com/Spam"
+
+# Other files {{{1
+# ===========
 # Color configuration
-source ~/.mutt/colors           # Source colors
+source ~/.mutt/colors       # Source colorscheme
+source ~/.mutt/colors.local # Source local colors
 
 # Source other files
-source ~/.mutt/aliases          # Source aliases
-source ~/.mutt/headers          # Source header ignores
-source ~/.mutt/address_book     # Source address book
 source ~/.mutt/mailing_lists    # Mailing lists I'm subscribed to
-source ~/.mutt/keys             # Key configuration
+source ~/.mutt/score
+
+# t-prot {{{1
+# ======
+set my_tprot='t-prot -aelmtS -c --bigq -Mmutt --spass -L$HOME/.mutt/mlfooters -A$HOME/.mutt/adfooters'
+set my_tprot       = 't-prot -cmekatl --max-lines=250 --bigq --pgp-move-vrf -Mmutt -L/etc/t-prot/footers -A/etc/t-prot/ads'
+set display_filter = $my_tprot
+
+# Toggle TOFU protection with ESC-0 (off) and ESC-1 (on)
+macro generic \e0 ":set display_filter = ' '\n"         "Turn TOFU protection off"
+macro generic \e1 ":set display_filter = '$my_tprot'\n" "Turn TOFU protection on"
+
+# same in pager mode - ugly but what the hell...
+macro pager \e0 ":set display_filter = ' '; exec exit\n:exec display-message\n" "Turn TOFU protection off"
+macro pager \e1 ":set display_filter = $my_tprot"                               "Turn TOFU protection on"
+
+# Key bindings {{{1
+# ============
+
+# My bindings {{{2
+#
+# Some taken from: https://ryanlue.com/posts/2017-05-21-mutt-the-vim-way
+#             https://ryanlue.com/posts/2017-05-22-autosync-mutt
+#
+
+# Remove bindings {{{3
+bind  index,pager,attach  g         noop
+bind  pager               L         noop
+bind  index,pager,browser  N         noop
+
+# Navigation {{{3
+bind  generic,index       j         next-entry
+bind  generic,index       k         previous-entry
+bind  pager               j         next-line
+bind  pager               k         previous-line
+
+bind  generic,index,pager \ce       next-line
+bind  generic,index,pager \cy       previous-line
+
+bind  generic,index,pager \cf       next-page
+bind  generic,index,pager \cb       previous-page
+
+bind  generic,index,pager \cd       half-down
+bind  generic,index,pager \cu       half-up
+
+bind  generic,index       H         top-page
+bind  generic,index       L         bottom-page
+bind  generic,index       M         middle-page
+
+bind  generic             zt        current-top
+bind  generic             zz        current-middle
+bind  generic             zb        current-bottom
+
+bind  generic,index,attach gg        first-entry
+bind  pager               gg        top
+bind  generic,index,attach G         last-entry
+bind  pager               G         bottom
+
+# TODO: sidebar bindings override history bindings
+bind  index,pager         \cn       sidebar-next
+bind  index,pager         \cp       sidebar-prev
+bind  index,pager         \co       sidebar-open
+bind  index,pager         <f10>     sidebar-toggle-visible
+
+# Thread navigation
+bind  index               zM        collapse-all
+bind  index               zR        collapse-all
+bind  index               zO        collapse-all
+bind  index               zC        collapse-all
+bind  index               zA        collapse-all
+bind  index               zo        collapse-thread
+bind  index               zc        collapse-thread
+bind  index               za        collapse-thread
+bind  index,pager         zj        next-thread
+bind  index,pager         zk        previous-thread
+bind  index,pager         zp        parent-message
+bind  index,pager         zr        root-message
+bind  index,pager         zB        break-thread
+bind  index,pager         zL        link-threads
+
+# Deletion
+bind  index,pager         dd        delete-message
+bind  index               dD        delete-pattern
+bind  alias,attach,postpone dd      delete-entry
+bind  index,pager         dt        delete-thread # should be subthread
+bind  index,pager         dat       delete-thread
+bind  index,pager         uu        undelete-message
+bind  index               uU        undelete-pattern
+bind  alias,attach,postpone uu      undelete-entry
+bind  index,pager         ut        undelete-thread # should be subthread
+bind  index,pager         uat       undelete-thread
+
+# Tagging
+bind  generic             tt        tag-entry
+bind  index               tT        tag-thread
+bind  pager               tt        tag-message
+macro pager tT "<exit><mark-message>q<enter><tag-thread>'q<display-message>"    "tag-thread"
+bind  index               tP        tag-pattern
+bind  index               utP       untag-pattern
+
+# Replying
+bind  index,pager,attach  rr        reply
+bind  index,pager,attach  ra        group-reply
+bind  index,pager,attach  rg        group-chat-reply
+bind  index,pager,attach  rl        list-reply
+
+# View X-Face headers
+# macro pager \Cx "|view-x-face<enter>" "display included X-Face"
+macro pager \Cx "|x-face-unicode<enter>" "display included X-Face in text mode"
+
+# URLScan
+macro index,pager \cu "<pipe-message> urlscan<Enter>" "call urlscan to extract URLs out of a message"
+macro attach,compose \cu "<pipe-entry> urlscan<Enter>" "call urlscan to extract URLs out of a message"
+
+bind  editor              <tab>     complete-query
+bind  editor              \ct       complete
+
+# This doesn't work yet
+macro index,pager A "<pipe-message>goobook add<return>" "add sender address to Google Contacts"
+
+# http://log.or.cz/?p=228
+# 'S' performs a notmuch query, showing only the results
+macro index S "<enter-command>unset wait_key<enter><shell-escape>read -p 'notmuch query: ' x; echo \$x >~/.cache/mutt_terms<enter><limit>~i \"\`notmuch search --output=messages \$(cat ~/.cache/mutt_terms) | head -n 600 | perl -le '@a=<>;chomp@a;s/\^id:// for@a;$,=\"|\";print@a'\`\"<enter>" "show only messages matching a notmuch pattern"
+# '<esc>' shows all messages again (supersedes default <alias> binding)
+macro index <esc> "<limit>all\n" "show all messages (undo limit)"
+
+# m  - mail
+# f  - forward
+# b  - bounce-message
+# T - toggle-quoted
+# h - toggle-display-weed
+bind  attach              MUTT_ENTER_S view-attach
+bind  attach              m            view-mailcap
+
+bind  index               R            recall-message
+bind  compose             P            postpone-message
+
+bind  index,pager,attach  b            noop
+bind  index,pager,attach  B            bounce-message
+
+bind  index               \cb          background-compose-menu
+
+# Per account bindings
+# gi - Go to Inbox
+# gs - Go to Starred
+# gt - Go to Sent
+# gd - Go to Drafts
+# gl - Go to label
+
+# Actions {{{3
+bind  generic,pager       <f1>      help
+
+bind  generic,index,pager /         search
+bind  generic,index,pager ?         search-reverse
+bind  generic,index,pager n         search-next
+bind  generic,index,pager N         search-opposite
+
+# Generic Menu {{{2
+#
+
+# Defaults {{{3
+# bind  generic             H         top-page
+# bind  generic             L         bottom-page
+# bind  generic             M         middle-page
+# bind  generic             \cL       refresh
+# bind  generic             n         search-next
+# bind  generic             q         exit
+# bind  generic             :         enter-command
+# bind  generic             !         shell-escape
+# bind  generic             MUTT_ENTER_S select-entry
+# bind  generic             /         search
+# bind  generic             t         tag-entry
+# bind  generic             z         next-page
+# bind  generic             Z         previous-page
+# bind  generic             ]         half-down
+# bind  generic             [         half-up
+# bind  generic             ';'       tag-prefix
+# bind  generic             >         next-line
+# bind  generic             <         previous-line
+# bind  generic             ?         help
+
+# Overriden {{{3
+
+# Index Menu {{{2
+#
+
+# Defaults {{{3
+# bind  index               a         create-alias
+# bind  index               G         fetch-mail
+# bind  index               N         toggle-new
+# bind  index               o         sort-mailbox
+# bind  index               A         autocrypt-acct-menu
+# bind  index                         group-chat-reply
+# bind  index               B         background-compose-menu
+# bind  index               b         bounce-message
+# bind  index               #         break-thread
+# bind  index               y         browse-mailboxes
+# bind  index               c         change-folder
+# bind  index               <esc>c    change-folder-readonly
+# bind  index               C         copy-message
+# bind  index               <esc>C    decode-copy
+# bind  index               <esc>s    decode-save
+# bind  index               d         delete-message
+# bind  index               D         delete-pattern
+# bind  index               <esc>d    delete-subthread
+# bind  index               e         edit
+# bind  index               E         edit-label
+# bind  index               f         forward
+# bind  index               F         flag-message
+# bind  index               h         display-toggle-weed
+# bind  index               l         limit
+# bind  index               &         link-threads
+# bind  index               m         mail
+# bind  index               %         toggle-write
+# bind  index               <esc>n    next-subthread
+# bind  index               Q         query
+# bind  index               q         exit
+# bind  index               r         reply
+# bind  index               <esc>l    show-limit
+# bind  index               O         sort-reverse
+# bind  index               p         print-message
+# bind  index               <esc>p    previous-subthread
+# bind  index               R         recall-message
+# bind  index               \cr       read-thread
+# bind  index               <esc>r    read-subthread
+# bind  index               <esc>e    resend-message
+# bind  index               s         save-message
+# bind  index               T         tag-pattern
+# bind  index               <esc>t    tag-thread
+# bind  index               \ct       untag-pattern
+# bind  index               u         undelete-message
+# bind  index               U         undelete-pattern
+# bind  index               <esc>u    undelete-subthread
+# bind  index               \cu       undelete-thread
+# bind  index               v         view-attachments
+# bind  index               V         show-version
+# bind  index               w         set-flag
+# bind  index               W         clear-flag
+# bind  index               MUTT_ENTER_S display-message
+# bind  index               ~         mark-message
+# bind  index               .         buffy-list
+# bind  index               $         sync-mailbox
+# bind  index               @         display-address
+# bind  index               |         pipe-message
+# bind  index               <tab>     next-new-then-unread
+# bind  index               <esc><tab> previous-new-then-unread
+# bind  index               P         parent-message
+# bind  index                         root-message
+# bind  index               \ck       extract-keys
+# bind  index               <esc>p    check-traditional-pgp
+# bind  index               <esc>k    mail-key
+
+# Overridden {{{3
+# bind  index               j         next-undeleted
+# bind  index               k         previous-undeleted
+# bind  index               L         list-reply
+# bind  index               g         group-reply
+# bind  index               \ce       edit-type
+# bind  index               \cn       next-thread
+# bind  index               \cp       previous-thread
+# bind  index               \cf       forget-passphrase
+
+# Pager Menu {{{2
+#
+
+# Defaults {{{3
+# bind  pager               a         create-alias
+# bind  pager               B         background-compose-menu
+# bind  pager               #         break-thread
+# bind  pager               y         browse-mailboxes
+# bind  pager               b         bounce-message
+# bind  pager               c         change-folder
+# bind  pager               <esc>c    change-folder-readonly
+# bind  pager               d         delete-message
+# bind  pager               <esc>d    delete-subthread
+# bind  pager               w         set-flag
+# bind  pager               W         clear-flag
+# bind  pager               e         edit
+# bind  pager               Y         edit-label
+# bind  pager               f         forward
+# bind  pager               F         flag-message
+# bind  pager               h         display-toggle-weed
+# bind  pager               J         next-entry
+# bind  pager               K         previous-entry
+# bind  pager               &         link-thread
+# bind  pager               \cl       redraw-screen
+# bind  pager               m         mail
+# bind  pager               N         mark-as-new
+# bind  pager               %         toggle-write
+# bind  pager               n         search-next
+# bind  pager               <esc>n    next-subthread
+# bind  pager               o         sort-mailbox
+# bind  pager               O         sort-reverse
+# bind  pager               p         print-message
+# bind  pager               <esc>p    prevsious-subthread
+# bind  pager               Q         quit
+# bind  pager               q         exit
+# bind  pager               r         reply
+# bind  pager               R         recall-message
+# bind  pager               \cr       read-thread
+# bind  pager               <esc>r    read-subthread
+# bind  pager               <esc>e    resend-message
+# bind  pager               s         save-message
+# bind  pager               S         skip-quoted
+# bind  pager               <esc>s    decode-save
+# bind  pager               t         tag-message
+# bind  pager               T         toggle-quoted
+# bind  pager               u         undelete-message
+# bind  pager               <esc>u    undelete-subthread
+# bind  pager               \cu       undelete-thread
+# bind  pager               v         view-attachment
+# bind  pager               V         show-version
+# bind  pager               \\        search-toggle
+# bind  pager               @         display-address
+# bind  pager               |         pipe-message
+# bind  pager               ?         help
+# bind  pager               <space>   next-page
+# bind  pager               -         previous-page
+# bind  pager               ^         top
+# bind  pager               $         sync-mailbox
+# bind  pager               !         shell-escape
+# bind  pager               :         enter-command
+# bind  pager               .         buffy-list
+# bind  pager               /         search
+# bind  pager               <esc>/    search-reverse
+# bind  pager               MUTT_ENTER_S next-line
+# bind  pager               P         parent-message
+# bind  pager               <esc>P    check-traditional-pgp
+# bind  pager               <esc>k    mail-key
+# bind  pager               \ck       extract-keys
+
+# Overridden {{{3
+# bind  pager               g         group-reply
+# bind  pager               j         next-undeleted
+# bind  pager               k         previous-undeleted
+# bind  pager               L         list-reply
+# bind  pager               \cd       delete-thread
+# bind  pager               \ce       edit-type
+# bind  pager               \cn       next-thread
+# bind  pager               \cp       previous-thread
+# bind  pager               \cf       forget-passphrase
+
+# Alias Menu {{{2
+#
+
+# Defaults {{{3
+# bind  alias               d         delete-entry
+# bind  alias               u         undelete-entry
+
+# Overridden{{{3
+
+# Query Menu {{{2
+#
+
+# Defaults {{{3
+# bind  query               a         create-alias
+# bind  query               m         mail
+# bind  query               Q         query
+# bind  query               A         query-append
+
+# Overridden {{{3
+
+# Attachment Menu {{{2
+#
+
+# Defaults {{{3
+# bind  attach              b         bounce-message
+# bind  attach              h         display-toggle-weed
+# bind  attach              \ce       edit-type
+# bind  attach              p         print-entry
+# bind  attach              s         save-entry
+# bind  attach              |         pipe-entry
+# bind  attach              m         view-mailcap
+# bind  attach              r         reply
+# bind  attach              <esc>e    resend-message
+# bind  attach              L         list-reply
+# bind  attach              f         forward-message
+# bind  attach              T         view-text
+# bind  attach              MUTT_ENTER_S view-attach
+# bind  attach              d         delete-entry
+# bind  attach              u         undelete-entry
+# bind  attach              v         collapse-parts
+# bind  attach              <esc>P    check-traditional-pgp
+# bind  attach              \ck       extract-keys
+# bind  attach              \cf       forget-passphrase
+
+# Overridden {{{3
+# bind  attach              g         group-reply
+
+# Compose Menu {{{2
+#
+
+# Defaults {{{3
+# bind  compose             a         attach-file
+# bind  compose             A         attach-message
+# bind  compose             b         edit-bcc
+# bind  compose             c         edit-cc
+# bind  compose             C         copy-file
+# bind  compose             D         detach-file
+# bind  compose             \cd       toggle-disposition
+# bind  compose             d         edit-description
+# bind  compose             e         edit-message
+# bind  compose             E         edit-headers
+# bind  compose             \cxe      edit-file
+# bind  compose             \ce       edit-encoding
+# bind  compose             <esc>f    edit-from
+# bind  compose             f         edit-fcc
+# bind  compose             F         filter-entry
+# bind  compose             G         get-attachment
+# bind  compose             h         display-toggle-weed
+# bind  compose             i         ispell
+# bind  compose             l         print-entry
+# bind  compose             m         edit-mime
+# bind  compose             n         new-mime
+# bind  compose             o         autocrypt-menu
+# bind  compose             P         postpone-message
+# bind  compose             r         edit-reply-to
+# bind  compose             \co       rename-attachment
+# bind  compose             R         rename-file
+# bind  compose             s         edit-subject
+# bind  compose             t         edit-to
+# bind  compose             \ct       edit-type
+# bind  compose             w         write-fcc
+# bind  compose             u         toggle-unlink
+# bind  compose             U         update-encoding
+# bind  compose             MUTT_ENTER_S view-attach
+# bind  compose             v         view-alt
+# bind  compose             <esc>v    view-alt-text
+# bind  compose             V         view-alt-mailcap
+# bind  compose             y         send-message
+# bind  compose             |         pipe-entry
+# bind  compose             <esc>k    attach-key
+# bind  compose             p         pgp-menu
+# bind  compose             \cf       forget-passphrase
+# bind  compose             S         smime-menu
+# bind  compose             M         mix
+
+# Overridden {{{3
+
+# Postpone Menu {{{2
+#
+
+# Defaults {{{3
+# bind  postpone            d         delete-entry
+# bind  postpone            u         undelete-entry
+
+# Overridden {{{3
+
+# Browser Menu {{{2
+#
+
+# Defaults {{{3
+# bind  browser              c         change-dir
+# bind  browser                        descend-directory
+# bind  browser              @         display-filename
+# bind  browser              m         enter-mask
+# bind  browser              o         sort
+# bind  browser              O         sort-reverse
+# bind  browser              N         select-new
+# bind  browser              <tab>     toggle-mailboxes
+# bind  browser              <space>   view-file
+# bind  browser              .         buffy-list
+# bind  browser              C         create-mailbox (IMAP only)
+# bind  browser              d         delete-mailbox (IMAP only)
+# bind  browser              r         rename-mailbox (IMAP only)
+# bind  browser              s         subscribe (IMAP only)
+# bind  browser              u         unsubscribe (IMAP only)
+# bind  browser              T         toggle-subscribed (IMAP only)
+
+# Overridden {{{3
+
+# PGP Menu {{{2
+#
+
+# Defaults {{{3
+# bind  pgp                 c         verify-key
+# bind  pgp                 %         view-name
+
+# Overridden {{{3
+
+# SMIME Menu {{{2
+#
+
+# Defaults {{{3
+# bind  smime               c         verify-key
+# bind  smime               %         view-name
+
+# Overridden {{{3
+
+# Mixmaster Menu {{{2
+#
+
+# Defaults {{{3
+# bind  mix                 MUTT_ENTER_S accept
+# bind  mix                 a         append
+# bind  mix                 i         insert
+# bind  mix                 d         delete
+# bind  mix                 <left>    chain-prev
+# bind  mix                 <right>   chain-next
+
+# Overridden {{{3
+
+# Editor Menu {{{2
+#
+
+# Defaults {{{3
+# bind  editor              \ca       bol
+# bind  editor              \cb       backward-char
+# bind  editor              <esc>b    backward-word
+# bind  editor              <esc>c    capitalize-word
+# bind  editor              <esc>l    downcase-word
+# bind  editor              <esc>u    upcase-word
+# bind  editor              \cd       delete-char
+# bind  editor              \ce       eol
+# bind  editor              \cf       foward-char
+# bind  editor              <esc>f    forward-word
+# bind  editor              <backspace> backspace
+# bind  editor              \ck       kill-eol
+# bind  editor              <esc>d    kill-eow
+# bind  editor              \cu       kill-line
+# bind  editor              \cv       quote-char
+# bind  editor              \cw       kill-word
+# bind  editor              <tab>     complete
+# bind  editor              \ct       complete-query
+# bind  editor              <space>   buffy-cycle
+# bind  editor              \cp       history-up
+# bind  editor              \cn       history-down
+# bind  editor              \cr       history-search
+
+# Overridden {{{3
+
+# Autocrypt Account Menu {{{2
+#
+
+# Defaults {{{3
+# bind  autocrypt           c         create-account
+# bind  autocrypt           D         delete-account
+# bind  autocrypt           a         toggle-active
+# bind  autocrypt           p         toggle-prefer-encrypt
+# Overridden {{{3
+

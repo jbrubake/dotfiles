@@ -1,0 +1,12 @@
+# vim: filetype=muttrc
+
+# Reread scorefile on every folder change
+folder-hook . source ~/.mutt/score
+unscore *
+uncolor index *
+# Read our global colors again
+# source ~/.mutt/colors
+# source ~/.mutt/colors.local
+
+# Score mail to me, basically any mail which matches a value in $alternates
+score ~p 40

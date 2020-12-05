@@ -1,0 +1,9 @@
+# vim: filetype=muttrc
+#
+# Override theme colors
+
+color sidebar_highlight brightblack yellow
+color sidebar_new       blue        default
+color sidebar_flagged   red         default
+
+color status            white      blue

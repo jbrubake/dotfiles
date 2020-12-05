@@ -1,0 +1,15 @@
+#!/bin/sh
+#
+# Wrap mutt-trim and vim with options so it
+# can be used with bgedit-screen-tmux.sh
+#
+# In ~/.muttrc:
+#     set editor = "bgedit-screen-tmuxh.sh mutt-edit %s"
+
+# Clean up quoting with mutt-trim first
+~/.mutt/scripts/mutt-trim $1
+
+# I can't get spellchecking to work without changing
+# the filetype to something other than ft=mail first
+vim $1 '+set ft=conf' '+set ft=mail' '+/^$/'
+
