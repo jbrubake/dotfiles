@@ -32,17 +32,14 @@ export TZ
 
 # EDITOR/VISUAL
 #
-if command -v vim >/dev/null; then
-    EDITOR=vim
-elif command -v vi >/dev/null; then
-    EDITOR=vi
-elif command -v nano >/dev/null; then
-    EDITOR=nano
-elif command -v pico >/dev/null; then
-    EDITOR=pico
-else
-    EDITOR=ed
-fi
+editors="vim vi nano pico ed"
+for e in $editors; do
+    if command -v $e >/dev/null; then
+        EDITOR=$e
+        break
+    fi
+done
+unset editors
 VISUAL=$EDITOR
 export VISUAL EDITOR
 
