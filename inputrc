@@ -66,5 +66,5 @@ $endif
 "\eo": "\C-p\C-a\ef "
 
 # Make Alt+s cycle through Tab completion list
-"\M-s": menu-complete
+"\es": menu-complete
 
