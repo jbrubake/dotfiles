@@ -3,10 +3,6 @@
 # ~/.profile: sh-specific and generic login configuration
 #
 
-. "$HOME/.env"      # common environment
-ENV="$HOME/.shinit" # equivalent to .bashrc for sh
-export ENV
-
 # Setup PATH {{{
 # Put /usr/local/bin in PATH if it exists
 test -d "/usr/local/bin" &&
@@ -19,6 +15,11 @@ test -d "$HOME/bin" &&
 # Remove duplicate entries
 PATH=$(printf %s "$PATH" | awk -vRS=: '!a[$0]++' | paste -s -d:)
 
+# }}}
+# Setup Environment {{{
+. "$HOME/.env"      # common environment
+ENV="$HOME/.shinit" # equivalent to .bashrc for sh
+export ENV
 # }}}
 # Mintty Color Themes {{{
 case "$(uname -o)" in
