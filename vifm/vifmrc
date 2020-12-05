@@ -43,7 +43,8 @@ set vifminfo=dhistory,chistory,state,tui,shistory,
 
 " Colors and Formatting {{{1
 " ==========================
-colorscheme desert
+" colorscheme desert
+colorscheme solarized-dark
 set timefmt=%m/%d\ %H:%M    " Format for displaying time in file list
 set statusline="  Hint: %z%= %A %10u:%-7g %15s %20d  "
 
