@@ -1,0 +1,8 @@
+[Unit]
+Description=Get new mail and flush mail queue every fifteen minutes
+RefuseManualStart=no
+RefuseManualStop=yes
+
+[Service]
+Type=oneshot
+ExecStart=/home/jbrubake/bin/checkmail

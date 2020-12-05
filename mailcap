@@ -1,0 +1,10 @@
+text/html; $BROWSER %s
+text/html; elinks -dump; copiousoutput;
+
+# type/type; mutt_bgrun viewer [options] %s
+
+# Supposed to work with lesspipe.sh
+text/*;        LESSQUIET=1 lesspipe.sh '%s'; copiousoutput
+application/*; LESSQUIET=1 lesspipe.sh '%s'; copiousoutput
+image/*;       LESSQUIET=1 lesspipe.sh '%s'; copiousoutput
+audio/*;       LESSQUIET=1 lesspipe.sh '%s'; copiousoutput
