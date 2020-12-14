@@ -285,6 +285,11 @@ let g:tagbar_type_markdown = {
     \ 'sro'        : '»',
     \ 'kind2scope' : {'s' : 'section',},
     \ 'sort'       : 0}
+" thesaurus-query: Multi-language Thesaurus Query and Replacement plugin {{{2
+" <leader>cs : query thesauras for word under cursor
+
+" No configuration needed default
+
 " tlib_vim: Utility functions required by snipMate {{{2
 " No configuration needed
 
