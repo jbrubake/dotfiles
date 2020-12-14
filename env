@@ -87,8 +87,8 @@ if test $( tput colors ) -ge 0 && command -v dircolors >/dev/null; then
             fi
             ;;
     esac
-
-    eval $(dircolors $colorfile)
+    colorfile="$HOME/.dircolors.ansi-dark"
+    eval $(cat $colorfile "$HOME/.dircolors.local" | dircolors -)
 
     unset colorfile
 fi
