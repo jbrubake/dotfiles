@@ -195,6 +195,10 @@ fi
 #
 # Find all non-hidden sub-directories and strip the leading "./"
 for d in $(find . -mindepth 1 \( ! -path '*/.*' \) -type d -print | sed -e 's#./##'); do
+    # TODO: Fix this hack
+    case "$d" in
+        git_template/*) continue ;;
+    esac
     $DRY_RUN mkdir -p $verbose "$DESTDIR/.$d"
 done
 # }
@@ -211,11 +215,18 @@ done
 #
 # Find all non-hidden files in current and non-hidden
 # sub-directories and strip the leading "./"
-for f in $(find . \( ! -path '*/.*' \) -type f -print | sed -e 's#./##'); do
+# TODO: Fix the git_template hack
+for f in git_template $(find . \( ! -path '*/.*' \) -type f -print | sed -e 's#./##'); do
     # skip ignored files
     for p in $(cat $IGNOREFILE $HOSTIGNORE 2>/dev/null); do
         test $f = $p && continue 2 # continue OUTER LOOP
     done
+
+    # ignore files in git_template as it has already been linked
+    # TODO: Fix this hack
+    case "$f" in
+        git_template/*) continue ;;
+    esac
 
     # get relative path to the file from its new location in DESTDIR
     linkpath=$( CT_FindRelativePath $DESTDIR/$( dirname $f) $( dirname $f ) )
