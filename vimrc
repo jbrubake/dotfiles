@@ -571,8 +571,19 @@ autocmd Filetype make setlocal shiftwidth=8
 " ==========================
 " NOTE: Rainbow doesn't work unless this is at the end
 set background=dark
-colorscheme desert256
+" colorscheme desert256
+
+" Solarized configuration
+"  (must be done before 'syntax enable')
+colorscheme solarized
+" Don't use underline (folds like ugly)
+let g:solarized_underline=0
+" Remind vim that my terminal can't actually do undercurl
+" which solarized wants to use for spellchecking
+set t_Cs=
+
 syntax enable
+
 
 set hlsearch " Highlight search matches
 
@@ -586,24 +597,24 @@ highlight NonText    ctermfg=brown
 highlight SpecialKey ctermfg=brown
 
 " Colors used in the statusline
-highlight User1 ctermfg=red   ctermbg=blue
-highlight User2 ctermfg=green ctermbg=blue
+" highlight User1 ctermfg=red   ctermbg=blue
+" highlight User2 ctermfg=green ctermbg=blue
 
 " Mode aware cursors
-highlight InsertCursor ctermfg=grey ctermbg=grey
-highlight VisualCursor ctermfg=grey ctermbg=grey
-highlight ReplaceCursor ctermfg=grey ctermbg=grey
-highlight CommandCursor ctermfg=grey ctermbg=grey
-
+" highlight InsertCursor ctermfg=grey ctermbg=grey
+" highlight VisualCursor ctermfg=grey ctermbg=grey
+" highlight ReplaceCursor ctermfg=grey ctermbg=grey
+" highlight CommandCursor ctermfg=grey ctermbg=grey
 " vem-tabline {{{
 " Needs to be in the color section
 
 " Selected buffer
-highlight VemTablineSelected    ctermfg=white ctermbg=red
+" highlight VemTablineSelected    ctermfg=white ctermbg=red
 " Non-selected buffers
-highlight VemTablineNormal      ctermfg=white ctermbg=darkblue
+" highlight VemTablineNormal      ctermfg=white ctermbg=darkblue
 " Non-selected buffers displayed in windows
-highlight VemTablineShown       ctermfg=white ctermbg=darkblue
+" highlight VemTablineShown       ctermfg=white ctermbg=darkblue
+
 " Directory name (when present)
 " highlight VemTablineLocation    ctermfg=white ctermbg=darkblue
 " +X more text
@@ -650,7 +661,6 @@ highlight VemTablineShown       ctermfg=white ctermbg=darkblue
 if filereadable(expand("~/.vimrc.local"))
     source ~/.vimrc.local
 endif
-
 " Other {{{1
 " Highlight code in different filetypes {{{2
 "
