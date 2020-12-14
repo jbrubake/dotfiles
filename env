@@ -168,3 +168,5 @@ if [ -n "$BASH" ]; then
     export FIGNORE HISTFILESIZE HISTCONTROL HISTIGNORE
 fi
 
+export VIMWIKI_DIR=~/docs/vimwiki
+export VIMWIKI_SITE=~/docs/vimwiki/site
