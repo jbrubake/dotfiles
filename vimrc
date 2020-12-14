@@ -195,7 +195,7 @@ autocmd bufenter * if (winnr("$") == 1 &&
     " \ }
 
 " rainbow: Highlight "parentheses" with varying colors {{{2
-let g:rainbow_active = 1 " Activate plugin
+" let g:rainbow_active = 1 " Activate plugin
 
 " NOTE: See 'Colors and Syntax Settings' for more
 " tabular: Smart alignment of tables {{{2
