@@ -111,7 +111,7 @@ fi
 #
 browsers="elinks links w3m lynx"
 if test -n "$DISPLAY"; then
-    browsers="chrome chromium firefox $browsers"
+    browsers="chrome chromium firefox netsurf $browsers"
 fi
 
 for b in $browsers; do
