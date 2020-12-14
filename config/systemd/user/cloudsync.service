@@ -1,0 +1,8 @@
+[Unit]
+Description=Sync cloud files
+RefuseManualStart=no
+RefuseManualStop=yes
+
+[Service]
+Type=oneshot
+ExecStart=/home/jbrubake/sbin/cloudsync.sh

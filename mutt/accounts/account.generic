@@ -1,0 +1,53 @@
+# vim: filetype=muttrc
+#
+# Configure $my_account
+#
+
+# Reset these just in case
+set folder    = "~/.maildir"
+set mbox_type = Maildir
+
+# Set folders
+# (no need for set sent as Google handles this automatically)
+set spoolfile = +$my_account
+set trash     = +$my_account/Trash
+set postponed = +$my_account/Drafts
+set record    = ''
+
+# Send mail from this account
+set sendmail = "$my_bin/mutt-send $my_account"
+
+# Configure the From: header
+set from     = $my_account # From: address
+
+# Signaure
+set signature = ~/.signature
+
+# Per mailbox status bar color
+# color status red default
+
+# Per mailbox bindings
+#
+# mbsync the entire mailbox
+macro index o "<shell-escape>mbsync $my_account-all >/dev/null &<enter>" "run mbsync to sync mail for this account"
+# Go to folder...
+macro index,pager gi "<change-folder>+$my_account<enter>"         "go to Inbox"
+macro index,pager gs "<change-folder>+$my_account/Starred<enter>" "go to Starred"
+macro index,pager gt "<change-folder>+$my_account/Sent<enter>"    "go to Sent"
+macro index,pager gd "<change-folder>+$my_account/Drafts<enter>"  "go to Drafts"
+macro index,pager gl "<change-folder>?<change-dir><home>^K+$my_account<enter>" "select folder to change to"
+
+# macro index,pager s \
+    # "<enter-command>set my_old_resolve=\$resolve noresolve<enter>\
+    # <tag-prefix><clear-flag>n<enter-command>set resolve=\$my_old_resolve<enter>\
+    # <save-message>+mailbox/junk<enter>" \
+    # "mark as read and move to junk folder"
+
+# macro index,pager a \
+    # "<save-message>+mailbox/archive<enter>"  \
+    # "move message to the archive"
+
+# macro index,pager i \
+    # "<save-message>+mailbox/INBOX<enter>"  \
+    # "move message to the inbox"
+

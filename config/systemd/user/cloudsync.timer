@@ -1,0 +1,13 @@
+[Unit]
+Description=Sync cloud files
+RefuseManualStart=no
+RefuseManualStop=no
+
+[Timer]
+Persistent=false
+OnBootSec= 5min
+OnUnitActiveSec= 15min
+Unit=cloudsync.service
+
+[Install]
+WantedBy=default.target

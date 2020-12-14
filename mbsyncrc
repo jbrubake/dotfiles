@@ -1,0 +1,146 @@
+################
+# Global Options
+################
+#
+# Automatically create missing mailboxes on local and remote
+Create Both
+# Save sync state in the relevant directory
+SyncState *
+
+####################
+# Create IMAP Stores
+####################
+# Account jeremy.d.brubaker@gmail.com
+#
+IMAPStore jeremy.d.brubaker@gmail.com
+Host imap.gmail.com
+User jeremy.d.brubaker@gmail.com
+PassCmd "pass show oauth/jeremy.d.brubaker@gmail.com"
+SSLType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+# Account jbru362@gmail.com
+#
+IMAPStore jbru362@gmail.com
+Host imap.gmail.com
+User jbru362@gmail.com
+PassCmd "pass show oauth/jbru362@gmail.com"
+SSLType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+##############
+# Local Stores
+##############
+# jeremy.d.brubaker@gmail.com
+#
+MaildirStore jeremy.d.brubaker@gmail.com-local
+# DO NOT delete the trailing "/"
+Path ~/.maildir/jeremy.d.brubaker@gmail.com/
+Inbox ~/.maildir/jeremy.d.brubaker@gmail.com
+SubFolders Verbatim
+
+# jbru362@gmail.com
+#
+MaildirStore jbru362@gmail.com-local
+# DO NOT delete the trailing "/"
+Path ~/.maildir/jbru362@gmail.com/
+Inbox ~/.maildir/jbru362@gmail.com/
+SubFolders Verbatim
+
+########################################
+# Channels (jeremy.d.brubaker@gmail.com)
+########################################
+Channel jeremy.d.brubaker@gmail.com-inbox
+Master :jeremy.d.brubaker@gmail.com:"Inbox"
+Slave :jeremy.d.brubaker@gmail.com-local:
+CopyArrivalDate yes
+
+Channel jeremy.d.brubaker@gmail.com-starred
+Master :jeremy.d.brubaker@gmail.com:"[Gmail]/Starred"
+Slave :jeremy.d.brubaker@gmail.com-local:"Starred"
+CopyArrivalDate yes
+
+Channel jeremy.d.brubaker@gmail.com-sent
+Master :jeremy.d.brubaker@gmail.com:"[Gmail]/Sent Mail"
+Slave :jeremy.d.brubaker@gmail.com-local:"Sent"
+CopyArrivalDate yes
+
+Channel jeremy.d.brubaker@gmail.com-drafts
+Master :jeremy.d.brubaker@gmail.com:"[Gmail]/Drafts"
+Slave :jeremy.d.brubaker@gmail.com-local:"Drafts"
+CopyArrivalDate yes
+
+Channel jeremy.d.brubaker@gmail.com-trash
+Master :jeremy.d.brubaker@gmail.com:"[Gmail]/Trash"
+Slave :jeremy.d.brubaker@gmail.com-local:"Trash"
+CopyArrivalDate yes
+
+Channel jeremy.d.brubaker@gmail.com-spam
+Master :jeremy.d.brubaker@gmail.com:"[Gmail]/Spam"
+Slave :jeremy.d.brubaker@gmail.com-local:"Spam"
+CopyArrivalDate yes
+
+
+Group jeremy.d.brubaker@gmail.com-all
+Channel jeremy.d.brubaker@gmail.com-inbox
+Channel jeremy.d.brubaker@gmail.com-starred
+Channel jeremy.d.brubaker@gmail.com-sent
+Channel jeremy.d.brubaker@gmail.com-drafts
+Channel jeremy.d.brubaker@gmail.com-trash
+Channel jeremy.d.brubaker@gmail.com-spam
+
+##############################
+# Channels (jbru362@gmail.com)
+##############################
+Channel jbru362@gmail.com-inbox
+Master :jbru362@gmail.com:"Inbox"
+Slave :jbru362@gmail.com-local:
+CopyArrivalDate yes
+
+Channel jbru362@gmail.com-starred
+Master :jbru362@gmail.com:"[Gmail]/Starred"
+Slave :jbru362@gmail.com-local:"Starred"
+CopyArrivalDate yes
+
+Channel jbru362@gmail.com-sent
+Master :jbru362@gmail.com:"[Gmail]/Sent Mail"
+Slave :jbru362@gmail.com-local:"Sent"
+CopyArrivalDate yes
+
+Channel jbru362@gmail.com-drafts
+Master :jbru362@gmail.com:"[Gmail]/Drafts"
+Slave :jbru362@gmail.com-local:"Drafts"
+CopyArrivalDate yes
+
+Channel jbru362@gmail.com-trash
+Master :jbru362@gmail.com:"[Gmail]/Trash"
+Slave :jbru362@gmail.com-local:"Trash"
+CopyArrivalDate yes
+
+Channel jbru362@gmail.com-spam
+Master :jbru362@gmail.com:"[Gmail]/Spam"
+Slave :jbru362@gmail.com-local:"Spam"
+CopyArrivalDate yes
+
+Channel jbru362@gmail.com-army
+Master :jbru362@gmail.com:"Army"
+Slave :jbru362@gmail.com-local:"Army"
+CopyArrivalDate yes
+Pattern *
+
+Channel jbru362@gmail.com-boardgames
+Master :jbru362@gmail.com:"Boardgames"
+Slave :jbru362@gmail.com-local:"Boardgames"
+CopyArrivalDate yes
+Pattern *
+
+Group jbru362@gmail.com-all
+Channel jbru362@gmail.com-inbox
+Channel jbru362@gmail.com-starred
+Channel jbru362@gmail.com-sent
+Channel jbru362@gmail.com-drafts
+Channel jbru362@gmail.com-trash
+Channel jbru362@gmail.com-spam
+Channel jbru362@gmail.com-army
+Channel jbru362@gmail.com-boardgames
+
