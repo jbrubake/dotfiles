@@ -76,7 +76,9 @@ prompt_tty () {
 prompt_pwd () {
     local dir_clr=$1
     local slash_clr=$2
-    echo $(pwd | sed "s@^@$dir_clr@" | sed "s@$HOME@~@" | sed "s@/@$slash_clr/$dir_clr@g")
+    local pwd=$PWD
+    pwd=${pwd/#$HOME/\~}
+    echo ${pwd//\//$slash_clr\/$dir_clr}
 }
 
 # prompt_error: Print exit value of last command if it is non-zero {{{2
