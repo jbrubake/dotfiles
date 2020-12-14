@@ -343,14 +343,9 @@ let g:gist_post_private = 1 " Private gists by default
 " No configuration needed
 
 " vim-markdown-folding: Fold Markdown files on headers {{{2
-" Use .mdp extentions for mdp presentations
-autocmd BufRead,BufNewFile *.mdp setfiletype markdown
 " Use Nested folding for all Markdown files
 autocmd Filetype markdown setlocal foldexpr=NestedMarkdownFolds()
-" vim-markdown: Markdown syntax {{{2
-" Enable fenced code block syntax highlighting
-" let g:markdown_fenced_languages = ['python', 'html', 'bash=sh', 'c']
-
+"
 " vim-surround: Modify surrounding characters {{{2
 " ds<t>         : delete <t>
 " cs<t><r>      : change <t> to <r>
@@ -566,16 +561,44 @@ nmap <leader>f8 :set foldlevel=8<cr>
 nmap <leader>f9 :set foldlevel=9<cr>
 " }}}
 
+" Filetypes {{{1
+"=================
+" Markdown {{{2
+" Enable fenced code block syntax highlighting
+let g:markdown_fenced_languages = ['sh', 'c', 'html', 'make', 'python']
+" Disable using conceal for bold, etc
+let g:markdown_syntax_conceal = 0
+" Use .mdp extentions for mdp presentations
+autocmd BufRead,BufNewFile *.mdp setfiletype markdown
 " autocmds {{{1
 "=================
 " All autocmds were cleared at the top of the file
 
 " Source .vimrc when saving changes
 autocmd BufWritePost ~/.vimrc source ~/.vimrc
+" git commit files {{{2
 " Set options for git commit files
 autocmd Filetype gitcommit set tw=68 spell
-" Use .mdp extentions for mdp presentations
-autocmd BufRead,BufNewFile *.mdp setfiletype markdown
+" }}}
+" Mail {{{2
+" Emails should be RFC 3676 format=flowed
+"     https://incenp.org/notes/2020/format-flowed-neomutt-vim.html
+"
+" formatoptions=awq  Enable automatic formatting of paragraphs, with
+"                    trailing white space indicating a paragraph
+"                    continues in the next line
+" comments+=nb:> Lines starting with > are “comments” (so quotes
+"                within a mail are displayed differently from the rest
+"                of the message).
+" match ErrorMsg '\s\+$' Highlight the trailing space at the end of
+"                        broken lines, to provide a visual distinction
+"                        between “soft” and “hard” line breaks
+autocmd Filetype mail setlocal textwidth=72 |
+                    \ setlocal formatoptions=awq |
+                    \ setlocal comments+=nb:> |
+                    \ setlocal spell |
+                    \ match ErrorMsg '\s\+$'
+" }}}
 " Makefiles {{{
 autocmd Filetype make setlocal noexpandtab   " We need real tabs
 autocmd Filetype make setlocal tabstop=8
