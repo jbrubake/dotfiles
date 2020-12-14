@@ -130,6 +130,9 @@ autocmd Filetype c,cpp,perl setlocal foldlevel=99         " Don't fold at start
 " Plugins {{{1
 "============
 " TODO: Only configure plugin if it exists
+" calendar-vim: A calendar application for Vim {{{2
+
+" No configuration needed
 " CCTree: Vim CCTree plugin {{{2
 " CTRL-\ > : Get forward call tree
 " CTRL-\ < : Get reverse call tree
