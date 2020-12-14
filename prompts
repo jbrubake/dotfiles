@@ -159,13 +159,16 @@ test $( tput colors ) -ge 0 && HAS_COLOR=yes
 if test $HAS_COLOR; then
     dir_clr="\[$(FX reset; FG 2)\]"
     slash_clr="\[$(FX reset; FG 1)\]"
-    git_branch_clr="\[$(FX bold; FG 4)\]"
-    git_status_clr="\[$(FX bold; FG 3)\]"
+    # git_branch_clr="\[$(FX bold; FG 4)\]"
+    # git_status_clr="\[$(FX bold; FG 3)\]"
+    git_branch_clr="\[$(FX reset; FG 4)\]"
+    git_status_clr="\[$(FX reset; FG 3)\]"
     user_clr="\[$(FX reset; FG 6)\]"
     root_user_clr="\[$(FX reset; FG 1)\]"
     at_clr="\[$(FX reset; FG 4)\]"
     hostname_clr="\[$(FX reset; FG 5)\]"
-    ssh_clr="\[$(FX bold; FG 3)\]"
+    ssh_clr="\[$(FX bold; FG 5)\]"
+    # ssh_clr="\[$(FX bold; FG 3)\]"
     jobs_clr="\[$(FX reset; FG 7)\]"
     history_clr="\[$(FX reset; FG 2)\]"
     error_clr="\[$(FX reset; FG 7; BG 1)\]"
@@ -238,7 +241,7 @@ if test -n "$BASH"; then
 #############################################
 
 PS1="\
-$reset\$(prompt_pwd $dir_clr $slash_clr) \$(prompt_git "$git_branch_clr\\\(" "$git_status_clr" "$git_branch_clr\\\)")
+$reset\$(prompt_pwd $dir_clr $slash_clr) \$(prompt_git "$bracket_clr\\\($git_branch_clr" "$git_status_clr" "$bracket_clr\\\)")
 $user_clr$(prompt_user)$at_clr@$hostname_clr\h $bracket_clr($ssh_clr$(prompt_ssh)$bracket_clr)
 $brackrt_clr{$jobs_clr\$(prompt_jobs)$bracket_clr} $bracket_clr!$history_clr\! \$(prompt_error $error_clr)
 $prompt_clr$ $reset"
