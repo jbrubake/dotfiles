@@ -269,6 +269,22 @@ vmap <Leader>t<Bar> :Tabularize /<Bar><cr>
 " <F9> : toggle TagBar
 noremap <silent> <F9> :TagbarToggle<cr>
 
+" Add support for Makefiles (requires adding
+"     --regex-make=/^([^# \t:]*):/\1/t,target/
+" to ~/.ctags)
+let g:tagbar_type_make = {'kinds':
+                        \ ['m:macros',
+                        \ 't:targets']}
+
+" Add support for Markdown
+let g:tagbar_type_markdown = {
+    \ 'ctagstype'  : 'markdown',
+    \ 'ctagsbin'   : 'markdown2ctags.py',
+    \ 'ctagsargs'  : '-f - --sort=yes --sro=»',
+    \ 'kinds'      : ['s:sections', 'i:images'],
+    \ 'sro'        : '»',
+    \ 'kind2scope' : {'s' : 'section',},
+    \ 'sort'       : 0}
 " tlib_vim: Utility functions required by snipMate {{{2
 " No configuration needed
 
