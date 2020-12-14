@@ -259,15 +259,6 @@ for f in git_template $(find . \( ! -path '*/.*' \) -type f -print | sed -e 's#.
 done
 # }
 # Custom installation {
-# TODO: Add better custom installation framework
-if ! test -e ~/.mutt/auth; then
-    cat <<END > ~/.mutt/auth
-# vi: filetype=muttrc
-#
-# Gmail application password
-set imap_pass = "GOOGLEAPPPWD"
-set smtp_pass = "GOOGLEAPPPWD"
-END
 if ! test -e ~/.mutt/address_book; then
     cat <<END > ~/.mutt/address_book
 # vi: filetype=muttrc
