@@ -25,7 +25,8 @@ set mbox_type = Maildir     # Mailboxes are in Maildir format
 #  (https://webgefrickel.de/blog/a-modern-mutt-setup-part-two)
 folder-hook jbru362@gmail.com/*           source ~/.mutt/accounts/jbru362@gmail.com
 folder-hook jeremy.d.brubaker@gmail.com/* source ~/.mutt/accounts/jeremy.d.brubaker@gmail.com
-source ~/.mutt/accounts/jbru362@gmail.com # Source the default account
+source ~/.mutt/accounts/jbru362@gmail.com # Set the default account
+source ~/.mutt/accounts/account.generic   # Source the generic account setup
 
 # Basic setup {{{1
 # ===========
