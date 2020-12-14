@@ -179,7 +179,6 @@ autocmd bufenter * if (winnr("$") == 1 &&
     \ endif
 
 " nerdtree-git-plugin: A plugin of NERDTree showing git status {{{2
-" Note: currently only works if Vim is started in a git repository
 "
 " Custom indicators
 "let g:NERDTreeIndicatorMapCustom = {
