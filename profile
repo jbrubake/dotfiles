@@ -20,6 +20,10 @@ PATH=$(printf %s "$PATH" | awk -vRS=: '!a[$0]++' | paste -s -d:)
 . "$HOME/.env"      # common environment
 ENV="$HOME/.shinit" # equivalent to .bashrc for sh
 export ENV
+
+# Start keychain
+eval $( keychain --eval --agents ssh,gpg id_rsa BF443169C02D9D58674866D4CE9114EFAF3CAB31 )
+
 # }}}
 # Mintty Color Themes {{{
 case "$(uname -o)" in
