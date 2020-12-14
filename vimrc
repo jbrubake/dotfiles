@@ -394,6 +394,21 @@ else
     let g:pilot_key_l='<a-l>'
     let g:pilot_key_p='<a-\>'
 endif
+" vim-wiki: Personal Wiki for Vim {{{2
+
+" Use Markdown instead of Vimwiki wyntax
+let g:vimwiki_list = [{
+    \ 'path_html': '~/docs/vimwiki/site',
+    \ 'path': '~/docs/vimwiki/content',
+    \ 'syntax': 'markdown',
+    \ 'ext': '.md'
+    \ }]
+
+" Do not create temporary wikis outside of vimwiki_list
+let g:vimwiki_global_ext = 0
+
+autocmd FileType vimwiki map <buffer> <leader>d :VimwikiMakeDiaryNote<CR>
+autocmd FileType vimwiki map <buffer> <leader>c :Calendar<CR>
 " webapi-vim: Needed for vim-gist {{{2
 " No configuration needed
 
