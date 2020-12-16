@@ -130,6 +130,7 @@ autocmd Filetype c,cpp,perl setlocal foldlevel=99         " Don't fold at start
 " Plugins {{{1
 "============
 " TODO: Only configure plugin if it exists
+set rtp+=/usr/local/share/fzf
 " calendar-vim: A calendar application for Vim {{{2
 
 " No configuration needed
@@ -168,6 +169,25 @@ autocmd VimEnter * if filereadable("cscope.out")
 
 " No configuration needed
 
+" fzf: Fuzzy finder {{{2
+
+" No configuration needed
+
+" fzf.vim: fzf vim plugin {{{2
+
+" :Files [PATH]     " Files ($FZF_DEFAULT_COMMAND)
+" :GFiles [OPTS]    " GIt files (git ls-files)
+" :GFiles?          " Git files (git status)
+" :Buffers
+" :Rg [PATTERN]     " Search using ripgrep
+" :Lines [QUERY]    " Lines in all buffers
+" :BLines [QUERY]   " Lines in current buffer
+" :Tags [QUERY]     " Tags in current project (ctags -R)
+" :BTags [QUERY]    " Tags in current buffer
+" :Marks            " Marks
+" :Snippets         " Snippets (UltiSnips)
+" :Commits          " Git commits (vim-fugitive)
+noremap <C-p> :Files<CR>
 " nerdtree: A tree explorer plugin for vim {{{2
 " <F10> : Toggle file tree browser
 noremap <silent> <F10> :NERDTreeToggle<cr>
