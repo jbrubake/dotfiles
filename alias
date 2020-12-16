@@ -81,6 +81,9 @@ else
     alias myip="echo 'wget or curl not available'"
 fi
 
+command -v fdfind >/dev/null &&
+    alias fd=fdfind
+
 # Miscellaneous
 #
 alias dut='du -h --max-depth=1'  # du(1) prints totals for one level down
