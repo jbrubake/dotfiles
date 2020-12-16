@@ -170,3 +170,6 @@ fi
 
 export VIMWIKI_DIR=~/docs/vimwiki
 export VIMWIKI_SITE=~/docs/vimwiki/site
+
+export FZF_DEFAULT_OPTS='--layout=reverse'
+export FZF_DEFAULT_COMMAND='rg --files'
