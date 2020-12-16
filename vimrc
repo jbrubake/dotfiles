@@ -342,6 +342,9 @@ let g:closetag_filenames = "*.html,*.xhtml,*.phtml"
 
 " No configuration needed
 
+" vim-fugitive: Git in Vim{{{2
+
+" No configuration needed
 " vim-gist: Edit github.com gists with vim {{{2
 let g:gist_post_private = 1 " Private gists by default
                             " :Gist -P to create public Gist
