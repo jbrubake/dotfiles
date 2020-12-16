@@ -3,3 +3,4 @@ COPYING.md
 install.sh
 Makefile
 tags
+ctags
