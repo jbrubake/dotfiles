@@ -1,0 +1,2 @@
+$include ~/.ssh/known_hosts
+$include /etc/hosts

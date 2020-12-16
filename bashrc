@@ -44,13 +44,9 @@ done
 command -v todo.sh >/dev/null &&
     complete -F _todo t
 
-# tldr completion
-command -v tldr >/dev/null &&
-    complete -W "$(tldr 2>/dev/null --list)" tldr
-
 # Hostnames for bash-completion
 if [[ -z $HOSTFILE && -r "$HOME/.ssh/known_hosts" ]]; then
-    HOSTFILE="$HOME/.ssh/known_hosts"
+    HOSTFILE="$HOME/.hosts"
 fi
 # }}}
 
