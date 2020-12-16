@@ -21,6 +21,12 @@ shopt -s no_empty_cmd_completion # Don't TAB complete a blank line
 
 set   +o ignoreeof    # Ctl+D does not exit shell
 # }}}
+# Keybindings {{{
+# fzf
+if test -f /usr/local/share/fzf/key-bindings.bash; then
+    . /usr/local/share/fzf/key-bindings.bash
+fi
+# }}}
 # Bash Completion {{{
 # System settings
 if ! shopt -oq posix; then
@@ -44,6 +50,10 @@ done
 command -v todo.sh >/dev/null &&
     complete -F _todo t
 
+# fzf completion
+if test -f /usr/local/share/fzf/completion.bash; then
+    . /usr/local/share/fzf/completion.bash
+fi
 # Hostnames for bash-completion
 if [[ -z $HOSTFILE && -r "$HOME/.ssh/known_hosts" ]]; then
     HOSTFILE="$HOME/.hosts"
