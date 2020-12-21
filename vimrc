@@ -22,6 +22,11 @@
 autocmd!
 
 set nocompatible " Don't be vi compatible
+
+if exists('g:vimpager_plugin_loaded')
+    " set noloadplugins
+endif
+
 " Basics {{{1
 " ======
 filetype plugin indent on            " Load filetype plugins and indent settings
@@ -137,7 +142,7 @@ autocmd Filetype c,cpp,perl setlocal foldlevel=99         " Don't fold at start
 " Plugins {{{1
 "============
 " TODO: Only configure plugin if it exists
-set rtp+=/usr/local/share/fzf
+" TODO: load minpac on demand
 " TODO: automatically update plugins periodically
 " minpac setup {{{2
 "
@@ -493,7 +498,7 @@ else
     let g:pilot_key_l='<a-l>'
     let g:pilot_key_p='<a-\>'
 endif
-" vim-wiki: Personal Wiki for Vim {{{2
+" vimwiki: Personal Wiki for Vim {{{2
 " call minpac#add('vimwiki/vimwiki')
 
 " Use Markdown instead of Vimwiki wyntax
@@ -679,8 +684,8 @@ nmap <leader>f9 :set foldlevel=9<cr>
 " Markdown {{{2
 " Enable fenced code block syntax highlighting
 let g:markdown_fenced_languages = ['sh', 'c', 'html', 'make', 'python']
-" Disable using conceal for bold, etc
-let g:markdown_syntax_conceal = 0
+" Turn on conceal
+autocmd Filetype markdown setlocal conceallevel=2
 " Use .mdp extentions for mdp presentations
 autocmd BufRead,BufNewFile *.mdp setfiletype markdown
 " autocmds {{{1
@@ -688,10 +693,10 @@ autocmd BufRead,BufNewFile *.mdp setfiletype markdown
 " All autocmds were cleared at the top of the file
 
 " Source .vimrc when saving changes
-autocmd BufWritePost ~/.vimrc source ~/.vimrc
+autocmd BufWritePost ~/.vimrc nested source ~/.vimrc
 " git commit files {{{2
 " Set options for git commit files
-autocmd Filetype gitcommit set tw=68 spell
+autocmd Filetype gitcommit setlocal tw=68 spell
 " }}}
 " Mail {{{2
 " Emails should be RFC 3676 format=flowed
@@ -765,7 +770,6 @@ let g:solarized_underline=0
 set t_Cs=
 
 syntax enable
-
 
 set hlsearch " Highlight search matches
 " vem-tabline {{{
@@ -907,7 +911,6 @@ fun! MailcompleteF(contacts)
     endfor
     return ret
 endfun
-
 
 autocmd Filetype mail setlocal completefunc=MailcompleteC
 
