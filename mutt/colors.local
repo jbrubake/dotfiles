@@ -2,8 +2,10 @@
 #
 # Override theme colors
 
-color sidebar_highlight brightblack yellow
-color sidebar_new       blue        default
-color sidebar_flagged   red         default
+color sidebar_highlight black color6
+color sidebar_new       color6 default
+color sidebar_flagged   default default
 
-color status            white      blue
+color indicator black color6
+
+color status    black blue
