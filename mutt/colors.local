@@ -2,10 +2,58 @@
 #
 # Override theme colors
 
+# UI {{{1
+color indicator black color6
+
+color status    black blue
+
+# Sidebar {{{1
 color sidebar_highlight black color6
 color sidebar_new       color6 default
 color sidebar_flagged   default default
 
-color indicator black color6
+# Pager headers {{{1
+color hdrdefault white          default
+color header     green          default "^date: "
+color header     cyan           default "^from: "
+color header     yellow         default "^to: "
+color header     brightblue     default "^cc: "
+color header     brightblue     default "^bcc: "
+color header     magenta        default "^subject: "
 
-color status    black blue
+# Pager body {{{1
+
+# URLs
+color body red default "([a-z][a-z0-9+-]*://(((([a-z0-9_.!~*'();:&=+$,-]|%[0-9a-f][0-9a-f])*@)?((([a-z0-9]([a-z0-9-]*[a-z0-9])?)\\.)*([a-z]([a-z0-9-]*[a-z0-9])?)\\.?|[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+)(:[0-9]+)?)|([a-z0-9_.!~*'()$,;:@&=+-]|%[0-9a-f][0-9a-f])+)(/([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*(;([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*)*(/([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*(;([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*)*)*)?(\\?([a-z0-9_.!~*'();/?:@&=+$,-]|%[0-9a-f][0-9a-f])*)?(#([a-z0-9_.!~*'();/?:@&=+$,-]|%[0-9a-f][0-9a-f])*)?|(www|ftp)\\.(([a-z0-9]([a-z0-9-]*[a-z0-9])?)\\.)*([a-z]([a-z0-9-]*[a-z0-9])?)\\.?(:[0-9]+)?(/([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*(;([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*)*(/([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*(;([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*)*)*)?(\\?([-a-z0-9_.!~*'();/?:@&=+$,]|%[0-9a-f][0-9a-f])*)?(#([-a-z0-9_.!~*'();/?:@&=+$,]|%[0-9a-f][0-9a-f])*)?)[^].,:;!)? \t\r\n<>\"]"
+# color body       brightblue     default "(http|https|ftp|news|telnet|finger)://[^ \">\t\r\n]*"
+#
+# mailto: links
+color body color3 default "mailto:[-a-z_0-9.]+@[-a-z_0-9.]+"
+
+# Email addresses
+color body red default "((@(([0-9a-z-]+\\.)*[0-9a-z-]+\\.?|#[0-9]+|\\[[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\]),)*@(([0-9a-z-]+\\.)*[0-9a-z-]+\\.?|#[0-9]+|\\[[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\]):)?[0-9a-z_.+%$-]+@(([0-9a-z-]+\\.)*[0-9a-z-]+\\.?|#[0-9]+|\\[[0-2]?[0-9]?[0-9]\\.[0-2]?[0-9]?[0-9]\\.[0-2]?[0-9]?[0-9]\\.[0-2]?[0-9]?[0-9]\\])"
+
+# Bold, underline, italic
+color body red default "(^|[[:space:]])\\*[^[:space:]]+\\*([[:space:]]|$)" # *Bold* text.
+color body red default "(^|[[:space:]])_[^[:space:]]+_([[:space:]]|$)"     # _Underlined_ text.
+color body red default "(^|[[:space:]])/[^[:space:]]+/([[:space:]]|$)"     # /Italic/ text.
+
+# Emoticons and text abbreviations
+color body red default " [;:]-*[)>(<|]"     # :-) etc...
+color body red default "[;:][-o][)/(|]"     # emoticons
+color body red default "[;:][)(|]"          # emoticons
+color body red default "[ ][*][^*]*[*][ ]?" # more emoticon?
+color body red default "[ ]?[*][^*]*[*][ ]" # more emoticon?
+color body red default "<[Gg]>"             # <g>
+color body red default "<[Bb][Gg]>"         # <bg>
+color body red default "[*]?((N)?ACK|CU|LOL|SCNR|BRB|BTW|CWYL|\
+                       |FWIW|vbg|GD&R|HTH|HTHBE|IMHO|IMNSHO|\
+                       |IRL|RTFM|ROTFL|ROFL|YMMV)[*]?"
+
+# TOFU
+color body	brightmagenta	black	"^\\[---.*"
+color body	green			black	"^#v[-+]"
+
+# Dates, both ISO-style and [YY]YY/MM/DD
+# color body red default "\(19|20\)?[0-9][0-9][/-][01]?[0-9][/-][0123]?[0-9]"
+
