@@ -768,25 +768,6 @@ syntax enable
 
 
 set hlsearch " Highlight search matches
-
-" In-active window status line
-highlight StatusLineNC ctermfg=darkblue ctermbg=black
-" Active window status line
-highlight StatusLine   ctermfg=darkblue ctermbg=white
-
-" Non-printing characters
-highlight NonText    ctermfg=brown
-highlight SpecialKey ctermfg=brown
-
-" Colors used in the statusline
-" highlight User1 ctermfg=red   ctermbg=blue
-" highlight User2 ctermfg=green ctermbg=blue
-
-" Mode aware cursors
-" highlight InsertCursor ctermfg=grey ctermbg=grey
-" highlight VisualCursor ctermfg=grey ctermbg=grey
-" highlight ReplaceCursor ctermfg=grey ctermbg=grey
-" highlight CommandCursor ctermfg=grey ctermbg=grey
 " vem-tabline {{{
 " Needs to be in the color section
 
