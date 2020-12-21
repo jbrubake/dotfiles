@@ -131,10 +131,22 @@ autocmd Filetype c,cpp,perl setlocal foldlevel=99         " Don't fold at start
 "============
 " TODO: Only configure plugin if it exists
 set rtp+=/usr/local/share/fzf
+" TODO: automatically update plugins periodically
+" minpac setup {{{2
+"
+" call minpac#update() to update all packages
+" call minpac#clean() to remove unused plugins
+" call minpac#status() to get plugin status
+
+packadd minpac
+call minpac#init()
+call minpac#add('k-takata/minpac', {'type': 'opt'})
 " calendar-vim: A calendar application for Vim {{{2
 
-" No configuration needed
+call minpac#add('mattn/calendar-vim')
 " CCTree: Vim CCTree plugin {{{2
+call minpac#add('hari-rangarajan/CCTree')
+
 " CTRL-\ > : Get forward call tree
 " CTRL-\ < : Get reverse call tree
 " CTRL-\ w : Toogle call tree window
@@ -152,7 +164,9 @@ autocmd VimEnter * if filereadable("cscope.out")
 
 " No configuration needed
 
-" cscope_maps.vim: CSCOPE settings for vim {{{2
+" cscope_maps: CSCOPE settings for vim {{{2
+call minpac#add('chazy/cscope_maps')
+
 " CTRL-\                   : Show search in current window
 " CTRL-<space>             : Show search in horizontal split
 " CTRL-<space> Ctl+<space> : Show search in vertical split
@@ -167,13 +181,16 @@ autocmd VimEnter * if filereadable("cscope.out")
 " i : includes - files that include filename
 " d : called - functions called by this function
 
-" No configuration needed
+" DrawIt: ASCII drawing plugin {{{2
+call minpac#add('vim-scripts/DrawIt')
 
 " fzf: Fuzzy finder {{{2
+call minpac#add('junegunn/fzf')
 
 " No configuration needed
 
 " fzf.vim: fzf vim plugin {{{2
+call minpac#add('junegunn/fzf.vim')
 
 " :Files [PATH]     " Files ($FZF_DEFAULT_COMMAND)
 " :GFiles [OPTS]    " GIt files (git ls-files)
@@ -189,6 +206,8 @@ autocmd VimEnter * if filereadable("cscope.out")
 " :Commits          " Git commits (vim-fugitive)
 noremap <C-p> :Files<CR>
 " nerdtree: A tree explorer plugin for vim {{{2
+call minpac#add('preservim/nerdtree')
+
 " <F10> : Toggle file tree browser
 noremap <silent> <F10> :NERDTreeToggle<cr>
 
@@ -199,7 +218,8 @@ autocmd bufenter * if (winnr("$") == 1 &&
     \ endif
 
 " nerdtree-git-plugin: A plugin of NERDTree showing git status {{{2
-"
+call minpac#add('Xuyuanp/nerdtree-git-plugin')
+
 " Custom indicators
 "let g:NERDTreeIndicatorMapCustom = {
     " \ "Modified"  : "✹",
@@ -215,11 +235,13 @@ autocmd bufenter * if (winnr("$") == 1 &&
     " \ }
 
 " rainbow: Highlight "parentheses" with varying colors {{{2
+call minpac#add('luochen1990/rainbow')
 " let g:rainbow_active = 1 " Activate plugin
 
 " NOTE: See 'Colors and Syntax Settings' for more
 " tabular: Smart alignment of tables {{{2
-"
+call minpac#add('godlygeek/tabular')
+
 " :Tabularize /<delimiter>/<format>
 "
 " <format> : (l)eft, (r)ight, (center)
@@ -271,6 +293,8 @@ nmap <Leader>t<Bar> :Tabularize /<Bar><cr>
 vmap <Leader>t<Bar> :Tabularize /<Bar><cr>
 
 " tagbar: Source code browser using ctags {{{2
+call minpac#add('preservim/tagbar')
+
 " ctags commands
 " --------------
 " CTRL-] : Jump to tag underneath cursor
@@ -306,22 +330,28 @@ let g:tagbar_type_markdown = {
     \ 'kind2scope' : {'s' : 'section',},
     \ 'sort'       : 0}
 " thesaurus-query: Multi-language Thesaurus Query and Replacement plugin {{{2
+call minpac#add('Ron89/thesaurus_query.vim')
+
 " <leader>cs : query thesauras for word under cursor
 
 " No configuration needed default
 
 " tlib_vim: Utility functions required by snipMate {{{2
-" No configuration needed
+call minpac#add('tomtom/tlib_vim')
 
 " vem-tabline: Vim plugin to display tabs and buffers in the tabline {{{2
+call minpac#add('pacha/vem-tabline')
+
 let g:vem_tabline_show             = 2 " Always show the tabline
 let g:vem_tabline_multiwindow_mode = 0 " Show all buffers in a tab
 
 " NOTE: See 'Colors and Syntax Settings' for more
 " vim-addon-mw-utils: Caching required by snipMate {{{2
-" No configuration needed
+call minpac#add('MarcWeber/vim-addon-mw-utils')
 
 " vim-closetag: Easily close HTML/XML tags {{{2
+call minpac#add('alvan/vim-closetag')
+
 "   Current content:
 "       <table|
 "   Press >:
@@ -335,21 +365,28 @@ let g:vem_tabline_multiwindow_mode = 0 " Show all buffers in a tab
 let g:closetag_filenames = "*.html,*.xhtml,*.phtml"
 
 " vim-commentary: Commenting keymaps {{{2
+call minpac#add('tpope/vim-commentary')
+
 " gc{motion} : Toggle commenting over {motion}
 " gcc        : Toggle commenting of [count] lines
 " {Visual}gc : Toggle commenting of highlighted lines
 " gcu        : Uncomment current and adjacent lines
 
-" No configuration needed
+" vim-devicons: NERDTree icons {{{2
+call minpac#add('ryanoasis/vim-devicons')
 
 " vim-fugitive: Git in Vim{{{2
+call minpac#add('tpope/vim-fugitive')
 
-" No configuration needed
 " vim-gist: Edit github.com gists with vim {{{2
+call minpac#add('mattn/vim-gist')
+
 let g:gist_post_private = 1 " Private gists by default
                             " :Gist -P to create public Gist
 
 " vim-IndentCommentPrefix: Indents comments sensibly {{{2
+call minpac#add('inkarkat/vim-IndentCommentPrefix')
+
 " >>  : Indent, keeping comment prefix where it is
 " <<  : Deindent, keeping comment prefix where it is
 " g>> : Indent, including comment prefix
@@ -363,13 +400,17 @@ let g:gist_post_private = 1 " Private gists by default
 "let g:IndentCommentPrefix_Whitelist = ['REMARK:']
 
 " vim-ingo-library: library functions required by IndentCommentPrefix {{{2
-" No configuration needed
+call minpac#add('inkarkat/vim-ingo-library')
 
 " vim-markdown-folding: Fold Markdown files on headers {{{2
+call minpac#add('masukomi/vim-markdown-folding')
+
 " Use Nested folding for all Markdown files
 autocmd Filetype markdown setlocal foldexpr=NestedMarkdownFolds()
 "
 " vim-surround: Modify surrounding characters {{{2
+call minpac#add('tpope/vim-surround')
+
 " ds<t>         : delete <t>
 " cs<t><r>      : change <t> to <r>
 " csw<t>        : surround current word with <t>
@@ -394,9 +435,10 @@ autocmd Filetype markdown setlocal foldexpr=NestedMarkdownFolds()
 " No configuration needed
 
 " vim-tmux: Vim plugin for .tmux.conf {{{2
-" No configuration needed
+call minpac#add('tmux-plugins/vim-tmux')
 
 " vim-tmux-pilot: Unified navigation of splits and tabs in nvim and tmux {{{2
+call minpac#add('urbainvaes/vim-tmux-pilot')
 
 " Use Alt+[hjkl] to navigate windows
 if has ('unix') " set convert-meta off in .inputrc makes Alt not the Meta key
@@ -413,6 +455,7 @@ else
     let g:pilot_key_p='<a-\>'
 endif
 " vim-wiki: Personal Wiki for Vim {{{2
+" call minpac#add('vimwiki/vimwiki')
 
 " Use Markdown instead of Vimwiki wyntax
 let g:vimwiki_list = [{
@@ -428,9 +471,11 @@ let g:vimwiki_global_ext = 0
 autocmd FileType vimwiki map <buffer> <leader>d :VimwikiMakeDiaryNote<CR>
 autocmd FileType vimwiki map <buffer> <leader>c :Calendar<CR>
 " webapi-vim: Needed for vim-gist {{{2
-" No configuration needed
+call minpac#add('mattn/webapi-vim')
 
 " todo-txt.vim: Vim plugin for Todo.txt {{{2
+call minpac#add('freitass/todo.txt-vim')
+
 " <LocalLeader>s   : Sort by priority
 " <LocalLeader>s+  : Sort on +Projects
 " <LocalLeader>s@  : Sort on @Contexts
@@ -465,6 +510,8 @@ autocmd filetype todo imap <buffer> + +<C-X><C-O>
 autocmd filetype todo imap <buffer> @ @<C-X><C-O>
 
 " a.vim: Swap header and source files {{{2
+call minpac#add('vim-scripts/a.vim')
+
 " :A : Switch between header and source files
 " :AS: Split and switch
 " :AV: Vertical split and switch
