@@ -300,7 +300,7 @@ tree() {
 #
 # Commands:
 #     git: pass args to git and run in wiki directory
-#     make: run 'make all' in wiki directory
+#     make: pass args to make and run in wiki directory
 #     view: open wiki index in $BROWSER
 #
 #     If no command is given, simply open the index
@@ -323,7 +323,7 @@ wiki() {
                 git -C $VIMWIKI_DIR ${@:2}
                 ;;
             make)
-                (cd $VIMWIKI_DIR && make)
+                (cd $VIMWIKI_DIR && make ${@:2})
                 ;;
             view)
                 openurl $VIMWIKI_SITE/index.html
