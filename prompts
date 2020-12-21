@@ -78,7 +78,7 @@ prompt_pwd () {
     local slash_clr=$2
     local pwd=$PWD
     pwd=${pwd/#$HOME/\~}
-    echo ${pwd//\//$slash_clr\/$dir_clr}
+    echo "$dir_clr${pwd//\//$slash_clr\/$dir_clr}"
 }
 
 # prompt_error: Print exit value of last command if it is non-zero {{{2
