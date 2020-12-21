@@ -3,3 +3,5 @@
 Host *
     HashKnownHosts no
 
+Include config.local
+
