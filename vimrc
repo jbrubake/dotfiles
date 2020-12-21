@@ -722,6 +722,37 @@ autocmd Filetype make setlocal shiftwidth=8
 " ==========================
 " NOTE: Rainbow doesn't work unless this is at the end
 set background=dark
+
+" Automatcially source local colors when a colorscheme is loaded
+function! s:colorscheme_local() abort
+    " In-active window status line
+    highlight StatusLineNC ctermfg=darkblue ctermbg=black
+    " Active window status line
+    highlight StatusLine   ctermfg=darkblue ctermbg=white
+
+    " Non-printing characters
+    highlight NonText    ctermfg=brown
+    highlight SpecialKey ctermfg=brown
+
+    " Turn Underlined back on after turning it off because
+    " vim-colors-solarized uses it too much
+    highlight Underlined cterm=underline
+
+    " Colors used in the statusline
+    " highlight User1 ctermfg=red   ctermbg=blue
+    " highlight User2 ctermfg=green ctermbg=blue
+
+    " Mode aware cursors
+    " highlight InsertCursor ctermfg=grey ctermbg=grey
+    " highlight VisualCursor ctermfg=grey ctermbg=grey
+    " highlight ReplaceCursor ctermfg=grey ctermbg=grey
+    " highlight CommandCursor ctermfg=grey ctermbg=grey
+endfunction
+augroup colorscheme_local
+    autocmd!
+    autocmd ColorScheme * call s:colorscheme_local()
+augroup END
+
 " colorscheme desert256
 
 " Solarized configuration
