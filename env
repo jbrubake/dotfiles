@@ -173,3 +173,7 @@ export VIMWIKI_SITE=~/docs/vimwiki/site
 
 export FZF_DEFAULT_OPTS='--layout=reverse'
 export FZF_DEFAULT_COMMAND='rg --files'
+# Create nerd-font variables
+if test -f "$HOME/share/nerd-font/i_all.sh"; then
+    . "$HOME/share/nerd-font/i_all.sh"
+fi
