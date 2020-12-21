@@ -59,4 +59,7 @@ if [[ -z $HOSTFILE && -r "$HOME/.ssh/known_hosts" ]]; then
     HOSTFILE="$HOME/.hosts"
 fi
 # }}}
-
+# Other {{{
+command -v navi >/dev/null && \
+    eval "$(navi widget bash)"
+# }}}
