@@ -257,7 +257,10 @@ call minpac#add('Xuyuanp/nerdtree-git-plugin')
 
 " rainbow: Highlight "parentheses" with varying colors {{{2
 call minpac#add('luochen1990/rainbow')
-" let g:rainbow_active = 1 " Activate plugin
+
+" XXX: conflicts with vimwiki
+" TODO: enable only for specific filetypes (or only outside vimwiki?)
+let g:rainbow_active = 1 " Activate plugin
 
 " NOTE: See 'Colors and Syntax Settings' for more
 " tabular: Smart alignment of tables {{{2
@@ -494,18 +497,22 @@ endif
 " call minpac#add('vimwiki/vimwiki')
 
 " Use Markdown instead of Vimwiki wyntax
-let g:vimwiki_list = [{
-    \ 'path_html': '~/docs/vimwiki/site',
-    \ 'path': '~/docs/vimwiki/content',
-    \ 'syntax': 'markdown',
-    \ 'ext': '.md'
-    \ }]
+" let g:vimwiki_list = [{
+    " \ 'path_html': '~/docs/vimwiki/site',
+    " \ 'path': '~/docs/vimwiki/content',
+    " \ 'syntax': 'markdown',
+    " \ 'ext': '.md'
+    " \ }]
 
 " Do not create temporary wikis outside of vimwiki_list
-let g:vimwiki_global_ext = 0
+" let g:vimwiki_global_ext = 0
 
-autocmd FileType vimwiki map <buffer> <leader>d :VimwikiMakeDiaryNote<CR>
-autocmd FileType vimwiki map <buffer> <leader>c :Calendar<CR>
+" Fold headings
+" let g:vimwiki_folding = 'expr'
+
+" autocmd FileType vimwiki map <buffer> <leader>d :VimwikiMakeDiaryNote<CR>
+" autocmd FileType vimwiki map <buffer> <leader>c :Calendar<CR>
+
 " webapi-vim: Needed for vim-gist {{{2
 call minpac#add('mattn/webapi-vim')
 
