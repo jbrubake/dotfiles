@@ -148,6 +148,15 @@ set rtp+=/usr/local/share/fzf
 packadd minpac
 call minpac#init()
 call minpac#add('k-takata/minpac', {'type': 'opt'})
+" auto_mkdir2: Automatically create directory tree for new files {{{2
+
+call minpac#add('arp242/auto_mkdir2.vim')
+
+let g:auto_mkdir2_autocmd = '*.md'
+
+" gf works with files that do not exist
+autocmd BufEnter *.md noremap gf :e <cfile><CR>
+
 " calendar-vim: A calendar application for Vim {{{2
 
 call minpac#add('mattn/calendar-vim')
@@ -194,7 +203,8 @@ call minpac#add('vim-scripts/DrawIt')
 " fzf: Fuzzy finder {{{2
 call minpac#add('junegunn/fzf')
 
-" No configuration needed
+" fzf plugin is located here
+set rtp+=/usr/local/share/fzf
 
 " fzf.vim: fzf vim plugin {{{2
 call minpac#add('junegunn/fzf.vim')
@@ -212,6 +222,10 @@ call minpac#add('junegunn/fzf.vim')
 " :Snippets         " Snippets (UltiSnips)
 " :Commits          " Git commits (vim-fugitive)
 noremap <C-p> :Files<CR>
+
+" gv.vim: Git commit browser {{{2
+call minpac#add('junegunn/gv.vim')
+
 " nerdtree: A tree explorer plugin for vim {{{2
 call minpac#add('preservim/nerdtree')
 
@@ -371,6 +385,9 @@ call minpac#add('alvan/vim-closetag')
 " Use closetag in these files
 let g:closetag_filenames = "*.html,*.xhtml,*.phtml"
 
+" vim-colors-solarized: Solarized colorscheme {{{2
+call minpac#add('altercation/vim-colors-solarized')
+
 " vim-commentary: Commenting keymaps {{{2
 call minpac#add('tpope/vim-commentary')
 
@@ -390,6 +407,18 @@ call minpac#add('mattn/vim-gist')
 
 let g:gist_post_private = 1 " Private gists by default
                             " :Gist -P to create public Gist
+
+" vim-gitgutter: Use the sign column to show git chanages {{{2
+call minpac#add('airblade/vim-gitgutter')
+
+" The default updatetime of 4000ms is not good for async update
+set updatetime=100
+" Statusline function
+" let l:hunks = GitGutterGetHunkSummary()
+" if l:hunks[0] || l:hunks[1] || l:hunks[2]
+    " let l:line .= '%#GitGutterAdd# +' . l:hunks[0] .
+                " \ ' %#GitGutterChange#~' . l:hunks[1] .
+                " \ ' %#GitGutterDelete#-' . l:hunks[2] . ' '
 
 " vim-IndentCommentPrefix: Indents comments sensibly {{{2
 call minpac#add('inkarkat/vim-IndentCommentPrefix')
