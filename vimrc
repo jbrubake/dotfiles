@@ -47,6 +47,7 @@ set listchars+=extends:>,precedes:<  " Show long line continuation chars
 set listchars+=tab:»\                " Show real tabs
 set listchars+=trail:.               " Show trailing spaces and higlight them
 set listchars+=eol:¬                 " Show end of line
+set listchars+=nbsp:+                " Show non-breaking space
 set visualbell                       " Blink instead of beep
 set relativenumber                   " Show relative line number
 set number                           " Show line number of current line
@@ -58,12 +59,18 @@ set sidescrolloff=10                 " Keep 10 lines at right/left
 set sidescroll=1                     " Horizontal scroll one column at a time
 set showtabline=0                    " Never show tabline
 set hidden                           " Allow hidden buffers
+set tags-=./tags                     " Remove ./tags and ./tags; from 'tags'
+set tags-=./tags;                    "  and prepend ./tags; in order to search
+set tags^=./tags;                    "  up the tree for the tags file
+set complete-=i                      " *Do not* search included files when completing
+set history=1000                     " Save more command history
 
 " Text Formatting/Layout {{{1
 "===========================
 set formatoptions+=rqln  " Insert comment leader on return, let gq format
                          "  comments and do not break an already long line
                          "  during insert, support numbered/bulleted lists
+set formatoptions+=j     " Delete comment character when joining lines
 set ignorecase           " Case insensitive by default
 set smartcase            "  but case sensitive if search string is multi-case
 set nowrap               " Long lines do not wrap
