@@ -121,10 +121,10 @@ prompt_git() {
 	# Get the short symbolic ref. If HEAD isn’t a symbolic ref, get a
 	# tracking remote branch or tag. Otherwise, get the
 	# short SHA for the latest commit, or give up.
-	branchName=$(git symbolic-ref --quiet --short HEAD 2> /dev/null || \
+	branchName=" $(git symbolic-ref --quiet --short HEAD 2> /dev/null || \
 		git describe --all --exact-match HEAD 2> /dev/null || \
 		git rev-parse --short HEAD 2> /dev/null || \
-		printf '%s' '(unknown)')
+		printf '%s' '(unknown)')"
 
     # Check for uncommitted changes in the index.
     if ! $(git diff --quiet --ignore-submodules --cached); then
