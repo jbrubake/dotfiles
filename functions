@@ -298,48 +298,52 @@ tree() {
 #
 # wiki <command> [args ...]
 #
-# Commands:
-#     git: pass args to git and run in wiki directory
-#     make: pass args to make and run in wiki directory
-#     view: open wiki index in $BROWSER
+# Commands: run wiki help
 #
-#     If no command is given, simply open the index
-#     in vim
-#
-# Requires $VIMWIKI_DIR to be set to wiki root directory
-#     and $VIMWIKI_SITE to be set to wiki site directory
+# Requires $WIKI_DIR to be set to wiki root directory
 #
 # Inspired by: https://vimwiki.github.io/vimwikiwiki/Tips%20and%20Snips.html
 wiki() {
-    if test "x$VIMWIKI_DIR" == 'x'; then
-        printf "%s\n" '$VIMWIKIDIR is not defined'
+    if test -z "$WIKI_DIR"; then
+        printf "%s\n" '$WIKI_DIR is not defined'
+        return 1
     fi
 
-    if test $# -eq 0; then
-        vim -c VimwikiIndex
-    else
-        case "$1" in
-            git)
-                git -C $VIMWIKI_DIR ${@:2}
-                ;;
-            make)
-                (cd $VIMWIKI_DIR && make ${@:2})
-                ;;
-            view)
-                openurl $VIMWIKI_SITE/index.html
-                ;;
-            help | *)
-                cat <<'END'
+    case "$1" in
+        git)
+            git -C "$WIKI_DIR ${@:2}"
+            ;;
+        make)
+            (cd "$WIKI_DIR" && make ${@:2})
+            ;;
+        view)
+            test -n "$2" && BROWSER="$2"
+            openurl "$WIKI_DIR/site/index.html"
+            ;;
+        help)
+            cat <<'END'
 Usage: wiki <command> [args ...]
 
 Commands:
-    git     Pass additional args to git(1) and execute in $VIMWIKI_DIR
-    make    Build the wiki found in $VIMWIKI_DIR and place it in $VIMWIKI_SITE
-    view    Open $VIMWIKI_SITE/index.html in $BROWSER
+    edit             Edit $WIKI_DIR/content/index.md in $EDITOR
+    git [args]       Pass [args] to git(1) and execute in $WIKI_DIR
+    make [args]      Run make(1) [args] in $WIKI_DIR
+    view [browser]   Use openurl to view the wiki at $WIKI_DIR/site.
+                       Use [browser] to view. Default is $BROWSER
+    help             View this help
+
+    Edit is the default command
+
+Note: $WIKI_DIR must be defined
 END
-                ;;
+            ;;
+        edit | *)
+            if test -z "$EDITOR"; then
+                EDITOR=vim
+            fi
+            $EDITOR "$WIKI_DIR/content/index.md"
+            ;;
         esac
-    fi
 }
 # }}}
 # Helper Functions {{{

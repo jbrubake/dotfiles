@@ -168,8 +168,8 @@ if [ -n "$BASH" ]; then
     export FIGNORE HISTFILESIZE HISTCONTROL HISTIGNORE
 fi
 
-export VIMWIKI_DIR=~/docs/vimwiki
-export VIMWIKI_SITE=~/docs/vimwiki/site
+export WIKI_DIR=~/docs/vimwiki
+export WIKI_SITE=~/docs/vimwiki/site
 
 export FZF_DEFAULT_OPTS='--layout=reverse'
 export FZF_DEFAULT_COMMAND='rg --files'
