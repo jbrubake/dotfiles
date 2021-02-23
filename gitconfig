@@ -10,8 +10,6 @@
 	email = "jbru362@gmail.com"
 [github]
 	user  = "jbrubake"
-[credential]
-	helper = store
 [alias]
 	aa  = !git ls-files -d | xargs -r git rm && git ls-files -m -o --exclude-standard | xargs -r git add
 	aup = "!sh -c 'git ls-files -m | grep $1 | xargs -r git add' -"
