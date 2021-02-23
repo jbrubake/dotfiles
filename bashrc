@@ -45,6 +45,7 @@ for f in ~/share/bash_completion.d/*; do
         . $f
     fi
 done
+unset f
 
 # Allow todo.sh alias to use bash completion
 command -v todo.sh >/dev/null &&
