@@ -6,12 +6,12 @@
 #
 # Do login shell stuff
 #
-if test -r $HOME/.bash_profile; then
-    . $HOME/.bash_profile
-else
+# My .profile sets $ENV so check that to see if .profile has
+# already been sourced
+if test -n "$ENV"; then
     . $HOME/.profile
 fi
 
 # Finish setting up
-source .xsession
+. ./.xinitrc
 
