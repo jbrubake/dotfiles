@@ -1,7 +1,7 @@
 " Markdown Bold and Italic don't display right when using vim-colors-solarized
 " as no bold attribute is available
-highlight markdownBold   ctermfg=red
-highlight markdownItalic ctermfg=white
+" highlight markdownBold   ctermfg=red
+" highlight markdownItalic ctermfg=white
 
 " Conceal links
 "
