@@ -96,6 +96,6 @@ if test  -e /run/motd.dynamic; then
     cat /run/motd.dynamic
 else
     uname -npsr
-    echo "Uptime: $( uptime )\n"
+    printf "%s\n\n" "Uptime: $( uptime )"
 fi
 # }}}
