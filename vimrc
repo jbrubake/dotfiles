@@ -16,13 +16,18 @@
 " za    toggle fold at cursor position
 " zj    move down to start of next fold
 " zk    move up to end of previous fold
+
 " Initialization {{{1
 " ==============
 " Remove all autocommands if sourcing .vimrc again
 autocmd!
 
+" Source .vimrc when saving changes
+autocmd BufWritePost ~/.vimrc nested source ~/.vimrc
+
 set nocompatible " Don't be vi compatible
 
+" vimpager specific initialization
 if exists('g:vimpager_plugin_loaded')
     " set noloadplugins
 endif
@@ -109,6 +114,7 @@ set foldopen=block,hor,mark,percent,quickfix,tag " What movements open folds
 " Right justify folded line count
 "
 " dhruvasagar (dhruvasagar.com/2013/03/28/vim-better-foldtext)
+" TODO: modify this (look at vim-markdown-folding) to include depth at the beginning
 function! NeatFoldText()
     let line = ' ' . substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{' . '{\d*\s*', '', 'g') . ' '
     let lines_count = v:foldend - v:foldstart + 1
@@ -142,9 +148,9 @@ autocmd Filetype c,cpp,perl setlocal foldlevel=99         " Don't fold at start
 " Plugins {{{1
 "============
 " TODO: Only configure plugin if it exists
+" minpac setup {{{2
 " TODO: load minpac on demand
 " TODO: automatically update plugins periodically
-" minpac setup {{{2
 "
 " call minpac#update() to update all packages
 " call minpac#clean() to remove unused plugins
@@ -568,11 +574,10 @@ call minpac#add('vim-scripts/a.vim')
 
 " No configuration needed
 
-" Mappings {{{1
-"=============
-" XXX: Don't forget Shift/C/M+Arrows
+" Mappings & Commands {{{1
+"========================
 " Help {{{2
-" map: normal, visual, select, operator-pending
+" map:  normal, visual, select, operator-pending
 " nmap: normal
 " vmap: visual and select
 " omap: operator-pending
@@ -583,26 +588,22 @@ call minpac#add('vim-scripts/a.vim')
 " cmap: command line
 " lmap: insert, command line, language-arg
 "
-" noremap: non-recursive mapping
+" *nore*: non-recursive mapping
 "
 " <silent> : don't echo mapping on command line
-" <expr> : mapping inserts result of {rhs}
+" <expr>   : mapping inserts result of {rhs}
+" <buffer> : buffer local mapping
 
 " Window Management {{{2
 " ======================
 " See vim-tmux-pilot configuration
-" Resize windows with C-[hjkl] {{{
-"   C-h : decrease vertical
-"   C-j : decrease horizontal
-"   C-k : increase horizontal
-"   C-l : increase vertical
-
+" Resize windows with C-[hjkl] {{{3
 nnoremap <C-j> <C-w>-
 nnoremap <C-k> <C-w>+
 nnoremap <C-h> <C-w><
 nnoremap <C-l> <C-w>>
-" }}}
-" Maximize/Minimize window with CTRL-W m  {{{
+
+" Maximize/Minimize window with CTRL-W m  {{{3
 "
 " pmalek (github.com/pmalek/toggle-maximize.vim)
 let t:maximizeCurrentWindow = 0
@@ -616,10 +617,9 @@ function! ToggleMaximizeCurrentWindow()
         let t:maximizeCurrentWindow = 0
     endif
 endfunction
-map <silent> <C-W>m :call ToggleMaximizeCurrentWindow() <cr>
-" }}}
-" Miscellaneous {{{2
-" Toggle colorcolumn with <leader>c {{{
+nnoremap <silent> <C-W>m :call ToggleMaximizeCurrentWindow() <cr>
+
+" <leader>c:        toggle colorcolumn {{{2
 "
 " Kevin Kuchta (www.vimbits.com/bits/317)
 function! g:ToggleColorColumn()
@@ -630,41 +630,40 @@ function! g:ToggleColorColumn()
     endif
 endfunction
 nnoremap <silent> <leader>c :call g:ToggleColorColumn()<cr>
-" }}}
 
-" Clear search string to remove highlighting
-nnoremap <silent> // :nohlsearch<cr>
+" //:               clear search shighlighting {{{2
+noremap <silent> // :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
 
-" Use TAB to jump between braces, etc
-nnoremap <tab> %
-vnoremap <tab> %
+" <Tab>:            % {{{2
+nmap <tab> %
+vmap <tab> %
 
-" Toggle listchars
+" <leader>l:        toggle listchars {{{2
 nnoremap <silent> <leader>l :set list!<cr>
 
-" Make Y consistent with C and D
+" Y:                yank to end (consistent with C and D) {{{2
 nnoremap Y y$
 
-" Really write the file when you forget to sudo 
+" :w!!:             write file when I forget to sudo {{{2
 cnoremap w!! w !sudo tee % >/dev/null
 
-" Reflow paragraph with Q in normal and visual mode
+" Q:                reflow paragraph {{{2
 nnoremap Q gqap
 vnoremap Q gq
 
-" Easier history navigation
+" <C-P> / <C-N>:    command history navigation {{{2
 cnoremap <C-P> <Up>
 cnoremap <C-N> <Down>
 
-" Underline current line with '=', '-' or '#'
+" <leader>[=-#]:    underline current line {{{2
 " TODO: Make this work with comments
 nnoremap <leader>= yyp^v$r=
 nnoremap <leader>- yyp^v$r-
 nnoremap <leader># yyp^v$r#
 
-" Easier horizontal scrolling
-map zl zL
-map zh zH
+" zl / zh:          horizontal left/right scrolling {{{2
+nnoremap zl zL
+nnoremap zh zH
 
 " Code folding{{{
 nmap <leader>f0 :set foldlevel=0<cr>
@@ -692,8 +691,6 @@ autocmd BufRead,BufNewFile *.mdp setfiletype markdown
 "=================
 " All autocmds were cleared at the top of the file
 
-" Source .vimrc when saving changes
-autocmd BufWritePost ~/.vimrc nested source ~/.vimrc
 " git commit files {{{2
 " Set options for git commit files
 autocmd Filetype gitcommit setlocal tw=68 spell
@@ -730,10 +727,10 @@ set background=dark
 
 " Automatcially source local colors when a colorscheme is loaded
 function! s:colorscheme_local() abort
-    " In-active window status line
-    highlight StatusLineNC ctermfg=darkblue ctermbg=black
     " Active window status line
     highlight StatusLine   ctermfg=darkblue ctermbg=white
+    " In-active window status line
+    highlight StatusLineNC ctermfg=darkblue ctermbg=black
 
     " Non-printing characters
     highlight NonText    ctermfg=brown
@@ -752,6 +749,26 @@ function! s:colorscheme_local() abort
     " highlight VisualCursor ctermfg=grey ctermbg=grey
     " highlight ReplaceCursor ctermfg=grey ctermbg=grey
     " highlight CommandCursor ctermfg=grey ctermbg=grey
+    " vem-tabline {{{
+    " Selected, visible buffer
+    highlight VemTablineSelected       ctermfg=white ctermbg=darkblue
+    highlight VemTablineNumberSelected ctermfg=white ctermbg=darkblue
+    " Non-selected, visible buffers
+    highlight VemTablineShown          ctermfg=black ctermbg=darkblue
+    highlight VemTablineNumberShown    ctermfg=black ctermbg=darkblue
+    " Non-selected, non-visible buffers
+    highlight VemTablineNormal         ctermfg=black ctermbg=darkblue
+    highlight VemTablineNumber         ctermfg=black ctermbg=darkblue
+
+    " Directory name (when present)
+    highlight VemTablineLocation       ctermfg=white ctermbg=darkblue
+    " +X more text
+    highlight VemTablineSeparator      ctermfg=black ctermbg=darkblue
+    " Selected tab
+    highlight VemTablineTabSelected    ctermfg=white ctermbg=darkblue
+    " Non-selected tab
+    highlight VemTablineTabNormal      ctermfg=black ctermbg=darkblue
+    " }}}
 endfunction
 augroup colorscheme_local
     autocmd!
@@ -772,25 +789,6 @@ set t_Cs=
 syntax enable
 
 set hlsearch " Highlight search matches
-" vem-tabline {{{
-" Needs to be in the color section
-
-" Selected buffer
-" highlight VemTablineSelected    ctermfg=white ctermbg=red
-" Non-selected buffers
-" highlight VemTablineNormal      ctermfg=white ctermbg=darkblue
-" Non-selected buffers displayed in windows
-" highlight VemTablineShown       ctermfg=white ctermbg=darkblue
-
-" Directory name (when present)
-" highlight VemTablineLocation    ctermfg=white ctermbg=darkblue
-" +X more text
-" highlight VemTablineSeparator   ctermfg=white ctermbg=darkblue
-" Selected tab
-" highlight VemTablineTabSelected ctermfg=white ctermbg=darkblue
-" Non-selected tab
-" highlight VemTablineTabNormal   ctermfg=white ctermbg=darkblue
-" }}}
 " rainbow {{{
 " let g:rainbow_conf = {
 "   \	'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
@@ -823,13 +821,7 @@ set hlsearch " Highlight search matches
 
 " Keep a field empty to use the default setting.
 " }}}
-" Local Vimrc {{{1
-" ===========
-if filereadable(expand("~/.vimrc.local"))
-    source ~/.vimrc.local
-endif
-" Other {{{1
-" Highlight code in different filetypes {{{2
+" Highlight code in different filetypes {{{1
 "
 " Ivan Tischenko (vim.wikia.com/wiki/Different_syntax_highlighting_within_regions_of_a_file)
 function! TextEnableCodeSnip(filetype,start,end,textSnipHl) abort
@@ -914,3 +906,8 @@ endfun
 
 autocmd Filetype mail setlocal completefunc=MailcompleteC
 
+" Local Vimrc {{{1
+" ===========
+if filereadable(expand("~/.vimrc.local"))
+    source ~/.vimrc.local
+endif
