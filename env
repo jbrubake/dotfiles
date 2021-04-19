@@ -27,8 +27,10 @@ fi
 
 # Other
 #
-TZ=$( cat /etc/timezone ) # Set TZ based on system timezone
-export TZ
+if [ -r /etc/timezone ]; then
+    TZ=$( cat /etc/timezone ) # Set TZ based on system timezone
+    export TZ
+fi
 
 # EDITOR/VISUAL
 #
@@ -87,7 +89,6 @@ if test $( tput colors ) -ge 0 && command -v dircolors >/dev/null; then
             fi
             ;;
     esac
-    colorfile="$HOME/.dircolors.ansi-dark"
     eval $(cat $colorfile "$HOME/.dircolors.local" | dircolors -)
 
     unset colorfile
@@ -174,7 +175,7 @@ export WIKI_SITE=~/docs/wiki/site
 export FZF_DEFAULT_OPTS='--layout=reverse'
 export FZF_DEFAULT_COMMAND='rg --files'
 
-export DOTFILES=~/src/working/dotfiles
+export DOTFILES=~/src/dotfiles
 
 export XDG_DATA_HOME=~/share
 
@@ -182,3 +183,7 @@ export XDG_DATA_HOME=~/share
 if test -f "$HOME/share/nerd-font/i_all.sh"; then
     . "$HOME/share/nerd-font/i_all.sh"
 fi
+
+# Sigh. Python can't find user site-packages because I refuse to use
+# .local or whatever other silly crap it expects
+export PYTHONPATH=$HOME/lib/python3.8/site-packages/
