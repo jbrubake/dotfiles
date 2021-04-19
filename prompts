@@ -4,12 +4,16 @@
 if test -n "$BASH"; then
 # prompt_detached: Determine number of detached screen/tmux sessions {{{2
 prompt_detached () {
-    local n_screen=$(screen -ls 2> /dev/null | grep -c '[Dd]etach[^)]*)$')
-    local n_tmux=$(tmux list-sessions 2> /dev/null | grep -cv attached)
-    local detached=$(( $n_screen + $n_tmux ))
-    if [[ $detached != "0" ]]; then
-        printf "%sd" "${detached}"
+    if type screen >/dev/null 2>&1; then
+        local n_screen=$(screen -ls 2> /dev/null | grep -c '[Dd]etach[^)]*)$')
     fi
+    if type tmux >/dev/null 2>&1; then
+        local n_tmux=$(tmux list-sessions 2> /dev/null | grep -cv attached)
+    fi
+
+    local detached=$(( $n_screen + $n_tmux ))
+
+    printf "%sd" "${detached}"
 }
 # prompt_jobs: Get running and stopped jobs {{{2
 # Only works under Bash
