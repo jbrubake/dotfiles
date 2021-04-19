@@ -13,6 +13,6 @@
 - desktop.ini
 - .dropbox
 
-# don't sync vimwiki/build tree
+# don't sync wiki/build tree
 - build/
 
