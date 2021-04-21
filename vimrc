@@ -694,6 +694,18 @@ function! g:ToggleColorColumn()
 endfunction
 nnoremap <silent> <leader>c :call g:ToggleColorColumn()<cr>
 
+" fN:               set foldlevel=N {{{2
+noremap <leader>f0 :set foldlevel=0<cr>
+noremap <leader>f1 :set foldlevel=1<cr>
+noremap <leader>f2 :set foldlevel=2<cr>
+noremap <leader>f3 :set foldlevel=3<cr>
+noremap <leader>f4 :set foldlevel=4<cr>
+noremap <leader>f5 :set foldlevel=5<cr>
+noremap <leader>f6 :set foldlevel=6<cr>
+noremap <leader>f7 :set foldlevel=7<cr>
+noremap <leader>f8 :set foldlevel=8<cr>
+noremap <leader>f9 :set foldlevel=9<cr>
+
 " //:               clear search shighlighting {{{2
 noremap <silent> // :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
 
@@ -728,18 +740,6 @@ nnoremap <leader># yyp^v$r#
 nnoremap zl zL
 nnoremap zh zH
 
-" Code folding{{{
-nmap <leader>f0 :set foldlevel=0<cr>
-nmap <leader>f1 :set foldlevel=1<cr>
-nmap <leader>f2 :set foldlevel=2<cr>
-nmap <leader>f3 :set foldlevel=3<cr>
-nmap <leader>f4 :set foldlevel=4<cr>
-nmap <leader>f5 :set foldlevel=5<cr>
-nmap <leader>f6 :set foldlevel=6<cr>
-nmap <leader>f7 :set foldlevel=7<cr>
-nmap <leader>f8 :set foldlevel=8<cr>
-nmap <leader>f9 :set foldlevel=9<cr>
-" }}}
 
 " Filetypes {{{1
 "=================
