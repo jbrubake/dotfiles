@@ -850,6 +850,9 @@ set t_Cs=
 
 syntax enable
 
+" Highlight strings in C comments
+let c_comment_strings=1
+
 set hlsearch " Highlight search matches
 " rainbow {{{
 " let g:rainbow_conf = {
