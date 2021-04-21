@@ -436,8 +436,9 @@ call minpac#add('tomtom/tlib_vim')
 " vem-tabline: Vim plugin to display tabs and buffers in the tabline {{{2
 call minpac#add('pacha/vem-tabline')
 
-let g:vem_tabline_show             = 2 " Always show the tabline
-let g:vem_tabline_multiwindow_mode = 0 " Show all buffers in a tab
+let g:vem_tabline_show             = 2        " Always show the tabline
+let g:vem_tabline_multiwindow_mode = 0        " Show all buffers in a tab
+let g:vem_tabline_show_number      = "buffnr" " Show Vim buffer numbers
 
 " NOTE: See 'Colors and Syntax Settings' for more
 " vim-addon-mw-utils: Caching required by snipMate {{{2
