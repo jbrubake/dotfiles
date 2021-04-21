@@ -203,6 +203,10 @@ autocmd Filetype c,cpp,perl setlocal foldlevel=99         " Don't fold at start
 " Plugins {{{1
 "============
 " TODO: Only configure plugin if it exists
+" Optional packages {{{2
+packadd! matchit    " Enhanced % matching
+packadd! cfilter    " Filter quickfix or location lists
+
 " minpac setup {{{2
 " TODO: load minpac on demand
 " TODO: automatically update plugins periodically
@@ -506,6 +510,9 @@ call minpac#add('inkarkat/vim-IndentCommentPrefix')
 
 " vim-ingo-library: library functions required by IndentCommentPrefix {{{2
 call minpac#add('inkarkat/vim-ingo-library')
+
+" vim-ini-fold: folding for ini-like files {{{2
+call minpac#add('matze/vim-ini-fold')
 
 " vim-markdown-folding: Fold Markdown files on headers {{{2
 call minpac#add('masukomi/vim-markdown-folding')
