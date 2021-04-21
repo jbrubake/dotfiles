@@ -222,10 +222,8 @@ call minpac#add('k-takata/minpac', {'type': 'opt'})
 
 call minpac#add('arp242/auto_mkdir2.vim')
 
-let g:auto_mkdir2_autocmd = '*.md'
-
-" gf works with files that do not exist
-autocmd BufEnter *.md noremap gf :e <cfile><CR>
+" Only make tree in wiki
+let g:auto_mkdir2_autocmd = '$WIKI_DIR/content/**'
 
 " calendar-vim: A calendar application for Vim {{{2
 
@@ -770,6 +768,19 @@ nnoremap zh zH
 " command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
             " \ | wincmd p | diffthis
 
+" My wiki {{{1
+" Find wiki files
+set path^=$WIKI_DIR/content
+" Open wiki index
+nnoremap <leader>ni :e $WIKI_DIR/content/index.md<CR>
+
+" Search the wiki
+if executable('rg')
+    command! -nargs=1 Ngrep silent! grep! "<args>" -g "*.md" $WIKI_DIR/content | execute ':redraw!'
+else
+    command! -nargs=1 Ngrep vimgrep "<args>" $WIKI_DIR/content/**/*.md
+endif
+nnoremap <leader>nn :Ngrep<Space>
 
 " Filetypes {{{1
 "=================
