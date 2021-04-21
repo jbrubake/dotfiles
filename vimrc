@@ -101,6 +101,34 @@ augroup numbertoggle
   autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
 augroup END
 
+" Automatically open quickfix window {{{2
+augroup quickfix
+    autocmd!
+    autocmd QuickFixCmdPost [^l]* cwindow
+    autocmd QuickFixCmdPost l*    lwindow
+augroup END
+
+" Searching {{{2
+if executable('rg')
+    set grepprg=rg\ --vimgrep
+endif
+
+" grep/lgrep without polluting the terminal or opening the first match
+"
+" Respects &grepprg
+"
+" https://gist.github.com/romainl/56f0c28ef953ffc157f36cc495947ab3
+function! Grep(...)
+    " return system(join([&grepprg] + [expandcmd(join(a:000, ' '))], ' '))
+    return system(join(extend([&grepprg], a:000), ' '))
+endfunction
+
+command! -nargs=+ -complete=file_in_path -bar Grep  cgetexpr Grep(<f-args>)
+command! -nargs=+ -complete=file_in_path -bar LGrep lgetexpr Grep(<f-args>)
+
+cnoreabbrev <expr> grep  (getcmdtype() ==# ':' && getcmdline() ==# 'grep')  ? 'Grep'  : 'grep'
+cnoreabbrev <expr> lgrep (getcmdtype() ==# ':' && getcmdline() ==# 'lgrep') ? 'LGrep' : 'lgrep'
+
 
 " Text Formatting/Layout {{{1
 "===========================
