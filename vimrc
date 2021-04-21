@@ -848,11 +848,6 @@ function! s:colorscheme_local() abort
     " highlight User1 ctermfg=red   ctermbg=blue
     " highlight User2 ctermfg=green ctermbg=blue
 
-    " Mode aware cursors
-    " highlight InsertCursor ctermfg=grey ctermbg=grey
-    " highlight VisualCursor ctermfg=grey ctermbg=grey
-    " highlight ReplaceCursor ctermfg=grey ctermbg=grey
-    " highlight CommandCursor ctermfg=grey ctermbg=grey
     " vem-tabline {{{
     " Selected, visible buffer
     highlight VemTablineSelected       ctermfg=white ctermbg=darkblue
