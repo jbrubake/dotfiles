@@ -694,6 +694,22 @@ function! g:ToggleColorColumn()
 endfunction
 nnoremap <silent> <leader>c :call g:ToggleColorColumn()<cr>
 
+" [n]gt:            goto tab [n] {{{2
+" 
+" Works like :tabnext if [n] is not given
+"
+" https://gist.github.com/romainl/0f589e07a079ea4b7a77fd66ef16ebee
+nnoremap <expr> gt ":tabnext +" . v:count1 . '<CR>'
+
+" S:                split line {{{2
+"
+" https://gist.github.com/romainl/3b8cdc6c3748a363da07b1a625cfc666
+function! BreakHere()
+    s/^\(\s*\)\(.\{-}\)\(\s*\)\(\%#\)\(\s*\)\(.*\)/\1\2\r\1\4\6
+    call histdel("/", -1)
+endfunction
+nnoremap S :<C-u>call BreakHere()<CR>
+
 " fN:               set foldlevel=N {{{2
 noremap <leader>f0 :set foldlevel=0<cr>
 noremap <leader>f1 :set foldlevel=1<cr>
@@ -705,6 +721,16 @@ noremap <leader>f6 :set foldlevel=6<cr>
 noremap <leader>f7 :set foldlevel=7<cr>
 noremap <leader>f8 :set foldlevel=8<cr>
 noremap <leader>f9 :set foldlevel=9<cr>
+
+" [<Space> / ]<Space>: add [n] blank lines before/after line {{{2
+"
+" https://superuser.com/a/607168
+nnoremap <silent> [<Space> :<C-u>put!=repeat(nr2char(10),v:count)<Bar>execute "']+1"<CR>
+nnoremap <silent> ]<Space> :<C-u>put =repeat(nr2char(10),v:count)<Bar>execute "'[-1"<CR>
+
+" [e / ]e:          exchange current line with previous/next {{{2
+nnoremap [e kddp
+nnoremap ]e jddkP
 
 " //:               clear search shighlighting {{{2
 noremap <silent> // :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
@@ -739,6 +765,10 @@ nnoremap <leader># yyp^v$r#
 " zl / zh:          horizontal left/right scrolling {{{2
 nnoremap zl zL
 nnoremap zh zH
+
+" DiffOrig:         diff of buffer and file {{{2
+" command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
+            " \ | wincmd p | diffthis
 
 
 " Filetypes {{{1
