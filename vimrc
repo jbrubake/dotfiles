@@ -87,6 +87,10 @@ set tags^=./tags;                    "  up the tree for the tags file
 set complete-=i                      " *Do not* search included files when completing
 set history=1000                     " Save more command history
 set fillchars=vert:\|,fold:―
+set path^=$DOTFILES                  " Search for files in $DOTFILES
+set path+=~/work/fen-x/fenx-infra
+set path+=~/work/fen-x/fenx-infra/fenx_infra
+
 " Absolute & Hybrid line numbers by buffer status {{{2
 "
 " https://jeffkreeftmeijer.com/vim-number/
