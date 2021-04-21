@@ -86,6 +86,16 @@ set tags-=./tags;                    "  and prepend ./tags; in order to search
 set tags^=./tags;                    "  up the tree for the tags file
 set complete-=i                      " *Do not* search included files when completing
 set history=1000                     " Save more command history
+" Absolute & Hybrid line numbers by buffer status {{{2
+"
+" https://jeffkreeftmeijer.com/vim-number/
+" TODO: stop this from applying to vim helpfiles
+augroup numbertoggle
+  autocmd!
+  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+augroup END
+
 
 " Text Formatting/Layout {{{1
 "===========================
