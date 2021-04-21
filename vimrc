@@ -27,6 +27,9 @@ autocmd BufWritePost ~/.vimrc nested source ~/.vimrc
 
 set nocompatible " Don't be vi compatible
 
+" Start in $HOME so fzf can find everything
+:cd "$HOME"
+
 " vimpager specific initialization
 if exists('g:vimpager_plugin_loaded')
     " set noloadplugins
@@ -44,7 +47,7 @@ set noexrc                           " Do not source .exrc
 set autowrite                        " Write file when changing to a new file
 set wildmenu                         " Show Tab completion menu
 set wildmode=longest,list            " Tab complete longest part, then show menu
-set autochdir                        " Automatically chdir to file (needed for a.vim)
+" set autochdir                        " Automatically chdir to file (needed for a.vim)
 set backspace=indent,eol,start       " What BS can delete
 set backupdir=~/.vim/backup          " Where to put backup files
 set directory=~/.vim/tmp             " Where to put swap files
