@@ -848,6 +848,8 @@ function! s:colorscheme_local() abort
     " highlight User1 ctermfg=red   ctermbg=blue
     " highlight User2 ctermfg=green ctermbg=blue
 
+    " Make gutter background match line number column
+    highlight! link SignColumn LineNr
     " vem-tabline {{{
     " Selected, visible buffer
     highlight VemTablineSelected       ctermfg=white ctermbg=darkblue
