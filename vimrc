@@ -182,24 +182,6 @@ function! NeatFoldText()
 endfunction
 set foldtext=NeatFoldText()
 
-" Fold C-like languages on the function prototype when braces are in the first column
-"
-" https://vim.fandom.com/wiki/Folding_functions_with_the_prototype_included
-function FoldBrace()
-    if getline(v:lnum+1)[0] == '{'
-        return 1
-    endif
-    if getline(v:lnum) =~ '{'
-        return 1
-    endif
-    if getline(v:lnum)[0] =~ '}'
-        return '<1'
-    endif
-    return -1
-endfunction
-autocmd Filetype c,cpp,perl setlocal foldexpr=FoldBrace() " Use custom folding function
-autocmd Filetype c,cpp,perl setlocal foldmethod=expr      "  for C/C++ code
-autocmd Filetype c,cpp,perl setlocal foldlevel=99         " Don't fold at start
 " Plugins {{{1
 "============
 " TODO: Only configure plugin if it exists
@@ -516,9 +498,6 @@ call minpac#add('matze/vim-ini-fold')
 " vim-markdown-folding: Fold Markdown files on headers {{{2
 call minpac#add('masukomi/vim-markdown-folding')
 
-" Use Nested folding for all Markdown files
-autocmd Filetype markdown setlocal foldexpr=NestedMarkdownFolds()
-"
 " vim-surround: Modify surrounding characters {{{2
 call minpac#add('tpope/vim-surround')
 
@@ -616,13 +595,6 @@ call minpac#add('freitass/todo.txt-vim')
 " <LocalLeader>C : Toggle cancelled
 " <LocalLeader>X : Mark all completed
 " <LocalLeader>D : Move completed tasks to done file
-
-"Use todo#complete as the omni complete function for todo files
-autocmd filetype todo setlocal omnifunc=todo#complete
-
-" Automatically complete + and @
-autocmd filetype todo imap <buffer> + +<C-X><C-O>
-autocmd filetype todo imap <buffer> @ @<C-X><C-O>
 
 " a.vim: Swap header and source files {{{2
 call minpac#add('vim-scripts/a.vim')
@@ -782,48 +754,6 @@ else
 endif
 nnoremap <leader>nn :Ngrep<Space>
 
-" Filetypes {{{1
-"=================
-" Markdown {{{2
-" Enable fenced code block syntax highlighting
-let g:markdown_fenced_languages = ['sh', 'c', 'html', 'make', 'python']
-" Turn on conceal
-autocmd Filetype markdown setlocal conceallevel=2
-" Use .mdp extentions for mdp presentations
-autocmd BufRead,BufNewFile *.mdp setfiletype markdown
-" autocmds {{{1
-"=================
-" All autocmds were cleared at the top of the file
-
-" git commit files {{{2
-" Set options for git commit files
-autocmd Filetype gitcommit setlocal tw=68 spell
-" }}}
-" Mail {{{2
-" Emails should be RFC 3676 format=flowed
-"     https://incenp.org/notes/2020/format-flowed-neomutt-vim.html
-"
-" formatoptions=awq  Enable automatic formatting of paragraphs, with
-"                    trailing white space indicating a paragraph
-"                    continues in the next line
-" comments+=nb:> Lines starting with > are “comments” (so quotes
-"                within a mail are displayed differently from the rest
-"                of the message).
-" match ErrorMsg '\s\+$' Highlight the trailing space at the end of
-"                        broken lines, to provide a visual distinction
-"                        between “soft” and “hard” line breaks
-autocmd Filetype mail setlocal textwidth=72 |
-                    \ setlocal formatoptions=awq |
-                    \ setlocal comments+=nb:> |
-                    \ setlocal spell |
-                    \ match ErrorMsg '\s\+$'
-" }}}
-" Makefiles {{{
-autocmd Filetype make setlocal noexpandtab   " We need real tabs
-autocmd Filetype make setlocal tabstop=8
-autocmd Filetype make setlocal softtabstop=8
-autocmd Filetype make setlocal shiftwidth=8
-" }}}
 " Colors and Syntax Settings {{{1
 " ==========================
 " NOTE: Rainbow doesn't work unless this is at the end
