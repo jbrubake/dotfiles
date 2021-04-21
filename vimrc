@@ -633,7 +633,7 @@ call minpac#add('vim-scripts/a.vim')
 " :AS: Split and switch
 " :AV: Vertical split and switch
 "
-" Use 'set autochdir' to make it work
+" XXX: Not true? Use 'set autochdir' to make it work
 
 " No configuration needed
 
