@@ -219,6 +219,8 @@ if test $HAS_COLOR; then
 else
     dir_clr=
     slash_clr=
+    git_branch_clr=
+    git_status_clr=
     user_clr=
     root_user_clr=
     at_clr=
@@ -271,6 +273,7 @@ fi # End sh-specific section
 # }}}
 # Clean up {{{1
  unset dir_clr slash_clr hostname_clr at_clr bracket_clr
+ unset git_branch_clr git_status_clr
  unset history_clr error_clr prompt_clr user_clr root_user_clr
  unset ssh_clr jobs_clr
  unset reset
