@@ -280,7 +280,7 @@ call minpac#add('junegunn/gv.vim')
 call minpac#add('preservim/nerdtree')
 
 " <F10> : Toggle file tree browser
-noremap <silent> <F10> :NERDTreeToggle<cr>
+noremap <silent> <F8> :NERDTreeToggle<cr>
 
 " Close Vim if last window open is NERDTree
 autocmd bufenter * if (winnr("$") == 1 &&
