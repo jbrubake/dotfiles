@@ -497,9 +497,11 @@ call minpac#add('matze/vim-ini-fold')
 " vim-markdown: Markdown vim mode {{{2
 call minpac#add('plasticboy/vim-markdown')
 
+let g:vim_markdown_frontmatter = 1
 let g:vim_markdown_folding_style_pythonic = 1
 let g:vim_markdown_folding_level = 0
 let g:vim_markdown_override_foldtext = 0
+let g:vim_markdown_follow_anchor = 1
 
 " vim-markdown-folding: Fold Markdown files on headers {{{2
 call minpac#add('masukomi/vim-markdown-folding')
