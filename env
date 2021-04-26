@@ -177,8 +177,6 @@ export FZF_DEFAULT_COMMAND='rg --files'
 
 export DOTFILES=~/src/dotfiles
 
-export XDG_DATA_HOME=~/share
-
 # Create nerd-font variables
 if test -f "$HOME/share/nerd-font/i_all.sh"; then
     . "$HOME/share/nerd-font/i_all.sh"
