@@ -115,6 +115,18 @@ prompt_error () {
 #   $2: String to print immediately after branch name
 #   $3: String to print immediately after repo status
 prompt_git() {
+    case $1 in
+        '-h' | '--help')
+            cat <<END
+    +   Uncommitted changes
+    !   Unstaged changes
+    ?   Untracked files
+    $   Stashed files
+END
+            return
+            ;;
+    esac
+
 	local s=''
 	local branchName=''
 
