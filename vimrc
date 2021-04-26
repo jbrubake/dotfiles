@@ -495,9 +495,18 @@ call minpac#add('inkarkat/vim-ingo-library')
 " vim-ini-fold: folding for ini-like files {{{2
 call minpac#add('matze/vim-ini-fold')
 
+" vim-markdown: Markdown vim mode {{{2
+call minpac#add('plasticboy/vim-markdown')
+
+let g:vim_markdown_folding_style_pythonic = 1
+let g:vim_markdown_folding_level = 0
+let g:vim_markdown_override_foldtext = 0
+
 " vim-markdown-folding: Fold Markdown files on headers {{{2
 call minpac#add('masukomi/vim-markdown-folding')
 
+" vim-markdown-toc: Generate a TOC for Markdown Files{{{2
+" call minpac#add('mzlogin/vim-markdown-toc')
 " vim-surround: Modify surrounding characters {{{2
 call minpac#add('tpope/vim-surround')
 
@@ -772,33 +781,32 @@ function! s:colorscheme_local() abort
 
     " Turn Underlined back on after turning it off because
     " vim-colors-solarized uses it too much
-    highlight Underlined cterm=underline
-
-    " Colors used in the statusline
-    " highlight User1 ctermfg=red   ctermbg=blue
-    " highlight User2 ctermfg=green ctermbg=blue
+    " highlight Underlined cterm=underline
 
     " Make gutter background match line number column
     highlight! link SignColumn LineNr
     " vem-tabline {{{
     " Selected, visible buffer
-    highlight VemTablineSelected       ctermfg=white ctermbg=darkblue
-    highlight VemTablineNumberSelected ctermfg=white ctermbg=darkblue
+    highlight VemTablineSelected         ctermfg=white ctermbg=darkblue
+    highlight VemTablineLocationSelected ctermfg=white ctermbg=darkblue
+    highlight VemTablineNumberSelected   ctermfg=white ctermbg=darkblue
     " Non-selected, visible buffers
-    highlight VemTablineShown          ctermfg=black ctermbg=darkblue
-    highlight VemTablineNumberShown    ctermfg=black ctermbg=darkblue
+    highlight VemTablineShown           ctermfg=black ctermbg=darkblue
+    highlight VemTablineLocationShown   ctermfg=black ctermbg=darkblue
+    highlight VemTablineNumberShown     ctermfg=black ctermbg=darkblue
     " Non-selected, non-visible buffers
-    highlight VemTablineNormal         ctermfg=black ctermbg=darkblue
-    highlight VemTablineNumber         ctermfg=black ctermbg=darkblue
+    highlight VemTablineNormal          ctermfg=black ctermbg=darkblue
+    highlight VemTablineLocation        ctermfg=black ctermbg=darkblue
+    highlight VemTablineNumber          ctermfg=black ctermbg=darkblue
 
-    " Directory name (when present)
-    highlight VemTablineLocation       ctermfg=white ctermbg=darkblue
     " +X more text
-    highlight VemTablineSeparator      ctermfg=black ctermbg=darkblue
+    highlight VemTablineSeparator       ctermfg=black ctermbg=darkblue
+    " Partially shown buffer
+    highlight VemTabSelected            ctermfg=black ctermbg=darkblue
     " Selected tab
-    highlight VemTablineTabSelected    ctermfg=white ctermbg=darkblue
+    highlight VemTablineTabSelected     ctermfg=white ctermbg=darkblue
     " Non-selected tab
-    highlight VemTablineTabNormal      ctermfg=black ctermbg=darkblue
+    highlight VemTablineTabNormal       ctermfg=black ctermbg=darkblue
     " }}}
 endfunction
 augroup colorscheme_local
@@ -806,16 +814,7 @@ augroup colorscheme_local
     autocmd ColorScheme * call s:colorscheme_local()
 augroup END
 
-" colorscheme desert256
-
-" Solarized configuration
-"  (must be done before 'syntax enable')
-colorscheme solarized
-" Don't use underline (folds like ugly)
-let g:solarized_underline=0
-" Remind vim that my terminal can't actually do undercurl
-" which solarized wants to use for spellchecking
-set t_Cs=
+colorscheme desert256
 
 syntax enable
 
@@ -945,3 +944,4 @@ autocmd Filetype mail setlocal completefunc=MailcompleteC
 if filereadable(expand("~/.vimrc.local"))
     source ~/.vimrc.local
 endif
+
