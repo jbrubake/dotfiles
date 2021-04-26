@@ -308,8 +308,7 @@ call minpac#add('Xuyuanp/nerdtree-git-plugin')
 " rainbow: Highlight "parentheses" with varying colors {{{2
 call minpac#add('luochen1990/rainbow')
 
-" XXX: conflicts with vimwiki
-" TODO: enable only for specific filetypes (or only outside vimwiki?)
+" TODO: enable only for specific filetypes
 let g:rainbow_active = 1 " Activate plugin
 
 " NOTE: See 'Colors and Syntax Settings' for more
@@ -505,8 +504,6 @@ let g:vim_markdown_override_foldtext = 0
 " vim-markdown-folding: Fold Markdown files on headers {{{2
 call minpac#add('masukomi/vim-markdown-folding')
 
-" vim-markdown-toc: Generate a TOC for Markdown Files{{{2
-" call minpac#add('mzlogin/vim-markdown-toc')
 " vim-surround: Modify surrounding characters {{{2
 call minpac#add('tpope/vim-surround')
 
@@ -799,6 +796,8 @@ function! s:colorscheme_local() abort
     highlight VemTablineLocation        ctermfg=black ctermbg=darkblue
     highlight VemTablineNumber          ctermfg=black ctermbg=darkblue
 
+    " Directory name (when present)
+    highlight VemTablineLocation       ctermfg=white ctermbg=darkblue
     " +X more text
     highlight VemTablineSeparator       ctermfg=black ctermbg=darkblue
     " Partially shown buffer
