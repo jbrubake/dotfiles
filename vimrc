@@ -190,8 +190,6 @@ packadd! matchit    " Enhanced % matching
 packadd! cfilter    " Filter quickfix or location lists
 
 " minpac setup {{{2
-" TODO: load minpac on demand
-" TODO: automatically update plugins periodically
 "
 " call minpac#update() to update all packages
 " call minpac#clean() to remove unused plugins
@@ -785,6 +783,8 @@ function! s:colorscheme_local() abort
 
     " Make gutter background match line number column
     highlight! link SignColumn LineNr
+
+    highlight ColorColumn ctermbg=8
     " vem-tabline {{{
     " Selected, visible buffer
     highlight VemTablineSelected         ctermfg=white ctermbg=darkblue
