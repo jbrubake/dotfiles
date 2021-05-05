@@ -310,6 +310,9 @@ call minpac#add('luochen1990/rainbow')
 let g:rainbow_active = 1 " Activate plugin
 
 " NOTE: See 'Colors and Syntax Settings' for more
+" SimplyFold: No-BS Python code folding{{{2
+call minpac#add('tmhedberg/SimpylFold')
+
 " tabular: Smart alignment of tables {{{2
 call minpac#add('godlygeek/tabular')
 
@@ -362,6 +365,11 @@ nmap <Leader>t,     :Tabularize /,<cr>
 vmap <Leader>t,     :Tabularize /,<cr>
 nmap <Leader>t<Bar> :Tabularize /<Bar><cr>
 vmap <Leader>t<Bar> :Tabularize /<Bar><cr>
+
+" tagalong: Change an HTML(ish) tag and update the matching one {{{2
+call minpac#add('AndrewRadev/tagalong.vim')
+
+let g:tagalong_additional_filetypes = ['xhtml', 'phtml']
 
 " tagbar: Source code browser using ctags {{{2
 call minpac#add('preservim/tagbar')
