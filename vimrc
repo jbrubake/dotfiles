@@ -422,7 +422,7 @@ call minpac#add('tomtom/tlib_vim')
 call minpac#add('pacha/vem-tabline')
 
 let g:vem_tabline_show             = 2        " Always show the tabline
-let g:vem_tabline_multiwindow_mode = 0        " Show all buffers in a tab
+let g:vem_tabline_multiwindow_mode = 1        " Only show buffers in current tab
 let g:vem_tabline_show_number      = "buffnr" " Show Vim buffer numbers
 
 " NOTE: See 'Colors and Syntax Settings' for more
