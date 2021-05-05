@@ -54,8 +54,8 @@ set encoding=utf8                    " Use Unicode
 
 set noexrc                           " Do not source .exrc
 set autowrite                        " Write file when changing to a new file
-set wildmenu                         " Show Tab completion menu
-set wildmode=longest,list            " Tab complete longest part, then show menu
+set wildmenu                         " Show wildmenu
+set wildmode=longest:full,full       " Tab complete longest part, then show wildmenu
 set backspace=indent,eol,start       " What BS can delete
 set backupdir=~/.vim/backup          " Where to put backup files
 set directory=~/.vim/tmp             " Where to put swap files
