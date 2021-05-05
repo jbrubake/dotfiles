@@ -5,6 +5,7 @@
     pager = git-pager
 [init]
 	templatedir = /home/jbrubake/.git_template
+	defaultBranch = master
 [user]
 	name  = "Jeremy Brubaker"
 	email = "jbru362@gmail.com"
