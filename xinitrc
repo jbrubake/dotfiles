@@ -50,10 +50,6 @@ esac
 # TODO: Use some variables to configure this
 # xset -r 129 -r 231 # Multimedia keys
 
-# Key bindings {{{1
-#
-# command -v xbindkeys >/dev/null && xbindkeys &
-
 # Set wallpaper {{{1
 #
 #if command -v Esetroot >/dev/null; then
@@ -151,7 +147,11 @@ xmodmap -e "add mod2 = Num_Lock"
 xmodmap -e "add mod4 = Super_L"
 
 # Control_L (Caps_Lock key) = Escape by itself
-xcape -e 'Control_L=Escape'
+type xcape 2>&1 >/dev/null && xcape -e 'Control_L=Escape'
+
+# Key bindings {{{1
+#
+command -v xbindkeys >/dev/null && xbindkeys &
 
 # Merge XResources/XDefaults {{{1
 test -r "$HOME/.Xresources" && xrdb -merge "$HOME/.Xresources"
