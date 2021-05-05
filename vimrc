@@ -679,13 +679,6 @@ function! g:ToggleColorColumn()
 endfunction
 nnoremap <silent> <leader>c :call g:ToggleColorColumn()<cr>
 
-" [n]gt:            goto tab [n] {{{2
-" 
-" Works like :tabnext if [n] is not given
-"
-" https://gist.github.com/romainl/0f589e07a079ea4b7a77fd66ef16ebee
-nnoremap <expr> gt ":tabnext +" . v:count1 . '<CR>'
-
 " S:                split line {{{2
 "
 " https://gist.github.com/romainl/3b8cdc6c3748a363da07b1a625cfc666
