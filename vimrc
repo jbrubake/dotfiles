@@ -667,6 +667,12 @@ function! ToggleMaximizeCurrentWindow()
 endfunction
 nnoremap <silent> <C-W>m :call ToggleMaximizeCurrentWindow() <cr>
 
+" <leader>e[wsvt]       edit in current file's directory {{{3
+cnoremap %% <C-R>=fnameescape(expand('%:h')).'/'<cr>
+map <leader>ew :e %%
+map <leader>es :sp %%
+map <leader>ev :vsp %%
+map <leader>et :tabe %%
 " <leader>c:        toggle colorcolumn {{{2
 "
 " Kevin Kuchta (www.vimbits.com/bits/317)
