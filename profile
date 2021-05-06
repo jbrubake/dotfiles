@@ -38,10 +38,10 @@ if test -z "$DISPLAY"; then
 fi
 
 # }}}
-# Mintty Color Themes {{{
+# System-specific Configuration {{{
 case "$(uname -o)" in
-    *Cygwin*)
-        # Set scheme to whatever color scheme you want
+    *Cygwin*) # {{{
+        # Mintty Color Themes {{{
         #
         # Currently supports:
         #  default : terminal default
@@ -100,6 +100,7 @@ case "$(uname -o)" in
         # Clear screen to prevent background artifacting
         echo -en "\e[2J\e[H" # Use escape codes since clear(1) may not exist
 
-        unset scheme
+        unset scheme # }}}
+        ;; # }}}
 esac
 # }}}
