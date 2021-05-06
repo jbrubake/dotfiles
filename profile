@@ -23,8 +23,19 @@ PATH=$(printf %s "$PATH" | awk -vRS=: '!a[$0]++' | paste -s -d:)
 ENV="$HOME/.shinit" # equivalent to .bashrc for sh
 export ENV
 
-# Start keychain
-eval $( keychain --eval --agents ssh,gpg id_rsa BF443169C02D9D58674866D4CE9114EFAF3CAB31 )
+# }}}
+# Non-X configuration {{{
+if test -z "$DISPLAY"; then
+    eval $( keychain --eval --agents ssh,gpg $(cat "$HOME/.keychain/keylist") )
+    # MOTD {{{
+    if test  -e /run/motd.dynamic; then
+        cat /run/motd.dynamic
+    else
+        uname -npsr
+        printf "%s\n\n" "Uptime: $( uptime )"
+    fi
+    # }}}
+fi
 
 # }}}
 # Mintty Color Themes {{{
@@ -91,13 +102,4 @@ case "$(uname -o)" in
 
         unset scheme
 esac
-# }}}
-# MOTD {{{
-# TODO: tmux currently shows this for *every* new shell
-if test  -e /run/motd.dynamic; then
-    cat /run/motd.dynamic
-else
-    uname -npsr
-    printf "%s\n\n" "Uptime: $( uptime )"
-fi
 # }}}
