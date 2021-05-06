@@ -8,9 +8,11 @@
 test -d "/usr/local/bin" &&
 PATH="/usr/local/bin:$PATH"
 
-# Put ~/bin in PATH if it exists
+# Put ~/bin and ~/sbin in PATH if they exist
 test -d "$HOME/bin" &&
     PATH="$HOME/bin:$PATH"
+test -d "$HOME/sbin" &&
+    PATH="$HOME/sbin:$PATH"
 
 # Remove duplicate entries
 PATH=$(printf %s "$PATH" | awk -vRS=: '!a[$0]++' | paste -s -d:)
