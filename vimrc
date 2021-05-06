@@ -158,6 +158,12 @@ set statusline+=%r               " Readonly flag
 set statusline+=%15.l(%L),%c     " Line number (total lines), column number
 set statusline+=\ [%Y]           " Filetype
 set statusline+=\ [ASCII=%03.3b] " ASCII value of char under cursor
+" Terminal window status line
+augroup termwindow | autocmd!
+    autocmd TerminalWinOpen * setlocal statusline=%t
+    autocmd ColorScheme * highlight! link StatusLineTerm StatusLine
+    autocmd ColorScheme * highlight! link StatusLineTermNC StatusLineNC
+augroup end
 
 " Folding {{{1
 "============
