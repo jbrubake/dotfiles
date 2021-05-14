@@ -604,8 +604,12 @@ call minpac#add('vim-scripts/a.vim')
 " <expr>   : mapping inserts result of {rhs}
 " <buffer> : buffer local mapping
 
-" Window Management {{{2
-" ======================
+" Remap <leader> ',' {{{2
+"
+let mapleader = ','
+
+" Window Management: {{{2
+" ==================
 " See vim-tmux-pilot configuration
 " Resize windows with C-[hjkl] {{{3
 nnoremap <C-j> <C-w>-
