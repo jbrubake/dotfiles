@@ -137,6 +137,13 @@ set smartindent          " Automatic indenting is intelligent
 
 " Statusline {{{1
 " ==========
+function! GitHunkStatus()
+    let [a,m,r] = GitGutterGetHunkSummary()
+    return printf('+%d %~%d -%d', a, m, r)
+
+    return string(hunks)
+endfunction
+
 set laststatus=2                 " Always show status line
 
 set statusline=                  " Clear status line
@@ -146,6 +153,8 @@ set statusline+=%r               " Readonly flag
 set statusline+=%15.l(%L),%c     " Line number (total lines), column number
 set statusline+=\ [%Y]           " Filetype
 set statusline+=\ [ASCII=%03.3b] " ASCII value of char under cursor
+set statusline+=\ \[%{GitHunkStatus()}\]
+
 " Terminal window status line
 augroup termwindow | autocmd!
     autocmd TerminalWinOpen * setlocal statusline=%t
@@ -450,12 +459,6 @@ call minpac#add('airblade/vim-gitgutter')
 
 " The default updatetime of 4000ms is not good for async update
 set updatetime=100
-" Statusline function
-" let l:hunks = GitGutterGetHunkSummary()
-" if l:hunks[0] || l:hunks[1] || l:hunks[2]
-    " let l:line .= '%#GitGutterAdd# +' . l:hunks[0] .
-                " \ ' %#GitGutterChange#~' . l:hunks[1] .
-                " \ ' %#GitGutterDelete#-' . l:hunks[2] . ' '
 
 " vim-IndentCommentPrefix: Indents comments sensibly {{{2
 call minpac#add('inkarkat/vim-IndentCommentPrefix')
