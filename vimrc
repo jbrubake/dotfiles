@@ -27,9 +27,6 @@ autocmd BufWritePost ~/.vimrc nested source ~/.vimrc
 
 set nocompatible " Don't be vi compatible
 
-" Start in $HOME so fzf can find everything
-:cd "$HOME"
-
 " vimpager specific initialization
 if exists('g:vimpager_plugin_loaded')
     " set noloadplugins
