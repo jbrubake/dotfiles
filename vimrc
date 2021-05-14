@@ -636,7 +636,7 @@ function! ToggleMaximizeCurrentWindow()
 endfunction
 nnoremap <silent> <C-W>m :call ToggleMaximizeCurrentWindow() <cr>
 
-" <leader>e[wsvt]       edit in current file's directory {{{2
+" <leader>e[wsvt]:      edit in current file's directory {{{2
 cnoremap %% <C-R>=fnameescape(expand('%:h')).'/'<cr>
 map <leader>ew :e %%
 map <leader>es :sp %%
