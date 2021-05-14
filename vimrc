@@ -806,7 +806,11 @@ nnoremap <leader>nn :Ngrep<Space>
 " NOTE: Rainbow doesn't work unless this is at the end
 set background=dark
 
-" Automatcially source local colors when a colorscheme is loaded
+syntax enable
+set hlsearch            " Highlight search matches
+let c_comment_strings=1 " Highlight strings in C comments
+
+" Custom colors {{{
 function! s:colorscheme_local() abort
     " Active window status line
     highlight StatusLine   ctermfg=darkblue ctermbg=white
@@ -817,14 +821,20 @@ function! s:colorscheme_local() abort
     highlight NonText    ctermfg=brown
     highlight SpecialKey ctermfg=brown
 
-    " Turn Underlined back on after turning it off because
-    " vim-colors-solarized uses it too much
-    " highlight Underlined cterm=underline
-
-    " Make gutter background match line number column
+    " Gutter and line number column
+    highlight LineNr ctermbg=None
     highlight! link SignColumn LineNr
 
-    highlight ColorColumn ctermbg=8
+    highlight ColorColumn  ctermbg=8
+    highlight CursorLine   ctermbg=8 cterm=None
+    highlight CursorLineNr ctermbg=8 cterm=None
+
+    " vim-gitgutter {{{
+    " The defaults aren't very good
+    highlight GitGutterAdd    ctermfg=green ctermbg=None
+    highlight GitGutterChange ctermfg=brown ctermbg=None
+    highlight GitGutterDelete ctermfg=red   ctermbg=None
+    " }}}
     " vem-tabline {{{
     " Selected, visible buffer
     highlight VemTablineSelected         ctermfg=white ctermbg=darkblue
@@ -840,7 +850,7 @@ function! s:colorscheme_local() abort
     highlight VemTablineNumber          ctermfg=black ctermbg=darkblue
 
     " Directory name (when present)
-    highlight VemTablineLocation       ctermfg=white ctermbg=darkblue
+    highlight VemTablineLocation        ctermfg=white ctermbg=darkblue
     " +X more text
     highlight VemTablineSeparator       ctermfg=black ctermbg=darkblue
     " Partially shown buffer
@@ -851,19 +861,12 @@ function! s:colorscheme_local() abort
     highlight VemTablineTabNormal       ctermfg=black ctermbg=darkblue
     " }}}
 endfunction
-augroup colorscheme_local
-    autocmd!
-    autocmd ColorScheme * call s:colorscheme_local()
-augroup END
+" Automatcially source custom colors when a colorscheme is loaded
+autocmd ColorScheme * call s:colorscheme_local()
+" }}}
 
 colorscheme desert256
 
-syntax enable
-
-" Highlight strings in C comments
-let c_comment_strings=1
-
-set hlsearch " Highlight search matches
 " rainbow {{{
 " let g:rainbow_conf = {
 "   \	'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
