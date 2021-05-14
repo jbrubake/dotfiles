@@ -202,41 +202,26 @@ let g:auto_mkdir2_autocmd = '$WIKI_DIR/content/**'
 
 call minpac#add('mattn/calendar-vim')
 " CCTree: Vim CCTree plugin {{{2
-call minpac#add('hari-rangarajan/CCTree')
+if has("cscope")
+    call minpac#add('hari-rangarajan/CCTree')
 
-" CTRL-\ > : Get forward call tree
-" CTRL-\ < : Get reverse call tree
-" CTRL-\ w : Toogle call tree window
-" CTRL-\ = : Increase depth
-" CTRL-\ - : Decrease depth
-" CTRL-p   : Preview symbol
+    " See Mappings & Commands -> Cscope for mappings
 
-" Note: Folding commands work on call tree window
+    set cscopetag                           " use cscope and ctag for 'ctrl-]', ':ta', and 'vim -t'
+    set cscopetagorder=0                    " search cscope then ctags
+    set cscopequickfix=s-,c-,d-,i-,t-,e-,a- " Open all results in quickfix 
 
-" Automatically load database if it exists in
-" currenty directory when Vim is started
-autocmd VimEnter * if filereadable("cscope.out") 
-    \ | exec "CCTreeLoadDB cscope.out" 
-    \ | endif
-
-" No configuration needed
-
-" cscope_maps: CSCOPE settings for vim {{{2
-call minpac#add('chazy/cscope_maps')
-
-" CTRL-\                   : Show search in current window
-" CTRL-<space>             : Show search in horizontal split
-" CTRL-<space> Ctl+<space> : Show search in vertical split
-" CTRL-o                   : jump back to previous locations
-
-" s : symbol - all references to token under cursor
-" g : global - global definition
-" c : calls - all calls to function
-" t : text - all instances
-" e : egrep - egrep search
-" f : file - open file
-" i : includes - files that include filename
-" d : called - functions called by this function
+    " Automatically load database if it exists in current directory
+    " or if defined in $CSCOPE_DB
+    function! s:load_cscope_db()
+        if filereadable("cscope.out")
+            CCTreeLoadDB cscope.out
+        elseif $CSCOPE_DB != ""
+            CCTreeLoadDB $CSCOPE_DB
+        endif
+    endfunction
+    autocmd VimEnter * call s:load_cscope_db()
+endif
 
 " DrawIt: ASCII drawing plugin {{{2
 call minpac#add('vim-scripts/DrawIt')
@@ -746,6 +731,69 @@ nnoremap zh zH
 " DiffOrig:         diff of buffer and file {{{2
 " command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
             " \ | wincmd p | diffthis
+
+" Cscope: {{{2
+" Based on https://raw.githubusercontent.com/chazy/cscope_maps/master/plugin/cscope_maps.vim
+
+if has("cscope")
+    " CCTree mappings:
+    " ----------------
+    " CTRL-\ > : Get forward call tree
+    " CTRL-\ < : Get reverse call tree
+    " CTRL-\ w : Toogle call tree window
+    " CTRL-\ = : Increase depth
+    " CTRL-\ - : Decrease depth
+    " CTRL-p   : Preview symbol
+    " Note: Folding commands work on call tree window
+
+    " Cscope mappings:
+    " ----------------
+    " CTRL-\        : Open result in current window
+    " CTRL-]        : Open result in horizontal split
+    " CTRL-] CTRL+] : Open result in vertical split
+
+    "   's'   symbol: find all references to the token under cursor
+    "   'g'   global: find global definition(s) of the token under cursor
+    "   'c'   calls:  find all calls to the function name under cursor
+    "   't'   text:   find all instances of the text under cursor
+    "   'e'   egrep:  egrep search for the word under cursor
+    "   'f'   file:   open the filename under cursor
+    "   'i'   includes: find files that include the filename under cursor
+    "   'd'   called: find functions that function under cursor calls
+    "
+    " All of the maps involving the <cfile> macro use '^<cfile>$': this is so
+    " that searches over '#include <time.h>" return only references to
+    " 'time.h', and not 'sys/time.h', etc. (by default cscope will return all
+    " files that contain 'time.h' as part of their name).
+
+    nmap <C-\>s :cscope find s <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-\>g :cscope find g <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-\>c :cscope find c <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-\>t :cscope find t <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-\>e :cscope find e <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-\>f :cscope find f <C-R>=expand("<cfile>")<CR><CR>
+    nmap <C-\>i :cscope find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+    nmap <C-\>d :cscope find d <C-R>=expand("<cword>")<CR><CR>
+
+    nmap <C-]>s :scscope find s <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-]>g :scscope find g <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-]>c :scscope find c <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-]>t :scscope find t <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-]>e :scscope find e <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-]>f :scscope find f <C-R>=expand("<cfile>")<CR><CR>
+    nmap <C-]>i :scscope find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+    nmap <C-]>d :scscope find d <C-R>=expand("<cword>")<CR><CR>
+
+    nmap <C-]><C-]>s :vert scscope find s <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-]><C-]>g :vert scscope find g <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-]><C-]>c :vert scscope find c <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-]><C-]>t :vert scscope find t <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-]><C-]>e :vert scscope find e <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-]><C-]>f :vert scscope find f <C-R>=expand("<cfile>")<CR><CR>
+    nmap <C-]><C-]>i :vert scscope find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+    nmap <C-]><C-]>d :vert scscope find d <C-R>=expand("<cword>")<CR><CR>
+
+endif
 
 " My wiki {{{1
 " Find wiki files
