@@ -23,9 +23,12 @@ set   +o ignoreeof    # Ctl+D does not exit shell
 # }}}
 # Keybindings {{{
 # fzf
-if test -f /usr/local/share/fzf/key-bindings.bash; then
-    . /usr/local/share/fzf/key-bindings.bash
-fi
+test -f /usr/share/fzf/shell/key-bindings.bash && \
+    fzfkeys=/usr/share/fzf/shell/key-bindings.bash
+test -f /usr/local/share/fzf/key-bindings.bash && \
+    fzfkeys=/usr/local/share/fzf/key-bindings.bash
+test -f "$fzfkeys" && . $fzfkeys
+unset fzfkeys
 # }}}
 # Bash Completion {{{
 # System settings
@@ -64,3 +67,4 @@ fi
 command -v navi >/dev/null && \
     eval "$(navi widget bash)"
 # }}}
+
