@@ -158,8 +158,6 @@ set statusline+=\ \[%{GitHunkStatus()}\]
 " Terminal window status line
 augroup termwindow | autocmd!
     autocmd TerminalWinOpen * setlocal statusline=%t
-    autocmd ColorScheme * highlight! link StatusLineTerm StatusLine
-    autocmd ColorScheme * highlight! link StatusLineTermNC StatusLineNC
 augroup end
 
 " Folding {{{1
@@ -811,6 +809,10 @@ function! s:colorscheme_local() abort
     highlight StatusLine   ctermfg=darkblue ctermbg=white
     " In-active window status line
     highlight StatusLineNC ctermfg=darkblue ctermbg=black
+
+    " Link terminal status lines to normal ones
+    highlight! link StatusLineTerm StatusLine
+    highlight! link StatusLineTermNC StatusLineNC
 
     " Non-printing characters
     highlight NonText    ctermfg=brown
