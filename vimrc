@@ -290,11 +290,6 @@ call minpac#add('Xuyuanp/nerdtree-git-plugin')
     " \ "Unknown"   : "?"
     " \ }
 
-" rainbow: Highlight "parentheses" with varying colors {{{2
-call minpac#add('luochen1990/rainbow')
-
-" TODO: enable only for specific filetypes
-let g:rainbow_active = 1 " Activate plugin
 
 " NOTE: See 'Colors and Syntax Settings' for more
 " SimplyFold: No-BS Python code folding{{{2
@@ -806,7 +801,6 @@ nnoremap <leader>nn :Ngrep<Space>
 
 " Colors and Syntax Settings {{{1
 " ==========================
-" NOTE: Rainbow doesn't work unless this is at the end
 set background=dark
 
 syntax enable
@@ -871,38 +865,6 @@ autocmd ColorScheme * call s:colorscheme_local()
 
 colorscheme desert256
 
-" rainbow {{{
-" let g:rainbow_conf = {
-"   \	'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
-" 	\	'ctermfgs': ['lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'],
-" 	\	'operators': '_,_',
-" 	\	'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
-" 	\	'separately': {
-" 	\		'*': {},
-" 	\		'tex': {
-" 	\			'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/'],
-" 	\		},
-" 	\		'lisp': {
-" 	\			'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
-" 	\		},
-" 	\		'vim': {
-" 	\			'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/', 'start=/{/ end=/}/ fold', 'start=/(/ end=/)/ containedin=vimFuncBody', 'start=/\[/ end=/\]/ containedin=vimFuncBody', 'start=/{/ end=/}/ fold containedin=vimFuncBody'],
-" 	\		},
-" 	\		'html': {
-" 	\			'parentheses': ['start=/\v\<((area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)[ >])@!\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'|[^ '."'".'"><=`]*))?)*\>/ end=#</\z1># fold'],
-" 	\		},
-" 	\		'css': 0,
-" 	\	}
-" 	\}
-
-" guifgs      : colors for gui interface, will be used in order.
-" ctermfgs    : colors for terms
-" operators   : describe the operators you want to highlight(read the vim help                                                                                                      : syn-pattern)
-" parentheses : describe what will be processed as parentheses, a pair of parentheses was described by two re pattern
-" separately  : configure for specific filetypes(decided by &ft), key `*` for filetypes without separate configuration, value `0` means disable rainbow only for this type of files
-
-" Keep a field empty to use the default setting.
-" }}}
 " Highlight code in different filetypes {{{1
 "
 " Ivan Tischenko (vim.wikia.com/wiki/Different_syntax_highlighting_within_regions_of_a_file)
