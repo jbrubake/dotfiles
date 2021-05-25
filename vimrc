@@ -484,7 +484,7 @@ let g:vim_markdown_folding_style_pythonic = 1
 let g:vim_markdown_folding_level = 1
 let g:vim_markdown_override_foldtext = 0
 let g:vim_markdown_follow_anchor = 1
-let g:vim_markdown_coneal_code_blocks = 0
+let g:vim_markdown_conceal_code_blocks = 0
 
 " vim-markdown-folding: Fold Markdown files on headers {{{2
 call minpac#add('masukomi/vim-markdown-folding')
