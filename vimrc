@@ -649,10 +649,6 @@ function! g:ToggleColorColumn()
 endfunction
 nnoremap <silent> <leader>c :call g:ToggleColorColumn()<cr>
 
-" <leader>h:        toggle cursorline {{{2
-"
-nnoremap <leader>h :set cursorline!<CR>
-
 " S:                split line {{{2
 "
 " https://gist.github.com/romainl/3b8cdc6c3748a363da07b1a625cfc666
