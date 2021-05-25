@@ -718,6 +718,8 @@ nnoremap zh zH
 " command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
             " \ | wincmd p | diffthis
 
+" <F2>:                 toggle relative/absoute line numbers {{{2
+nnoremap <F2> :set norelativenumber!<CR>
 " Cscope: {{{2
 " Based on https://raw.githubusercontent.com/chazy/cscope_maps/master/plugin/cscope_maps.vim
 
