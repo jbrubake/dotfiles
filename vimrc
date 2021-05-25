@@ -57,6 +57,7 @@ set listchars+=tab:»\                " Show real tabs
 set listchars+=trail:.               " Show trailing spaces and higlight them
 set listchars+=eol:¬                 " Show end of line
 set listchars+=nbsp:+                " Show non-breaking space
+set cursorline                       " Highlight current line
 set visualbell                       " Blink instead of beep
 set relativenumber                   " Show relative line number
 set number                           " Show line number of current line
@@ -828,9 +829,10 @@ function! s:colorscheme_local() abort
     highlight LineNr ctermbg=None
     highlight! link SignColumn LineNr
 
+    " Column and row highlighting
     highlight ColorColumn  ctermbg=8
-    highlight CursorLine   ctermbg=8 cterm=None
-    highlight CursorLineNr ctermbg=8 cterm=None
+    highlight CursorLine   ctermbg=None cterm=None
+    highlight CursorLineNr ctermfg=white ctermbg=None cterm=None
 
     " vim-gitgutter {{{
     " The defaults aren't very good
