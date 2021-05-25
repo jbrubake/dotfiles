@@ -17,7 +17,7 @@ WINDOWMANAGER=gnome-session
 # Basic setup {{{1
 # Where my WM init scripts live
 #
-INIT=~/.config/init.d
+INIT=~/etc/init.d
 
 # Start WM {{{1
 #
