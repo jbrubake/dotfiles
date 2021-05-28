@@ -180,8 +180,8 @@ export DOTFILES=~/src/dotfiles
 export DMENU_OPTS='-l 10 -fn 20'
 
 # Create nerd-font variables
-if test -f "$HOME/share/nerd-font/i_all.sh"; then
-    . "$HOME/share/nerd-font/i_all.sh"
+if test -f "$HOME/share/nerd-font/scripts/i_all.sh"; then
+    . "$HOME/share/nerd-font/scripts/i_all.sh"
 fi
 
 # Sigh. Python can't find user site-packages because I refuse to use
