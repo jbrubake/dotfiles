@@ -11,7 +11,7 @@
 # Default: twm
 # TODO: Actual default should then be just an xterm in case twm isn't installed
 #
-WINDOWMANAGER=gnome-session
+WINDOWMANAGER=cwm
 
 # Basic setup {{{1
 # Where my WM init scripts live
@@ -27,6 +27,10 @@ case $WINDOWMANAGER in
 dwm)
     ~/local/bin/dwm & wmpid=$!
     # dwm_statusbar.sh &
+    ;;
+
+cwm)
+    cwm & wmpid=$!
     ;;
 
 #
