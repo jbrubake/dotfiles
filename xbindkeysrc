@@ -32,7 +32,7 @@
   control+shift + q
 
 "/home/jbrubake/bin/dmenu_run"
-  Alt + r 
+  Mod4 + r 
 
 "/home/jbrubake/bin/passmenu"
-  Alt + p 
+  Mod4 + p 
