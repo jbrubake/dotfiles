@@ -797,8 +797,18 @@ nnoremap <leader>nn :Ngrep<Space>
 
 " Colors and Syntax Settings {{{1
 " ==========================
+set termguicolors
 set background=dark
-
+let g:PaperColor_Theme_Options = {
+            \ 'theme' : {
+            \     'default' : {
+            \         'allow_bold' : 1,
+            \         'allow_italic' : 1 }},
+            \ 'language': {
+            \     'python': { 'highlight_builtins' : 1 },
+            \     'cpp': { 'highlight_standard_library': 1 },
+            \     'c': {'highlight_builtins' : 1 }}
+            \ }
 syntax enable
 set hlsearch            " Highlight search matches
 let c_comment_strings=1 " Highlight strings in C comments
@@ -863,7 +873,7 @@ endfunction
 autocmd ColorScheme * call s:colorscheme_local()
 " }}}
 
-colorscheme desert256
+colorscheme PaperColor
 
 " Highlight code in different filetypes {{{1
 "
