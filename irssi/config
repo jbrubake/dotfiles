@@ -62,6 +62,13 @@ servers = (
     address = "irc.undernet.org";
     chatnet = "Undernet";
     port = "6667";
+  },
+  {
+    address = "irc.libera.chat";
+    chatnet = "Libera";
+    port = "6697";
+    use_tls = "yes";
+    tls_verify = "yes";
   }
 );
 
@@ -133,6 +140,13 @@ chatnets = {
     max_kicks = "1";
     max_msgs = "1";
     max_whois = "1";
+  };
+  Libera = { type = "IRC"; };
+  liberachat = {
+    type = "IRC";
+    sasl_mechanism = "PLAIN";
+    sasl_username = "jbrubake";
+    sasl_password = "Jbrs2004y$";
   };
 };
 
@@ -226,14 +240,11 @@ statusbar = {
     topic = " $topic";
     topic_empty = " Irssi v$J - https://irssi.org";
 
-    lag = "{sb Lag: $0-}";
-    act = "{sb Act: $0-}";
-    more = "-- more --";
-
-    # Solarized
     lag = "{sb Lag: %m$0-%n}";
     act = "{sb Act: $0-}";
     more = "%k%3-- more --%n";
+
+    # Solarized
   };
 
   default = {
@@ -313,11 +324,11 @@ settings = {
   };
   "fe-text" = { actlist_sort = "refnum"; };
   "fe-common/core" = {
-        # Solarized
-        theme = "solarized-universal";
-        hilight_color = "= %R";
+    # Solarized
+    theme = "solarized-universal";
+    hilight_color = "= %R";
   };
 };
 hilights = (
-    { text = "jbrubake"; color = "%M"; nick = "yes"; word = "yes"; }
+  { text = "jbrubake"; color = "%M"; nick = "yes"; word = "yes"; }
 );
