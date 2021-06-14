@@ -156,6 +156,22 @@ bind -x '"\C-g": _navi_widget'
 # }}}
 # Miscellaneous Functions {{{
 
+# rpg-cli {{{
+cd () {
+    if [ "$#" -eq 0 ]
+    then
+        rpg-cli "$HOME"
+    elif [ "$1" == "-" ]
+    then
+        rpg-cli "$OLDPWD"
+    else
+        rpg-cli "$@"
+    fi
+    builtin cd "$(rpg-cli --pwd)"
+}
+
+# }}}
+
 ###
 # cd
 #
