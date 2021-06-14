@@ -25,7 +25,12 @@ case $WINDOWMANAGER in
 # Any WM/DE that needs specific start up
 #
 dwm)
-    ~/local/bin/dwm & wmpid=$!
+    while true
+    do
+        xsetroot -name "$(date "+%F %R")"
+        sleep 1m
+    done &
+    ~/src/dwm/dwm & wmpid=$!
     # dwm_statusbar.sh &
     ;;
 
