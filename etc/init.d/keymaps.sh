@@ -29,5 +29,8 @@ xmodmap -e "add mod2 = Num_Lock"
 xmodmap -e "add mod4 = Super_L"
 
 # Control_L (Caps_Lock key) = Escape by itself
-type xcape 2>&1 >/dev/null && xcape -e 'Control_L=Escape'
+if command -v xcape 2>&1 >/dev/null; then
+    xcape -e 'Control_L=Escape'
+    xcape -e 'Super_L=Super_R'
+fi
 
