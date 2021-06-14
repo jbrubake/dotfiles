@@ -942,6 +942,11 @@ let g:PaperColor_Theme_Options = {
             \     'c': {'highlight_builtins' : 1 }}
             \ }
 
+" Mode aware cursors
+let &t_SI = "\<Esc>[6 q" " Insert mode
+let &t_SR = "\<Esc>[4 q" " Replace mode
+let &t_EI = "\<Esc>[2 q" " Normal mode
+
 " Highlight code in different filetypes {{{1
 "
 " Ivan Tischenko (vim.wikia.com/wiki/Different_syntax_highlighting_within_regions_of_a_file)
