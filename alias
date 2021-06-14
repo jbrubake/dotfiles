@@ -97,3 +97,8 @@ alias lsshd="/usr/sbin/sshd -f $HOME/etc/ssh/sshd_config"
 alias klsshd="kill -TERM \$(cat $HOME/var/run/sshd.pid)"
 alias rpg=rpg-cli
 alias dev='sudo -u dev bash'
+
+alias term='( $(chooser terminal)& )'
+alias calc='( $(chooser calculator)& )'
+alias calendar='( $(chooser calendar)& )'
+
