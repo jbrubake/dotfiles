@@ -38,7 +38,22 @@
 *.color7:                COLOR7
 *.color15:               COLOR15
 
+*fading:                40
+! dmenu {{{1
+dmenu.font:             monospace:size=10
+dmenu.background:       #222222
+dmenu.foreground:       #bbbbbb
+dmenu.selbackground:    #005577
+dmenu.selforeground:    #eeeeee
+dmenu.hibackground:     #005577
+dmenu.hiforeground:     orange
+dmenu.hiselbackground:  #005577
+dmenu.hiselforeground:  orange
+dmenu.outforeground:    purple
+dmenu.outbackground:    green
 
+! st {{{1
+st.font:                Source Code Pro:size=12
 
 ! XTerm / UXTerm {{{1
 XTerm*colorBDMode:      true
@@ -102,3 +117,7 @@ xscreensaver.Dialog.shadowThickness:    2
 xscreensaver.passwd.thermometer.foreground:  #101010
 xscreensaver.passwd.thermometer.background:  #2E2E2E
 xscreensaver.passwd.thermometer.width:       8
+
+! xsetroot {{{1
+xsetroot.foreground:    #000011
+xsetroot.background:    #002b36
