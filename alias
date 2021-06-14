@@ -95,3 +95,4 @@ alias gist="vim '+Gist -l'"      # Open Gist browser
 alias ':q'=exit                  # Exit like it's vim
 alias lsshd="/usr/sbin/sshd -f $HOME/etc/ssh/sshd_config"
 alias klsshd="kill -TERM \$(cat $HOME/var/run/sshd.pid)"
+alias rpg=rpg-cli
