@@ -804,18 +804,30 @@ nnoremap <leader>nn :Ngrep<Space>
 
 " Colors and Syntax Settings {{{1
 " ==========================
-set termguicolors
-set background=dark
-let g:PaperColor_Theme_Options = {
-            \ 'theme' : {
-            \     'default' : {
-            \         'allow_bold' : 1,
-            \         'allow_italic' : 1 }},
-            \ 'language': {
-            \     'python': { 'highlight_builtins' : 1 },
-            \     'cpp': { 'highlight_standard_library': 1 },
-            \     'c': {'highlight_builtins' : 1 }}
-            \ }
+" HilightSwap: make 'hi out' the reverse of 'hi in' {{{2
+" Based on https://vi.stackexchange.com/a/21547
+" TODO: Look at just replacing the 'cterm' 'gui' parts
+function! HighlightSwap(in, out)
+    let l:hi = execute('hi ' . a:in)
+
+    let l:cterm = matchstr(l:hi, 'cterm=\zs\S*')
+    let l:ctermfg = matchstr(l:hi, 'ctermfg=\zs\S*')
+    let l:ctermbg = matchstr(l:hi, 'ctermbg=\zs\S*')
+
+    let l:gui = matchstr(l:hi, 'gui=\zs\S*')
+    let l:guifg = matchstr(l:hi, 'guifg=\zs\S*')
+    let l:guibg = matchstr(l:hi, 'guibg=\zs\S*')
+
+    let l:cterm = empty(l:cterm) ? 'NONE' : l:cterm
+    let l:ctermfg = empty(l:ctermfg) ? 'NONE' : l:ctermfg
+    let l:ctermbg = empty(l:ctermbg) ? 'NONE' : l:ctermbg
+
+    let l:gui = empty(l:gui) ? 'NONE' : l:gui
+    let l:guifg = empty(l:guifg) ? 'NONE' : l:guifg
+    let l:guibg = empty(l:guibg) ? 'NONE' : l:guibg
+
+    call execute(printf("hi %s cterm=%s,reverse ctermfg=%s ctermbg=%s gui=%s,reverse guifg=%s guibg=%s", a:out, l:cterm, l:ctermfg, l:ctermbg, l:gui, l:guifg, l:guibg))
+endfunction " }}}
 syntax enable
 set hlsearch            " Highlight search matches
 let c_comment_strings=1 " Highlight strings in C comments
