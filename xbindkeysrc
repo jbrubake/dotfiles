@@ -31,10 +31,7 @@
 "xbindkeys_show" 
   control+shift + q
 
-"/home/jbrubake/bin/dmenu_run"
-  Mod4 + r 
-
-"/home/jbrubake/bin/passmenu"
+"/home/jbrubake/bin/passmenu -l 10 -bw 1 -c -p Password?"
   Mod4 + p 
 
 "/home/jbrubake/bin/dmenu_run -l 10 -bw 1 -c -p Command:"
