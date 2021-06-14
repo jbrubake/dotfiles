@@ -1,0 +1,60 @@
+command term st
+command lock mylock
+
+color activeborder blue
+color inactiveborder grey
+color selfont white
+color menubg blue
+color menufg black
+color urgencyborder color red
+
+fontname "sans-serif:pixelsize=14"
+
+gap 20 0 0 0
+
+snapdist 20
+
+unbind-key all
+unbind-mouse all
+
+bind-key 4S-r           restart
+bind-key 4S-q           quit
+bind-key 4-l            lock
+bind-key 4-Return       terminal
+bind-key 4-r            terminal
+
+bind-key M-F4           window-close
+
+bind-key M-Tab          window-cycle
+bind-key MS-Tab         window-rcycle
+
+bind-key 4-m            window-maximize
+bind-key 4-f            window-fullscreen
+
+bind-key 4-h            window-hmaximize
+bind-key 4-v            window-vmaximize
+bind-key 4-Left         window-snap-left
+bind-key 4-Right        window-snap-right
+
+bind-key 4-d            window-hide
+
+bind-key 4-Up           window-raise
+bind-key 4-Down         window-lower
+
+bind-key 4-slash        menu-window
+bind-key 4S-slash       menu-window-hidden
+
+# Mouse buttons
+#
+# 1 Left mouse button
+# 2 Middle mouse button
+# 3 Right mouse button
+# 4 Scroll up mouse button
+# 5 Scroll down mouse button
+
+bind-mouse 4-1           window-move
+bind-mouse 4-3           window-resize
+bind-mouse 4-4           window-raise
+bind-mouse 4-5           window-lower
+
+# vim: filetype=conf
