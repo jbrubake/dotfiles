@@ -892,7 +892,12 @@ endfunction
 autocmd ColorScheme * call s:colorscheme_local()
 " }}}
 
+set t_8f=[38;2;%lu;%lu;%lum        " set foreground color
+set t_8b=[48;2;%lu;%lu;%lum        " set background color
+set termguicolors                    " Enable GUI colors for the terminal to get truecolor
+
 colorscheme PaperColor
+set background=dark
 
 " Highlight code in different filetypes {{{1
 "
