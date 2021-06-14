@@ -75,6 +75,10 @@ esac
 # elif command -v gnome-screensaver >/dev/null; then
     # gnome-screensaver &
 # fi
+command -v xautolock >/dev/null && \
+    xautolock -locker 'xlock -echokeys "*" -planfont "lucidasans-12" -font "lucidasans-14" -fg "#bbbbbb" -bg "#005577" -info ""' -time 1 &
+command -v xbanish >/dev/null && \
+    xbanish &>/dev/null &
 
 # Start desktop apps {{{1
 #
