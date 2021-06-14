@@ -290,6 +290,9 @@ call minpac#add('Xuyuanp/nerdtree-git-plugin')
 
 
 " NOTE: See 'Colors and Syntax Settings' for more
+" presenting.vim: A simple tool for presenting slides in vim based on text files {{{2
+call minpac#add('sotte/presenting.vim')
+
 " SimplyFold: No-BS Python code folding{{{2
 call minpac#add('tmhedberg/SimpylFold')
 
