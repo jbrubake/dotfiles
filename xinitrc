@@ -40,14 +40,14 @@ cwm)
 
 #
 # This accepts any WM/DE that does not need specific start up.
-# If WINDOWMANAGER isn't found, twm is run instead
+# If WINDOWMANAGER isn't found, st is run instead
 #
 *)
     if command -v $WINDOWMANAGER >/dev/null
     then
         $WINDOWMANAGER & wmpid=$!
     else
-        twm & wmpid=$!
+        st & wmpid=$!
     fi
     ;;
 esac
