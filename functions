@@ -156,6 +156,8 @@ bind -x '"\C-g": _navi_widget'
 # }}}
 # Miscellaneous Functions {{{
 
+# TODO: This should be somwhere else
+bind -x '"\C-]": passmenu --type'
 # rpg-cli {{{
 cd () {
     if [ "$#" -eq 0 ]
