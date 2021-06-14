@@ -290,6 +290,9 @@ call minpac#add('Xuyuanp/nerdtree-git-plugin')
 
 
 " NOTE: See 'Colors and Syntax Settings' for more
+" presenting.vim: A simple tool for presenting slides in vim based on text files {{{2
+call minpac#add('sotte/presenting.vim')
+
 " SimplyFold: No-BS Python code folding{{{2
 call minpac#add('tmhedberg/SimpylFold')
 
@@ -434,6 +437,23 @@ call minpac#add('tpope/vim-commentary')
 " gcc        : Toggle commenting of [count] lines
 " {Visual}gc : Toggle commenting of highlighted lines
 " gcu        : Uncomment current and adjacent lines
+
+" Colorizer: Color hex codes and color names{{{2
+call minpac#add('chrisbra/Colorizer')
+
+" Highlight colors in a range (entire buffer by default):
+"   :[range]ColorHighlight [match|syntax]
+" Turn off color:
+"   :ColorClear
+" Toggle color:
+"   :ColorToggle
+
+" Automatically colorize these filetypes
+" TODO: get this to work correctly in .vimrc
+let g:colorizer_auto_filetype='css,html,markdown,xdefaults'
+" Highlight X11 colornames in Xresources and such
+" TODO: is there a way to do this **only** for Xresources files?
+" let g:colorizer_x11_names = 1
 
 " vim-devicons: NERDTree icons {{{2
 call minpac#add('ryanoasis/vim-devicons')
