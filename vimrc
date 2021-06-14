@@ -834,58 +834,71 @@ let c_comment_strings=1 " Highlight strings in C comments
 
 " Custom colors {{{
 function! s:colorscheme_local() abort
+    highlight Normal ctermbg=250 guibg=#002b36
+
     " Active window status line
-    highlight StatusLine   ctermfg=darkblue ctermbg=white
+    highlight StatusLine   ctermfg=darkblue ctermbg=white guifg=#4271ae guibg=#ffffff
     " In-active window status line
-    highlight StatusLineNC ctermfg=darkblue ctermbg=black
+    highlight StatusLineNC ctermfg=darkblue ctermbg=black guifg=#4271ae guibg=#000000
 
     " Link terminal status lines to normal ones
     highlight! link StatusLineTerm StatusLine
     highlight! link StatusLineTermNC StatusLineNC
 
     " Non-printing characters
-    highlight NonText    ctermfg=brown
-    highlight SpecialKey ctermfg=brown
+    highlight NonText    ctermfg=brown ctermbg=bg guifg=#d75f00 guibg=bg
+    highlight SpecialKey ctermfg=brown ctermbg=bg guifg=#d75f00 guibg=bg
 
     " Gutter and line number column
-    highlight LineNr ctermbg=None
+    highlight LineNr ctermbg=bg guibg=bg
     highlight! link SignColumn LineNr
 
     " Column and row highlighting
-    highlight ColorColumn  ctermbg=8
-    highlight CursorLine   ctermbg=None cterm=None
-    highlight CursorLineNr ctermfg=white ctermbg=None cterm=None
+    highlight ColorColumn  ctermbg=darkgray guibg=#586e75
+    highlight CursorLine   cterm=NONE ctermbg=bg guibg=bg
+    highlight CursorLineNr cterm=NONE ctermfg=white ctermbg=NONE gui=NONE guifg=white guibg=NONE
 
+    " Statusline user colors
+    highlight! link User1 StatusLine
+
+    highlight SpellBad ctermul=red
+
+    " Make all types of diffs look the same {{{
+    highlight! link diffAdded DiffAdd 
+    highlight! link diffChanged DiffChange
+    highlight! link diffRemoved DiffDelete
+    " DiffText (changed line)
+    " }}}
     " vim-gitgutter {{{
     " The defaults aren't very good
-    highlight GitGutterAdd    ctermfg=green ctermbg=None
-    highlight GitGutterChange ctermfg=brown ctermbg=None
-    highlight GitGutterDelete ctermfg=red   ctermbg=None
+    highlight GitGutterAdd    ctermfg=green ctermbg=bg gui=bold guifg=green guibg=bg
+    highlight GitGutterChange ctermfg=brown ctermbg=bg gui=bold guifg=brown guibg=bg
+    highlight GitGutterDelete ctermfg=red   ctermbg=None gui=bold guifg=red guibg=bg
     " }}}
     " vem-tabline {{{
     " Selected, visible buffer
-    highlight VemTablineSelected         ctermfg=white ctermbg=darkblue
-    highlight VemTablineLocationSelected ctermfg=white ctermbg=darkblue
-    highlight VemTablineNumberSelected   ctermfg=white ctermbg=darkblue
+    highlight VemTablineSelected         ctermfg=white ctermbg=darkblue guibg=#ffffff guifg=#4271ae
+    highlight VemTablineLocationSelected ctermfg=white ctermbg=darkblue guibg=#ffffff guifg=#4271ae
+    highlight VemTablineNumberSelected   ctermfg=white ctermbg=darkblue guibg=#ffffff guifg=#4271ae
     " Non-selected, visible buffers
-    highlight VemTablineShown           ctermfg=black ctermbg=darkblue
-    highlight VemTablineLocationShown   ctermfg=black ctermbg=darkblue
-    highlight VemTablineNumberShown     ctermfg=black ctermbg=darkblue
+    highlight VemTablineShown           ctermfg=black ctermbg=darkblue guifg=#000000 guibg=#4271ae
+    highlight VemTablineLocationShown   ctermfg=black ctermbg=darkblue guifg=#000000 guibg=#4271ae
+    highlight VemTablineNumberShown     ctermfg=black ctermbg=darkblue guifg=#000000 guibg=#4271ae
     " Non-selected, non-visible buffers
-    highlight VemTablineNormal          ctermfg=black ctermbg=darkblue
-    highlight VemTablineLocation        ctermfg=black ctermbg=darkblue
-    highlight VemTablineNumber          ctermfg=black ctermbg=darkblue
+    highlight VemTablineNormal          ctermfg=black ctermbg=darkblue guifg=#000000 guibg=#4271ae
+    highlight VemTablineLocation        ctermfg=black ctermbg=darkblue guifg=#000000 guibg=#4271ae
+    highlight VemTablineNumber          ctermfg=black ctermbg=darkblue guifg=#000000 guibg=#4271ae
 
     " Directory name (when present)
-    highlight VemTablineLocation        ctermfg=white ctermbg=darkblue
+    highlight VemTablineLocation        ctermfg=white ctermbg=darkblue guifg=#ffffff guibg=#4271ae
     " +X more text
-    highlight VemTablineSeparator       ctermfg=black ctermbg=darkblue
+    highlight VemTablineSeparator       ctermfg=black ctermbg=darkblue guifg=#000000 guibg=#4271ae
     " Partially shown buffer
-    highlight VemTabSelected            ctermfg=black ctermbg=darkblue
+    highlight VemTabSelected            ctermfg=black ctermbg=darkblue guifg=#000000 guibg=#4271ae
     " Selected tab
-    highlight VemTablineTabSelected     ctermfg=white ctermbg=darkblue
+    highlight VemTablineTabSelected     ctermfg=white ctermbg=darkblue guifg=#ffffff guibg=#4271ae
     " Non-selected tab
-    highlight VemTablineTabNormal       ctermfg=black ctermbg=darkblue
+    highlight VemTablineTabNormal       ctermfg=black ctermbg=darkblue guifg=#000000 guibg=#4271ae
     " }}}
 endfunction
 " Automatcially source custom colors when a colorscheme is loaded
