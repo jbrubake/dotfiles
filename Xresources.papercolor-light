@@ -1,0 +1,37 @@
+! vim: filetype=xdefaults
+
+! dark / light: color
+! -------------------
+! 0    /  8   : black
+! 1    /  9   : red
+! 2    /  10  : green
+! 3    /  11  : yellow
+! 4    /  12  : blue
+! 5    /  13  : magenta
+! 6    /  14  : cyan
+! 7    /  15  : white
+
+#define FG              #4D4D4C
+#define BG              #CECECE
+#define FADE            #dc322f
+#define CURSOR          #4D4D4C
+#define POINTERBG       #268bd2
+#define POINTERFG       #cb4b16
+#define HILIGHT         #969694
+
+#define COLOR0          #EDEDED
+#define COLOR8          #969694
+#define COLOR1          #D7005F
+#define COLOR9          #D7005F
+#define COLOR2          #718C00
+#define COLOR10         #718C00
+#define COLOR3          #D75F00
+#define COLOR11         #D75F00
+#define COLOR4          #4271AE
+#define COLOR12         #4271AE
+#define COLOR5          #8959A8
+#define COLOR13         #8959A8
+#define COLOR6          #3E999F
+#define COLOR14         #3E999F
+#define COLOR7          #4D4D4C
+#define COLOR15         #F5F5F5
