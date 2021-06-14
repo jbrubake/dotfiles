@@ -58,14 +58,6 @@ esac
 # TODO: Use some variables to configure this
 # xset -r 129 -r 231 # Multimedia keys
 
-# Set wallpaper {{{1
-#
-#if command -v Esetroot >/dev/null; then
-    #Esetroot "$HOME/pixmaps/wallpaper.jpg"
-#elif command -v feh >/dev/null; then
-    #feh --bg-scale "$HOME/Misc/pixmaps/Wallpaper/wallpaper.jpg"
-#elif GNOME SETTINGS
-
 # Start daemons {{{1
 #
 # Group start:
@@ -134,6 +126,16 @@ command -v xbindkeys >/dev/null && xbindkeys &
 # Merge XResources/XDefaults {{{1
 test -r "$HOME/.Xresources" && xrdb -merge "$HOME/.Xresources"
 test -r "$HOME/.Xdefaults"  && xrdb -merge "$HOME/.Xdefaults"
+
+# Set wallpaper {{{1
+#
+if command -v feh >/dev/null; then
+    feh --bg-center $HOME/.wallpaper0 --bg-center $HOME/.wallpaper1
+else
+    xsetroot -mod 16 16 \
+        -bg "$(xrdb -query | awk '/xsetroot\.background/ {print $2}')" \
+        -fg "$(xrdb -query | awk '/xsetroot\.foreground/ {print $2}')"
+fi
 
 # Wait for WM to exit {{{1
 wait $wmpid
