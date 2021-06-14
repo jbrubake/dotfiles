@@ -36,3 +36,6 @@
 
 "/home/jbrubake/bin/passmenu"
   Mod4 + p 
+
+"/home/jbrubake/bin/dmenu_run -l 10 -bw 1 -c -p Command:"
+    Super_R
