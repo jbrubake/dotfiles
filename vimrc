@@ -489,6 +489,8 @@ call minpac#add('masukomi/vim-markdown-folding')
 
 " vim-pconf: Project-local vimrc files {{{2
 call minpac#add('jbrubake/vim-pconf')
+" vim-repeat: Penable repeating supported plugin maps with "."{{{2
+call minpac#add('tpope/vim-repeat')
 
 " vim-surround: Modify surrounding characters {{{2
 call minpac#add('tpope/vim-surround')
