@@ -720,6 +720,11 @@ nnoremap zh zH
 
 " <F2>:                 toggle relative/absoute line numbers {{{2
 nnoremap <F2> :set norelativenumber!<CR>
+" <F7>:                 identify higlight group at cursor {{{2
+" https://vim.fandom.com/wiki/Identify_the_syntax_highlighting_group_used_at_the_cursor
+map <F7> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+            \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+            \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 " Cscope: {{{2
 " Based on https://raw.githubusercontent.com/chazy/cscope_maps/master/plugin/cscope_maps.vim
 
