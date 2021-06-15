@@ -535,8 +535,6 @@ let g:vim_markdown_conceal_code_blocks = 0
 " vim-markdown-folding: Fold Markdown files on headers {{{2
 call minpac#add('masukomi/vim-markdown-folding')
 
-" vim-pconf: Project-local vimrc files {{{2
-call minpac#add('jbrubake/vim-pconf')
 " vim-repeat: Penable repeating supported plugin maps with "."{{{2
 call minpac#add('tpope/vim-repeat')
 
