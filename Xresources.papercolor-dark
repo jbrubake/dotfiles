@@ -11,11 +11,11 @@
 ! 6    /  14  : cyan
 ! 7    /  15  : white
 
-#define FG              #657b83
-#define BG              #fdf6e3
+#define FG              #839496
+#define BG              #002b36
 
-#define COLOR0          #EDEDED
-#define COLOR8          #969694
+#define COLOR0          #1C1C1C
+#define COLOR8          #4D4D4C
 #define COLOR1          #D7005F
 #define COLOR9          #D7005F
 #define COLOR2          #718C00
@@ -28,7 +28,7 @@
 #define COLOR13         #8959A8
 #define COLOR6          #3E999F
 #define COLOR14         #3E999F
-#define COLOR7          #4D4D4C
+#define COLOR7          #D0D0D0
 #define COLOR15         #F5F5F5
 
 #define CURSOR          COLOR14
