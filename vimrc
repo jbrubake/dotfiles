@@ -470,7 +470,8 @@ call minpac#add('chrisbra/Colorizer')
 
 " Automatically colorize these filetypes
 " TODO: get this to work correctly in .vimrc
-let g:colorizer_auto_filetype='css,html,markdown,xdefaults'
+let g:colorizer_auto_filetype = 'css,html,markdown,xdefaults'
+let g:colorizer_disable_bufleave = 1
 " Highlight X11 colornames in Xresources and such
 " TODO: is there a way to do this **only** for Xresources files?
 " let g:colorizer_x11_names = 1
