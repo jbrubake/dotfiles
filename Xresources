@@ -83,9 +83,17 @@ XLogo*shapeWindow:      false
 XCalc*Cursor:           top_left_arrow
 XCalc*pointerColor:     #073642
 
+! XLock {{{1
+xlock.echokeys:         true
+xlock.echokey:          *
+xlock.planfont:         lucidasans-12
+xlock.font:             lucidasans-14
+xlock.messagefont:      lucidasans-14
+xlock.foreground:       #bbbbbb
+xlock.background:       #005577
+
 ! XClock {{{1
 ! nothing at the moment
-
 
 ! xscreensaver {{{1
 

@@ -1,5 +1,5 @@
 command term st
-command lock mylock
+command lock xlock
 
 color activeborder blue
 color inactiveborder grey
