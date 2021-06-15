@@ -137,23 +137,43 @@ set smartindent          " Automatic indenting is intelligent
 
 " Statusline {{{1
 " ==========
-function! GitHunkStatus()
+function! SL_GitHunks()
+    if system('git rev-parse --is-inside-work-tree 2>/dev/null') !~ 'true'
+        return ''
+    endif
     let [a,m,r] = GitGutterGetHunkSummary()
-    return printf('+%d %~%d -%d', a, m, r)
+    let s = printf('[+%d %~%d -%d] ', a, m, r)
+    return s
+endfunction
 
-    return string(hunks)
+function! SL_GitBranch()
+    let b = substitute(system('git rev-parse --abbrev-ref HEAD 2>/dev/null'), '\n\+$', '', '')
+    let s = strlen(b) ? ' ' . b . ' ' : ''
+    return s
+endfunction
+
+function! SL_isactive()
+    return g:statusline_winid == win_getid(winnr())
+endfunction
+
+function! Statusline() abort
+    let s = ' '
+    let s .= '%{SL_GitBranch()} '
+    let s .= '%F'
+    let s .= '%m'
+    let s .= '%r'
+    let s .= ' '
+    let s .= '[%Y]'
+    let s .= '%='
+    let s .= '%{SL_GitHunks()}'
+    let s .= '%l(%L):%c'
+    let s .= ' '
+    let s .= '[ASCII 0x%B]'
+    return s
 endfunction
 
 set laststatus=2                 " Always show status line
-
-set statusline=                  " Clear status line
-set statusline+=%t               " Filename
-set statusline+=%m               " Modified flag
-set statusline+=%r               " Readonly flag
-set statusline+=%15.l(%L),%c     " Line number (total lines), column number
-set statusline+=\ [%Y]           " Filetype
-set statusline+=\ [ASCII=%03.3b] " ASCII value of char under cursor
-set statusline+=\ \[%{GitHunkStatus()}\]
+set statusline=%!Statusline()
 
 " Terminal window status line
 augroup termwindow | autocmd!
