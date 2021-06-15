@@ -494,6 +494,13 @@ call minpac#add('airblade/vim-gitgutter')
 " The default updatetime of 4000ms is not good for async update
 set updatetime=100
 
+" Use fontawesome icons as signs
+let g:gitgutter_sign_added = ''
+let g:gitgutter_sign_modified = 'ﰣ'
+let g:gitgutter_sign_removed = ''
+let g:gitgutter_sign_removed_first_line = ''
+let g:gitgutter_sign_modified_removed = ''
+
 " vim-IndentCommentPrefix: Indents comments sensibly {{{2
 call minpac#add('inkarkat/vim-IndentCommentPrefix')
 
