@@ -276,6 +276,8 @@ call minpac#add('junegunn/fzf.vim')
 " :Commits          " Git commits (vim-fugitive)
 noremap <C-p> :Files<CR>
 
+" fzf-checkout.vim: Manage branches and tags with fzf {{{2
+call minpac#add('stsewd/fzf-checkout.vim')
 " gv.vim: Git commit browser {{{2
 call minpac#add('junegunn/gv.vim')
 
