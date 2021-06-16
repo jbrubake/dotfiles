@@ -119,8 +119,6 @@ type 2>&1 >/dev/null xfortune && xfortune ~/share/games/fortunes
 
 # Setup keymap {{{1
 #
-# The delay is needed in Fedora under Gnome or these don't take effect
-sleep 3
 test -x $INIT/keymaps.sh 2>&1 && $INIT/keymaps.sh
 
 # Key bindings {{{1
