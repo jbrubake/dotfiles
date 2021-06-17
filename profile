@@ -12,6 +12,13 @@ fi
 # Setup Environment {{{1
 . "$HOME/.env"      # common environment
 
+# Start gpg and ssh agents {{{1
+#
+# Start keychain but do not load keys. Keys
+# are loaded in ~/.bashrc to make sure all terminals
+# in X load keys
+eval $( keychain --eval --agents ssh,gpg )
+
 # Non-X configuration {{{1
 if test -z "$DISPLAY"; then
     eval $( keychain --eval --agents ssh,gpg $(cat "$HOME/.keychain/keylist") )
