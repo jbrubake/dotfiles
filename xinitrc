@@ -2,55 +2,42 @@
 # FIXME: Make this more robust. Set options through
 # FIXME: variables at the begining. Maybe have app lists?
 
-# Select Window Manager or Desktop Environment {{{1
+# Basic setup {{{1
+
+# Where my WM init scripts live
+INIT=~/etc/init.d
+
+# Select Window Manager or Desktop Environment {{{2
 #
 # Supports:
 #   dwm
 #   Any WM/DE that is run as a single command with no arguments
 #
-# Default: twm
-# TODO: Actual default should then be just an xterm in case twm isn't installed
+# Default: run an instance of st
+# TODO: Make this run whatever terminal is installed
 #
 WINDOWMANAGER=cwm
 
-# Basic setup {{{1
-# Where my WM init scripts live
+# Set wallpaper {{{1
 #
-INIT=~/etc/init.d
+if command -v feh >/dev/null; then
+    feh --no-fehbg --bg-center $HOME/.wallpaper0 --bg-center $HOME/.wallpaper1
+elif command -v xsetroot >/dev/null; then
+    xsetroot \
+        -mod "$(xrdb -query | awk '/xsetroot\.modx/ {print $2}')" \
+             "$(xrdb -query | awk '/xsetroot\.mody/ {print $2}')" \
+        -bg "$(xrdb -query | awk '/xsetroot\.background/ {print $2}')" \
+        -fg "$(xrdb -query | awk '/xsetroot\.foreground/ {print $2}')"
+fi
 
-# Start WM {{{1
+# Setup keymap and keybindings {{{1
 #
-case $WINDOWMANAGER in
-#
-# Any WM/DE that needs specific start up
-#
-dwm)
-    while true
-    do
-        xsetroot -name "$(date "+%F %R")"
-        sleep 1m
-    done &
-    ~/src/dwm/dwm & wmpid=$!
-    # dwm_statusbar.sh &
-    ;;
+test -x $INIT/keymaps.sh 2>&1 && $INIT/keymaps.sh
+command -v xbindkeys >/dev/null && xbindkeys &
 
-cwm)
-    cwm & wmpid=$!
-    ;;
-
-#
-# This accepts any WM/DE that does not need specific start up.
-# If WINDOWMANAGER isn't found, st is run instead
-#
-*)
-    if command -v $WINDOWMANAGER >/dev/null
-    then
-        $WINDOWMANAGER & wmpid=$!
-    else
-        st & wmpid=$!
-    fi
-    ;;
-esac
+# Merge XResources/XDefaults {{{1
+test -r "$HOME/.Xresources" && xrdb -merge "$HOME/.Xresources"
+test -r "$HOME/.Xdefaults"  && xrdb -merge "$HOME/.Xdefaults"
 
 # xset options {{{1
 #
@@ -79,6 +66,33 @@ command -v xautolock >/dev/null && \
     xautolock -locker 'xlock -echokeys "*" -planfont "lucidasans-12" -font "lucidasans-14" -fg "#bbbbbb" -bg "#005577" -info ""' -time 1 &
 command -v xbanish >/dev/null && \
     xbanish &>/dev/null &
+
+# Start WM {{{1
+#
+case $WINDOWMANAGER in
+dwm)
+    while true; do
+        xsetroot -name "$(date "+%F %R")"
+        sleep 1m
+    done &
+    ~/src/dwm/dwm & wmpid=$!
+    # dwm_statusbar.sh &
+    ;;
+
+cwm) ~/src/cwm/cwm & wmpid=$!  ;;
+
+#
+# This accepts any WM/DE that does not need specific start up.
+# If WINDOWMANAGER isn't found, st is run instead
+#
+*)
+    if command -v $WINDOWMANAGER >/dev/null; then
+        $WINDOWMANAGER & wmpid=$!
+    else
+        st & wmpid=$!
+    fi
+    ;;
+esac
 
 # Start desktop apps {{{1
 #
@@ -114,28 +128,6 @@ type teams >/dev/null 2>&1 && teams
     # such as temperature or IP address
     # sleep 20s # Reasonable CPU cycles
 # done &
-
-# Setup keymap {{{1
-#
-test -x $INIT/keymaps.sh 2>&1 && $INIT/keymaps.sh
-
-# Key bindings {{{1
-#
-command -v xbindkeys >/dev/null && xbindkeys &
-
-# Merge XResources/XDefaults {{{1
-test -r "$HOME/.Xresources" && xrdb -merge "$HOME/.Xresources"
-test -r "$HOME/.Xdefaults"  && xrdb -merge "$HOME/.Xdefaults"
-
-# Set wallpaper {{{1
-#
-if command -v feh >/dev/null; then
-    feh --bg-center $HOME/.wallpaper0 --bg-center $HOME/.wallpaper1
-else
-    xsetroot -mod 16 16 \
-        -bg "$(xrdb -query | awk '/xsetroot\.background/ {print $2}')" \
-        -fg "$(xrdb -query | awk '/xsetroot\.foreground/ {print $2}')"
-fi
 
 # Wait for WM to exit {{{1
 wait $wmpid
