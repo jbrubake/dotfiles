@@ -106,8 +106,6 @@ type teams >/dev/null 2>&1 && teams
           #-e sh -c "screen -c ~/.screenrc -dR DEVEL" &
 #fi
 
-type 2>&1 >/dev/null xfortune && xfortune ~/share/games/fortunes
-
 # Run this stuff forever {{{1
 #
 # while true; do

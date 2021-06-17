@@ -2,6 +2,8 @@
 #
 # ~/.env: environment variables
 
+BASH_ENV="$HOME/.env"   # non-interactive setup
+
 # Sane defaults
 #
 : ${HOME:=~}
@@ -10,6 +12,24 @@
 
 export HOME LOGNAME UNAME
 
+ENV="$HOME/.shinit" # equivalent to .bashrc for sh
+export ENV
+
+# Setup PATH {{{
+# Put /usr/local/bin in PATH if it exists
+test -d "/usr/local/bin" &&
+PATH="/usr/local/bin:$PATH"
+
+# Put ~/bin and ~/sbin in PATH if they exist
+test -d "$HOME/bin" &&
+    PATH="$HOME/bin:$PATH"
+test -d "$HOME/sbin" &&
+    PATH="$HOME/sbin:$PATH"
+
+# Remove duplicate entries
+PATH=$(printf %s "$PATH" | awk -vRS=: '!a[$0]++' | paste -s -d:)
+
+# }}}
 # Locale settings default to en_US with utf-8 unless already set
 #
 LANG="en_US.UTF-8"

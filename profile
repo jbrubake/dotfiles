@@ -3,28 +3,16 @@
 # ~/.profile: sh-specific and generic login configuration
 #
 
-# Setup PATH {{{
-# Put /usr/local/bin in PATH if it exists
-test -d "/usr/local/bin" &&
-PATH="/usr/local/bin:$PATH"
+# This file does non-X login stuff so return
+# if some DM decides it should be sourced
+if test -n "$DISPLAY"; then
+    return 2>/dev/null || exit
+fi
 
-# Put ~/bin and ~/sbin in PATH if they exist
-test -d "$HOME/bin" &&
-    PATH="$HOME/bin:$PATH"
-test -d "$HOME/sbin" &&
-    PATH="$HOME/sbin:$PATH"
-
-# Remove duplicate entries
-PATH=$(printf %s "$PATH" | awk -vRS=: '!a[$0]++' | paste -s -d:)
-
-# }}}
-# Setup Environment {{{
+# Setup Environment {{{1
 . "$HOME/.env"      # common environment
-ENV="$HOME/.shinit" # equivalent to .bashrc for sh
-export ENV
 
-# }}}
-# Non-X configuration {{{
+# Non-X configuration {{{1
 if test -z "$DISPLAY"; then
     eval $( keychain --eval --agents ssh,gpg $(cat "$HOME/.keychain/keylist") )
     # MOTD {{{
@@ -34,11 +22,9 @@ if test -z "$DISPLAY"; then
         uname -npsr
         printf "%s\n\n" "Uptime: $( uptime )"
     fi
-    # }}}
 fi
 
-# }}}
-# System-specific Configuration {{{
+# System-specific Configuration {{{1
 case "$(uname -o)" in
     *Cygwin*) # {{{
         # Mintty Color Themes {{{
@@ -103,4 +89,3 @@ case "$(uname -o)" in
         unset scheme # }}}
         ;; # }}}
 esac
-# }}}
