@@ -129,3 +129,9 @@ xscreensaver.passwd.thermometer.width:       8
 ! xsetroot {{{1
 xsetroot.foreground:    #000011
 xsetroot.background:    #002b36
+xsetroot.modx:          16
+xsetroot.mody:          16
+
+! xautolock {{{1
+xautolock.time:         1
+xautolock.locker:       xlock -info ""

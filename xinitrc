@@ -63,9 +63,9 @@ test -r "$HOME/.Xdefaults"  && xrdb -merge "$HOME/.Xdefaults"
     # gnome-screensaver &
 # fi
 command -v xautolock >/dev/null && \
-    xautolock -locker 'xlock -echokeys "*" -planfont "lucidasans-12" -font "lucidasans-14" -fg "#bbbbbb" -bg "#005577" -info ""' -time 1 &
+    xautolock &
 command -v xbanish >/dev/null && \
-    xbanish &>/dev/null &
+    xbanish &
 
 # Start WM {{{1
 #
