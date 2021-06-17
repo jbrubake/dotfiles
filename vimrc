@@ -780,7 +780,7 @@ nnoremap <leader>gB :GBrowse<CR>
 vnoremap <leader>gB :GBrowse<CR>
 
 " Open Diff split
-nnoremap <leader>gd :GDiff<CR>
+nnoremap <leader>gd :Gdiffsplit<CR>
 
 " Mappings to jump between hunks
 nnoremap <Leader>gn <Plug>(GitGutterNextHunk)
