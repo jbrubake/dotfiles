@@ -524,6 +524,9 @@ call minpac#add('inkarkat/vim-ingo-library')
 " vim-ini-fold: folding for ini-like files {{{2
 call minpac#add('matze/vim-ini-fold')
 
+" vim-irssi-syntax: syntax file for irssi configuration files {{{2
+call minpac#add('wsdjeg/vim-irssi-syntax')
+
 " vim-markdown: Markdown vim mode {{{2
 call minpac#add('plasticboy/vim-markdown')
 
