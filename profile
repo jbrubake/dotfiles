@@ -19,16 +19,12 @@ fi
 # in X load keys
 eval $( keychain --eval --agents ssh,gpg )
 
-# Non-X configuration {{{1
-if test -z "$DISPLAY"; then
-    eval $( keychain --eval --agents ssh,gpg $(cat "$HOME/.keychain/keylist") )
-    # MOTD {{{
-    if test  -e /run/motd.dynamic; then
-        cat /run/motd.dynamic
-    else
-        uname -npsr
-        printf "%s\n\n" "Uptime: $( uptime )"
-    fi
+# MOTD {{{1
+if test  -e /run/motd.dynamic; then
+    cat /run/motd.dynamic
+else
+    uname -npsr
+    printf "%s\n\n" "Uptime: $( uptime )"
 fi
 
 # System-specific Configuration {{{1
