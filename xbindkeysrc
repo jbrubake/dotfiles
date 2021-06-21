@@ -36,3 +36,6 @@
 
 "dmenu_run -l 10 -bw 1 -c -p Command:"
     Super_R
+
+"winsearch -l 10 -bw 1 -c -p Window:"
+    Mod4 + s
