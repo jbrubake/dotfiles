@@ -16,6 +16,11 @@ alias lal="command ls $color_flag $LS_OPTS -lhA"
 alias l.="command  ls $color_flag $LS_OPTS -d .*"
 alias lsap="lsp -lA" # lsp is a function defined in ~/.functions
 
+# Force color in *grep {{{1
+#
+alias grep="grep $color_flag"
+unset color_flag
+
 # Easier navigation
 alias ..="cd .."
 alias ...="cd ../.."
@@ -24,13 +29,6 @@ if test -n "$BASH"; then
 else
     alias -="cd -"
 fi
-
-# Force color in *grep
-#
-alias grep="grep $color_flag"
-alias fgrep="fgrep $color_flag"
-alias egrep="egrep $color_flag"
-unset color_flag
 
 # If my pager is not less, make me think it is
 #
