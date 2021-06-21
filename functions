@@ -151,7 +151,20 @@ _navi_widget() {
     READLINE_LINE="$output"
     READLINE_POINT=${#READLINE_LINE}
 }
+lsp () { # Print numerical permissions at the start of ls -l output
+# https://github.com/blaenk/dots/blob/master/zsh/zsh/functions.zsh
 
+    # LS_COLOR_ALWAYS and LS_OPTS are defined in ~/.alias
+    command ls $LS_COLOR_ALWAYS $LS_OPTS -lh "$@" |
+        awk '{ \
+            k = 0; \
+            for (i = 0; i <= 8; i++) \
+                k += ((substr($1, i+2, 1) ~ /[rwx]/) * 2^(8-i)); \
+            if(k) \
+                printf("%0o ",k); \
+            print; \
+        }'
+}
 bind -x '"\C-g": _navi_widget'
 # }}}
 # Miscellaneous Functions {{{

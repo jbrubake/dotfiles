@@ -4,16 +4,17 @@
 
 # Color flag for ls and grep
 test $( tput colors ) -ge 0 && color_flag='--color=auto'
+test -n "$color_flag" && LS_COLOR_ALWAYS='--color=always'
 
-# My standard ls aliases
+# My standard ls aliases {{{1
 #
-ls_opts="--group-directories-first -XF --dereference-command-line-symlink-to-dir"
-alias ls="command  ls $color_flag $ls_opts"
-alias la="command  ls $color_flag $ls_opts -A"
-alias ll="command  ls $color_flag $ls_opts -lh"
-alias lal="command ls $color_flag $ls_opts -lhA"
-alias l.="command  ls $color_flag $ls_opts -d .*"
-unset ls_opts
+LS_OPTS="--group-directories-first -XF --dereference-command-line-symlink-to-dir"
+alias ls="command  ls $color_flag $LS_OPTS"
+alias la="command  ls $color_flag $LS_OPTS -A"
+alias ll="command  ls $color_flag $LS_OPTS -lh"
+alias lal="command ls $color_flag $LS_OPTS -lhA"
+alias l.="command  ls $color_flag $LS_OPTS -d .*"
+alias lsap="lsp -lA" # lsp is a function defined in ~/.functions
 
 # Easier navigation
 alias ..="cd .."
