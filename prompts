@@ -11,21 +11,21 @@ prompt_detached () {
         local n_tmux=$(tmux list-sessions 2> /dev/null | grep -cv attached)
     fi
 
-    local detached=$(( $n_screen + $n_tmux ))
+    local detached=$(( n_screen + n_tmux ))
 
     printf "%sd" "${detached}"
 }
 # prompt_jobs: Get running and stopped jobs {{{2
 # Only works under Bash
 prompt_jobs () {
-    printf "%s&/%sz" $( jobs -r | wc -l | tr -d " " ) $( jobs -s | wc -l | tr -d " " )
+    printf "%s&/%sz" "$( jobs -r | wc -l | tr -d " " )" "$( jobs -s | wc -l | tr -d " " )"
 }
 # prompt_load: Get system load {{{2
 prompt_load () {
     local one=
     local five=
     local rest=
-    read one five rest < /proc/loadavg
+    read -r one five rest < /proc/loadavg
     printf "%s:%s" "$one" "$five"
 }
 
@@ -47,12 +47,12 @@ prompt_uptime () {
 
 # prompt_user: Determine if root or not logged in user {{{2
 prompt_user () {
-    if [ "x$EUID" = 'x0' ]; then
+    if [ "$EUID" = '0' ]; then
         printf "%s" 'root'
-    elif [ $USER != `logname 2>/dev/null` ]; then
+    elif [ "$USER" != "$(logname 2>/dev/null)" ]; then
         printf "su to %s" "$USER"
     else
-        printf "%s" $USER
+        printf "%s" "$USER"
     fi
 }
 
@@ -94,12 +94,12 @@ prompt_pwd () {
 prompt_error () {
     local error_clr=$1
 
-    if [ $RETVAL -gt 0 ]; then (( i = 3 - ${#RETVAL} ));
-        printf "%s" "$error_clr[";
-        [ $i -gt 0 ] && printf "%s" " ";
+    if [ "$RETVAL" -gt 0 ]; then (( i = 3 - ${#RETVAL} ));
+        printf "%s[" "$error_clr";
+        [ "$i" -gt 0 ] && printf "%s" " ";
         printf "%s" "$RETVAL";
         [ $i -eq 2 ] && printf "%s" " ";
-        printf "%s" "]$(FX reset)";
+        printf "]%s" "$(FX reset)";
     fi
 }
 
@@ -131,7 +131,7 @@ END
 	local branchName=''
 
 	# Check if the current directory is in a Git repository.
-	git rev-parse --is-inside-work-tree &>/dev/null || return
+	git rev-parse --is-inside-work-tree >/dev/null 2>&1 || return
 
 	# Check for what branch we’re on.
 	# Get the short symbolic ref. If HEAD isn’t a symbolic ref, get a
@@ -143,11 +143,11 @@ END
 		printf '%s' '(unknown)')"
 
     # Check for uncommitted changes in the index.
-    if ! $(git diff --quiet --ignore-submodules --cached); then
+    if ! git diff --quiet --ignore-submodules --cached; then
         s+='+'
     fi;
     # Check for unstaged changes.
-    if ! $(git diff-files --quiet --ignore-submodules --); then
+    if ! git diff-files --quiet --ignore-submodules --; then
         s+='!'
     fi;
     # Check for untracked files.
@@ -155,13 +155,13 @@ END
         s+='?';
     fi;
     # Check for stashed files.
-    if $(git rev-parse --verify refs/stash &>/dev/null); then
+    if git rev-parse --verify refs/stash >/dev/null 2>&1; then
         s+='$';
     fi;
 
 	[ -n "${s}" ] && s=" ${s}";
 
-	echo -e "${1}${branchName}${2}${s}${3}";
+	printf "%s%s%s%s%s" "$1" "$branchName" "$2" "$s" "$3"
 }
 
 fi # End bash-specific section
@@ -170,7 +170,7 @@ fi # End bash-specific section
 
 # Determine if terminal supports color
 #
-test $( tput colors ) -ge 0 && HAS_COLOR=yes
+test "$( tput colors )" -ge 0 && HAS_COLOR=yes
 
 if test $HAS_COLOR; then
     dir_clr="\[$(FG 2)\]"
