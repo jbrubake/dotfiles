@@ -2,7 +2,7 @@
 #
 # Jeremy Brubaker <jbru362@gmail.com>
 
-# Color Escape Functions {{{
+# Color Escape Functions {1
 
 ###################################################
 # Functions to set colors and attributes
@@ -21,8 +21,7 @@
 # Changed to use functions instead of hashes for speed
 # Changed to use tput(1) as much as possible
 ###################################################
-FX()
-{
+FX() {
     case "$1" in
         reset)       tput sgr0 ;;
         bold)        tput bold ;;
@@ -49,70 +48,38 @@ FX()
     esac
 }
 
-if test $( tput colors ) -ge 0; then
+if test "$( tput colors )" -ge 0; then
     FG() {
-        tput setaf $1
-    }
-
-    BG()
-    {
-        tput setab $1
-    }
-else
-    FG() {
-        :
+        tput setaf "$1"
     }
 
     BG() {
-        :
+        tput setab "$1"
+    }
+else
+    FG() { :
+    }
+
+    BG() { :
     }
 fi
 
-# }}}
-# navi {{{
-_navi_call() {
-    local result="$(navi --path ~/share/navi "$@" </dev/tty)"
-    if [ -z "${result}" ]; then
-        result="$(navi --path ~/share/navi --print </dev/tty)"
-    fi
-    printf "%s" "$result"
-}
-
-_navi_widget() {
-    local -r input="${READLINE_LINE}"
-    local -r last_command="$(echo "${input}" | navi fn widget::last_command)"
-
-    if [ -z "${last_command}" ]; then 
-        local -r output="$(_navi_call --print --fzf-overrides '--no-select-1')"
-    else
-        local -r find="$last_command"
-        local -r replacement="$(_navi_call --print --query "${last_command}")"
-        local -r output="${input//$find/$replacement}"
-    fi
-
-    READLINE_LINE="$output"
-    READLINE_POINT=${#READLINE_LINE}
-}
+# Miscellaneous {1
 lsp () { # Print numerical permissions at the start of ls -l output
 # https://github.com/blaenk/dots/blob/master/zsh/zsh/functions.zsh
 
     # LS_COLOR_ALWAYS and LS_OPTS are defined in ~/.alias
     command ls $LS_COLOR_ALWAYS $LS_OPTS -lh "$@" |
-        awk '{ \
-            k = 0; \
-            for (i = 0; i <= 8; i++) \
-                k += ((substr($1, i+2, 1) ~ /[rwx]/) * 2^(8-i)); \
-            if(k) \
-                printf("%0o ",k); \
-            print; \
+        awk '{
+            k = 0;
+            for (i = 0; i <= 8; i++)
+                k += ((substr($1, i+2, 1) ~ /[rwx]/) * 2^(8-i));
+            if(k)
+                printf("%0o ",k);
+            print;
         }'
 }
-bind -x '"\C-g": _navi_widget'
-# }}}
-# Miscellaneous Functions {{{
 
-# TODO: This should be somwhere else
-bind -x '"\C-]": passmenu --type'
 # rpg-cli {{{
 cd () {
     if [ "$#" -eq 0 ]
@@ -164,17 +131,7 @@ lsp ()
         awk '{k=0;for(i=0;i<=8;i++)k+=((substr($1,i+2,1)~/[rwx]/)\
         *2^(8-i));if(k)printf("%0o ",k);print}'
 }
-
-####
-# google
-#
-# Google something
-#
-# Expects: a google search string, just like
-#          you would enter it at the website
-####
-google ()
-{
+google () { # Google something
     # Create search string if arguments were passed
     if [[ "$*" ]]; then
         # Google search strings replace spaces with '+'
@@ -190,23 +147,20 @@ google ()
     # it merely opens google.com
     openurl "www.google.com/$url"
 }
-
-####
-# define
-#
-# Define words and phrases with google
-####
-define()
-{
+define() { # Define words and phrases with google
     local y="$@"
-    curl -sA"Opera" "http://www.google.com/search?q=define:${y// /+}"|grep -Eo '<li>[^<]+'|sed 's/^<li>//g'|nl|/usr/bin/perl -MHTML::Entities -pe 'decode_entities($_)'
+    curl -sA"Opera" "http://www.google.com/search?q=define:${y// /+}" |
+        grep -Eo '<li>[^<]+' |
+        sed 's/^<li>//g' |
+        nl |
+        /usr/bin/perl -MHTML::Entities -pe 'decode_entities($_)'
 }
-
-rtfm()
-{
-    man "$@" || [[ -f "/usr/share/info/$@.info*" ]] && info "$@" ||
-        echo "No info entry for $@" >/dev/stderr && "$@" --help ||
-        openurl "http://duckduckgo.com/?q=%21man+$@" ;
+rtfm() { # Check various forms of documentation
+    man "$@" ||
+        [[ -f "/usr/share/info/$@.info*" ]] && info "$@" ||
+        echo "No info entry for $@" >/dev/stderr &&
+        "$@" --help ||
+        openurl "http://duckduckgo.com/?q=%21documentation+for+$@" ;
 }
 
 ####
@@ -248,33 +202,16 @@ hbl()
 #
 # List last "n" commands in history
 ###
-lh()
-{
+lh() { # List last "n" commands in history
     history | tail -"$1"
 }
-
-###
-# manf
-#
+manf() { # Open manpage for $1 at the first occurence of flag $2
 # https://jip.dev/posts/dots/
-#
-# Open manpage for $1 at the first occurence
-# of flag $2
-manf() {
+# FIXME: Make this work with $PAGER
       man -P "less -p \"^ +$2\"" $1
 }
-
-###
-# wiki
-#
-# wiki <command> [args ...]
-#
-# Commands: run wiki help
-#
-# Requires $WIKI_DIR to be set to wiki root directory
-#
+wiki() { # Interact with wiki
 # Inspired by: https://vimwiki.github.io/vimwikiwiki/Tips%20and%20Snips.html
-wiki() {
     if test -z "$WIKI_DIR"; then
         printf "%s\n" '$WIKI_DIR is not defined'
         return 1
@@ -316,8 +253,30 @@ END
             ;;
         esac
 }
-# }}}
-# Helper Functions {{{
+# navi {1
+_navi_call() {
+    local result="$(navi --path ~/share/navi "$@" </dev/tty)"
+    if [ -z "${result}" ]; then
+        result="$(navi --path ~/share/navi --print </dev/tty)"
+    fi
+    printf "%s" "$result"
+}
+_navi_widget() {
+    local -r input="${READLINE_LINE}"
+    local -r last_command="$(echo "${input}" | navi fn widget::last_command)"
+
+    if [ -z "${last_command}" ]; then 
+        local -r output="$(_navi_call --print --fzf-overrides '--no-select-1')"
+    else
+        local -r find="$last_command"
+        local -r replacement="$(_navi_call --print --query "${last_command}")"
+        local -r output="${input//$find/$replacement}"
+    fi
+
+    READLINE_LINE="$output"
+    READLINE_POINT=${#READLINE_LINE}
+}
+# Helper Functions {1
 # (prefix names with '__')
 
 # vim: foldlevel=0 foldmarker={,}
