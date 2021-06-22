@@ -1,4 +1,4 @@
-#!/bin/bash vim: foldlevel=0
+#!/bin/bash
 #
 # Jeremy Brubaker <jbru362@gmail.com>
 #
@@ -63,8 +63,4 @@ if [[ -z $HOSTFILE && -r "$HOME/.ssh/known_hosts" ]]; then
     HOSTFILE="$HOME/.hosts"
 fi
 # }}}
-# Other {{{
-command -v navi >/dev/null && \
-    eval "$(navi widget bash)"
-# }}}
-
+# vim: foldlevel=0

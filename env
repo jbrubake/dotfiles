@@ -1,4 +1,4 @@
-#!/bin/sh vim: foldlevel=0
+#!/bin/sh
 #
 # ~/.env: environment variables
 
@@ -205,3 +205,4 @@ fi
 # Sigh. Python can't find user site-packages because I refuse to use
 # .local or whatever other silly crap it expects
 export PYTHONPATH=$HOME/lib/python3.8/site-packages/
+# vim: foldlevel=0

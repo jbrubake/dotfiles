@@ -1,4 +1,4 @@
-#!/bin/sh vim: foldlevel=0
+#!/bin/sh
 
 # Prompt functions {{{1
 if test -n "$BASH"; then
@@ -288,3 +288,4 @@ fi # End sh-specific section
  unset reset
  unset HAS_COLOR
 
+# vim: foldlevel=0

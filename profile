@@ -1,4 +1,4 @@
-#!/bin/sh vim: foldlevel=0
+#!/bin/sh
 #
 # ~/.profile: sh-specific and generic login configuration
 #
@@ -92,3 +92,5 @@ case "$(uname -o)" in
         unset scheme # }}}
         ;; # }}}
 esac
+
+#vim: foldlevel=0

@@ -1,4 +1,4 @@
-#!/bin/sh vim: foldlevel=0
+#!/bin/sh
 #
 # Jeremy Brubaker <jbru362@gmail.com>
 
@@ -407,3 +407,4 @@ END
 # Helper Functions {{{
 # (prefix names with '__')
 
+# vim: foldlevel=0 foldmarker={,}

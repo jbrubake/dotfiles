@@ -1,4 +1,4 @@
-#!/bin/bash vim: foldlevel=0
+#!/bin/bash
 #
 # ~/.bash_profile: bash-specific login configuration
 
@@ -10,3 +10,5 @@ fi
 
 source "$HOME/.profile" # non-bash specific login config
 source "$HOME/.bashrc"  # interactive setup. not sourced by default
+
+# vim: foldlevel=0
