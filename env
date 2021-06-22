@@ -3,90 +3,109 @@
 # ~/.env: environment variables
 
 BASH_ENV="$HOME/.env"   # non-interactive setup
+ENV="$HOME/.shinit" # equivalent to .bashrc for sh
+export BASH_ENV ENV
 
-# Sane defaults
+# Sane defaults {{{1
 #
-: ${HOME:=~}
-: ${LOGNAME:=$(id -un)}
-: ${UNAME:=$(uname)}
-
+: "${HOME:=~}"
+: "${LOGNAME:=$(id -un)}"
+: "${UNAME:=$(uname)}"
 export HOME LOGNAME UNAME
 
-ENV="$HOME/.shinit" # equivalent to .bashrc for sh
-export ENV
-
-# Setup PATH {{{
-# Put /usr/local/bin in PATH if it exists
-test -d "/usr/local/bin" &&
-PATH="/usr/local/bin:$PATH"
-
-# Put ~/bin and ~/sbin in PATH if they exist
-test -d "$HOME/bin" &&
-    PATH="$HOME/bin:$PATH"
-test -d "$HOME/sbin" &&
-    PATH="$HOME/sbin:$PATH"
+# Setup PATH {{{1
+test -d "/usr/local/bin" && PATH="/usr/local/bin:$PATH"
+test -d "$HOME/bin"  && PATH="$HOME/bin:$PATH"
+test -d "$HOME/sbin" && PATH="$HOME/sbin:$PATH"
 
 # Remove duplicate entries
 PATH=$(printf %s "$PATH" | awk -vRS=: '!a[$0]++' | paste -s -d:)
 
-# }}}
-# Locale settings default to en_US with utf-8 unless already set
+# Locale and timezone {{{1
 #
-LANG="en_US.UTF-8"
-LANGUAGE="en_US.UTF-8"
-LC_CTYPE="en_US.UTF-8"
-LC_ALL="en_US.UTF-8"
-
+: "${LANG:=en_US.UTF-8}"
+: "${LANGUAGE:=en_US.UTF-8}"
+: "${LC_CTYPE:=en_US.UTF-8}"
+: "${LC_ALL:=en_US.UTF-8}"
 export LANG LANGUAGE LC_CTYPE LC_ALL
 
-# Always use my .inputrc
-if [ -r "$HOME/.inputrc" ]; then
-    INPUTRC="$HOME/.inputrc"
-    export INPUTRC
-fi
-
-# Other
-#
 if [ -r /etc/timezone ]; then
-    TZ=$( cat /etc/timezone ) # Set TZ based on system timezone
-    export TZ
+    TZ=$( cat /etc/timezone )
+else
+    TZ=$(date +%Z)
 fi
+export TZ
 
-# EDITOR/VISUAL
+# Alternatives {{{1
+# EDITOR/VISUAL {{{2
 #
-editors="vim vi nano pico ed"
-for e in $editors; do
-    if command -v $e >/dev/null; then
-        EDITOR=$e
-        break
-    fi
-done
+if command -v >/dev/null chooser; then
+    EDITOR=$(chooser -V editor 2>/dev/null)
+fi
+if test -z "$EDITOR"; then
+    editors="vim vi nano pico ed"
+    for e in $editors; do
+        if command -v "$e" >/dev/null; then
+            EDITOR="$e"
+            break
+        fi
+    done
 unset editors
+fi
 VISUAL=$EDITOR
 export VISUAL EDITOR
 
-# PAGER/MANPAGER
+# PAGER/MANPAGER {{{2
 #
-if command -v vimpager >/dev/null; then
-    PAGER=`command -v vimpager` # Only works with git if I set the whole path
+if command -v >/dev/null chooser; then
+    PAGER=$(chooser -V pager 2>/dev/null)
+fi
+if test -z "$PAGER"; then
+    pagers="vimpager less most more"
+    for p in $pagers; do
+        if command -v "$p" >/dev/null; then
+            EDITOR="$p"
+            break
+        fi
+    done
+unset pagers
+fi
+if test "$PAGER" == "vimpager"; then
     VIMPAGER_RC="$HOME/.vimrc"
     export VIMPAGER_RC
-elif command -v less >/dev/null; then
-    PAGER=less
-else
-    PAGER=more
 fi
 MANPAGER=$PAGER
+export PAGER MANPAGER
+
 if command -v ack >/dev/null; then
     ACK_PAGER=$PAGER
     ACK_PAGER_COLOR=$PAGER
     export ACK_PAGER ACK_PAGER_COLOR
 fi
-export PAGER MANPAGER
 
-# Setup dircolors
+# Web browser {{{2
 #
-if test $( tput colors ) -ge 0 && command -v dircolors >/dev/null; then
+if command -v >/dev/null chooser; then
+    BROWSER=$(chooser -V browser 2>/dev/null)
+fi
+if test -z "$BROWSER"; then
+    browsers="elinks links w3m lynx"
+    if test -n "$DISPLAY"; then
+        browsers="firefox chrome chromium netsurf $browsers"
+    fi
+    for b in $browsers; do
+        if command -v "$b" >/dev/null; then
+            BROWSER="$b"
+            break
+        fi
+    done
+    unset browsers
+fi
+export BROWSER
+
+# dircolors {{{1
+#
+if test "$( tput colors )" -ge 0 && command -v dircolors >/dev/null; then
     # If colorfile remains blank, dircolors will use defaults
     colorfile=
     case "$TERM" in
@@ -114,71 +133,42 @@ if test $( tput colors ) -ge 0 && command -v dircolors >/dev/null; then
     unset colorfile
 fi
 
-# Configure tldr client
-#
-if command -v tldr >/dev/null; then
-    TLDR_PARAM='green'
-    TLDR_EPARAM='bold green'
-    TLDR_CODE='green'
-    TLDR_DESCRIPTION='white'
-    TLDR_HEADER='bold yellow'
-    TLDR_QUOTE='underline bold blue'
-
-    export TLDR_PARAM TLDR_EPARAM TLDR_CODE
-    export TLDR_DESCRIPTION TLDR_HEADER TLDR_QUOTE
-fi
-
-# Set default web browser
-#
-browsers="elinks links w3m lynx"
-if test -n "$DISPLAY"; then
-    browsers="chrome chromium firefox netsurf $browsers"
-fi
-
-for b in $browsers; do
-    if command -v $b >/dev/null; then
-        BROWSER=$b
-        break
-    fi
-done
-unset browsers
-export BROWSER
-
-# Set news server
-#
-NNTPSERVER=nntp.aioe.org
-export NNTPSERVER
-
-# Perl configuration
+# Development {{{1
+# Perl {{{2
 #
 if test -d "$HOME/perl5/"; then
     PATH="$HOME/perl5/bin${PATH:+:${PATH}}"
     PERL5LIB="$HOME/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"
     PERL_LOCAL_LIB_ROOT="$HOME/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"
-    PERL_MB_OPT="--install_base \"$HOME/perl5\""
+    PERL_MB_OPT="--install_base $HOME/perl5"
     PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"
     export PATH PERL5LIB PERL_LOCAL_LIB_ROOT PERL_MB_OPT PERL_MM_OPT
 fi
 
-# ARM cross-compiler PATH
+# ARM cross-compiler {{{2
 #
 if test -d "$HOME/opt/arm-none-eabi/"; then
     PATH="$HOME/opt/arm-none-eabi/bin:$PATH"
     PATH="$HOME/opt/aarch64-elf/bin:$PATH"
 fi
 
-# Cygwin specific
+# Python {{{2
+# Sigh. Python can't find user site-packages because I refuse to use
+# .local or whatever other silly crap it expects
+export PYTHONPATH=$HOME/lib/python3.8/site-packages/
+
+# System specific {{{1
 #
 case "$(uname -o)" in
-    *Cygwin*)
-        LD=gcc # Cygwin won't build without this. Weird
-        export LD
+    *) ;;
 esac
 
+# Miscellaneous {{{1
 if [ -n "$BASH" ]; then
     # Filename completion ignores backups and vim swap files
     #
     FIGNORE="~:.swp"
+    export FIGNORE
 
     # History stuff
     #
@@ -186,7 +176,7 @@ if [ -n "$BASH" ]; then
     HISTCONTROL="ignoredups"  # No duplicate history entries
     HISTIGNORE="&:[bf]g:exit" # History ignores these matches
 
-    export FIGNORE HISTFILESIZE HISTCONTROL HISTIGNORE
+    export HISTFILESIZE HISTCONTROL HISTIGNORE
 fi
 
 export WIKI_DIR=~/docs/wiki
@@ -202,7 +192,28 @@ if test -f "$HOME/share/nerd-font/scripts/i_all.sh"; then
     . "$HOME/share/nerd-font/scripts/i_all.sh"
 fi
 
-# Sigh. Python can't find user site-packages because I refuse to use
-# .local or whatever other silly crap it expects
-export PYTHONPATH=$HOME/lib/python3.8/site-packages/
+# Always use my .inputrc
+if [ -r "$HOME/.inputrc" ]; then
+    INPUTRC="$HOME/.inputrc"
+    export INPUTRC
+fi
+
+# Set news server
+NNTPSERVER=nntp.aioe.org
+export NNTPSERVER
+
+# Configure tldr client {{{2
+#
+if command -v tldr >/dev/null; then
+    TLDR_PARAM='green'
+    TLDR_EPARAM='bold green'
+    TLDR_CODE='green'
+    TLDR_DESCRIPTION='white'
+    TLDR_HEADER='bold yellow'
+    TLDR_QUOTE='underline bold blue'
+
+    export TLDR_PARAM TLDR_EPARAM TLDR_CODE
+    export TLDR_DESCRIPTION TLDR_HEADER TLDR_QUOTE
+fi
+
 # vim: foldlevel=0
