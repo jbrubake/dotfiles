@@ -52,19 +52,8 @@ xset b off
 # app2 && \
 # ) &
 # Use sleep as necessary to sync things up)
-# command -v urxvtd >/dev/null && urxvtd -q -o -f
-# command -v unclutter >/dev/null unclutter -root &
-# command -v dropbox start >/dev/null &
-# command -v gpg-agent >/dev/null gpg-agent --daemon
-# if command -v xscreensaver >/dev/null; then
-    # xscreensaver &
-# elif command -v gnome-screensaver >/dev/null; then
-    # gnome-screensaver &
-# fi
-command -v xautolock >/dev/null && \
-    xautolock &
-command -v xbanish >/dev/null && \
-    xbanish &
+command -v xautolock >/dev/null && xautolock &
+command -v xbanish >/dev/null && xbanish &
 
 # Start WM {{{1
 #
