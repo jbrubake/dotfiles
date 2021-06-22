@@ -86,28 +86,35 @@ cd () { # rpg-cli
     builtin cd "$(rpg-cli pwd)" || return 2>/dev/null || exit
 }
 fi # rpg-cli }
-###
-# ip
-#
+ip() {
 # 'ip get' prints current ip address and copies to clipboard
 # All other commands are passed to the real 'ip' command
 #
 # https://jip.dev/posts/dots/
 #
-# TODO: Doesn't pass args right
-# TODO: Option to copy to clipboard?
-# ip() {
-    # if [[ $1 == 'get' ]]; then
-        # res=$(curl -s ipinfo.io/ip)
-        # echo -n $res | xsel --clipboard
-        # echo "copied $res to clipboard"
-    # else
-        # only run ip if it exists
-        # command ip >/dev/null &&
-            # command ip $@
-    # fi
-# }
+    if [[ "$1" == 'get' || "$1" == 'g' ]]; then
+        res=$(curl -s ipinfo.io/ip)
+        if [[ "$1" == 'help' || "$1" == 'h' ]]; then
+            cat <<EOF
+Usage: ip get [clipboard]
 
+Print public IP address to stdout or to the X11
+clipboard if [clipboard] is present
+EOF
+        elif [[ "$1" == 'clipboard' || "$1" == 'c' ]]; then
+            if command -v xclip >/dev/null; then
+                printf "%s" "$res" | xclip -in -selection clipboard
+                printf "copied %s to clipboard" "$res"
+            else
+                printf "%s\n" "xclip is not installed"
+            fi
+        else
+            printf "%s\n" "$res"
+        fi
+    else
+        command ip >/dev/null &&
+            command ip $@
+    fi
 ###
 # lsp
 #
