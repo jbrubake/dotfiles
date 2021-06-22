@@ -10,25 +10,25 @@
 source "$HOME/.shinit" # common interactive shell configuration
 
 # Shell options {{{
-shopt -s cdspell      # Fix spelling errors in cd commands
-shopt -s extglob      # Advanced pathname expansion
-shopt -s histappend   # Append to HISTFIL on exit - don't clobber it
-shopt -s checkwinsize # Update LINES/COLUMNS after each command
-shopt -s cmdhist      # Try to save multiline commands as one history
-                      # entry
-shopt -s histverify   # Allow verification of history substitution
-shopt -s no_empty_cmd_completion # Don't TAB complete a blank line
-
-set   +o ignoreeof    # Ctl+D does not exit shell
+shopt -s  cdspell      # Fix spelling errors in cd commands
+shopt -s  extglob      # Advanced pathname expansion
+shopt -s  histappend   # Append to HISTFIL on exit - don't clobber it
+shopt -s  checkwinsize # Update LINES/COLUMNS after each command
+shopt -s  cmdhist      # Try to save multiline commands as one history entry
+shopt -s  histverify   # Allow verification of history substitution
+shopt -s  no_empty_cmd_completion # Don't TAB complete a blank line
+shopt -so ignoreeof    # Ctl+D does not exit shell
 # }}}
 # Keybindings {{{
 # fzf
 test -f /usr/share/fzf/shell/key-bindings.bash && \
-    fzfkeys=/usr/share/fzf/shell/key-bindings.bash
+    . /usr/share/fzf/shell/key-bindings.bash
 test -f /usr/local/share/fzf/key-bindings.bash && \
-    fzfkeys=/usr/local/share/fzf/key-bindings.bash
-test -f "$fzfkeys" && . $fzfkeys
-unset fzfkeys
+    . /usr/local/share/fzf/key-bindings.bash
+command -v passmenu >/dev/null &&
+    bind -x '"\C-]": passmenu --type'
+command -v navi >/dev/null &&
+    bind -x '"\C-g": _navi_widget'
 # }}}
 # Bash Completion {{{
 # System settings
@@ -44,8 +44,8 @@ fi
 
 # Personal settings
 for f in ~/share/bash_completion.d/*; do
-    if test -e $f; then
-        . $f
+    if test -e "$f"; then
+        . "$f"
     fi
 done
 unset f
