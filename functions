@@ -115,19 +115,6 @@ EOF
         command ip >/dev/null &&
             command ip $@
     fi
-###
-# lsp
-#
-# Print numerical permissions at the start of each line
-#
-# https://github.com/blaenk/dots/blob/master/zsh/zsh/functions.zsh
-#
-###
-lsp ()
-{
-    command ls -lh --color=always $@ | \
-        awk '{k=0;for(i=0;i<=8;i++)k+=((substr($1,i+2,1)~/[rwx]/)\
-        *2^(8-i));if(k)printf("%0o ",k);print}'
 }
 google () { # Google something
     # Create search string if arguments were passed
@@ -160,9 +147,7 @@ rtfm() { # Check various forms of documentation
         "$@" --help ||
         openurl "http://duckduckgo.com/?q=%21documentation+for+$@" ;
 }
-
-####
-# hb/hr/hbl
+#### hb/hr/hbl {
 # Bold, Reverse-Video and Blinking highlighted search
 #
 # Args:
@@ -173,33 +158,24 @@ rtfm() { # Check various forms of documentation
 # who | hb "$USER" 1 
 # ps | hr ".*$PPID.*" | hbl ".*$$.*"
 ####
-hb()
-{
-    local fg
-    test $2 && fg=$( FG $2 )
-    sed "s/\($1\)/$(FX bold)$fg\1$(FX reset)/gI"
-
+hb() {
+    local fx="[1m"
+    _hb_hr_hbl "$1" "$fx" "$2"
 }
-
-hr()
-{
-    local fg
-    test $2 && bg=$( FG $2 )
-    sed "s/\($1\)/$(FX reverse)$bg\1$(FX reset)/gI"
+hr() {
+    local fx="[7m"
+    _hb_hr_hbl "$1" "$fx" "$2"
 }
-
-hbl()
-{
-    local fg
-    test $2 && fg=$( FG $2 )
-    sed "s/\($1\)/$(FX blink)$fg\1$(FX reset)/gI"
+hbl() {
+    local fx="[5m"
+    _hb_hr_hbl "$1" "$fx" "$2"
 }
-
-###
-# lh
-#
-# List last "n" commands in history
-###
+_hb_hr_hbl() {
+    test $2 && local color="[38;5;$3m"
+    local reset="[0m"
+    sed "s/\($1\)/$2$color\1$reset/gI"
+}
+#}
 lh() { # List last "n" commands in history
     history | tail -"$1"
 }
