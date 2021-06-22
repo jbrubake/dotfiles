@@ -41,9 +41,8 @@ test -r "$HOME/.Xdefaults"  && xrdb -merge "$HOME/.Xdefaults"
 
 # xset options {{{1
 #
-# Disable repeat for special keys
-# TODO: Use some variables to configure this
-# xset -r 129 -r 231 # Multimedia keys
+# Turn off audible bell
+xset b off
 
 # Start daemons {{{1
 #
