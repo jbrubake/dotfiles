@@ -1,3 +1,7 @@
+" Fold quotations {{{1
+setlocal foldexpr=strlen(substitute(matchstr(getline(v:lnum),'\\v^\\s*%(\\>\\s*)+'),'\\s','','g')) 
+setlocal foldmethod=expr foldlevel=1 foldminlines=2
+
 " Emails should be RFC 3676 format=flowed {{{1
 "     https://incenp.org/notes/2020/format-flowed-neomutt-vim.html
 "
