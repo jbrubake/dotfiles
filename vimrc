@@ -225,9 +225,6 @@ call minpac#add('arp242/auto_mkdir2.vim')
 " Only make tree in wiki
 let g:auto_mkdir2_autocmd = '$WIKI_DIR/content/**'
 
-" calendar-vim: A calendar application for Vim {{{2
-
-call minpac#add('mattn/calendar-vim')
 " CCTree: Vim CCTree plugin {{{2
 if has("cscope")
     call minpac#add('hari-rangarajan/CCTree')
@@ -418,11 +415,6 @@ call minpac#add('Ron89/thesaurus_query.vim')
 
 " <leader>cs : query thesauras for word under cursor
 
-" No configuration needed default
-
-" tlib_vim: Utility functions required by snipMate {{{2
-call minpac#add('tomtom/tlib_vim')
-
 " vem-tabline: Vim plugin to display tabs and buffers in the tabline {{{2
 call minpac#add('pacha/vem-tabline')
 
@@ -431,9 +423,6 @@ let g:vem_tabline_multiwindow_mode = 1        " Only show buffers in current tab
 let g:vem_tabline_show_number      = "buffnr" " Show Vim buffer numbers
 
 " NOTE: See 'Colors and Syntax Settings' for more
-" vim-addon-mw-utils: Caching required by snipMate {{{2
-call minpac#add('MarcWeber/vim-addon-mw-utils')
-
 " vim-closetag: Easily close HTML/XML tags {{{2
 call minpac#add('alvan/vim-closetag')
 
@@ -628,10 +617,6 @@ call minpac#add('vim-scripts/a.vim')
 " :A : Switch between header and source files
 " :AS: Split and switch
 " :AV: Vertical split and switch
-"
-" XXX: Not true? Use 'set autochdir' to make it work
-
-" No configuration needed
 
 " Mappings & Commands {{{1
 "========================
