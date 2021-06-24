@@ -108,26 +108,12 @@ export BROWSER
 if test "$( tput colors )" -ge 0 && command -v dircolors >/dev/null; then
     # If colorfile remains blank, dircolors will use defaults
     colorfile=
-    case "$TERM" in
-        *256*)
-            # Use Solarized scheme if it exists and terminal supports it
-            if test -r "$HOME/.dircolors.solarized"; then
-                colorfile="$HOME/.dircolors.solarized"
-            # Next try 256 color scheme if it exists and terminal supports it
-            elif test -r "$HOME/.dircolors.256"; then
-                colorfile="$HOME/.dircolors.256"
-            fi
-            ;;
-        *)
-            # Next try non-256 color scheme
-            if test -r "$HOME/.dircolors"; then
-                colorfile="$HOME/.dircolors" 
-            # Fallback to system default
-            elif test -r "/etc/DIR_COLORS"; then
-                colorfile='/etc/DIR_COLORS'
-            fi
-            ;;
-    esac
+    if test -r "$HOME/.dircolors"; then
+        colorfile="$HOME/.dircolors" 
+    elif test -r "/etc/DIR_COLORS"; then
+        colorfile='/etc/DIR_COLORS'
+    fi
+
     eval $(cat $colorfile "$HOME/.dircolors.local" | dircolors -)
 
     unset colorfile
