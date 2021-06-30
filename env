@@ -11,7 +11,10 @@ export BASH_ENV ENV
 : "${HOME:=~}"
 : "${LOGNAME:=$(id -un)}"
 : "${UNAME:=$(uname)}"
-export HOME LOGNAME UNAME
+: "${TMPDIR:=/tmp}"
+: "${TMP:=/tmp}"
+export HOME LOGNAME UNAME TMPDIR TMP
+
 
 # Setup PATH {{{1
 test -d "/usr/local/bin" && PATH="/usr/local/bin:$PATH"
