@@ -638,9 +638,10 @@ call minpac#add('vim-scripts/a.vim')
 " <expr>   : mapping inserts result of {rhs}
 " <buffer> : buffer local mapping
 
-" Remap <leader> ',' {{{2
+" Remap <leader> ' ' {{{2
 "
-let mapleader = ','
+" Better than ',' which is used for backwards character searching
+let mapleader = ' '
 
 " Window Management: {{{2
 " ==================
