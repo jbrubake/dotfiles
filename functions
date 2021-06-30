@@ -23,47 +23,52 @@
 ###################################################
 FX() {
     case "$1" in
-        reset)       tput sgr0 ;;
-        bold)        tput bold ;;
-        nobold)      echo -en "\e[22m" ;; # no tput sequence
-        dim)         tput dim ;;
-        nodim)       ;;                   # no tput sequence
-        italic)      tput sitm ;;
-        noitalic)    tput ritm ;;
-        underline)   tput smul ;;
-        nounderline) tput rmul ;;
-        blink)       tput blink ;;
-        fastblink)   echo -en "\e[6m" ;;  # no tput sequence
-        noblink)     echo -en "\e[25m" ;; # no tput sequence
-        reverse)     tput rev ;;
-        noreverse)   echo -en "\e[27m" ;; # no tput sequence
-        hidden)      echo -en "\e[8m" ;;  # no tput sequence
-        nohidden)    echo -en "\e[28m" ;; # no tput sequence
-        standout)    tput smso ;;
-        nostandout)  tput rmso ;;
-        strikeout)   echo -en "\e[9m" ;;  # no tput sequence
-        nostrikeout) echo -en "\e[29m" ;; # no tput sequence
+        reset)       printf "[0m"   ;;
+        bold)        printf "[1m"   ;;
+        nobold)      printf "[22m"  ;;
+        dim)         printf "[2m"   ;;
+        nodim)       printf "0m"    ;; # Unsupported
+        italic)      printf "[3m"   ;;
+        noitalic)    printf "[23m"  ;;
+        underline)   printf "[4m"   ;;
+        nounderline) printf "[24m"  ;;
+        blink)       printf "[5m"   ;;
+        fastblink)   printf "[6m"   ;;
+        noblink)     printf "[25m"  ;;
+        reverse)     printf "[7m"   ;;
+        noreverse)   printf "[27m"  ;;
+        hidden)      printf "[8m"   ;;
+        nohidden)    printf "[28m"  ;;
+        standout)    printf "[7m"   ;;
+        nostandout)  printf "[27m"  ;;
+        strikeout)   printf "[9m"   ;;
+        nostrikeout) printf "[29m"  ;;
+
+        fancyul)     printf "[4:1m" ;;
+        dblfancyul)  printf "[4:2m" ;;
+        undercurl)   printf "[4:3m" ;;
+        dotfancyul)  printf "[4:4m" ;;
+        dashfancyul) printf "[4:5m" ;;
+        nofancyul)   printf "[4:0m" ;;
 
         *)           echo "";
     esac
 }
-
+# FG(), FGt(), BG() and BGt() {
 if test "$( tput colors )" -ge 0; then
-    FG() {
-        tput setaf "$1"
-    }
-
-    BG() {
-        tput setab "$1"
-    }
+    # Expects: color number 0-255
+    FG()  { printf "[38;5;$1m"; }
+    BG()  { printf "[48;5;$1m"; }
+    # Expects: 3 values (r g b) of 0-255
+    FGt() { printf "[38;2;$1;$2;$3m"; }
+    BGt() { printf "[48;2;$1;$2;$3m"; }
 else
-    FG() { :
-    }
-
-    BG() { :
-    }
+    FG()  { :; }
+    BG()  { :; }
+    FGt() { :; }
+    BGt() { :; }
 fi
-
+# }
 # Miscellaneous {1
 lsp () { # Print numerical permissions at the start of ls -l output
 # https://github.com/blaenk/dots/blob/master/zsh/zsh/functions.zsh
