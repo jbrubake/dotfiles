@@ -33,7 +33,7 @@ fi
 # Setup keymap and keybindings {{{1
 #
 test -x $INIT/keymaps.sh 2>&1 && $INIT/keymaps.sh
-command -v xbindkeys >/dev/null && xbindkeys &
+command -v sxhkd >/dev/null && sxhkd &
 
 # Merge XResources/XDefaults {{{1
 test -r "$HOME/.Xresources" && xrdb -merge "$HOME/.Xresources"
