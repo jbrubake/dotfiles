@@ -261,11 +261,16 @@ else # End bash / start sh
 # This prompt looks roughly like this:
 #
 # 'pwd
-# <username@hostname> $'
+# username@hostname
+# $ '
 #############################################
 
-PS1="$reset$dir_clr\$(pwd)
-$bracket_clr<$user_clr$(whoami)$at_clr@$hostname_clr$(hostname)$bracket_clr> $prompt_clr$ $reset"
+PS1="$reset\
+$dir_clr\$(pwd)
+$bracket_clr$user_clr$(whoami)$at_clr@$hostname_clr$(hostname)$bracket_clr
+$prompt_clr$ $reset"
+# PS1="\$(pwd)
+# <$(whoami)@$(hostname)>\$ "
 fi # End sh-specific section
 # }}}
 # Clean up {{{1
