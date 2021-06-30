@@ -1,0 +1,19 @@
+COMMANDS[Hibernate]="xmessage hibernate"
+COMMANDS[Suspend]="xmessage suspend"
+COMMANDS[Power off]="xmessage poweroff"
+COMMANDS[Reboot]="xmessage reboot"
+COMMANDS[Log out]="pkill cwm"
+COMMANDS[Lock]="xlock"
+
+POSITION="center"
+FONT='sans:size=20'
+BORDER="3"
+FG="#ee1111"
+BG="grey"
+SELFG="black"
+SELBG="#eeeeee"
+HIFG="grey"
+HIBG="black"
+
+
+# vim: filetype=sh
