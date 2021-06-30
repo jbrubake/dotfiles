@@ -1,0 +1,12 @@
+mod4 + p 
+    passmenu -l 10 -bw 1 -c -p Password?
+
+mod4 + s
+    winsearch -l 10 -bw 1 -c -p Window:
+
+Super_R
+    dmenu_run -l 10 -bw 1 -c -p Command:
+
+ctrl + alt + Delete
+    dmenu-menu exitrc
+
