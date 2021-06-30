@@ -174,8 +174,8 @@ if [ -n "$BASH" ]; then
     export HISTFILESIZE HISTCONTROL HISTIGNORE
 fi
 
-export WIKI_DIR=~/docs/wiki
-export WIKI_SITE=~/docs/wiki/site
+export WIKI_DIR=~/wiki
+export WIKI_SITE=~/wiki/site
 
 export FZF_DEFAULT_OPTS='--layout=reverse'
 export FZF_DEFAULT_COMMAND='rg --files'
