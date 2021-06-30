@@ -117,9 +117,10 @@ if test "$( tput colors )" -ge 0 && command -v dircolors >/dev/null; then
         colorfile='/etc/DIR_COLORS'
     fi
 
-    eval $(cat $colorfile "$HOME/.dircolors.local" | dircolors -)
+    test -r "$HOME/.dircolors.local" && localcolorfile="$HOME/.dircolors.local"
+    eval $(cat $colorfile $localcolorfile | dircolors -)
 
-    unset colorfile
+    unset colorfile localcolorfile
 fi
 
 # Development {{{1
