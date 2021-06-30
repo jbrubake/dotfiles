@@ -33,6 +33,7 @@ fi
 # Setup keymap and keybindings {{{1
 #
 test -x $INIT/keymaps.sh 2>&1 && $INIT/keymaps.sh
+test -x $INIT/touchpad-tap.sh 2>&1 && $INIT/touchpad-tap.sh
 command -v sxhkd >/dev/null && sxhkd &
 
 # Merge XResources/XDefaults {{{1
