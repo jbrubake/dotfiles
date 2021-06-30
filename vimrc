@@ -981,9 +981,9 @@ let g:PaperColor_Theme_Options = {
             \ }
 
 " Mode aware cursors
-let &t_SI = "\<Esc>[6 q" " Insert mode
-let &t_SR = "\<Esc>[4 q" " Replace mode
-let &t_EI = "\<Esc>[2 q" " Normal mode
+let &t_SI = "\<Esc>[6 q" " Insert mode (bar)
+let &t_SR = "\<Esc>[4 q" " Replace mode (underline)
+let &t_EI = "\<Esc>[2 q" " Normal mode (block)
 
 " Highlight code in different filetypes {{{1
 "
