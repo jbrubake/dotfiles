@@ -78,10 +78,10 @@ prompt_tty () {
 #   $1 : directory color
 #   $2 : slash color
 prompt_pwd () {
-    local dir_clr=$1
-    local slash_clr=$2
-    local pwd=$PWD
-    pwd=${pwd/#$HOME/\~}
+    local dir_clr="$1"
+    local slash_clr="$2"
+    local pwd="$PWD"
+    pwd="${pwd/#$HOME/\~}"
     echo "$dir_clr${pwd//\//$slash_clr\/$dir_clr}"
 }
 
@@ -92,7 +92,7 @@ prompt_pwd () {
 # Arguments:
 #   $1: output color
 prompt_error () {
-    local error_clr=$1
+    local error_clr="$1"
 
     if [ "$RETVAL" -gt 0 ]; then (( i = 3 - ${#RETVAL} ));
         printf "%s[" "$error_clr";
@@ -168,80 +168,61 @@ fi # End bash-specific section
 # Prompt color definitions {{{1
 #
 
-# Determine if terminal supports color
+# Set prompt colors (these functions return nothing if color is not available)
 #
-test "$( tput colors )" -ge 0 && HAS_COLOR=yes
 
-if test $HAS_COLOR; then
-    dir_clr="\[$(FG 2)\]"
-    slash_clr="\[$(FG 1)\]"
-    git_branch_clr="\[$(FX bold; FG 4)\]"
-    git_status_clr="\[$(FX bold; FG 3)\]"
-    user_clr="\[$(FX reset; FG 6)\]"
-    root_user_clr="\[$(FX reset; FG 1)\]"
-    at_clr="\[$(FX reset; FG 4)\]"
-    hostname_clr="\[$(FX reset; FG 5)\]"
-    ssh_clr="\[$(FX bold; FG 5)\]"
-    jobs_clr="\[$(FX reset; FG 7)\]"
-    history_clr="\[$(FX reset; FG 2)\]"
-    error_clr="\[$(FG 7; BG 1)\]"
-    prompt_clr="\[$(FX reset; FG 3)\]"
-    bracket_clr="\[$(FX bold; FG 4)\]"
-    reset="\[$(FX reset)\]"
+dir_clr="\[$(FG 2)\]"
+slash_clr="\[$(FG 1)\]"
+git_branch_clr="\[$(FX bold; FG 4)\]"
+git_status_clr="\[$(FX bold; FG 3)\]"
+user_clr="\[$(FX reset; FG 6)\]"
+root_user_clr="\[$(FX reset; FG 1)\]"
+at_clr="\[$(FX reset; FG 4)\]"
+hostname_clr="\[$(FX reset; FG 5)\]"
+ssh_clr="\[$(FX bold; FG 5)\]"
+jobs_clr="\[$(FX reset; FG 7)\]"
+history_clr="\[$(FX reset; FG 2)\]"
+error_clr="\[$(FG 7; BG 1)\]"
+prompt_clr="\[$(FX reset; FG 3)\]"
+bracket_clr="\[$(FX bold; FG 4)\]"
+reset="\[$(FX reset)\]"
 
-    # Colorize username differently if we are root
-    test "$UID" = "0" && user_clr=$root_user_clr
+# Colorize username differently if we are root
+test "$UID" = "0" && user_clr=$root_user_clr
 
-    # Strip the non-printing escapes if not running in bash {{{
-    if test -z "$BASH"; then 
-        dir_clr=${dir_clr#\\[}
-        slash_clr=${slash_clr#\\[}
-        git_branch_clr=${git_branch_clr#\\[}
-        git_status_clr=${git_status_clr#\\[}
-        user_clr=${user_clr#\\[}
-        root_user_clr=${root_user_clr#\\[}
-        at_clr=${at_clr#\\[}
-        hostname_clr=${hostname_clr#\\[}
-        ssh_clr=${ssh_clr#\\[}
-        jobs_clr=${jobs_clr#\\[}
-        history_clr=${history_clr#\\[}
-        error_clr=${error_clr#\\[}
-        prompt_clr=${prompt_clr#\\[}
-        bracket_clr=${bracket_clr#\\[}
-        reset=${reset#\\[}
-        dir_clr=${dir_clr%\\]}
-        slash_clr=${slash_clr%\\]}
-        git_branch_clr=${git_branch_clr%\\]}
-        git_status_clr=${git_status_clr%\\]}
-        user_clr=${user_clr%\\]}
-        root_user_clr=${root_user_clr%\\]}
-        at_clr=${at_clr%\\]}
-        hostname_clr=${hostname_clr%\\]}
-        ssh_clr=${ssh_clr%\\]}
-        jobs_clr=${jobs_clr%\\]}
-        history_clr=${history_clr%\\]}
-        error_clr=${error_clr%\\]}
-        prompt_clr=${prompt_clr%\\]}
-        bracket_clr=${bracket_clr%\\]}
-        reset=${reset%\\]}
-    fi # }}}
-else
-    dir_clr=
-    slash_clr=
-    git_branch_clr=
-    git_status_clr=
-    user_clr=
-    root_user_clr=
-    at_clr=
-    hostname_clr=
-    ssh_clr=
-    jobs_clr=
-    history_clr=
-    error_clr=
-    prompt_clr=
-    bracket_clr=
-    reset=
-fi
+# Strip the non-printing escapes if not running in bash {{{
+if test -z "$BASH"; then 
+    dir_clr=${dir_clr#\\[}
+    slash_clr=${slash_clr#\\[}
+    git_branch_clr=${git_branch_clr#\\[}
+    git_status_clr=${git_status_clr#\\[}
+    user_clr=${user_clr#\\[}
+    root_user_clr=${root_user_clr#\\[}
+    at_clr=${at_clr#\\[}
+    hostname_clr=${hostname_clr#\\[}
+    ssh_clr=${ssh_clr#\\[}
+    jobs_clr=${jobs_clr#\\[}
+    history_clr=${history_clr#\\[}
+    error_clr=${error_clr#\\[}
+    prompt_clr=${prompt_clr#\\[}
+    bracket_clr=${bracket_clr#\\[}
+    reset=${reset#\\[}
+    dir_clr=${dir_clr%\\]}
+    slash_clr=${slash_clr%\\]}
+    git_branch_clr=${git_branch_clr%\\]}
+    git_status_clr=${git_status_clr%\\]}
+    user_clr=${user_clr%\\]}
+    root_user_clr=${root_user_clr%\\]}
+    at_clr=${at_clr%\\]}
+    hostname_clr=${hostname_clr%\\]}
+    ssh_clr=${ssh_clr%\\]}
+    jobs_clr=${jobs_clr%\\]}
+    history_clr=${history_clr%\\]}
+    error_clr=${error_clr%\\]}
+    prompt_clr=${prompt_clr%\\]}
+    bracket_clr=${bracket_clr%\\]}
+    reset=${reset%\\]}
+fi # }}}
 
 # Prompts {{{1
 # Bash prompt {{{2
@@ -255,9 +236,8 @@ if test -n "$BASH"; then
 # '$ '
 #############################################
 
-PS1=""
-PS1="$PS1$reset"
-PS1="$PS1\$(prompt_pwd $dir_clr $slash_clr)"
+PS1="$reset"
+PS1="$PS1\$(prompt_pwd '$dir_clr' '$slash_clr')"
 PS1="$PS1\n"
 PS1="$PS1$user_clr$(prompt_user)$at_clr@$hostname_clr\h "
 PS1="$PS1$bracket_clr($ssh_clr$(prompt_ssh)$bracket_clr) "
@@ -265,9 +245,9 @@ PS1="$PS1\$(prompt_git '$bracket_clr($git_branch_clr' '$git_status_clr' '$bracke
 PS1="$PS1\n"
 PS1="$PS1$bracket_clr{$jobs_clr\$(prompt_jobs)|\$(prompt_detached)$bracket_clr} "
 PS1="$PS1$bracket_clr!$history_clr\! "
-PS1="$PS1\$(prompt_error $error_clr)"
+PS1="$PS1\$(prompt_error '$error_clr')$reset"
 PS1="$PS1\n"
-PS1="$PS1$reset$prompt_clr$ $reset"
+PS1="$PS1$prompt_clr$ $reset"
 
 # Need to save $? here so that ps1_error can occur anywhere in the prompt
 # Otherwise, new_pwd will clobber the value of $? that we want
@@ -294,6 +274,5 @@ fi # End sh-specific section
  unset history_clr error_clr prompt_clr user_clr root_user_clr
  unset ssh_clr jobs_clr
  unset reset
- unset HAS_COLOR
 
 # vim: foldlevel=0
