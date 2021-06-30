@@ -6,6 +6,7 @@
 - Properly install packages from newer versions of Ubuntu
 - Setup proper logging and logrotation for systemd timers
 - Script setup of dropbox links
+- Add podboat config to newsboat
 ## bootstrap
 - Add ability to run arbitrary code
 - Improve bootstrap.ini syntax
