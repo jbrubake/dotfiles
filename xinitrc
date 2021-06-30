@@ -102,12 +102,6 @@ type teams >/dev/null 2>&1 && teams
 
 # Start other apps {{{1
 #
-#if command -v urxvt >/dev/null; then
-    #urxvt -name main_terminal  -tr -fg white -e sh \
-           #-c "screen -c ~/.screenrc -dR MAIN"  &
-    #urxvt -name devel_terminal -tr -fg white \
-          #-e sh -c "screen -c ~/.screenrc -dR DEVEL" &
-#fi
 
 # Run this stuff forever {{{1
 #
