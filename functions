@@ -94,26 +94,28 @@ ip() {
 #
     if [[ "$1" == 'get' || "$1" == 'g' ]]; then
         res=$(curl -s ipinfo.io/ip)
-        if [[ "$1" == 'help' || "$1" == 'h' ]]; then
+        case $2 in
+            h | he | hel | help)
             cat <<EOF
-Usage: ip get [clipboard]
+Usage: ip get [copy]
 
-Print public IP address to stdout or to the X11
-clipboard if [clipboard] is present
+Print public IP address to stdout or to the X11 clipboard if [copy]
+is present
 EOF
-        elif [[ "$1" == 'clipboard' || "$1" == 'c' ]]; then
-            if command -v xclip >/dev/null; then
-                printf "%s" "$res" | xclip -in -selection clipboard
-                printf "copied %s to clipboard" "$res"
-            else
-                printf "%s\n" "xclip is not installed"
-            fi
-        else
-            printf "%s\n" "$res"
-        fi
+            ;;
+            c | co | cop | copy)
+                if command -v xclip >/dev/null; then
+                    printf "%s" "$res" | xclip -in -selection clipboard
+                    printf "copied %s to clipboard\n" "$res"
+                else
+                    printf "%s\n" "xclip is not installed"
+                fi
+                ;;
+            *)
+                printf "%s\n" "$res"
+        esac
     else
-        command ip >/dev/null &&
-            command ip $@
+        command ip "$@"
     fi
 }
 google () { # Google something
