@@ -15,6 +15,18 @@ export BASH_ENV ENV
 : "${TMP:=/tmp}"
 export HOME LOGNAME UNAME TMPDIR TMP
 
+# XDG Directores {{{1
+# Defaults for now
+XDG_DATA_HOME="$HOME/.local/share"        # data files
+XDG_CONFIG_HOME="$HOME/.config"           # config files
+XDG_STATE_HOME="$HOME/.local/state"       # state data (persist application restart)
+XDG_CACHE_HOME="$HOME/.local/cache"       # non-essential data
+
+# System defaults
+#
+if command -v flatpak >/dev/null; then
+    XDG_DATA_DIRS=/home/jbrubake/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share/:/usr/share/
+fi
 
 # Setup PATH {{{1
 test -d "/usr/local/bin" && PATH="/usr/local/bin:$PATH"
