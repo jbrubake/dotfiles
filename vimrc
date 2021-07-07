@@ -158,14 +158,14 @@ endfunction
 
 function! Statusline() abort
     let s = ' '
-    let s .= '%{SL_GitBranch()} '
+    "let s .= '%{SL_GitBranch()} '
     let s .= '%F'
     let s .= '%m'
     let s .= '%r'
     let s .= ' '
     let s .= '[%Y]'
     let s .= '%='
-    let s .= '%{SL_GitHunks()}'
+    "let s .= '%{SL_GitHunks()}'
     let s .= '%l(%L):%c'
     let s .= ' '
     let s .= '[ASCII 0x%B]'
@@ -209,6 +209,20 @@ set foldtext=NeatFoldText()
 packadd! matchit    " Enhanced % matching
 packadd! cfilter    " Filter quickfix or location lists
 
+" EVALUATING {{{2
+""call minpac#add('lervag/lists.vim') " A Vim plugin to handle lists
+""call minpac#add('tpope/vim-projectionist') " Granular project configuration
+""call minpac#add('tpope/vim-apathy') " Set the 'path' option for miscellaneous file types
+""call minpac#add('tpope/vim-obsession') " continuously updated session files
+""call minpac#add('tpope/vim-rhubarb') " GitHub extension for fugitive.vim
+""call minpac#add('tpope/vim-unimpaired') " Pairs of handy bracket mappings
+""call minpac#add('tpope/vim-vinegar') " Combine with netrw to create a delicious salad dressing
+""call minpac#add('romainl/vim-cool') " A very simple plugin that makes hlsearch more useful
+""call minpac#add('romainl/vim-qf') " Tame the quickfix window
+""call minpac#add('fcpg/vim-waikiki') " Vim minimal wiki
+""call minpac#add('bennyyip/plugpac.vim') " Thin wrapper of minpac, provides vim-plug-like experience
+""call minpac#add('preservim/vim-pencil') " Rethinking Vim as a tool for writing
+
 " minpac setup {{{2
 "
 " call minpac#update() to update all packages
@@ -220,14 +234,14 @@ call minpac#init()
 call minpac#add('k-takata/minpac', {'type': 'opt'})
 " auto_mkdir2: Automatically create directory tree for new files {{{2
 
-call minpac#add('arp242/auto_mkdir2.vim')
+""call minpac#add('arp242/auto_mkdir2.vim')
 
 " Only make tree in wiki
 let g:auto_mkdir2_autocmd = '$WIKI_DIR/content/**'
 
 " CCTree: Vim CCTree plugin {{{2
 if has("cscope")
-    call minpac#add('hari-rangarajan/CCTree')
+""    call minpac#add('hari-rangarajan/CCTree')
 
     " See Mappings & Commands -> Cscope for mappings
 
@@ -237,18 +251,18 @@ if has("cscope")
 
     " Automatically load database if it exists in current directory
     " or if defined in $CSCOPE_DB
-    function! s:load_cscope_db()
-        if filereadable("cscope.out")
-            CCTreeLoadDB cscope.out
-        elseif $CSCOPE_DB != ""
-            CCTreeLoadDB $CSCOPE_DB
-        endif
-    endfunction
-    autocmd VimEnter * call s:load_cscope_db()
+""    function! s:load_cscope_db()
+""        if filereadable("cscope.out")
+""            CCTreeLoadDB cscope.out
+""        elseif $CSCOPE_DB != ""
+""            CCTreeLoadDB $CSCOPE_DB
+""        endif
+""    endfunction
+""    autocmd VimEnter * call s:load_cscope_db()
 endif
 
 " DrawIt: ASCII drawing plugin {{{2
-call minpac#add('vim-scripts/DrawIt')
+""call minpac#add('vim-scripts/DrawIt')
 
 " fzf: Fuzzy finder {{{2
 call minpac#add('junegunn/fzf')
@@ -276,10 +290,10 @@ noremap <C-p> :Files<CR>
 " fzf-checkout.vim: Manage branches and tags with fzf {{{2
 call minpac#add('stsewd/fzf-checkout.vim')
 " gv.vim: Git commit browser {{{2
-call minpac#add('junegunn/gv.vim')
+""call minpac#add('junegunn/gv.vim')
 
 " nerdtree: A tree explorer plugin for vim {{{2
-call minpac#add('preservim/nerdtree')
+""call minpac#add('preservim/nerdtree')
 
 " <F10> : Toggle file tree browser
 noremap <silent> <F8> :NERDTreeToggle<cr>
@@ -291,7 +305,7 @@ autocmd bufenter * if (winnr("$") == 1 &&
     \ endif
 
 " nerdtree-git-plugin: A plugin of NERDTree showing git status {{{2
-call minpac#add('Xuyuanp/nerdtree-git-plugin')
+""call minpac#add('Xuyuanp/nerdtree-git-plugin')
 
 " Custom indicators
 "let g:NERDTreeIndicatorMapCustom = {
@@ -374,7 +388,7 @@ call minpac#add('AndrewRadev/tagalong.vim')
 let g:tagalong_additional_filetypes = ['xhtml', 'phtml']
 
 " tagbar: Source code browser using ctags {{{2
-call minpac#add('preservim/tagbar')
+""call minpac#add('preservim/tagbar')
 
 " ctags commands
 " --------------
@@ -411,12 +425,12 @@ let g:tagbar_type_markdown = {
     \ 'kind2scope' : {'s' : 'section',},
     \ 'sort'       : 0}
 " thesaurus-query: Multi-language Thesaurus Query and Replacement plugin {{{2
-call minpac#add('Ron89/thesaurus_query.vim')
+""call minpac#add('Ron89/thesaurus_query.vim')
 
 " <leader>cs : query thesauras for word under cursor
 
 " vem-tabline: Vim plugin to display tabs and buffers in the tabline {{{2
-call minpac#add('pacha/vem-tabline')
+""call minpac#add('pacha/vem-tabline')
 
 let g:vem_tabline_show             = 2        " Always show the tabline
 let g:vem_tabline_multiwindow_mode = 1        " Only show buffers in current tab
@@ -450,7 +464,7 @@ call minpac#add('tpope/vim-commentary')
 " gcu        : Uncomment current and adjacent lines
 
 " Colorizer: Color hex codes and color names{{{2
-call minpac#add('chrisbra/Colorizer')
+""call minpac#add('chrisbra/Colorizer')
 
 " Highlight colors in a range (entire buffer by default):
 "   :[range]ColorHighlight [match|syntax]
@@ -468,19 +482,19 @@ let g:colorizer_disable_bufleave = 1
 " let g:colorizer_x11_names = 1
 
 " vim-devicons: NERDTree icons {{{2
-call minpac#add('ryanoasis/vim-devicons')
+""call minpac#add('ryanoasis/vim-devicons')
 
 " vim-fugitive: Git in Vim{{{2
 call minpac#add('tpope/vim-fugitive')
 
 " vim-gist: Edit github.com gists with vim {{{2
-call minpac#add('mattn/vim-gist')
+""call minpac#add('mattn/vim-gist')
 
 let g:gist_post_private = 1 " Private gists by default
                             " :Gist -P to create public Gist
 
 " vim-gitgutter: Use the sign column to show git chanages {{{2
-call minpac#add('airblade/vim-gitgutter')
+""call minpac#add('airblade/vim-gitgutter')
 
 " The default updatetime of 4000ms is not good for async update
 set updatetime=100
@@ -517,7 +531,7 @@ call minpac#add('matze/vim-ini-fold')
 call minpac#add('wsdjeg/vim-irssi-syntax')
 
 " vim-markdown: Markdown vim mode {{{2
-call minpac#add('plasticboy/vim-markdown')
+""call minpac#add('plasticboy/vim-markdown')
 
 let g:vim_markdown_frontmatter = 1
 let g:vim_markdown_folding_style_pythonic = 1
@@ -580,7 +594,7 @@ else
 endif
 
 " webapi-vim: Needed for vim-gist {{{2
-call minpac#add('mattn/webapi-vim')
+""call minpac#add('mattn/webapi-vim')
 
 " todo-txt.vim: Vim plugin for Todo.txt {{{2
 call minpac#add('freitass/todo.txt-vim')
