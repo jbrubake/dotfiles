@@ -75,5 +75,6 @@ alias klsshd="kill -TERM \$(cat $HOME/var/run/sshd.pid)"
 alias rpg=rpg-cli
 alias dev='sudo -u dev bash --login'
 alias tree='command tree -CFI '.git' --dirsfirst'
+alias loc='locate -d "$LOCATEDB" "$@"'
 
 # vim: foldlevel=0

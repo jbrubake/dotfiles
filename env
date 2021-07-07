@@ -171,6 +171,9 @@ case "$(uname -o)" in
 esac
 
 # Miscellaneous {{{1
+LOCATEDB="$HOME/var/lib/locate/locatedb"
+export LOCATEDB
+
 if [ -n "$BASH" ]; then
     # Filename completion ignores backups and vim swap files
     #
