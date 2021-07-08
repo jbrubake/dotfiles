@@ -79,7 +79,7 @@ if test -z "$PAGER"; then
     pagers="vimpager less most more"
     for p in $pagers; do
         if command -v "$p" >/dev/null; then
-            EDITOR="$p"
+            PAGER="$p"
             break
         fi
     done
