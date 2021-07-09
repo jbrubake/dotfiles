@@ -45,17 +45,6 @@ prompt_uptime () {
     printf "%s:%s" "${hours}" "${mins}"
 }
 
-# prompt_user: Determine if root or not logged in user {{{2
-prompt_user () {
-    if [ "$EUID" = '0' ]; then
-        printf "%s" 'root'
-    elif [ "$USER" != "$(logname 2>/dev/null)" ]; then
-        printf "su to %s" "$USER"
-    else
-        printf "%s" "$USER"
-    fi
-}
-
 # prompt_ssh: Determine if running under ssh {{{2
 prompt_ssh () {
     if [ -n "$SSH_CLIENT$SSH2_CLIENT$SSH_TTY" ]; then
@@ -238,7 +227,7 @@ if test -n "$BASH"; then
 PS1="$reset"
 PS1="$PS1\$(prompt_pwd '$dir_clr' '$slash_clr')"
 PS1="$PS1\n"
-PS1="$PS1$user_clr$(prompt_user)$at_clr@$hostname_clr\h "
+PS1="$PS1$user_clr\u$at_clr@$hostname_clr\h "
 PS1="$PS1$ssh_clr$(prompt_ssh) "
 PS1="$PS1\$(prompt_git '$bracket_clr($git_branch_clr' '$git_status_clr' '$bracket_clr) ')"
 PS1="$PS1$bracket_clr{$jobs_clr\$(prompt_jobs)|\$(prompt_detached)$bracket_clr} "
