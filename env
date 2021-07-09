@@ -171,7 +171,7 @@ case "$(uname -o)" in
 esac
 
 # Miscellaneous {{{1
-LOCATEDB="$HOME/var/lib/locate/locatedb"
+LOCATEDB="$HOME/var/lib/locate/locate.db"
 export LOCATEDB
 
 if [ -n "$BASH" ]; then
