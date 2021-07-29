@@ -3,5 +3,9 @@
 Host *
     HashKnownHosts no
 
+# Force IPv4 everywhere
+Host *
+    AddressFamily inet
+
 Include config.local
 
