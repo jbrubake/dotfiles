@@ -10,7 +10,7 @@ color urgencyborder color red
 
 fontname "sans-serif:pixelsize=14"
 
-gap 20 0 0 0
+gap 0 0 0 0
 
 snapdist 20
 
