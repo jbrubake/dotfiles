@@ -429,14 +429,6 @@ let g:tagbar_type_markdown = {
 
 " <leader>cs : query thesauras for word under cursor
 
-" vem-tabline: Vim plugin to display tabs and buffers in the tabline {{{2
-""call minpac#add('pacha/vem-tabline')
-
-let g:vem_tabline_show             = 2        " Always show the tabline
-let g:vem_tabline_multiwindow_mode = 1        " Only show buffers in current tab
-let g:vem_tabline_show_number      = "buffnr" " Show Vim buffer numbers
-
-" NOTE: See 'Colors and Syntax Settings' for more
 " vim-closetag: Easily close HTML/XML tags {{{2
 call minpac#add('alvan/vim-closetag')
 
@@ -976,31 +968,6 @@ function! s:colorscheme_local() abort
     highlight GitGutterAdd    ctermfg=green ctermbg=bg gui=bold guifg=green guibg=bg
     highlight GitGutterChange ctermfg=brown ctermbg=bg gui=bold guifg=brown guibg=bg
     highlight GitGutterDelete ctermfg=red   ctermbg=None gui=bold guifg=red guibg=bg
-    " }}}
-    " vem-tabline {{{
-    " Selected, visible buffer
-    highlight VemTablineSelected         ctermfg=white ctermbg=darkblue guibg=#ffffff guifg=#4271ae
-    highlight VemTablineLocationSelected ctermfg=white ctermbg=darkblue guibg=#ffffff guifg=#4271ae
-    highlight VemTablineNumberSelected   ctermfg=white ctermbg=darkblue guibg=#ffffff guifg=#4271ae
-    " Non-selected, visible buffers
-    highlight VemTablineShown           ctermfg=black ctermbg=darkblue guifg=#000000 guibg=#4271ae
-    highlight VemTablineLocationShown   ctermfg=black ctermbg=darkblue guifg=#000000 guibg=#4271ae
-    highlight VemTablineNumberShown     ctermfg=black ctermbg=darkblue guifg=#000000 guibg=#4271ae
-    " Non-selected, non-visible buffers
-    highlight VemTablineNormal          ctermfg=black ctermbg=darkblue guifg=#000000 guibg=#4271ae
-    highlight VemTablineLocation        ctermfg=black ctermbg=darkblue guifg=#000000 guibg=#4271ae
-    highlight VemTablineNumber          ctermfg=black ctermbg=darkblue guifg=#000000 guibg=#4271ae
-
-    " Directory name (when present)
-    highlight VemTablineLocation        ctermfg=white ctermbg=darkblue guifg=#ffffff guibg=#4271ae
-    " +X more text
-    highlight VemTablineSeparator       ctermfg=black ctermbg=darkblue guifg=#000000 guibg=#4271ae
-    " Partially shown buffer
-    highlight VemTabSelected            ctermfg=black ctermbg=darkblue guifg=#000000 guibg=#4271ae
-    " Selected tab
-    highlight VemTablineTabSelected     ctermfg=white ctermbg=darkblue guifg=#ffffff guibg=#4271ae
-    " Non-selected tab
-    highlight VemTablineTabNormal       ctermfg=black ctermbg=darkblue guifg=#000000 guibg=#4271ae
     " }}}
 endfunction
 " Automatcially source custom colors when a colorscheme is loaded
