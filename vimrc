@@ -273,7 +273,7 @@ set rtp+=/usr/local/share/fzf
 call minpac#add('junegunn/fzf.vim')
 
 " :Files [PATH]     " Files ($FZF_DEFAULT_COMMAND)
-" :GFiles [OPTS]    " GIt files (git ls-files)
+" :GFiles [OPTS]    " Git files (git ls-files)
 " :GFiles?          " Git files (git status)
 " :Buffers
 " :Rg [PATTERN]     " Search using ripgrep
@@ -285,6 +285,7 @@ call minpac#add('junegunn/fzf.vim')
 " :Snippets         " Snippets (UltiSnips)
 " :Commits          " Git commits (vim-fugitive)
 noremap <C-p> :Files<CR>
+noremap <C-b> :Buffers<CR>
 
 " fzf-checkout.vim: Manage branches and tags with fzf {{{2
 call minpac#add('stsewd/fzf-checkout.vim')
