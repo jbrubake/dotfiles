@@ -47,7 +47,7 @@ export LANG LANGUAGE LC_CTYPE LC_ALL
 if [ -r /etc/timezone ]; then
     TZ=$( cat /etc/timezone )
 else
-    TZ=$(date +%Z)
+    TZ="America/New_York"
 fi
 export TZ
 
