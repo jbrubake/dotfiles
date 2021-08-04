@@ -11,6 +11,7 @@ else
 fi
 
 printf "#[fg=white,bg=black] "
-printf "#[fg=cyan]#h:#S:[#I] "
+printf "#[fg=cyan]#h:#[fg=magenta]#S"
+printf "#[fg=yellow]:%s " "$(plugin uptime)"
 printf "%s%s" "$(emojify :earth_americas:)" "$ip "
 printf "#[fg=white] "
