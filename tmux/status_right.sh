@@ -1,9 +1,9 @@
 #!/bin/sh
 
-PWD="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-
-source $PWD/functions.sh
+PLUGINS=$(tmux show-option -gqv @plugin_dir)
+source $PLUGINS/utils/plugins.sh
 
 printf "#[fg=white,bg=black] "
-printf "#[fg=yellow]%s " "$(get_mem_usage)"
-printf "#[fg=green,bold]%s " "$(get_dtg)"
+printf "#[fg=yellow]%s " "$(plugin mem_usage)"
+printf "%s " "$(plugin load)"
+printf "#[fg=green,bold]%s " "$(plugin clock)"
