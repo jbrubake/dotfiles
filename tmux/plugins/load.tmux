@@ -34,10 +34,11 @@ get_load_average() {
 get_load(){
     set -- $(uptime | awk -F: '{printf $NF}' | tr -d ',' )
 
+    ave1=$(colorize_load $(get_load_average $1))
     ave5=$(colorize_load $(get_load_average $2))
     ave15=$(colorize_load $(get_load_average $3))
 
-    printf "💻 %s%%/%s%%" $ave5 $ave15
+    printf "💻 %s%%/%s%%/%s%%" $ave1 :w $ave5 $ave15
 }
 
 get_value get_load "$INTERVAL"
