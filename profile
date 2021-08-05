@@ -29,5 +29,11 @@ fi
 case "$(uname -o)" in
     *) ;;
 esac
+case "$(uname -r)" in
+    *Microsoft*) # WSL
+        sudo /usr/sbin/crond -p
+        ;;
+
+esac
 
 #vim: foldlevel=0
