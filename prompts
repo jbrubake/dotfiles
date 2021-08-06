@@ -4,6 +4,9 @@
 if test -n "$BASH"; then
 # prompt_detached: Determine number of detached screen/tmux sessions {{{2
 prompt_detached () {
+    pre="$1"
+    post="$2"
+
     if type screen >/dev/null 2>&1; then
         local n_screen=$(screen -ls 2> /dev/null | grep -c '[Dd]etach[^)]*)$')
     fi
@@ -13,7 +16,9 @@ prompt_detached () {
 
     local detached=$(( n_screen + n_tmux ))
 
-    printf "%sd" "${detached}"
+    if test $detached -ne 0; then
+        printf "%s%sd%s" "$pre" "${detached}" "$post"
+    fi
 }
 # prompt_jobs: Get running and stopped jobs {{{2
 # Only works under Bash
@@ -230,7 +235,7 @@ PS1="$PS1\n"
 PS1="$PS1$user_clr\u$at_clr@$hostname_clr\h "
 PS1="$PS1$ssh_clr$(prompt_ssh) "
 PS1="$PS1\$(prompt_git '$bracket_clr($git_branch_clr' '$git_status_clr' '$bracket_clr) ')"
-PS1="$PS1$bracket_clr{$jobs_clr\$(prompt_jobs)|\$(prompt_detached)$bracket_clr} "
+PS1="$PS1$bracket_clr{$jobs_clr\$(prompt_jobs)\$(prompt_detached '|' '')$bracket_clr} "
 PS1="$PS1$bracket_clr!$history_clr\! "
 PS1="$PS1\$(prompt_error '$error_clr')$reset"
 PS1="$PS1\n"
