@@ -28,7 +28,7 @@ get_uptime() {
     elif [ "$day" -gt 1 ]; then
         up="${day}d"
     elif [ "$hrs" -gt 1 ]; then
-        up="${day}h"
+        up="${hrs}h"
     else
         up="${min}m"
     fi
