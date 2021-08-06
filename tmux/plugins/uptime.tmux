@@ -33,7 +33,7 @@ get_uptime() {
         up="${min}m"
     fi
 
-    printf "Up %s" "$up"
+    printf "%s" "$up"
 }
 
 get_value get_uptime "$INTERVAL"
