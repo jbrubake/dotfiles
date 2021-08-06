@@ -31,7 +31,7 @@ case "$(uname -o)" in
 esac
 case "$(uname -r)" in
     *Microsoft*) # WSL
-        sudo /usr/sbin/crond -p
+        sudo /usr/sbin/crond -p 2>/dev/null
         ;;
 
 esac
