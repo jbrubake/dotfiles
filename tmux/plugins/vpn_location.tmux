@@ -1,7 +1,7 @@
 #!/usr/bin/sh
 
 # Seconds until script output cache is stale
-INTERVAL=$(( 60 * 10 ))
+INTERVAL=$(( 60 * 15 ))
 
 # Get script location (OK even if it is a link because
 # support scripts should also be linked here)
