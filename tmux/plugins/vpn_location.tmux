@@ -12,11 +12,15 @@ PLUGINS=$(tmux show-option -gqv @plugin_dir)
 source "$PLUGINS/utils/cache.sh"
 
 get_ip_location() {
-    curl -s ipinfo.io/json |
+    loc=$(curl -s ipinfo.io/json --connect-timeout 3 |
         tr -d '[[:punct:]]' |
         awk '/city/ {print $2} /country/ {print $2}' |
         paste -d " " - - |
-        sed 's/ /, /'
+        sed 's/ /, /')
+    if [ -z "$loc" ]; then
+        loc="Private"
+    fi
+    echo "$loc"
     }
 
 is_vpn_on() {
