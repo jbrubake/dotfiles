@@ -20,10 +20,8 @@ if [ $tot -gt 0 ]; then
     fi
 fi
 
-
 printf "#[fg=white,bg=black]"
-printf "%s" "$updates"
 printf "#[fg=cyan]#h:#[fg=magenta]#S"
-printf "#[fg=yellow]:up %s " "$(plugin uptime)"
-printf "%s%s" "$(emojify :earth_americas:)" "$location "
+printf "#[fg=yellow]:up %s" "$(plugin uptime)"
+printf " %s%s" "$(emojify :earth_americas:)" "$location "
 printf "#[fg=white] "
