@@ -49,9 +49,9 @@ case $(uname -o) in
 esac
 
 # Alternatives {{{1
-alias term='( $(chooser terminal)& )'
-alias calc='( $(chooser calculator)& )'
-alias calendar='( $(chooser calendar)& )'
+alias term='( $(my terminal)& )'
+alias calc='( $(my calculator)& )'
+alias calendar='( $(my calendar)& )'
 
 # Miscellaneous {{{1
 #
