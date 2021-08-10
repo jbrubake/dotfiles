@@ -38,7 +38,7 @@ get_load(){
     ave5=$(colorize_load $(get_load_average $2))
     ave15=$(colorize_load $(get_load_average $3))
 
-    printf "%s %s%%/%s%%/%s%%" $(emojify :computer:) $ave1 $ave5 $ave15
+    printf "%s%%/%s%%/%s%%" $ave1 $ave5 $ave15
 }
 
 get_value get_load "$INTERVAL"
