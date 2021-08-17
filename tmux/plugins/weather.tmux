@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
 # Seconds until script output cache is stale
-INTERVAL=$(( 60 * 3600 )) # 1 hour
+INTERVAL=$(( 60 * 60 )) # 1 hour
 
 # Weather format
 # c    Weather condition,
