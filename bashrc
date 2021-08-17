@@ -42,6 +42,14 @@ if ! shopt -oq posix; then
     fi
 fi
 
+# System local settings
+for f in /usr/local/etc/bash_completion.d/*; do
+    if test -e "$f"; then
+        . "$f"
+    fi
+done
+unset f
+
 # Personal settings
 for f in ~/share/bash_completion.d/*; do
     if test -e "$f"; then
