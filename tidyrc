@@ -3,5 +3,5 @@ indent-spaces: 2
 wrap: 100
 tidy-mark: no
 preserve-entities: yes
-vertical-space: yes
+vertical-space: no
 
