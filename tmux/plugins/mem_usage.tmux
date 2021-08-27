@@ -28,20 +28,21 @@ colorize_usage() {
 }
 
 get_usage_average() {
-    # TODO: get rid of the tr and just clean up the values
-    printf "%.0f" $(echo "$1 / $2 * 100" | tr -cd [[:digit:][:space:]\*/] | bc -l)
+    printf "%.0f" $(echo "$1 / $2 * 100" | bc -l)
 }
 
 get_usage(){
-    set -- $(free -h | awk 'NR == 2 {print $2, $3}')
+    # Determine average-based color
+    set -- $(free | awk 'NR == 2 {print $2, $3}')
+    color=$(colorize_usage $(get_usage_average "$2" "$1"))
 
+    # Get human readable values
+    set -- $(free -h | awk 'NR == 2 {print $2, $3}')
     total="$1"
     used="$2"
-    color=$(colorize_usage $(get_usage_average "$used" "$total"))
 
     printf "%s%s/%s" "$color" "$used" "$total"
 }
 
-get_usage
-# get_value get_usage "$INTERVAL"
+get_value get_usage "$INTERVAL"
 
