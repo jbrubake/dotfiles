@@ -69,6 +69,27 @@ else
     BGt() { :; }
 fi
 # }
+# Play rpg-cli {1
+if command -v >/dev/null rpg-cli; then
+function cd () { # rpg-cli
+    builtin cd "$@"
+    rpg-cli cd -f .
+    rpg-cli battle
+}
+function delve () {
+    current=$(basename $PWD)
+    number_re='^[0-9]+$'
+
+    if [[ $current =~ $number_re ]]; then
+        next=$(($current + 1))
+        command mkdir -p $next && cd $next && rpg-cli ls
+    elif [[ -d 1 ]] ; then
+        cd 1 && rpg-cli ls
+    else
+        command mkdir -p dungeon/1 && cd dungeon/1 && rpg-cli ls
+    fi
+}
+fi # rpg-cli }
 # Miscellaneous {1
 lsp () { # Print numerical permissions at the start of ls -l output
 # https://github.com/blaenk/dots/blob/master/zsh/zsh/functions.zsh
@@ -89,13 +110,6 @@ lsp () { # Print numerical permissions at the start of ls -l output
         }'
     fi
 }
-# Play rpg-cli {
-if command -v >/dev/null rpg-cli; then
-cd () { # rpg-cli
-    rpg-cli cd "$@"
-    builtin cd "$(rpg-cli pwd)" || return 2>/dev/null || exit
-}
-fi # rpg-cli }
 ip() {
 # 'ip get' prints current ip address and copies to clipboard
 # All other commands are passed to the real 'ip' command
