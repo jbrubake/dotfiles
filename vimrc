@@ -260,6 +260,9 @@ if has("cscope")
 ""    autocmd VimEnter * call s:load_cscope_db()
 endif
 
+" cisco.vim: syntax highlighting for Cisco config files
+call minpac#add('vim-scripts/cisco.vim')
+
 " DrawIt: ASCII drawing plugin {{{2
 ""call minpac#add('vim-scripts/DrawIt')
 
