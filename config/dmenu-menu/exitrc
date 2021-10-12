@@ -1,7 +1,8 @@
-COMMANDS[Hibernate]="xmessage hibernate"
-COMMANDS[Suspend]="xmessage suspend"
-COMMANDS[Power off]="xmessage poweroff"
-COMMANDS[Reboot]="xmessage reboot"
+export SUDO_ASKPASS=/usr/libexec/openssh/ssh-askpass
+COMMANDS[Hibernate]="sudo -A systemctl hibernate"
+COMMANDS[Suspend]="sudo -A systemctl suspend"
+COMMANDS[Power off]="sudo -A shutdown now"
+COMMANDS[Reboot]="sudo -A reboot now"
 COMMANDS[Log out]="pkill cwm"
 COMMANDS[Lock]="xlock"
 
@@ -14,6 +15,5 @@ SELFG="black"
 SELBG="#eeeeee"
 HIFG="grey"
 HIBG="black"
-
 
 # vim: filetype=sh
