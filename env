@@ -55,7 +55,7 @@ export TZ
 # EDITOR/VISUAL {{{2
 #
 if command -v >/dev/null my; then
-    EDITOR=$(my -V editor 2>/dev/null)
+    EDITOR=$(my -v editor 2>/dev/null)
 fi
 if test -z "$EDITOR"; then
     editors="vim vi nano pico ed"
@@ -73,7 +73,7 @@ export VISUAL EDITOR
 # PAGER/MANPAGER {{{2
 #
 if command -v >/dev/null my; then
-    PAGER=$(my -V pager 2>/dev/null)
+    PAGER=$(my -v pager 2>/dev/null)
 fi
 if test -z "$PAGER"; then
     pagers="vimpager less most more"
@@ -101,7 +101,7 @@ fi
 # Web browser {{{2
 #
 if command -v >/dev/null my; then
-    BROWSER=$(my -V browser 2>/dev/null)
+    BROWSER=$(my -v browser 2>/dev/null)
 fi
 if test -z "$BROWSER"; then
     browsers="elinks links w3m lynx"
