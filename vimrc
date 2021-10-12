@@ -295,6 +295,8 @@ call minpac#add('stsewd/fzf-checkout.vim')
 " gv.vim: Git commit browser {{{2
 ""call minpac#add('junegunn/gv.vim')
 
+" vim-hcl: Syntax highlighting for HCL {{{2
+call minpac#add('jvirtanen/vim-hcl')
 " nerdtree: A tree explorer plugin for vim {{{2
 ""call minpac#add('preservim/nerdtree')
 
