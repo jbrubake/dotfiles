@@ -14,9 +14,9 @@ source "$PLUGINS/utils/cache.sh"
 get_ip_location() {
     loc=$(curl -s ipinfo.io/json --connect-timeout 3 |
         tr -d '[[:punct:]]' |
-        awk '/city/ {print $2} /country/ {print $2}' |
+        awk '/city/ {$1=""; print} /country/ {$1=""; print}' |
         paste -d " " - - |
-        sed 's/ /, /')
+        sed -e 's/^ *//' -e 's/  /, /')
     if [ -z "$loc" ]; then
         loc="Private"
     fi
