@@ -55,6 +55,7 @@ xset b off
 # Use sleep as necessary to sync things up)
 command -v xautolock >/dev/null && xautolock &
 command -v xbanish >/dev/null && xbanish &
+command -v xwrits >/dev/null && xwrits &
 
 # Start WM {{{1
 #
