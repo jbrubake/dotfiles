@@ -218,15 +218,15 @@ fi
 NNTPSERVER=nntp.aioe.org
 export NNTPSERVER
 
-# Configure tldr client {{{2
+# Configure tldr-sh client {{{2
 #
 if command -v tldr >/dev/null; then
-    TLDR_PARAM='green'
-    TLDR_EPARAM='bold green'
-    TLDR_CODE='green'
-    TLDR_DESCRIPTION='white'
-    TLDR_HEADER='bold yellow'
-    TLDR_QUOTE='underline bold blue'
+    TLDR_HEADER='underline bold magenta'
+    TLDR_QUOTE='white'
+    TLDR_DESCRIPTION='italic bold blue'
+    TLDR_CODE='bold yellow'
+    TLDR_PARAM='reset white'
+    TLDR_EPARAM='white'
 
     export TLDR_PARAM TLDR_EPARAM TLDR_CODE
     export TLDR_DESCRIPTION TLDR_HEADER TLDR_QUOTE
