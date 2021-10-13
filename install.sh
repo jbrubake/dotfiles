@@ -195,9 +195,17 @@ fi
 #
 # Find all non-hidden sub-directories and strip the leading "./"
 for d in $(find . -mindepth 1 \( ! -path '*/.*' \) -type d -print | sed -e 's#./##'); do
+    # git_templates need to be the actual files or brokwn symlinks
+    # get copied to the repositories
+    #
+    # etc is not a dot directory
     # TODO: Fix this hack
     case "$d" in
-        git_template/*) continue ;;
+        git_template*) continue ;;
+        etc*)
+        $DRY_RUN mkdir -p $verbose "$DESTDIR/$d"
+        continue
+        ;;
     esac
     $DRY_RUN mkdir -p $verbose "$DESTDIR/.$d"
 done
@@ -237,6 +245,13 @@ for f in git_template $(find . \( ! -path '*/.*' \) -type f -print | sed -e 's#.
     else
         linkname=".$( dirname $f )/$( basename $f )"
     fi
+    # etc is not a dot directory
+    # TODO: Fix this hack
+    case "$f" in
+        etc/*)
+            linkname="$( dirname $f )/$( basename $f )"
+        ;;
+    esac
 
     # Test if an already existing link points
     # to the right file already
