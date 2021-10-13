@@ -1,0 +1,19 @@
+# See anacron(8) and anacrontab(5) for details.
+
+SHELL=/bin/bash
+HOME=/home/jbrubake
+PATH=$HOME/sbin:$HOME/bin:/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
+MAILTO=jbrubake
+RANDOM_DELAY=5
+
+# .---------------- @{daily,weekly,monthly} or N (# of days)
+# |       .------------- Wait N minutes before starting job
+# |       |      .---------- Job name to enter in log
+# |       |      |
+# |       |      |
+# |       |      |
+# period    delay   job-id          command to be executed
+1      0       logrotate       logrotate --state=$HOME/var/lib/logrotate/logrotate.status $HOME/etc/logrotate.conf
+1      0       updatedb        updatedb -l 0 -n ".git" -U $HOME -o $HOME/var/lib/locate/locate.db
+
+# vim: filetype=crontab

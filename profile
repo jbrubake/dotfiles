@@ -32,6 +32,7 @@ esac
 case "$(uname -r)" in
     *Microsoft*) # WSL
         sudo /usr/sbin/crond -p 2>/dev/null
+        anacron -s -t $HOME/etc/anacrontab -S $HOME/var/spool/anacron
         ;;
 
 esac
