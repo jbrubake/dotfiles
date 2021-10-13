@@ -43,7 +43,7 @@ if ! shopt -oq posix; then
 fi
 
 # System local settings
-for f in /usr/local/etc/bash_completion.d/*; do
+for f in /usr/local/etc/bash_completion.d/* /usr/local/share/bash-completion/completions/* /usr/local/share/bash_completion.d/*; do
     if test -e "$f"; then
         . "$f"
     fi
