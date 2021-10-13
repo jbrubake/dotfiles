@@ -1,0 +1,9 @@
+[dropbox]
+type = dropbox
+token = DROPBOX_TOKEN
+
+[google]
+type = drive
+scope = drive
+token = GOOGLE_TOKEN
+
