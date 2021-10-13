@@ -1,0 +1,28 @@
+[calendars]
+
+[[default]]
+path = ~/.calendars/google/jbru362@gmail.com
+color = light red
+type = discover
+
+[[appointments]]
+path = ~/.calendars/google/APPPOINTMENTS@group.calendar.google.com
+color = light blue
+type = discover
+
+[[family]]
+path = ~/.calendars/google/FAMILY@group.calendar.google.com
+color = light green
+type = discover
+
+[[church]]
+path = ~/.calendars/google/CHURCH@gmail.com
+color = light magenta
+type = discover
+
+[locale]
+timeformat = %H:%M
+dateformat = %d-%b-%y
+longdateformat = %d-%b-%y
+datetimeformat = %d-%b-%y %H:%M
+longdatetimeformat = %d-%b-%y %H:%M
