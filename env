@@ -68,7 +68,8 @@ if test -z "$EDITOR"; then
 unset editors
 fi
 VISUAL=$EDITOR
-export VISUAL EDITOR
+FCEDIT=$EDITOR
+export VISUAL FCEDIT EDITOR
 
 # PAGER/MANPAGER {{{2
 #
