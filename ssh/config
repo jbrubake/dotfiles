@@ -7,5 +7,6 @@ Host *
 Host *
     AddressFamily inet
 
+Include config.base
 Include config.local
 
