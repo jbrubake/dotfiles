@@ -1,4 +1,4 @@
-#!/usr/bin/sh
+#!/bin/sh
 
 # Seconds until script output cache is stale
 INTERVAL=$(( 60 * 15 ))

@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 
 # Seconds until script output cache is stale
 INTERVAL=$(( 60 * 60 )) # 1 hour
