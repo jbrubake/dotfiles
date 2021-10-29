@@ -27,11 +27,6 @@ autocmd BufWritePost ~/.vimrc nested source ~/.vimrc
 
 set nocompatible " Don't be vi compatible
 
-" vimpager specific initialization
-if exists('g:vimpager_plugin_loaded')
-    " set noloadplugins
-endif
-
 " Basics {{{1
 " ======
 filetype plugin indent on            " Load filetype plugins and indent settings
@@ -931,6 +926,10 @@ syntax enable
 set hlsearch            " Highlight search matches
 let c_comment_strings=1 " Highlight strings in C comments
 
+set t_8f=[38;2;%lu;%lu;%lum        " set foreground color
+set t_8b=[48;2;%lu;%lu;%lum        " set background color
+set termguicolors                    " Enable GUI colors for the terminal to get truecolor
+
 " Custom colors {{{
 function! s:colorscheme_local() abort
     highlight Normal ctermbg=250 guibg=#002b36
@@ -976,15 +975,14 @@ function! s:colorscheme_local() abort
     " }}}
 endfunction
 " Automatcially source custom colors when a colorscheme is loaded
-autocmd ColorScheme * call s:colorscheme_local()
+" unless we are running vimpager
+if !exists('g:vimpager.enabled')
+    autocmd ColorScheme * call s:colorscheme_local()
+endif
 " }}}
 
-set t_8f=[38;2;%lu;%lu;%lum        " set foreground color
-set t_8b=[48;2;%lu;%lu;%lum        " set background color
-set termguicolors                    " Enable GUI colors for the terminal to get truecolor
-
-colorscheme PaperColor
 set background=dark
+colorscheme PaperColor
 let g:PaperColor_Theme_Options = {
             \ 'theme' : {
             \     'default' : {
@@ -995,6 +993,11 @@ let g:PaperColor_Theme_Options = {
             \     'cpp': { 'highlight_standard_library': 1 },
             \     'c': {'highlight_builtins' : 1 }}
             \ }
+
+" TODO: stop writing this twice
+if exists('g:vimpager.enabled')
+    highlight Normal ctermbg=250 guibg=#002b36
+endif
 
 " Mode aware cursors
 let &t_SI = "\<Esc>[6 q" " Insert mode (bar)
