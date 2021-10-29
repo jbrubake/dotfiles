@@ -213,7 +213,8 @@ if [ -r "$HOME/.inputrc" ]; then
 fi
 
 # Set news server
-NNTPSERVER=nntp.aioe.org
+# NNTPSERVER=nntp.aioe.org
+NNTPSERVER=news.eternal-september.org
 export NNTPSERVER
 
 # Configure tldr-sh client {{{2
