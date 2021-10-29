@@ -37,8 +37,8 @@ bind-key 4-Right        window-snap-right
 
 bind-key 4-d            window-hide
 
-bind-key 4-Up           window-raise
-bind-key 4-Down         window-lower
+bind-key 4-Up           window-snap-up
+bind-key 4-Down         window-snap-down
 
 bind-key 4-slash        menu-window
 bind-key 4S-slash       menu-window-hidden
