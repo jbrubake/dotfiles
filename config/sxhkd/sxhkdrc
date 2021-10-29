@@ -14,14 +14,17 @@ ctrl + alt + Delete
 #
 
 mod4 + b
-   jumpapp -c Navigator.Firefox firefox
+    jumpapp -c Navigator.Firefox firefox
 
 mod4 + Return
-   jumpapp -c st.St -t main st -t main -e tmux new-session -A -s main -t main
+    jumpapp -c st.St -t main st -t main -e tmux new-session -A -s main -t main
+
+F10
+    jumpapp -i Discord Discord
 
 F11
-   jumpapp -i Signal flatpak run org.signal.Signal
+    jumpapp -i Signal flatpak run org.signal.Signal
 
 F12
-   jumpapp -i "Microsoft Teams" teams
+    jumpapp -i "Microsoft Teams" teams
 
