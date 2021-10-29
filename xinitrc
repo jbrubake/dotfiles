@@ -28,7 +28,7 @@ command -v sxhkd >/dev/null && sxhkd &
 # Set wallpaper {{{1
 #
 if command -v feh >/dev/null; then
-    feh --no-fehbg --bg-center $HOME/.wallpaper0 --bg-center $HOME/.wallpaper1
+    feh --no-fehbg --bg-fill $HOME/.wallpaper0
 elif command -v xsetroot >/dev/null; then
     xsetroot \
         -mod "$(xrdb -query | awk '/xsetroot\.modx/ {print $2}')" \
