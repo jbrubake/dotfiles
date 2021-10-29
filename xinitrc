@@ -18,6 +18,13 @@ INIT=~/etc/init.d
 #
 WINDOWMANAGER=cwm
 
+# Setup displays, keymap and keybindings {{{1
+#
+test -x $INIT/displays.sh 2>&1 && $INIT/displays.sh
+test -x $INIT/keymaps.sh 2>&1 && $INIT/keymaps.sh
+test -x $INIT/touchpad-tap.sh 2>&1 && $INIT/touchpad-tap.sh
+command -v sxhkd >/dev/null && sxhkd &
+
 # Set wallpaper {{{1
 #
 if command -v feh >/dev/null; then
@@ -29,12 +36,6 @@ elif command -v xsetroot >/dev/null; then
         -bg "$(xrdb -query | awk '/xsetroot\.background/ {print $2}')" \
         -fg "$(xrdb -query | awk '/xsetroot\.foreground/ {print $2}')"
 fi
-
-# Setup keymap and keybindings {{{1
-#
-test -x $INIT/keymaps.sh 2>&1 && $INIT/keymaps.sh
-test -x $INIT/touchpad-tap.sh 2>&1 && $INIT/touchpad-tap.sh
-command -v sxhkd >/dev/null && sxhkd &
 
 # Merge XResources/XDefaults {{{1
 test -r "$HOME/.Xresources" && xrdb -merge "$HOME/.Xresources"
