@@ -3,12 +3,27 @@
 PLUGINS=$(tmux show-option -gqv @plugin_dir)
 source $PLUGINS/utils/plugins.sh
 
-vpn="$(plugin vpn_location)"
-if [ -n "$vpn" ]; then
-    location="#[fg=green]$vpn"
-else
-    location="#[fg=red]No VPN"
-fi
+network_status() {
+    vpn="$(plugin vpn_location)"
+    status="$(plugin uplink)"
+
+    if [ -n "$vpn" ]; then
+        location="$vpn"
+        color="#[fg=brightgreen]"
+    else
+        location="No VPN"
+        color="#[fg=brightyellow]"
+    fi
+
+    case $status in
+        [nN]*)
+            color="#[fg=red]"
+            location="No network"
+            ;;
+    esac
+
+    echo "$color$location"
+}
 
 set -- $(plugin updates)
 sec=$1
@@ -23,5 +38,6 @@ fi
 printf "#[fg=white,bg=black]"
 printf "#[fg=cyan]#h:#[fg=magenta]#S"
 printf "#[fg=yellow]:up %s" "$(plugin uptime)"
-printf " %s%s" "$(emojify :earth_americas:)" "$location "
+printf " %s%s" "$(emojify :earth_americas:)" "$(network_status) "
 printf "#[fg=white] "
+
