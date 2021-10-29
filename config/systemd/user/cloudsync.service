@@ -5,4 +5,4 @@ RefuseManualStop=yes
 
 [Service]
 Type=oneshot
-ExecStart=/home/jbrubake/sbin/cloudsync.sh
+ExecStart=/home/jbrubake/sbin/cloudsync
