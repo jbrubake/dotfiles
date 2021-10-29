@@ -71,7 +71,8 @@ dwm)
     # dwm_statusbar.sh &
     ;;
 
-cwm) ~/src/cwm/cwm & wmpid=$!  ;;
+cwm) cwm & wmpid=$!  ;;
+# cwm) ~/src/cwm/cwm & wmpid=$!  ;;
 
 #
 # This accepts any WM/DE that does not need specific start up.
