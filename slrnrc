@@ -1,6 +1,8 @@
 % vim: filetype=slang
 
-interpret /home/jbrubake/.slrn/t-prot.sl
+include .slrn/auth.txt
+
+interpret .slrn/t-prot.sl
    setkey article   register_t_prot "\e6"
    setkey article unregister_t_prot "\e7"
 
