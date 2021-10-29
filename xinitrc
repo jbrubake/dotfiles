@@ -57,7 +57,7 @@ xset b off
 command -v xautolock >/dev/null && xautolock &
 command -v xbanish >/dev/null && xbanish &
 command -v xwrits >/dev/null && xwrits &
-command -v streamdeck >/dev/null && streamdeck --no-ui &
+command -v streamdeck >/dev/null && streamdeck &
 
 # Start WM {{{1
 #
