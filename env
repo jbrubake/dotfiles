@@ -160,8 +160,7 @@ PYTHONPATH=$HOME/lib/python3.8/site-packages/
 export PYTHONPATH
 
 # Rust {{{2
-CARGO_HOME=$HOME/var/cache/cargo
-export CARGO_HOME
+[ -d "$HOME/.cargo/bin" ] && PATH="$PATH:$HOME/.cargo/bin"
 
 # Packer {{{2
 PACKER_CONFIG_DIR=$XDG_STATE_HOME
