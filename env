@@ -31,10 +31,8 @@ fi
 # Setup PATH {{{1
 test -d "/usr/local/bin" && PATH="/usr/local/bin:$PATH"
 test -d "$HOME/bin"  && PATH="$HOME/bin:$PATH"
+test -d "$HOME/games" && PATH="$HOME/games:$PATH"
 test -d "$HOME/sbin" && PATH="$HOME/sbin:$PATH"
-
-# Remove duplicate entries
-PATH=$(printf %s "$PATH" | awk -vRS=: '!a[$0]++' | paste -s -d:)
 
 # Locale and timezone {{{1
 #
@@ -232,5 +230,8 @@ if command -v tldr >/dev/null; then
     export TLDR_PARAM TLDR_EPARAM TLDR_CODE
     export TLDR_DESCRIPTION TLDR_HEADER TLDR_QUOTE
 fi
+
+# Remove duplicate entries from PATH {{{2
+PATH=$(printf %s "$PATH" | awk -vRS=: '!a[$0]++' | paste -s -d:)
 
 # vim: foldlevel=0
