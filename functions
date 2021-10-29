@@ -110,7 +110,7 @@ lsp () { # Print numerical permissions at the start of ls -l output
         }'
     fi
 }
-ip() {
+function ip () {
 # 'ip get' prints current ip address and copies to clipboard
 # All other commands are passed to the real 'ip' command
 #
