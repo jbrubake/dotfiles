@@ -217,6 +217,10 @@ fi
 NNTPSERVER=news.eternal-september.org
 export NNTPSERVER
 
+# Set local mail directory
+MAIL="$HOME/.maildir/local"
+export MAIL
+
 # Configure tldr-sh client {{{2
 #
 if command -v tldr >/dev/null; then
