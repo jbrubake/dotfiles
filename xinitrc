@@ -58,6 +58,7 @@ command -v xautolock >/dev/null && xautolock &
 command -v xbanish >/dev/null && xbanish &
 command -v xwrits >/dev/null && xwrits &
 command -v streamdeck >/dev/null && streamdeck &
+command -v mopidy >/dev/null && mopidy &
 
 # Start WM {{{1
 #
