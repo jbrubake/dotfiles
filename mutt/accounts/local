@@ -2,6 +2,6 @@
 #
 # Configure jbru362@gmail.com account
 
-set my_account = "jbru362@gmail.com"
+set my_account = "jbrubake"
 source ~/.mutt/accounts/account.generic
 
