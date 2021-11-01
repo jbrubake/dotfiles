@@ -15,18 +15,18 @@ SyncState *
 IMAPStore jeremy.d.brubaker@gmail.com
 Host imap.gmail.com
 User jeremy.d.brubaker@gmail.com
-PassCmd "pass show oauth/jeremy.d.brubaker@gmail.com"
+PassCmd "pass show gmail/jeremy.d.brubaker@gmail.com-oauth"
 SSLType IMAPS
-CertificateFile /etc/ssl/certs/ca-certificates.crt
+CertificateFile /etc/pki/tls/cert.pem
 
 # Account jbru362@gmail.com
 #
 IMAPStore jbru362@gmail.com
 Host imap.gmail.com
 User jbru362@gmail.com
-PassCmd "pass show oauth/jbru362@gmail.com"
+PassCmd "pass show gmail/jbru362@gmail.com-oauth"
 SSLType IMAPS
-CertificateFile /etc/ssl/certs/ca-certificates.crt
+CertificateFile /etc/pki/tls/cert.pem
 
 ##############
 # Local Stores
@@ -51,7 +51,7 @@ SubFolders Verbatim
 # Channels (jeremy.d.brubaker@gmail.com)
 ########################################
 Channel jeremy.d.brubaker@gmail.com-inbox
-Master :jeremy.d.brubaker@gmail.com:"Inbox"
+Master :jeremy.d.brubaker@gmail.com:"INBOX"
 Slave :jeremy.d.brubaker@gmail.com-local:
 CopyArrivalDate yes
 
@@ -93,7 +93,7 @@ Channel jeremy.d.brubaker@gmail.com-spam
 # Channels (jbru362@gmail.com)
 ##############################
 Channel jbru362@gmail.com-inbox
-Master :jbru362@gmail.com:"Inbox"
+Master :jbru362@gmail.com:"INBOX"
 Slave :jbru362@gmail.com-local:
 CopyArrivalDate yes
 
