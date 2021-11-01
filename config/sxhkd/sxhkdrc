@@ -28,3 +28,15 @@ F11
 F12
     jumpapp -i "Microsoft Teams" teams
 
+# Other
+#
+
+XF86AudioMute
+    change_volume mute
+
+XF86AudioLowerVolume
+    change_volume -10%
+
+XF86AudioRaiseVolume
+    change_volume +10%
+
