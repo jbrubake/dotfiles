@@ -13,7 +13,8 @@ RANDOM_DELAY=5
 # |       |      |
 # |       |      |
 # period    delay   job-id          command to be executed
-1      0       logrotate       logrotate --state=$HOME/var/lib/logrotate/logrotate.status $HOME/etc/logrotate.conf
-1      0       updatedb        updatedb -l 0 -n ".git" -U $HOME -o $HOME/var/lib/locate/locate.db
+1      0       cron.daily      nice run-parts etc/cron.daily
+7      0       cron.weekly     nice run-parts etc/cron.weekly
+@monthly 0     cron.monthly    nice run-parts etc/cron.monthly
 
 # vim: filetype=crontab
