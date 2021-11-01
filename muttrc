@@ -36,12 +36,8 @@ source ~/.mutt/accounts/jbru362@gmail.com # Set the default account
 # ===========
 # Cache message headers and bodies
 #  These directories must be created manually)
-set header_cache     = "~/.cache/mutt/headers"
-set message_cachedir = "~/.cache/mutt/bodies"
-set tmpdir           = "~/.cache/mutt/tmp" # Where to write temporary files
-
-# XXX: Is this necessary?
-set certificate_file = ~/.mutt/certificates
+set header_cache     = "~/var/cache/mutt/headers"
+set tmpdir           = "~/var/run/mutt" # Where to write temporary files
 
 # Configure the From: header
 set realname         = "Jeremy Brubaker" # My name
