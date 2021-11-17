@@ -22,6 +22,8 @@
 set my_bin = "~/.mutt/scripts"
 set folder    = "~/.maildir" # Root mailbox folder
 set mbox_type = Maildir     # Mailboxes are in Maildir format
+set my_varcache = "~/var/cache/mutt"
+set my_varrun   = "~/var/run/mutt"
 
 # Accounts {{{1
 # ========
@@ -36,8 +38,8 @@ source ~/.mutt/accounts/jbru362@gmail.com # Set the default account
 # ===========
 # Cache message headers and bodies
 #  These directories must be created manually)
-set header_cache     = "~/var/cache/mutt/headers"
-set tmpdir           = "~/var/run/mutt" # Where to write temporary files
+set header_cache = "$my_varcache/headers"
+set tmpdir       = "$my_varrun" # Where to write temporary files
 
 # Configure the From: header
 set realname         = "Jeremy Brubaker" # My name
