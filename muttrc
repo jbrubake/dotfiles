@@ -83,7 +83,8 @@ set include      = yes # Include original message when replying
 set text_flowed  = yes # Generate format=flowed emails (editor needs configured for this)
 
 set background_edit = yes
-set editor = "mutt-trim %s; $my_bin/bgedit-screen-tmux.sh $my_bin/mutt-edit %s"
+set editor          = "mutt-trim %s; $my_bin/mutt-bgedit $my_bin/mutt-edit %s"
+
 set abort_nosubject = no  # Allow composing messages with no Subject:
 
 set mailcap_path = "~/.mailcap"

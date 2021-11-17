@@ -1,6 +1,7 @@
 imports: 
   ls_colors: ./
   gdb-dashboard: ./
+  mutt-bgedit: ./mutt/scripts
 
 git module ls_colors:
   url: https://github.com/trapd00r/LS_COLORS
@@ -17,3 +18,9 @@ git module gdb-dashboard:
       - gdbinit
   pick: gdbinit
   rev: 101cf69cc95f90956b6d9612a3468dac6422c87c
+
+curl module mutt-bgedit:
+  url: https://gitlab.com/muttmua/mutt/-/raw/master/contrib/bgedit-screen-tmux.sh
+  filename: mutt-bgedit
+  executable: mutt-bgedit
+  sha1: a41d6fbcfc7ea498679cf43e22b6d7c8f05e877f
