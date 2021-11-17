@@ -35,8 +35,8 @@ XF86AudioMute
     change_volume mute
 
 XF86AudioLowerVolume
-    change_volume -10%
+    change_volume -1%
 
 XF86AudioRaiseVolume
-    change_volume +10%
+    change_volume +1%
 
