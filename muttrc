@@ -59,19 +59,17 @@ set sleep_time = 0  # Do not pause when switching mailboxes
 set wait_key   = no # Do not wait for a keypress after external commands that succeed
 set beep_new   = yes # Beep on new mail
 
-set mail_check                = 5 # Check for new mail every 5 seconds
-set mail_check_stats          = yes # Periodically calculate unread, flagged and total messages
-set mail_check_stats_interval = 60 # Calculate stats once a minute
+set mail_check                = 5   # Check for new mail every 5 seconds
+set mail_check_stats          = yes # Periodically calculate unread,
+                                    #  flagged and total messages
+set mail_check_stats_interval = 60  # Calculate stats once a minute
 
-# set sendmail_wait = 0 # block when sending emails
 set sendmail_wait = 1 # do not block when sending emails
 
-# set confirmappend = no # Do not ask before appending to existing mailbox
-# set mark_old = yes # Mark old unread messages with an "O"
+set mark_old = yes # Mark old unread messages with an "O"
 
 set edit_headers = yes # May edit headers along with body
 set fast_reply   = yes # Don't ask for useless headers when replying/forwarding
-# set autoedit 
 set askcc        = yes # Prompt for Cc before editing
 set askbcc       = yes # Prompt for Bcc before editing
 set fcc_attach   = yes # Save attachments with sent messages
@@ -84,6 +82,8 @@ set reverse_name = yes # Reply as whomever message was to
 set include      = yes # Include original message when replying
 set text_flowed  = yes # Generate format=flowed emails (editor needs configured for this)
 
+# Edit emails in a new tmux/screen window
+# TODO: fix so it also works outside of tmux/screen
 set background_edit = yes
 set editor          = "mutt-trim %s; $my_bin/mutt-bgedit $my_bin/mutt-edit %s"
 
@@ -94,6 +94,7 @@ auto_view text/html # Automatically view HTML email (bastards)
 # auto_view text/* application/* image/* audio/* # For lesspipe.sh
 alternative_order text/plain text/enriched text/html
 
+# TODO: Needs a spell checker installed
 set ispell="aspell -e -c"       # Use aspell for spell checking
 
 # What parts of the header to show
@@ -108,6 +109,7 @@ unhdr_order *
 hdr_order from: to: cc: bcc: date: subject:
 
 # Generate X-Face: header
+# TODO: this needs to fail gracefully
 my_hdr X-Face: $(compface ~/share/avatars/me.xbm | $my_bin/mutt-quote-x-face)
 
 # Address book {{{1
@@ -116,13 +118,11 @@ set query_command = "goobook query '%s'" # Use goobook to search Google contacts
 
 # Display formats {{{1
 # ===============
-set pager_index_lines = 11 # Show 10 emails in a mini-index while in the pager
+set pager_index_lines = 11  # Show 10 emails in a mini-index while in the pager
 set menu_scroll       = yes # Scroll one line at a time
 set tilde             = yes # Pad trailing blank lines in the pager with "~"
-
 set pager_stop        = yes # Do not page to the next message
-
-set markers           = no # Do not prepend continued lines with a '+'
+set markers           = no  # Do not prepend continued lines with a '+'
 
 # Index entry format:
 #
@@ -135,9 +135,9 @@ set markers           = no # Do not prepend continued lines with a '+'
 set index_format="%Z%?X?📎&  ? %-6@date@ %-30.30F %@subj_tag@%s"
 
 # Format @date@ based on message age:
-index-format-hook date "~d<1d" "%[ %H:%M]" # 1 day     09:30
-index-format-hook date "~d<1w" "%[%a %d]" # 1 week    Sun 29
-index-format-hook date "~d<1y" "%[%b-%d]" # 1 year    Nov-12
+index-format-hook date "~d<1d" "%[ %H:%M]" #   1 day   09:30
+index-format-hook date "~d<1w" "%[   %a]"  #   1 week    Sun
+index-format-hook date "~d<1y" "%[%d-%b]"  #   1 year 12-Nov
 index-format-hook date "~A"    "%[ %m/%y]" # > 1 year  11/19
 
 # Tags based on subject
@@ -172,6 +172,7 @@ set sidebar_short_path     = yes
 set sidebar_folder_indent  = yes
 set sidebar_indent_string  = '  '
 set sidebar_divider_char   = "│" # That's a box character, not a pipe
+
 # Sidebar format
 #
 # %B: mailbox name
@@ -238,7 +239,6 @@ macro pager \e1 ":set display_filter = $my_tprot"                               
 #
 # Some taken from: https://ryanlue.com/posts/2017-05-21-mutt-the-vim-way
 #             https://ryanlue.com/posts/2017-05-22-autosync-mutt
-#
 
 # Remove bindings {{{3
 bind  index,pager,attach  g         noop
