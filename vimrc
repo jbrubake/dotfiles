@@ -926,9 +926,11 @@ syntax enable
 set hlsearch            " Highlight search matches
 let c_comment_strings=1 " Highlight strings in C comments
 
-set t_8f=[38;2;%lu;%lu;%lum        " set foreground color
-set t_8b=[48;2;%lu;%lu;%lum        " set background color
-set termguicolors                    " Enable GUI colors for the terminal to get truecolor
+if exists('+termguicolors')
+    set t_8f=[38;2;%lu;%lu;%lum        " set foreground color
+    set t_8b=[48;2;%lu;%lu;%lum        " set background color
+    set termguicolors                    " Enable GUI colors for the terminal to get truecolor
+endif
 
 " Custom colors {{{
 function! s:colorscheme_local() abort
