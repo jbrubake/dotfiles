@@ -3,24 +3,26 @@
 # Configure $my_account
 #
 
-# Reset these just in case
-set folder    = "~/.maildir"
+# Mailbox defaults
+set folder    = "~/.maildir" # Root mailbox folder
 set mbox_type = Maildir
 
 # Set folders
-# (no need for set sent as Google handles this automatically)
 set spoolfile = +$my_account
 set trash     = +$my_account/Trash
 set postponed = +$my_account/Drafts
-set record    = ''
+set record    = "" # Gmail handles Sent folder automatically)
+
+# Configure the From: header
+set realname         = "Jeremy Brubaker" # My name
 
 # Send mail from this account
 set sendmail = "$my_bin/mutt-send $my_account"
 
 # Configure the From: header
-set from     = $my_account # From: address
+set from = $my_account
 
-# Signaure
+# Default signature
 set signature = ~/.signature
 
 # Per mailbox status bar color

@@ -17,22 +17,23 @@
 # zj    move down to start of next fold
 # zk    move up to end of previous fold
 
-# Initialization {{{1
-# ==============
-set my_bin = "~/.mutt/scripts"
-set folder    = "~/.maildir" # Root mailbox folder
-set mbox_type = Maildir     # Mailboxes are in Maildir format
+# Set variables {{{1
+# =============
+set my_bin      = "~/.mutt/scripts"
+set my_accounts = "~/.mutt/accounts"
 set my_varcache = "~/var/cache/mutt"
 set my_varrun   = "~/var/run/mutt"
 
-# Accounts {{{1
-# ========
+# Configure accounts {{{1
+# ==================
 # Hooks to account-specific configuration
-#  (https://webgefrickel.de/blog/a-modern-mutt-setup-part-two)
-folder-hook jbru362@gmail.com/*           source ~/.mutt/accounts/jbru362@gmail.com
-folder-hook jeremy.d.brubaker@gmail.com/*  source ~/.mutt/accounts/jeremy.d.brubaker@gmail.com
-folder-hook local/*  source ~/.mutt/accounts/local
-source ~/.mutt/accounts/jbru362@gmail.com # Set the default account
+#  (Inspired by https://webgefrickel.de/blog/a-modern-mutt-setup-part-two)
+folder-hook jbru362@gmail.com/*           source $my_accounts/jbru362@gmail.com
+folder-hook jeremy.d.brubaker@gmail.com/* source $my_accounts/jeremy.d.brubaker@gmail.com
+folder-hook local/*                       source $my_accounts/local
+
+# Set the default account
+source $my_accounts/jbru362@gmail.com
 
 # Basic setup {{{1
 # ===========
@@ -40,14 +41,6 @@ source ~/.mutt/accounts/jbru362@gmail.com # Set the default account
 #  These directories must be created manually)
 set header_cache = "$my_varcache/headers"
 set tmpdir       = "$my_varrun" # Where to write temporary files
-
-# Configure the From: header
-set realname         = "Jeremy Brubaker" # My name
-set reverse_name     = yes               # Use To: to build From:
-set reverse_realname = no                # Always use realname
-#set use_from # Mutt generates From: header
-#set envelope_from_address # Mutt generates message's envelope sender
-#set mime_forward = no # forward attachments as part of the body
 
 set sort     = "threads"                    # Sort by thread,
 set sort_aux = "reverse-last-date-received" #  then sort by date sent
