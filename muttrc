@@ -200,6 +200,9 @@ mailboxes                          "=jeremy.d.brubaker@gmail.com/Trash"
 mailboxes                          "=jeremy.d.brubaker@gmail.com/Spam"
 
 mailboxes -label local "=local"
+mailboxes              "=local/Sent"
+mailboxes              "=local/Drafts"
+mailboxes              "=local/Trash"
 
 # Other files {{{1
 # ===========

@@ -2,6 +2,16 @@
 #
 # Configure jbru362@gmail.com account
 
-set my_account = "jbrubake"
+set my_account = "local"
 source ~/.mutt/accounts/account.generic
+
+# Override defaults
+set from   = "$USER"
+set record = +$my_account/Sent
+
+# Do not need to mbsync this mailbox
+bind index o noop
+
+# No starred folder
+bind index,pager gs noop
 
