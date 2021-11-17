@@ -31,7 +31,7 @@ set signature = ~/.signature
 # Per mailbox bindings
 #
 # mbsync the entire mailbox
-macro index o "<shell-escape>mbsync $my_account-all >/dev/null &<enter>" "run mbsync to sync mail for this account"
+macro index o "<shell-escape>mbsync $my_account-all >> ~/var/log/mbsync.log 2>&1 &<enter><enter-command>echo 'syncing...'<enter>" "run mbsync to sync mail for this account"
 # Go to folder...
 macro index,pager gi "<change-folder>+$my_account<enter>"         "go to Inbox"
 macro index,pager gs "<change-folder>+$my_account/Starred<enter>" "go to Starred"
