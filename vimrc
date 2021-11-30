@@ -977,6 +977,7 @@ function! s:colorscheme_local() abort
     highlight! link SignColumn LineNr
 
     " Column and row highlighting
+    " TODO: use a function to set all this based on the current background color
     highlight ColorColumn  cterm=NONE ctermbg=darkgray guibg=#586e75
     highlight CursorLine   cterm=NONE ctermbg=darkgray guibg=#003644
     highlight CursorLineNr cterm=NONE ctermfg=white ctermbg=darkgray gui=NONE guifg=white guibg=#003644
