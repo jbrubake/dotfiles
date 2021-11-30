@@ -7,3 +7,15 @@ type = drive
 scope = drive
 token = GOOGLE_TOKEN
 
+[onedrive]
+type = onedrive
+region = global
+token = ONEDRIVE_TOKEN
+drive_id = ONEDRIVE_ID
+drive_type = personal
+
+[box]
+type = box
+box_sub_type = user
+token = BOX_TOKEN
+
