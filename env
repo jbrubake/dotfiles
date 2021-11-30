@@ -214,7 +214,7 @@ fi
 
 # Set news server
 # NNTPSERVER=nntp.aioe.org
-NNTPSERVER=news.eternal-september.org
+NNTPSERVER=snews://news.eternal-september.org
 export NNTPSERVER
 
 # Set local mail directory
