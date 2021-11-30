@@ -1,0 +1,13 @@
+session_name: main
+windows:
+  - window_name: apps
+    layout: tiled
+    panes:
+      - slrn -w0
+      - blank
+      - blank
+      - blank
+  - window_name: bash
+    panes:
+      - blank
+
