@@ -1,6 +1,6 @@
 SHELL=/bin/bash
 HOME=/home/jbrubake
-PATH=$HOME/sbin:$HOME/bin:/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
+PATH=/home/jbrubake/sbin:/home/jbrubake/bin:/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
 MAILTO=jbrubake
 
 # For details see man 4 crontabs
