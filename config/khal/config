@@ -6,17 +6,17 @@ color = light red
 type = discover
 
 [[appointments]]
-path = ~/.calendars/google/APPPOINTMENTS@group.calendar.google.com
+path = ~/.calendars/google/5dt59omre27j9hr47gt0ib2q5o@group.calendar.google.com
 color = light blue
 type = discover
 
 [[family]]
-path = ~/.calendars/google/FAMILY@group.calendar.google.com
+path = ~/.calendars/google/family16730286924103663967@group.calendar.google.com
 color = light green
 type = discover
 
 [[church]]
-path = ~/.calendars/google/CHURCH@gmail.com
+path = ~/.calendars/google/arundelbaptist.data@gmail.com
 color = light magenta
 type = discover
 
