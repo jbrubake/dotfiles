@@ -978,9 +978,9 @@ function! s:colorscheme_local() abort
     highlight! link SignColumn LineNr
 
     " Column and row highlighting
-    highlight ColorColumn  ctermbg=darkgray guibg=#586e75
-    highlight CursorLine   cterm=NONE ctermbg=bg guibg=bg
-    highlight CursorLineNr cterm=NONE ctermfg=white ctermbg=NONE gui=NONE guifg=white guibg=NONE
+    highlight ColorColumn  cterm=NONE ctermbg=darkgray guibg=#586e75
+    highlight CursorLine   cterm=NONE ctermbg=darkgray guibg=#003644
+    highlight CursorLineNr cterm=NONE ctermfg=white ctermbg=darkgray gui=NONE guifg=white guibg=#003644
 
     " Statusline user colors
     highlight! link User1 StatusLine
