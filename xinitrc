@@ -13,8 +13,7 @@ INIT=~/etc/init.d
 #   dwm
 #   Any WM/DE that is run as a single command with no arguments
 #
-# Default: run an instance of st
-# TODO: Make this run whatever terminal is installed
+# Default: run a terminal emulator
 #
 WINDOWMANAGER=cwm
 
@@ -81,17 +80,15 @@ dwm)
     # dwm_statusbar.sh &
     ;;
 
-cwm) cwm & wmpid=$!  ;;
-# cwm) ~/src/cwm/cwm & wmpid=$!  ;;
-
 #
 # This accepts any WM/DE that does not need specific start up.
-# If WINDOWMANAGER isn't found, st is run instead
+# If WINDOWMANAGER isn't found, a terminal emulator is run instead
 #
 *)
     if command -v $WINDOWMANAGER >/dev/null; then
         $WINDOWMANAGER & wmpid=$!
     else
+        # TODO: Make this run whatever terminal is installed
         st & wmpid=$!
     fi
     ;;
