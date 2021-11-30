@@ -116,6 +116,13 @@ function ip () {
 #
 # https://jip.dev/posts/dots/
 #
+    # Use grc if it exists
+    if command -v grc >/dev/null; then
+        ip="grc ip"
+    else
+        ip="command ip"
+    fi
+
     if [[ "$1" == 'get' || "$1" == 'g' ]]; then
         res=$(curl -s ipinfo.io/ip)
         case $2 in
@@ -139,7 +146,7 @@ EOF
                 printf "%s\n" "$res"
         esac
     else
-        command ip "$@"
+        $ip "$@"
     fi
 }
 google () { # Google something
