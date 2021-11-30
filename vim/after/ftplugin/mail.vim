@@ -2,12 +2,7 @@
 setlocal foldexpr=strlen(substitute(matchstr(getline(v:lnum),'\\v^\\s*%(\\>\\s*)+'),'\\s','','g')) 
 setlocal foldmethod=expr foldlevel=1 foldminlines=2
 
-" Emails should be RFC 3676 format=flowed {{{1
-"     https://incenp.org/notes/2020/format-flowed-neomutt-vim.html
-"
-" formatoptions=awq  Enable automatic formatting of paragraphs, with
-"                    trailing white space indicating a paragraph
-"                    continues in the next line
+" formatoptions=aq  Enable automatic formatting of paragraphs and comments
 " comments+=nb:> Lines starting with > are “comments” (so quotes
 "                within a mail are displayed differently from the rest
 "                of the message).
@@ -15,7 +10,7 @@ setlocal foldmethod=expr foldlevel=1 foldminlines=2
 "                        broken lines, to provide a visual distinction
 "                        between “soft” and “hard” line breaks
 setlocal textwidth=72
-setlocal formatoptions=awq
+setlocal formatoptions=aq
 setlocal comments+=nb:>
 setlocal spell
 match ErrorMsg '\s\+$'
