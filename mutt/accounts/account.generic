@@ -23,7 +23,7 @@ set sendmail = "$my_bin/mutt-send $my_account"
 set from = $my_account
 
 # Default signature
-set signature = ~/.signature
+set signature = "siggen -qc |"
 
 # Per mailbox status bar color
 # color status red default
