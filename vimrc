@@ -382,7 +382,7 @@ call minpac#add('junegunn/fzf.vim')
 " :Snippets         " Snippets (UltiSnips)
 " :Commits          " Git commits (vim-fugitive)
 noremap <C-p> :Files<CR>
-noremap <C-b> :Buffers<CR>
+noremap <Leader>b :Buffers<CR>
 
 " fzf-checkout.vim: Manage branches and tags with fzf {{{2
 call minpac#add('stsewd/fzf-checkout.vim')
