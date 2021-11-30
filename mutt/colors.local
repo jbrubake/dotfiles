@@ -5,7 +5,7 @@
 # UI {{{1
 color indicator black color6
 
-color status    black blue
+color status    white blue
 
 # Sidebar {{{1
 color sidebar_highlight black color6
