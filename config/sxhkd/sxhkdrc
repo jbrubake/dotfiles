@@ -19,8 +19,20 @@ mod4 + b
     jumpapp -c Navigator.Firefox firefox
 
 # Main terminal
+#
+# if 'main' session is not running, launch it detached and then
+# connect to it on the second window (which is the one after 'apps')
 mod4 + Return
-    jumpapp -c st.St -t main st -t main -e tmux new-session -A -s main -t main
+    if ! tmux ls | grep ^main >/dev/null; then tmuxp load -d main; fi; \
+    jumpapp -c st.St -t main st -t main -e tmux new -t main \; select-window -t 2 \;
+
+# Apps terminal
+#
+# if 'main' session is not running, launch it detached and then
+# connect to it on the apps window
+mod4 + ctrl + Return
+    if ! tmux ls | grep ^main >/dev/null; then tmuxp load -d main; fi; \
+    jumpapp -c st.St -t apps st -t apps -e tmux new -t main \; select-window -t apps \;
 
 # Various apps
 #
