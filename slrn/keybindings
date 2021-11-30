@@ -24,7 +24,7 @@
 % Group mode {{{1
 % Cursor movement {{{2
 setkey group bob                   "0"  % Go to the top of the list
-setkey group bob                   "gg" % Go to the top of the list
+setkey group bob                   "g" % Go to the top of the list
 setkey group eob                   "G"  % Go to the bottom of the list
 setkey group group_search_backward "?"  % Group keyword search backward
 setkey group group_search_forward  "/"  % Group keyword search forward
@@ -107,7 +107,7 @@ setkey article skip_quotes          "" % Skip beyond quoted text
 setkey article author_search_forward   "a"  % Author search forward
 setkey article author_search_backward  "A"  % Author search backward
 setkey article exchange_mark           "'"  % Return to marked article
-setkey article header_bob            "gg"   % Go to first article in group
+setkey article header_bob            "g"   % Go to first article in group
 setkey article header_eob            "G"   % Go to last article in group
 setkey article header_line_down      "j"   % Move to next article
 setkey article header_line_down      "^N"  % Move to next article
