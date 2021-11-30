@@ -60,6 +60,15 @@ command -v xwrits >/dev/null && xwrits &
 command -v streamdeck >/dev/null && streamdeck &
 command -v mopidy >/dev/null && mopidy &
 
+# Show login related things {{{1
+#
+# This has to be done here instead of in .xsession
+# because it needs to be done *after* setting up the display and keyboard
+if [ $_xlogin == 'yes' ]; then
+    type 2>&1 >/dev/null xfortune && xfortune ~/share/games/fortunes
+    unset _xlogin
+fi
+
 # Start WM {{{1
 #
 case $WINDOWMANAGER in
