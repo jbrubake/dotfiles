@@ -1,0 +1,194 @@
+% vim: filetype=slang
+
+% Available keys {{{1
+
+% ^C (Ctrl+C)
+% <PageUp>
+% <PageDown>
+% <Up>
+% <Down>
+% <Right>
+% <Left>
+% <Delete>
+% <BackSpace>
+% <Insert>
+% <Home>
+% <End>
+% <Enter>
+% <Return>
+% <Tab>
+% <BackTab>
+% <Space>
+% <Esc>
+
+% Group mode {{{1
+% Cursor movement {{{2
+setkey group bob                   "0"  % Go to the top of the list
+setkey group bob                   "gg" % Go to the top of the list
+setkey group eob                   "G"  % Go to the bottom of the list
+setkey group group_search_backward "?"  % Group keyword search backward
+setkey group group_search_forward  "/"  % Group keyword search forward
+setkey group line_down             "j"  % Go to the next group
+setkey group line_up               "k"  % Go to the previous group
+setkey group page_down             "^F" % Scroll to the next page
+setkey group page_up               "^B" % Scroll to the previous page
+
+% Actions {{{2
+setkey group evaluate_cmd     ":"        % Enter S-Lang prompt
+setkey group post             "p"        % Post an article
+setkey group post_postponed   "P"        % Post or edit a postponed article
+setkey group quit             "q"        % Quit slrn
+setkey group refresh_groups   "^R"       % Get new news from server
+setkey group repeat_last_key  "."        % Repeat last key sequence
+setkey group select_group     "<Return>" % Enter the current newsgroup
+setkey group suspend          "^Z"       % Suspend slrn
+setkey group toggle_scoring   "K"        % Select scoring mode
+
+% Group management {{{2
+setkey group add_group        "a"  % Add a new newsgroup
+setkey group catchup          "c"  % Mark all articles as read
+setkey group move_group       "m"  % Move newsgroup to a different location
+setkey group save_newsrc      "S"  % Force a save of the newsrc file
+setkey group subscribe        "s"  % Subscribe to the current newsgroup
+setkey group transpose_groups "xp" % Transpose position of groups
+setkey group uncatchup        "U"  % Mark all articles as unread
+setkey group unsubscribe      "u"  % Unsubscribe from the current newsgroup
+
+% Display {{{2
+setkey group help                 "^H"    % Display a help screen
+setkey group redraw               "^L"    % Redraw the screen
+setkey group toggle_group_formats "<Tab>" % Toggle group display formats
+setkey group toggle_hidden        "l"     % Toggle display of hidden groups
+setkey group toggle_list_all      "L"     % Toggle listing of unsubscribed groups
+
+% Article mode {{{1
+
+% General movement {{{2
+setkey article next                    "nn"  % next unread article
+setkey article next_high_score         "nh"  % next article with high score
+setkey article next_same_subject       "ns"  % next article with same subject
+setkey article previous                ""  % previous unread article
+setkey article skip_to_next_group      "ng"  % go to the next group
+    setkey article skip_to_previous_group  "<Esc><Left>"  % go to the previous group
+
+% Actions {{{2
+setkey article browse_url              "<Esc>U"  % Search for URL and follow it
+setkey article cancel               "<Esc>^C"   % Cancel article
+setkey article decode               ""     % Decode article
+setkey article evaluate_cmd            ":"   % Interpret line as S-Lang
+setkey article fast_quit            "Q"     % Quit without returning to group mode
+setkey article followup             "f"     % Post a followup
+setkey article forward              ""     % Forward posting via mail
+setkey article pipe                 "|"     % Pipe article
+setkey article post                 "p"     % Post a new article
+setkey article post_postponed       "P"    % Post/edit a postponed article
+setkey article print                "<Esc>P"     % Print article
+setkey article quit                 "q"     % Quit to group mode
+setkey article reply                "r"     % Reply to poster
+setkey article save                 "<Esc>S"     % Save article
+setkey article supersede            "<Esc>s"   % Supersede article
+setkey article suspend              "^Z"    % Suspend slrn
+
+% Moving in the article pager {{{2
+setkey article article_bob          "<Esc>gg"     % Move to the beginning
+setkey article article_eob          "<Esc>G"     % Move to the end of the article
+setkey article article_left         "h"    % Pan article to the left
+setkey article article_line_down    "J"   % Scroll article down one line
+setkey article article_line_down    "<Return>"
+setkey article article_line_up      "K" % Scroll article up one line
+setkey article article_page_down    "^B"   % Scroll article down one page
+setkey article article_page_up      "^F"   % Scroll article up one page
+setkey article article_right        "l"   % Pan article to the right
+setkey article article_search       "/"     % Search forward in the article
+setkey article forward_digest       ""     % Skip to next digest
+setkey article skip_quotes          "" % Skip beyond quoted text
+
+% Moving in the header display {{{2
+setkey article author_search_forward   "a"  % Author search forward
+setkey article author_search_backward  "A"  % Author search backward
+setkey article exchange_mark           "'"  % Return to marked article
+setkey article header_bob            "gg"   % Go to first article in group
+setkey article header_eob            "G"   % Go to last article in group
+setkey article header_line_down      "j"   % Move to next article
+setkey article header_line_down      "^N"  % Move to next article
+setkey article header_line_up        "k" % Move to previous article
+setkey article header_line_up        "^P" % Move to previous article
+setkey article header_page_down      "^D"       % Scroll down one page
+setkey article header_page_up        "^U"   % Scroll up one page
+setkey article goto_article          ""    % Move to article (number)
+setkey article goto_last_read          ""  % go to the last read article
+setkey article locate_article          "" % Locate article by Message-ID
+setkey article mark_spot               "m"  % Mark current article position
+setkey article subject_search_backward "S"  % Subject search backward
+setkey article subject_search_forward  "s"  % Subject search forward
+
+% Marking as read/unread {{{2
+setkey article catchup                 "c" % Catchup (up to this article)
+setkey article catchup_all             "^C"  % Mark all articles as read
+setkey article delete                  "dd"  % Mark article as read
+setkey article delete_thread           "dt" % Mark (Sub-)Thread as read
+setkey article expunge                 "dx"  % Remove all read articles
+setkey article uncatchup               "U" % Uncatchup (up to this article)
+setkey article uncatchup_all           "^u" % Mark all articles as unread
+setkey article undelete                "u"  % Mark article as unread
+
+% Display properties {{{2
+setkey article enlarge_article_window  "^6"  % Enlarge the header window
+setkey article help                    "^H"  % Display help screen
+setkey article hide_article            "H"  % Hide/Show the article window
+setkey article redraw                  "^L" % Redraw screen
+setkey article show_spoilers           "<Esc>?" % Reveal spoilers (on/off)
+setkey article shrink_article_window   "6" % Shrink the header window
+setkey article toggle_collapse_threads "tt" % Collapse/Uncollapse thread
+setkey article toggle_headers          "th"  % Full headers (on/off)
+setkey article toggle_header_formats   "<Tab>" % Toggle header display formats
+setkey article toggle_pgpsignature     "tg"  % Show PGP signature (on/off)
+setkey article toggle_quotes           "tq"  % Display quoted lines (on/off)
+setkey article toggle_rot13            "tr" % Toggle ROT-13 decryption
+setkey article toggle_signature        "ts" % Show signature (on/off)
+setkey article toggle_sort             "tS" % Select threading method
+setkey article toggle_verbatim_marks   ""  % Show verbatim marks (on/off)
+setkey article toggle_verbatim_text    "V" % Show verbatim text (on/off)
+setkey article view_scores             "v"      % Show which rules matched
+setkey article wrap_article            "W"  % Wrap long lines (on/off)
+setkey article zoom_article_window     "z"  % Maximize/Unmaximize article
+
+% Miscellaneous actions {{{2
+setkey article create_score            "^K"  % Create a scorefile entry
+setkey article get_children_headers    "<Esc>c"    % Find all children
+setkey article get_parent_header       "<Esc>p" % Reconstruct thread
+setkey article repeat_last_key         "."  % Repeat last key sequence
+setkey article tag_header              "#"  % Numerically tag article
+setkey article toggle_header_tag       "*"  % Set/remove header tag
+setkey article untag_headers           "<Esc>#" % Remove all numerical tags
+
+% Macro bindings {{{2
+
+% t-prot.sl {{{3
+    setkey article   register_t_prot "\e6"
+    setkey article unregister_t_prot "\e7"
+
+% color.sl {{{3
+    setkey article edit_colors "\eec"
+    setkey article edit_colors "Z"
+% Readline mode {{{1
+
+setkey readline bdel          "<Backspace>"%Delete backward
+setkey readline bol           "^A"         %Beginning of line
+setkey readline complete      "<Tab>"      %Complete filename
+setkey readline cycle         "<Space>"    %Cycle among filenames
+setkey readline del           "^D"         %Delete Foreword
+setkey readline delbol        "^U"         %Delete to Beginning of line
+setkey readline delbow        "^W"         %Delete to Beginning of word
+setkey readline deleol        "^K"         %Delete to End of line
+setkey readline down          "^N"         %Jumps to the next history entry
+setkey readline enter         "<Return>"   %Finishes editing
+setkey readline eol           "^E"         %End of line
+setkey readline left          "^B"         %Move left
+setkey readline quoted_insert "^V"         %Quoted insert
+setkey readline right         "^F"         %Move right
+setkey readline trim          "<Esc>\\"    %Trim defaultspace
+setkey readline up            "^P"         %Jumps to thre previous history entry
+%Use this to unbind a key in readline mode
+%setkey readline self_insert  ""           %Insert this key
+

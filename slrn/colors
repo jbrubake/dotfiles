@@ -1,0 +1,53 @@
+% vim: filetype=slang
+
+% Group List
+color description       "default"       "default"
+color group             "color15"       "default"
+
+% Header List
+color author            "magenta"       "default"
+color date              "default"       "default"  
+color from_myself       "black" "magenta"
+color header_number     "green"         "default"
+color high_score        "brightgreen"   "default"
+color neg_score         "red"           "default"
+color pos_score         "green"         "default"
+color subject           "default"       "default"
+color thread_number     "default"       "default"
+color tree              "yellow"        "default"
+color unread_subject    "color15"       "default"
+
+% Article Pager
+color article           "default"       "default"
+color boldtext          "color15"       "default"      "bold"
+color header_name       "brightgreen"   "default"
+color headers           "default"       "default"
+color italicstext       "color15"       "default"
+color pgpsignature      "brightblack"   "default"
+color quotes            "brightblue"    "default"
+color quotes1           "cyan"          "default"
+color quotes2           "yellow"        "default"
+color quotes3           "brightred"     "default"
+color quotes4           "brightred"     "default"
+color quotes5           "brightred"     "default"
+color quotes6           "brightred"     "default"
+color quotes7           "brightred"     "default"
+color signature         "brightgreen"   "default"
+color underlinetext     "color15"       "default"      "underline"
+color tilde             "brown"         "default"
+color url               "brightmagenta" "default"      "underline"
+color verbatim          "brightgreen"   "default"
+
+% UI
+color box               "white"       "black"   % items in a message box
+color cursor            "black"       "color6"  % current line selection
+color error             "red"         "default"
+color frame             "white"      "default"    % message box frame
+color menu              "white"     "blue"
+color menu_press        "lightgray"   "yellow"
+color message           "cyan"        "default"
+color normal            "default"     "default"
+color response_char     "brightgreen" "default"       "bold"
+color selection         "brightblack" "yellow"
+color status            "white"     "blue"
+
