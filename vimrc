@@ -216,6 +216,81 @@ packadd! cfilter    " Filter quickfix or location lists
 ""call minpac#add('fcpg/vim-waikiki') " Vim minimal wiki
 ""call minpac#add('bennyyip/plugpac.vim') " Thin wrapper of minpac, provides vim-plug-like experience
 ""call minpac#add('preservim/vim-pencil') " Rethinking Vim as a tool for writing
+""call minpac#add('vim-scripts/DrawIt') " DrawIt: ASCII drawing plugin
+""call minpac#add('junegunn/gv.vim') " gv.vim: Git commit browser
+""call minpac#add('sotte/presenting.vim') " presenting.vim: A simple tool for presenting slides in vim based on text files
+""call minpac#add('Ron89/thesaurus_query.vim') " thesaurus-query: Multi-language Thesaurus Query and Replacement plugin
+""call minpac#add('altercation/vim-colors-solarized') " vim-colors-solarized: Solarized colorscheme
+""call minpac#add('ryanoasis/vim-devicons') " vim-devicons: NERDTree icons
+""call minpac#add('bagrat/vim-buffet') " IDE-like Vim tabline 
+""call minpac#add('euclio/vim-markdown-composer') " Asynchronous markdown preview
+""call minpac#add('airblade/vim-rooter') " vim-rooter: Change working directory to project root
+""call minpac#add('jenterkin/vim-autosource') " vim-autosource: project vimrc
+""call minpac#add('RRethy/vim-hexokinase') " vim-hexokinase: Display colors in the file
+""call minpac#add(ludovicchabant/vim-gutentags') " vim-gutentags: vim tags
+""call minpac#add('skywind3000/gutentags_plus') " gutentags_plus: vim_tags
+""call minpac#add('rhysd/vim-grammarous') " vim-grammarous: vim grammar checker
+""call minpac#add('sysid/vimwiki-nirvana') " vimwiki-nirvana: vimwiki custom link handler
+""call minpac#add('sysid/vimwiki-nirvana') " coc: Intellisense for vim
+""call minpac#add('neoclide/coc-snippets') " coc-snippets: snippets for coc
+""call minpac#add('sirver/UltiSnips') " UltiSnips: vim snippets
+""call minpac#add('Shougo/deoplete.nvim') " deoplete: vim completion framework
+""call minpac#add('vim-scripts/Conque-GDB') " conque-gdb: integrate gdb with vim
+""call minpac#add('lervag/vimtex') " vimtex: vim LaTEX plugin
+""call minpac#add('ii14/exrc.vim') " exrc.vim: project vimrc
+""call minpac#add('vifm/vifm.vim') " vifm.vifm: use vim as a file picker
+""call minpac#add('roryokane/detectindent') " detectindent: detect indent settings in vim
+" auto_mkdir2: Automatically create directory tree for new files {{{3
+""call minpac#add('arp242/auto_mkdir2.vim')
+
+" Only make tree in wiki
+let g:auto_mkdir2_autocmd = '$WIKI_DIR/content/**'
+
+" nerdtree: A tree explorer plugin for vim {{{3
+""call minpac#add('preservim/nerdtree')
+
+" <F10> : Toggle file tree browser
+noremap <silent> <F8> :NERDTreeToggle<cr>
+
+" Close Vim if last window open is NERDTree
+autocmd bufenter * if (winnr("$") == 1 &&
+    \ exists("b:NERDTree") && 
+    \ b:NERDTree.isTabTree()) | q | 
+    \ endif
+
+" nerdtree-git-plugin: A plugin of NERDTree showing git status {{{3
+""call minpac#add('Xuyuanp/nerdtree-git-plugin')
+
+" Custom indicators
+"let g:NERDTreeIndicatorMapCustom = {
+    " \ "Modified"  : "✹",
+    " \ "Staged"    : "✚",
+    " \ "Untracked" : "✭",
+    " \ "Renamed"   : "➜",
+    " \ "Unmerged"  : "═",
+    " \ "Deleted"   : "✖",
+    " \ "Dirty"     : "✗",
+    " \ "Clean"     : "✔︎",
+    " \ "Ignored"   : "☒",
+    " \ "Unknown"   : "?"
+    " \ }
+
+" NOTE: See 'Colors and Syntax Settings' for more
+
+" vim-sneak: The missing motion for Vim {{{3
+""call minpac#add('justinmk/vim-sneak')
+
+" sS works like fF, except searches for two characters
+" Use zZ instead in operations (s is taken by surround.vim)
+"
+" [count]s limits search to a vertical column of 2*[count]
+
+" s goes not next match
+" S goes to previous match
+let  g:sneak#s_next = 1
+
+" Enable label mode
+let g:sneak#label = 1
 
 " minpac setup {{{2
 "
@@ -226,16 +301,20 @@ packadd! cfilter    " Filter quickfix or location lists
 packadd minpac
 call minpac#init()
 call minpac#add('k-takata/minpac', {'type': 'opt'})
-" auto_mkdir2: Automatically create directory tree for new files {{{2
 
-""call minpac#add('arp242/auto_mkdir2.vim')
+" a.vim: Swap header and source files {{{2
+call minpac#add('vim-scripts/a.vim')
 
-" Only make tree in wiki
-let g:auto_mkdir2_autocmd = '$WIKI_DIR/content/**'
+" :A : Switch between header and source files
+" :AS: Split and switch
+" :AV: Vertical split and switch
+
+" ansible-vim: Syntax highlighting Ansible's common filetypes {{{2
+call minpac#add('pearofducks/ansible-vim')
 
 " CCTree: Vim CCTree plugin {{{2
 if has("cscope")
-""    call minpac#add('hari-rangarajan/CCTree')
+    call minpac#add('hari-rangarajan/CCTree')
 
     " See Mappings & Commands -> Cscope for mappings
 
@@ -245,21 +324,37 @@ if has("cscope")
 
     " Automatically load database if it exists in current directory
     " or if defined in $CSCOPE_DB
-""    function! s:load_cscope_db()
-""        if filereadable("cscope.out")
-""            CCTreeLoadDB cscope.out
-""        elseif $CSCOPE_DB != ""
-""            CCTreeLoadDB $CSCOPE_DB
-""        endif
-""    endfunction
-""    autocmd VimEnter * call s:load_cscope_db()
+    function! s:load_cscope_db()
+        if filereadable("cscope.out")
+            CCTreeLoadDB cscope.out
+        elseif $CSCOPE_DB != ""
+            CCTreeLoadDB $CSCOPE_DB
+        endif
+    endfunction
+    autocmd VimEnter * call s:load_cscope_db()
 endif
 
-" cisco.vim: syntax highlighting for Cisco config files
+" cisco.vim: syntax highlighting for Cisco config files {{{2
 call minpac#add('vim-scripts/cisco.vim')
 
-" DrawIt: ASCII drawing plugin {{{2
-""call minpac#add('vim-scripts/DrawIt')
+" Colorizer: Color hex codes and color names{{{2
+call minpac#add('chrisbra/Colorizer')
+
+" Highlight colors in a range (entire buffer by default):
+"   :[range]ColorHighlight [match|syntax]
+" Turn off color:
+"   :ColorClear
+" Toggle color:
+"   :ColorToggle
+
+" Automatically colorize these filetypes
+" TODO: get this to work correctly in .vimrc
+let g:colorizer_auto_filetype = 'css,html,markdown,xdefaults'
+" TODO: can it turn back on automatically?
+let g:colorizer_disable_bufleave = 0 " Only highlight above files
+" Highlight X11 colornames in Xresources and such
+" TODO: is there a way to do this **only** for Xresources files?
+let g:colorizer_x11_names = 1
 
 " fzf: Fuzzy finder {{{2
 call minpac#add('junegunn/fzf')
@@ -287,44 +382,15 @@ noremap <C-b> :Buffers<CR>
 
 " fzf-checkout.vim: Manage branches and tags with fzf {{{2
 call minpac#add('stsewd/fzf-checkout.vim')
-" gv.vim: Git commit browser {{{2
-""call minpac#add('junegunn/gv.vim')
 
-" vim-hcl: Syntax highlighting for HCL {{{2
-call minpac#add('jvirtanen/vim-hcl')
-" nerdtree: A tree explorer plugin for vim {{{2
-""call minpac#add('preservim/nerdtree')
+" gemini-vim-syntax: Syntax highlighting for text/gemini files {{{2
+call minpac#add('https://tildegit.org/sloum/gemini-vim-syntax')
 
-" <F10> : Toggle file tree browser
-noremap <silent> <F8> :NERDTreeToggle<cr>
+" pnfo: View NFO files in vim {{{2
+call minpac#add('trapd00r/pnfo')
 
-" Close Vim if last window open is NERDTree
-autocmd bufenter * if (winnr("$") == 1 &&
-    \ exists("b:NERDTree") && 
-    \ b:NERDTree.isTabTree()) | q | 
-    \ endif
-
-" nerdtree-git-plugin: A plugin of NERDTree showing git status {{{2
-""call minpac#add('Xuyuanp/nerdtree-git-plugin')
-
-" Custom indicators
-"let g:NERDTreeIndicatorMapCustom = {
-    " \ "Modified"  : "✹",
-    " \ "Staged"    : "✚",
-    " \ "Untracked" : "✭",
-    " \ "Renamed"   : "➜",
-    " \ "Unmerged"  : "═",
-    " \ "Deleted"   : "✖",
-    " \ "Dirty"     : "✗",
-    " \ "Clean"     : "✔︎",
-    " \ 'Ignored'   : '☒',
-    " \ "Unknown"   : "?"
-    " \ }
-
-
-" NOTE: See 'Colors and Syntax Settings' for more
-" presenting.vim: A simple tool for presenting slides in vim based on text files {{{2
-call minpac#add('sotte/presenting.vim')
+" scss-syntax: Sassy CSS for vim {{{2
+call minpac#add('cakebaker/scss-syntax.vim')
 
 " SimplyFold: No-BS Python code folding{{{2
 call minpac#add('tmhedberg/SimpylFold')
@@ -388,7 +454,7 @@ call minpac#add('AndrewRadev/tagalong.vim')
 let g:tagalong_additional_filetypes = ['xhtml', 'phtml']
 
 " tagbar: Source code browser using ctags {{{2
-""call minpac#add('preservim/tagbar')
+call minpac#add('preservim/tagbar')
 
 " ctags commands
 " --------------
@@ -424,8 +490,7 @@ let g:tagbar_type_markdown = {
     \ 'sro'        : '»',
     \ 'kind2scope' : {'s' : 'section',},
     \ 'sort'       : 0}
-" thesaurus-query: Multi-language Thesaurus Query and Replacement plugin {{{2
-""call minpac#add('Ron89/thesaurus_query.vim')
+
 
 " <leader>cs : query thesauras for word under cursor
 
@@ -444,9 +509,6 @@ call minpac#add('alvan/vim-closetag')
 " Use closetag in these files
 let g:closetag_filenames = "*.html,*.xhtml,*.phtml"
 
-" vim-colors-solarized: Solarized colorscheme {{{2
-call minpac#add('altercation/vim-colors-solarized')
-
 " vim-commentary: Commenting keymaps {{{2
 call minpac#add('tpope/vim-commentary')
 
@@ -455,38 +517,17 @@ call minpac#add('tpope/vim-commentary')
 " {Visual}gc : Toggle commenting of highlighted lines
 " gcu        : Uncomment current and adjacent lines
 
-" Colorizer: Color hex codes and color names{{{2
-""call minpac#add('chrisbra/Colorizer')
-
-" Highlight colors in a range (entire buffer by default):
-"   :[range]ColorHighlight [match|syntax]
-" Turn off color:
-"   :ColorClear
-" Toggle color:
-"   :ColorToggle
-
-" Automatically colorize these filetypes
-" TODO: get this to work correctly in .vimrc
-let g:colorizer_auto_filetype = 'css,html,markdown,xdefaults'
-let g:colorizer_disable_bufleave = 1
-" Highlight X11 colornames in Xresources and such
-" TODO: is there a way to do this **only** for Xresources files?
-" let g:colorizer_x11_names = 1
-
-" vim-devicons: NERDTree icons {{{2
-""call minpac#add('ryanoasis/vim-devicons')
-
-" vim-fugitive: Git in Vim{{{2
+" vim-fugitive: Git in Vim {{{2
 call minpac#add('tpope/vim-fugitive')
 
 " vim-gist: Edit github.com gists with vim {{{2
-""call minpac#add('mattn/vim-gist')
+call minpac#add('mattn/vim-gist')
 
 let g:gist_post_private = 1 " Private gists by default
                             " :Gist -P to create public Gist
 
 " vim-gitgutter: Use the sign column to show git chanages {{{2
-""call minpac#add('airblade/vim-gitgutter')
+call minpac#add('airblade/vim-gitgutter')
 
 " The default updatetime of 4000ms is not good for async update
 set updatetime=100
@@ -497,6 +538,9 @@ let g:gitgutter_sign_modified = 'ﰣ'
 let g:gitgutter_sign_removed = ''
 let g:gitgutter_sign_removed_first_line = ''
 let g:gitgutter_sign_modified_removed = ''
+
+" vim-hcl: Syntax highlighting for HCL {{{2
+call minpac#add('jvirtanen/vim-hcl')
 
 " vim-IndentCommentPrefix: Indents comments sensibly {{{2
 call minpac#add('inkarkat/vim-IndentCommentPrefix')
@@ -523,7 +567,7 @@ call minpac#add('matze/vim-ini-fold')
 call minpac#add('wsdjeg/vim-irssi-syntax')
 
 " vim-markdown: Markdown vim mode {{{2
-""call minpac#add('plasticboy/vim-markdown')
+call minpac#add('plasticboy/vim-markdown')
 
 let g:vim_markdown_frontmatter = 1
 let g:vim_markdown_folding_style_pythonic = 1
@@ -531,27 +575,14 @@ let g:vim_markdown_folding_level = 1
 let g:vim_markdown_override_foldtext = 0
 let g:vim_markdown_follow_anchor = 1
 let g:vim_markdown_conceal_code_blocks = 0
-
-" vim-markdown-folding: Fold Markdown files on headers {{{2
+ 
+" vim-markdown-folding: Fold Markdown files on headers
 call minpac#add('masukomi/vim-markdown-folding')
-
-" vim-repeat: Penable repeating supported plugin maps with "."{{{2
+" vim-repeat: Enable repeating supported plugin maps with "."{{{2
 call minpac#add('tpope/vim-repeat')
 
-" vim-sneak: The missing motion for Vim {{{2
-call minpac#add('justinmk/vim-sneak')
-
-" sS works like fF, except searches for two characters
-" Use zZ instead in operations (s is taken by surround.vim)
-"
-" [count]s limits search to a vertical column of 2*[count]
-
-" s goes not next match
-" S goes to previous match
-let  g:sneak#s_next = 1
-
-" Enable label mode
-let g:sneak#label = 1
+" vim-sxhkdrc: Vim syntax for sxhkd's configuration files {{{2
+call minpac#add('baskerville/vim-sxhkdrc')
 
 " vim-surround: Modify surrounding characters {{{2
 call minpac#add('tpope/vim-surround')
@@ -601,7 +632,7 @@ else
 endif
 
 " webapi-vim: Needed for vim-gist {{{2
-""call minpac#add('mattn/webapi-vim')
+call minpac#add('mattn/webapi-vim')
 
 " todo-txt.vim: Vim plugin for Todo.txt {{{2
 call minpac#add('freitass/todo.txt-vim')
@@ -631,13 +662,6 @@ call minpac#add('freitass/todo.txt-vim')
 " <LocalLeader>C : Toggle cancelled
 " <LocalLeader>X : Mark all completed
 " <LocalLeader>D : Move completed tasks to done file
-
-" a.vim: Swap header and source files {{{2
-call minpac#add('vim-scripts/a.vim')
-
-" :A : Switch between header and source files
-" :AS: Split and switch
-" :AV: Vertical split and switch
 
 " Mappings & Commands {{{1
 "========================
