@@ -27,6 +27,10 @@ autocmd BufWritePost ~/.vimrc nested source ~/.vimrc
 
 set nocompatible " Don't be vi compatible
 
+" Remap Leader here because it may be used *before* the mapping section
+" Better than ',' which is used for backwards character searching
+let mapleader = ' '
+
 " Basics {{{1
 " ======
 filetype plugin indent on            " Load filetype plugins and indent settings
@@ -682,11 +686,6 @@ call minpac#add('freitass/todo.txt-vim')
 " <silent> : don't echo mapping on command line
 " <expr>   : mapping inserts result of {rhs}
 " <buffer> : buffer local mapping
-
-" Remap <leader> ' ' {{{2
-"
-" Better than ',' which is used for backwards character searching
-let mapleader = ' '
 
 " Window Management: {{{2
 " ==================
