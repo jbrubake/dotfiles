@@ -1,42 +1,42 @@
+# Get a password from pass(1)
 mod4 + p 
     passmenu -l 10 -bw 1 -c -p Password?
 
+# Use the window list to raise and focus a particular window
 mod4 + s
     winsearch -l 10 -bw 1 -c -p Window:
 
+# Use dmenu to run a command
 Super_R
     dmenu_run -l 10 -bw 1 -c -p Command:
 
+# 3-finger saulte
 ctrl + alt + Delete
     dmenu-menu exitrc
 
-# Application shortcuts
-#
-
+# Browser
 mod4 + b
     jumpapp -c Navigator.Firefox firefox
 
+# Main terminal
 mod4 + Return
     jumpapp -c st.St -t main st -t main -e tmux new-session -A -s main -t main
 
+# Various apps
+#
 F10
     jumpapp -i Discord Discord
-
 F11
     jumpapp -i Signal flatpak run org.signal.Signal
-
 F12
     jumpapp -i "Microsoft Teams" teams
 
-# Other
+# Volume controls
 #
-
 XF86AudioMute
     change_volume mute
-
 XF86AudioLowerVolume
     change_volume -1%
-
 XF86AudioRaiseVolume
     change_volume +1%
 
