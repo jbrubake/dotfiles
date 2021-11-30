@@ -893,18 +893,18 @@ endif
 " vim-sneak {{{2
 
 " Add vim-sneak functionality to fFtT
-nmap f <Plug>Sneak_f
-nmap F <Plug>Sneak_F ne
-xmap f <Plug>Sneak_f
-xmap F <Plug>Sneak_F ne
-omap f <Plug>Sneak_f
-omap F <Plug>Sneak_F
-nmap t <Plug>Sneak_t
-nmap T <Plug>Sneak_T
-xmap t <Plug>Sneak_t
-xmap T <Plug>Sneak_T
-omap t <Plug>Sneak_t
-omap T <Plug>Sneak_T
+" nmap f <Plug>Sneak_f
+" nmap F <Plug>Sneak_F ne
+" xmap f <Plug>Sneak_f
+" xmap F <Plug>Sneak_F ne
+" omap f <Plug>Sneak_f
+" omap F <Plug>Sneak_F
+" nmap t <Plug>Sneak_t
+" nmap T <Plug>Sneak_T
+" xmap t <Plug>Sneak_t
+" xmap T <Plug>Sneak_T
+" omap t <Plug>Sneak_t
+" omap T <Plug>Sneak_T
 " My wiki {{{1
 " Find wiki files
 set path^=$WIKI_DIR/content
