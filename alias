@@ -110,23 +110,27 @@ else
     alias myip='printf "wget or curl not available\n"'
 fi
 
-alias dut='du -h --max-depth=1'  # du(1) prints totals for one level down
-alias df='df -hT'                # Make df output nicer
+
+alias ':q'=exit                                           # Exit like it's vim
+alias +x='chmod +x "$@"'                                  # Make file executable
+alias -- -x='chmod -x "$@"'                               # Make file non-executable
+alias bell='printf "\a"'                                  # Ring the bell
+alias df='df -hT'                                         # Make df output nicer
+alias dut='du -h --max-depth=1'                           # du(1) prints totals for one level down
+alias gist="vim '+Gist -l'"                               # Open Gist browser
+alias jobs='jobs -l'                                      # List PID
+alias klsshd="kill -TERM \$(cat $HOME/var/run/sshd.pid)"  # Stop user sshd
+alias loc='locate -d "$LOCATEDB" "$@"'                    # Use my personal locate(1) db
+alias lsshd="/usr/sbin/sshd -f $HOME/etc/ssh/sshd_config" # Start user sshd
+alias nu="who | cut -d' ' -f1 | uniq | wc -l"             # Get number of logged on users
+command -v reset >/dev/null ||  alias reset='tput sgr0'   # Reset terminal
+alias rpg=rpg-cli                                         # rpg-cli but shorter
+alias sudo='sudo '                                        # Enable aliases to be sudo’ed
+alias tree='command tree -CFI '.git' --dirsfirst'         # Better looking tree(1)
+alias unexec="find . -type f -exec chmod ogu-x '{}' \;"   # chmod -x ALL files in tree
+
 command -v reset >/dev/null || \
-    alias reset='tput sgr0'          # Reset system palette
-alias sudo='sudo '               # Enable aliases to be sudo’ed
-alias jobs='jobs -l'             # List PID
-alias gist="vim '+Gist -l'"      # Open Gist browser
-alias ':q'=exit                  # Exit like it's vim
-alias lsshd="/usr/sbin/sshd -f $HOME/etc/ssh/sshd_config"
-alias klsshd="kill -TERM \$(cat $HOME/var/run/sshd.pid)"
-alias rpg=rpg-cli
-alias tree='command tree -CFI '.git' --dirsfirst'
-alias loc='locate -d "$LOCATEDB" "$@"'
-alias bell='printf "\a"'
-alias +x='chmod +x "$@"'
-alias -- -x='chmod -x "$@"'
-alias nu="who | cut -d' ' -f1 | uniq | wc -l"
-alias unexec="find . -type f -exec chmod ogu-x '{}' \;" # chmod -x ALL files in tree
+    alias reset='tput sgr0'          # Reset terminal
 
 # vim: foldlevel=0
+
