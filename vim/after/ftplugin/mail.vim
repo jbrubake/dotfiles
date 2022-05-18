@@ -11,7 +11,7 @@ setlocal foldmethod=expr foldlevel=1 foldminlines=2
 "                        between “soft” and “hard” line breaks
 setlocal textwidth=72
 setlocal formatoptions=aq
-setlocal comments+=nb:>
+setlocal comments=nb:>
 setlocal spell
 match ErrorMsg '\s\+$'
 
