@@ -76,7 +76,6 @@ set include      = yes # Include original message when replying
 set text_flowed  = yes # Generate format=flowed emails (editor needs configured for this)
 
 # Edit emails in a new tmux/screen window
-# TODO: fix so it also works outside of tmux/screen
 set background_edit = yes
 set editor          = "mutt-trim %s; $my_bin/mutt-bgedit $my_bin/mutt-edit %s"
 
@@ -87,7 +86,6 @@ auto_view text/html # Automatically view HTML email (bastards)
 # auto_view text/* application/* image/* audio/* # For lesspipe.sh
 alternative_order text/plain text/enriched text/html
 
-# TODO: Needs a spell checker installed
 set ispell="aspell -e -c"       # Use aspell for spell checking
 
 # What parts of the header to show
@@ -102,7 +100,6 @@ unhdr_order *
 hdr_order from: to: cc: bcc: date: subject:
 
 # Generate X-Face: header
-# TODO: this needs to fail gracefully
 my_hdr X-Face: $(compface ~/share/avatars/me.xbm | $my_bin/mutt-quote-x-face)
 
 # Address book {{{1
@@ -269,7 +266,6 @@ bind  pager               gg        top
 bind  generic,index,attach G         last-entry
 bind  pager               G         bottom
 
-# TODO: sidebar bindings override history bindings
 bind  index,pager         \cn       sidebar-next
 bind  index,pager         \cp       sidebar-prev
 bind  index,pager         \co       sidebar-open

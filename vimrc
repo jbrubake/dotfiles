@@ -187,7 +187,6 @@ set foldopen=block,hor,mark,percent,quickfix,tag " What movements open folds
 " Right justify folded line count
 "
 " dhruvasagar (dhruvasagar.com/2013/03/28/vim-better-foldtext)
-" TODO: modify this (look at vim-markdown-folding) to include depth at the beginning
 function! NeatFoldText()
     let line = ' ' . substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{' . '{\d*\s*', '', 'g') . ' '
     let lines_count = v:foldend - v:foldstart + 1
@@ -202,7 +201,6 @@ set foldtext=NeatFoldText()
 
 " Plugins {{{1
 "============
-" TODO: Only configure plugin if it exists
 " Optional packages {{{2
 packadd! matchit    " Enhanced % matching
 packadd! cfilter    " Filter quickfix or location lists
@@ -351,12 +349,9 @@ call minpac#add('chrisbra/Colorizer')
 "   :ColorToggle
 
 " Automatically colorize these filetypes
-" TODO: get this to work correctly in .vimrc
 let g:colorizer_auto_filetype = 'css,html,markdown,xdefaults'
-" TODO: can it turn back on automatically?
 let g:colorizer_disable_bufleave = 0 " Only highlight above files
 " Highlight X11 colornames in Xresources and such
-" TODO: is there a way to do this **only** for Xresources files?
 let g:colorizer_x11_names = 1
 
 " fzf: Fuzzy finder {{{2
@@ -788,7 +783,6 @@ cnoremap <C-P> <Up>
 cnoremap <C-N> <Down>
 
 " <leader>[=-#]:    underline current line {{{2
-" TODO: Make this work with comments
 nnoremap <leader>= yyp^v$r=
 nnoremap <leader>- yyp^v$r-
 nnoremap <leader># yyp^v$r#
@@ -807,7 +801,6 @@ nnoremap <F2> :set norelativenumber!<CR>
 "
 nnoremap <leader>gg :Git<CR>
 
-" FIXME: origin is SSH not HTTP
 nnoremap <leader>gB :GBrowse<CR>
 vnoremap <leader>gB :GBrowse<CR>
 
@@ -925,7 +918,6 @@ nnoremap <leader>nn :Ngrep<Space>
 " ==========================
 " HilightSwap: make 'hi out' the reverse of 'hi in' {{{2
 " Based on https://vi.stackexchange.com/a/21547
-" TODO: Look at just replacing the 'cterm' 'gui' parts
 function! HighlightSwap(in, out)
     let l:hi = execute('hi ' . a:in)
 
@@ -979,7 +971,6 @@ function! s:colorscheme_local() abort
     highlight! link SignColumn LineNr
 
     " Column and row highlighting
-    " TODO: use a function to set all this based on the current background color
     highlight ColorColumn  cterm=NONE ctermbg=darkgray guibg=#586e75
     highlight CursorLine   cterm=NONE ctermbg=darkgray guibg=#003644
     highlight CursorLineNr cterm=NONE ctermfg=white ctermbg=darkgray gui=NONE guifg=white guibg=#003644
@@ -1022,7 +1013,6 @@ let g:PaperColor_Theme_Options = {
             \     'c': {'highlight_builtins' : 1 }}
             \ }
 
-" TODO: stop writing this twice
 if exists('g:vimpager.enabled')
     highlight Normal ctermbg=250 guibg=#002b36
 endif

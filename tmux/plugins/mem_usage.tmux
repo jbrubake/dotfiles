@@ -1,7 +1,5 @@
 #!/bin/sh
 
-# TODO: Pull the colorize piece out from here and load plugin
-
 # Seconds until script output cache is stale
 INTERVAL=60
 YELLOW_USAGE=50

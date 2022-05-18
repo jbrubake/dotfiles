@@ -97,7 +97,6 @@ visible_headers "From:,Subject:,Date:,Newsgroups:,Followup-To:,User-Agent:"
 
 set process_verbatim_marks 1 % #v+ and #v- mark verbatim lines
 
-% TODO: emacs marks (snip?)
 set hide_verbatim_marks 1 % hide verbatim marks
   
 set hide_pgpsignature 1 % hide PGP signatures

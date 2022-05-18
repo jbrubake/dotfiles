@@ -1,6 +1,4 @@
 #!/bin/sh
-# FIXME: Make this more robust. Set options through
-# FIXME: variables at the begining. Maybe have app lists?
 
 # Basic setup {{{1
 
@@ -88,7 +86,6 @@ dwm)
     if command -v $WINDOWMANAGER >/dev/null; then
         $WINDOWMANAGER & wmpid=$!
     else
-        # TODO: Make this run whatever terminal is installed
         st & wmpid=$!
     fi
     ;;
