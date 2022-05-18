@@ -53,6 +53,37 @@ alias term='( $(my terminal)& )'
 alias calc='( $(my calculator)& )'
 alias calendar='( $(my calendar)& )'
 
+# GRC Highlighting {{{1
+
+if command -v grc >/dev/null; then
+    df='grc df'
+    alias du='grc du'
+    alias dig='grc dig'
+    alias dnf='grc dnf'
+    alias env='grc env'
+    alias free='grc free'
+    alias id='grc id'
+    alias jobs='grc jobs'
+    alias last='grc last'
+    alias mount='grc mount'
+    alias mtr='grc mtr'
+    alias netstat='grc netstat'
+    alias nmap='grc nmap'
+    alias ping='grc ping'
+    alias ps='grc ps'
+    alias pv='grc pv'
+    alias sensors='grc sensors'
+    alias ss='grc ss'
+    alias stat='grc stat'
+    alias sysctl='grc sysctl'
+    alias systemctl='grc systemctl'
+    alias tcpdump='grc tcpdump'
+    alias traceroute='grc traceroute'
+    alias uptime='grc uptime'
+    alias vmstat='grc vmstat'
+    alias whois='grc whois'
+fi
+
 # Miscellaneous {{{1
 #
 # Emulate clear(1) if I don't have it
