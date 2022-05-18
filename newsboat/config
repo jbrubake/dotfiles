@@ -1,3 +1,4 @@
 urls-source oldreader
 oldreader-login jbru362@gmail.com
 oldreader-passwordeval "pass show theoldreader.com"
+include /usr/share/doc/newsboat/contrib/colorschemes/solarized-dark
