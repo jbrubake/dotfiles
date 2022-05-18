@@ -354,6 +354,9 @@ let g:colorizer_disable_bufleave = 0 " Only highlight above files
 " Highlight X11 colornames in Xresources and such
 let g:colorizer_x11_names = 1
 
+" fugitive-gitlab: A vim extension to fugitive.vim for GitLab support {{{2
+call minpac#add('shumphrey/fugitive-gitlab.vim')
+
 " fzf: Fuzzy finder {{{2
 call minpac#add('junegunn/fzf')
 
