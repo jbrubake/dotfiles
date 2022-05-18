@@ -170,6 +170,11 @@ PACKER_CONFIG=$XDG_CONFIG_HOME/packerconfig
 PACKER_CACHE_DIR=$XDG_CACHE_HOME/packer
 export PACKER_CONFIG_DIR
 
+# Go {{{2
+if [ -d "/opt/go/bin" ]; then
+    PATH="$PATH:/opt/go/bin"
+fi
+
 # System specific {{{1
 #
 case "$(uname -o)" in
