@@ -523,6 +523,7 @@ call minpac#add('tpope/vim-commentary')
 
 " vim-fugitive: Git in Vim {{{2
 call minpac#add('tpope/vim-fugitive')
+"set completopt-=preview " disable issue body preview
 
 " vim-gist: Edit github.com gists with vim {{{2
 call minpac#add('mattn/vim-gist')
