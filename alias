@@ -123,5 +123,10 @@ alias klsshd="kill -TERM \$(cat $HOME/var/run/sshd.pid)"
 alias rpg=rpg-cli
 alias tree='command tree -CFI '.git' --dirsfirst'
 alias loc='locate -d "$LOCATEDB" "$@"'
+alias bell='printf "\a"'
+alias +x='chmod +x "$@"'
+alias -- -x='chmod -x "$@"'
+alias nu="who | cut -d' ' -f1 | uniq | wc -l"
+alias unexec="find . -type f -exec chmod ogu-x '{}' \;" # chmod -x ALL files in tree
 
 # vim: foldlevel=0
