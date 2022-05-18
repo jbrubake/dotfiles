@@ -1,5 +1,7 @@
 #!/bin/sh
 #
+# Generate multipart text+HTML emails
+#
 # Wrap MIMEmbellish and msmtp because mutt appends To:
 # addresses to its 'sendmail' command instead of allowing
 # me to put those variables in the setting where I want them
