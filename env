@@ -158,6 +158,7 @@ fi
 # Sigh. Python can't find user site-packages because I refuse to use
 # .local or whatever other silly crap it expects
 PYTHONPATH=$HOME/lib/python3/site-packages
+test -d "$PYTHONPATH/bin" && PATH="$PYTHONPATH/bin:$PATH"
 export PYTHONPATH
 
 # Rust {{{2
