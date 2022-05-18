@@ -10,3 +10,13 @@ Host *
 Include config.base
 Include config.local
 
+# sshtron
+Host tron
+    HostName sshtron.zachlatta.com
+    User green
+
+# localhost
+Host local
+    HostName localhost
+    Port 2022
+
