@@ -260,6 +260,9 @@ END
             ;;
         esac
 }
+sdfmap() { # Print ASCII map location of SDF user $1
+    curl http://plewylli.sdf-eu.org/asciimap.cgi?$1
+}
 # navi {1
 _navi_call() {
     local result="$(navi --path ~/share/navi "$@" </dev/tty)"
