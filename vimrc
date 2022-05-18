@@ -212,7 +212,6 @@ packadd! cfilter    " Filter quickfix or location lists
 ""call minpac#add('tpope/vim-projectionist') " Granular project configuration
 ""call minpac#add('tpope/vim-apathy') " Set the 'path' option for miscellaneous file types
 ""call minpac#add('tpope/vim-obsession') " continuously updated session files
-""call minpac#add('tpope/vim-rhubarb') " GitHub extension for fugitive.vim
 ""call minpac#add('tpope/vim-unimpaired') " Pairs of handy bracket mappings
 ""call minpac#add('tpope/vim-vinegar') " Combine with netrw to create a delicious salad dressing
 ""call minpac#add('romainl/vim-cool') " A very simple plugin that makes hlsearch more useful
@@ -584,6 +583,9 @@ let g:vim_markdown_conceal_code_blocks = 0
 call minpac#add('masukomi/vim-markdown-folding')
 " vim-repeat: Enable repeating supported plugin maps with "."{{{2
 call minpac#add('tpope/vim-repeat')
+
+" vim-rhubarb: GitHub extension for fugitive.vim {{{2
+call minpac#add('tpope/vim-rhubarb')
 
 " vim-sxhkdrc: Vim syntax for sxhkd's configuration files {{{2
 call minpac#add('baskerville/vim-sxhkdrc')
