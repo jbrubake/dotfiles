@@ -1,0 +1,17 @@
+show-summary: false
+show-tags: true
+show-fundamentals: true
+show-separator: false
+show-holdings: true
+interval: 5
+currency: USD
+currency-summary-only: false
+lots:
+  - symbol: "VTI"
+    quantity: 2
+    unit_cost: 1
+  - symbol: "ETH-USD"
+    quantity: 0.00108917
+    unit_cost: 4131.586
+    fixed_cost: 0.50 # e.g. brokerage commission fee
+
