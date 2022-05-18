@@ -228,6 +228,10 @@ export NNTPSERVER
 MAIL="$HOME/.maildir/local"
 export MAIL
 
+# Enable pass(1) extensions
+PASSWORD_STORE_ENABLE_EXTENSIONS=true
+export PASSWORD_STORE_ENABLE_EXTENSIONS
+
 # Configure tldr-sh client {{{2
 #
 if command -v tldr >/dev/null; then
