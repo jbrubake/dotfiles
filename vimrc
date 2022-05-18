@@ -357,6 +357,9 @@ let g:colorizer_x11_names = 1
 " fugitive-gitlab: A vim extension to fugitive.vim for GitLab support {{{2
 call minpac#add('shumphrey/fugitive-gitlab.vim')
 
+" fugitive-gitea: Plugin for :Gbrowse to work with GITea server {{{2
+call minpac#add('borissov/fugitive-gitea')
+
 " fzf: Fuzzy finder {{{2
 call minpac#add('junegunn/fzf')
 
