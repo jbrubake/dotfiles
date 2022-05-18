@@ -24,7 +24,7 @@ get_ip_location() {
     }
 
 is_vpn_on() {
-    if ip a | grep -q 'tun0'; then
+    if ip address | grep -Eq '(tun|wg)[[:digit:]]'; then
         return 0
     else
         return 1
