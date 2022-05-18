@@ -84,6 +84,11 @@ if command -v grc >/dev/null; then
     alias whois='grc whois'
 fi
 
+# Flatpak aliases {{{1
+#
+alias lagrange='flatpak run fi.skyjake.Lagrange'
+alias signal='flatpak run org.signal.Signal'
+
 # Miscellaneous {{{1
 #
 # Emulate clear(1) if I don't have it
