@@ -35,9 +35,14 @@ if [ $tot -gt 0 ]; then
     fi
 fi
 
+home_network=$(plugin home-network)
+
 printf "#[fg=white,bg=black]"
 printf "#[fg=cyan]#h:#[fg=magenta]#S"
 printf "#[fg=yellow]:up %s" "$(plugin uptime)"
-printf " %s%s" "$(emojify :earth_americas:)" "$(network_status) "
-printf "#[fg=white] "
+printf " %s%s" "$(emojify :earth_americas:)" "$(network_status)"
+if [ -n "$home_network" ]; then
+    printf "#[fg=green] [%s]" "$home_network"
+fi
+printf "#[fg=white]  "
 
