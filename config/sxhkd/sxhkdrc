@@ -52,3 +52,9 @@ XF86AudioLowerVolume
 XF86AudioRaiseVolume
     change_volume +1%
 
+# Brightness controls
+#
+XF86MonBrightnessDown
+    change_brightness -5%
+XF86MonBrightnessUp
+    change_brightness +5%
