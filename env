@@ -30,6 +30,7 @@ fi
 
 # Setup PATH {{{1
 test -d "/usr/local/bin" && PATH="/usr/local/bin:$PATH"
+test -d "/usr/local/games" && PATH="/usr/local/games:$PATH"
 test -d "$HOME/bin"  && PATH="$HOME/bin:$PATH"
 test -d "$HOME/games" && PATH="$HOME/games:$PATH"
 test -d "$HOME/sbin" && PATH="$HOME/sbin:$PATH"
