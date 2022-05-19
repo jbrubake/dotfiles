@@ -975,8 +975,8 @@ set hlsearch            " Highlight search matches
 let c_comment_strings=1 " Highlight strings in C comments
 
 if exists('+termguicolors')
-    set t_8f=[38;2;%lu;%lu;%lum        " set foreground color
-    set t_8b=[48;2;%lu;%lu;%lum        " set background color
+    set t_8f=[38;2;%lu;%lu;%lum        " Enable 24-bit foreground colors
+    set t_8b=[48;2;%lu;%lu;%lum        " Enable 24-bit background colors
     set termguicolors                    " Enable GUI colors for the terminal to get truecolor
 endif
 
@@ -1001,7 +1001,7 @@ function! s:colorscheme_local() abort
     highlight StatusLineNC ctermfg=12 ctermbg=16 guifg=#4271ae guibg=#000000
 
     " Link terminal status lines to normal ones
-    highlight! link StatusLineTerm StatusLine
+    highlight! link StatusLineTerm   StatusLine
     highlight! link StatusLineTermNC StatusLineNC
 
     " Non-printing characters
@@ -1013,8 +1013,8 @@ function! s:colorscheme_local() abort
     highlight! link SignColumn LineNr
 
     " Column and row highlighting
-    highlight ColorColumn  cterm=NONE ctermbg=23 guibg=#003644
-    highlight CursorLine   cterm=NONE ctermbg=23 guibg=#003644
+    highlight ColorColumn  cterm=NONE            ctermbg=23                          guibg=#003644
+    highlight CursorLine   cterm=NONE            ctermbg=23                          guibg=#003644
     highlight CursorLineNr cterm=NONE ctermfg=15 ctermbg=NONE gui=NONE guifg=#ffffff guibg=NONE
 
     " Statusline user colors
@@ -1029,7 +1029,7 @@ function! s:colorscheme_local() abort
     highlight DiffDelete term=bold ctermfg=12 ctermbg=6 guifg=#cf669f guibg=#5f0000
     "
     " Make all types of diffs look the same {{{
-    highlight! link diffAdded DiffAdd 
+    highlight! link diffAdded   DiffAdd 
     highlight! link diffChanged DiffChange
     highlight! link diffRemoved DiffDelete
     " DiffText (changed line)
