@@ -546,6 +546,9 @@ call minpac#add('tpope/vim-commentary')
 call minpac#add('tpope/vim-fugitive')
 "set completopt-=preview " disable issue body preview
 
+" vim-fugitive-blame-ext: extend vim-fugitive to show commit message on statusline in :Gblame {{{2
+call minpac#add('tommcdo/vim-fugitive-blame-ext')
+
 " vim-gist: Edit github.com gists with vim {{{2
 call minpac#add('mattn/vim-gist')
 
