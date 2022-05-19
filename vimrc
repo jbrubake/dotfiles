@@ -1020,7 +1020,11 @@ function! s:colorscheme_local() abort
     " Statusline user colors
     highlight! link User1 StatusLine
 
-    highlight SpellBad ctermul=red
+    " Spelling colors
+    highlight SpellBad   cterm=undercurl ctermul=160 ctermbg=NONE gui=undercurl guisp=#d70000 guibg=NONE
+    highlight SpellCap   cterm=underline ctermul=226 ctermbg=NONE gui=underline guisp=#ffff00 guibg=NONE
+    highlight SpellLocal cterm=underline ctermul=166 ctermbg=NONE gui=underline guisp=#d75f00 guibg=NONE
+    highlight SpellRare  cterm=underline ctermul=135 ctermbg=NONE gui=underline guisp=#af5fff guibg=NONE
 
     " Make all types of diffs look the same {{{
     highlight! link diffAdded DiffAdd 
