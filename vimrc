@@ -1013,7 +1013,7 @@ function! s:colorscheme_local() abort
     highlight! link SignColumn LineNr
 
     " Column and row highlighting
-    highlight ColorColumn  cterm=NONE ctermbg=23 guibg=#586e75
+    highlight ColorColumn  cterm=NONE ctermbg=23 guibg=#003644
     highlight CursorLine   cterm=NONE ctermbg=23 guibg=#003644
     highlight CursorLineNr cterm=NONE ctermfg=15 ctermbg=NONE gui=NONE guifg=#ffffff guibg=NONE
 
