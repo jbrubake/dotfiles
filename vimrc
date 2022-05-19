@@ -996,26 +996,26 @@ function! s:colorscheme_local() abort
     highlight Normal ctermbg=NONE guibg=NONE
 
     " Active window status line
-    highlight StatusLine   ctermfg=darkblue ctermbg=white guifg=#4271ae guibg=#ffffff
+    highlight StatusLine   ctermfg=12 ctermbg=15 guifg=#4271ae guibg=#ffffff
     " In-active window status line
-    highlight StatusLineNC ctermfg=darkblue ctermbg=black guifg=#4271ae guibg=#000000
+    highlight StatusLineNC ctermfg=12 ctermbg=16 guifg=#4271ae guibg=#000000
 
     " Link terminal status lines to normal ones
     highlight! link StatusLineTerm StatusLine
     highlight! link StatusLineTermNC StatusLineNC
 
     " Non-printing characters
-    highlight NonText    ctermfg=brown ctermbg=NONE guifg=#d75f00 guibg=NONE
-    highlight SpecialKey ctermfg=brown ctermbg=NONE guifg=#d75f00 guibg=NONE
+    highlight NonText    ctermfg=166 ctermbg=NONE guifg=#d75f00 guibg=NONE
+    highlight SpecialKey ctermfg=166 ctermbg=NONE guifg=#d75f00 guibg=NONE
 
     " Gutter and line number column
     highlight  LineNr ctermbg=NONE guibg=NONE
     highlight! link SignColumn LineNr
 
     " Column and row highlighting
-    highlight ColorColumn  cterm=NONE ctermbg=darkgray guibg=#586e75
-    highlight CursorLine   cterm=NONE ctermbg=darkgray guibg=#003644
-    highlight CursorLineNr cterm=NONE ctermfg=white ctermbg=NONE gui=NONE guifg=white guibg=NONE
+    highlight ColorColumn  cterm=NONE ctermbg=23 guibg=#586e75
+    highlight CursorLine   cterm=NONE ctermbg=23 guibg=#003644
+    highlight CursorLineNr cterm=NONE ctermfg=15 ctermbg=NONE gui=NONE guifg=#ffffff guibg=NONE
 
     " Statusline user colors
     highlight! link User1 StatusLine
@@ -1030,9 +1030,9 @@ function! s:colorscheme_local() abort
     " }}}
     " vim-gitgutter {{{
     " The defaults aren't very good
-    highlight GitGutterAdd    ctermfg=green ctermbg=NONE gui=bold guifg=green guibg=NONE
-    highlight GitGutterChange ctermfg=brown ctermbg=NONE gui=bold guifg=brown guibg=NONE
-    highlight GitGutterDelete ctermfg=red   ctermbg=NONE gui=bold guifg=red guibg=NONE
+    highlight GitGutterAdd    ctermfg=40 ctermbg=NONE gui=bold guifg=#00d700 guibg=NONE
+    highlight GitGutterChange ctermfg=226 ctermbg=NONE gui=bold guifg=#ffff00 guibg=NONE
+    highlight GitGutterDelete ctermfg=160   ctermbg=NONE gui=bold guifg=#d70000 guibg=NONE
     " }}}
 endfunction
 " Automatcially source custom colors when a colorscheme is loaded
