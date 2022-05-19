@@ -205,6 +205,16 @@ set foldtext=NeatFoldText()
 packadd! matchit    " Enhanced % matching
 packadd! cfilter    " Filter quickfix or location lists
 
+" minpac setup {{{2
+"
+" call minpac#update() to update all packages
+" call minpac#clean() to remove unused plugins
+" call minpac#status() to get plugin status
+
+packadd minpac
+call minpac#init()
+call minpac#add('k-takata/minpac', {'type': 'opt'})
+
 " EVALUATING {{{2
 ""call minpac#add('dbeniamine/cheat.sh-vim') " cheat.sh-vim: A vim plugin to access cheat.sh sheets
 ""call minpac#add('neoclide/coc-snippets') " coc-snippets: snippets for coc
@@ -313,16 +323,6 @@ let  g:sneak#s_next = 1
 
 " Enable label mode
 let g:sneak#label = 1
-
-" minpac setup {{{2
-"
-" call minpac#update() to update all packages
-" call minpac#clean() to remove unused plugins
-" call minpac#status() to get plugin status
-
-packadd minpac
-call minpac#init()
-call minpac#add('k-takata/minpac', {'type': 'opt'})
 
 " a.vim: Swap header and source files {{{2
 call minpac#add('vim-scripts/a.vim')
