@@ -9,7 +9,7 @@ git module ls_colors:
     LS_COLORS:
       - dircolors
   pick: dircolors
-  rev: 2957904dbd4156b7980e3450233f811073132023
+  rev: 52efc3b3df66fcc1ea19c8edeba769d5e42c7b97
 
 git module gdb-dashboard:
   url: https://github.com/cyrus-and/gdb-dashboard
