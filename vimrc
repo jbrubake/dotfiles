@@ -206,41 +206,62 @@ packadd! matchit    " Enhanced % matching
 packadd! cfilter    " Filter quickfix or location lists
 
 " EVALUATING {{{2
-""call minpac#add('lervag/lists.vim') " A Vim plugin to handle lists
-""call minpac#add('tpope/vim-projectionist') " Granular project configuration
-""call minpac#add('tpope/vim-apathy') " Set the 'path' option for miscellaneous file types
-""call minpac#add('tpope/vim-obsession') " continuously updated session files
-""call minpac#add('tpope/vim-unimpaired') " Pairs of handy bracket mappings
-""call minpac#add('tpope/vim-vinegar') " Combine with netrw to create a delicious salad dressing
-""call minpac#add('romainl/vim-cool') " A very simple plugin that makes hlsearch more useful
-""call minpac#add('romainl/vim-qf') " Tame the quickfix window
-""call minpac#add('fcpg/vim-waikiki') " Vim minimal wiki
-""call minpac#add('bennyyip/plugpac.vim') " Thin wrapper of minpac, provides vim-plug-like experience
-""call minpac#add('preservim/vim-pencil') " Rethinking Vim as a tool for writing
-""call minpac#add('vim-scripts/DrawIt') " DrawIt: ASCII drawing plugin
-""call minpac#add('junegunn/gv.vim') " gv.vim: Git commit browser
-""call minpac#add('sotte/presenting.vim') " presenting.vim: A simple tool for presenting slides in vim based on text files
-""call minpac#add('Ron89/thesaurus_query.vim') " thesaurus-query: Multi-language Thesaurus Query and Replacement plugin
-""call minpac#add('altercation/vim-colors-solarized') " vim-colors-solarized: Solarized colorscheme
-""call minpac#add('ryanoasis/vim-devicons') " vim-devicons: NERDTree icons
-""call minpac#add('bagrat/vim-buffet') " IDE-like Vim tabline 
-""call minpac#add('euclio/vim-markdown-composer') " Asynchronous markdown preview
-""call minpac#add('airblade/vim-rooter') " vim-rooter: Change working directory to project root
-""call minpac#add('jenterkin/vim-autosource') " vim-autosource: project vimrc
-""call minpac#add('RRethy/vim-hexokinase') " vim-hexokinase: Display colors in the file
-""call minpac#add(ludovicchabant/vim-gutentags') " vim-gutentags: vim tags
-""call minpac#add('skywind3000/gutentags_plus') " gutentags_plus: vim_tags
-""call minpac#add('rhysd/vim-grammarous') " vim-grammarous: vim grammar checker
-""call minpac#add('sysid/vimwiki-nirvana') " vimwiki-nirvana: vimwiki custom link handler
-""call minpac#add('sysid/vimwiki-nirvana') " coc: Intellisense for vim
+""call minpac#add('dbeniamine/cheat.sh-vim') " cheat.sh-vim: A vim plugin to access cheat.sh sheets
 ""call minpac#add('neoclide/coc-snippets') " coc-snippets: snippets for coc
-""call minpac#add('sirver/UltiSnips') " UltiSnips: vim snippets
-""call minpac#add('Shougo/deoplete.nvim') " deoplete: vim completion framework
 ""call minpac#add('vim-scripts/Conque-GDB') " conque-gdb: integrate gdb with vim
-""call minpac#add('lervag/vimtex') " vimtex: vim LaTEX plugin
-""call minpac#add('ii14/exrc.vim') " exrc.vim: project vimrc
-""call minpac#add('vifm/vifm.vim') " vifm.vifm: use vim as a file picker
+""call minpac#add('Shougo/deoplete.nvim') " deoplete: vim completion framework
 ""call minpac#add('roryokane/detectindent') " detectindent: detect indent settings in vim
+""call minpac#add('vim-scripts/DrawIt') " DrawIt: ASCII drawing plugin
+""call minpac#add('Shougo/echodoc.vim') " echodoc.vim: Print documents in echo area
+""call minpac#add('editorconfig/editorconfig-vim') " editorconfig-vim: EditorConfig plugin for Vim
+""call minpac#add('ii14/exrc.vim') " exrc.vim: project vimrc
+""call minpac#add('skywind3000/gutentags_plus') " gutentags_plus: vim_tags
+""call minpac#add('junegunn/gv.vim') " gv.vim: Git commit browser
+""call minpac#add('lervag/lists.vim') " lists.vim: A Vim plugin to handle lists
+""call minpac#add('SidOfc/mkdx') " mkdx: A vim plugin that adds some nice extras for working with markdown documents
+""call minpac#add('bennyyip/plugpac.vim') " plugpac.vim: Thin wrapper of minpac, provides vim-plug-like experience
+""call minpac#add('sotte/presenting.vim') " presenting.vim: A simple tool for presenting slides in vim based on text files
+""call minpac#add('unblevable/quick-scope') " quick-scope: Lightning fast left-right movement in Vim
+""call minpac#add('Ron89/thesaurus_query.vim') " thesaurus-query: Multi-language Thesaurus Query and Replacement plugin
+""call minpac#add('sirver/UltiSnips') " UltiSnips: vim snippets
+""call minpac#add('mbbill/undotree') " undotree: The undo history visualizer for VIM
+""call minpac#add('vifm/vifm.vim') " vifm.vifm: use vim as a file picker
+""call minpac#add('pseewald/vim-anyfold') " vim-anyfold: Langague agnostic vim plugin for folding and motion based on indentation
+""call minpac#add('tpope/vim-apathy') " vim-apathy: Set the 'path' option for miscellaneous file types
+""call minpac#add('jenterkin/vim-autosource') " vim-autosource: project vimrc
+""call minpac#add('bagrat/vim-buffet') " vim-buffet: IDE-like Vim tabline 
+""call minpac#add('altercation/vim-colors-solarized') " vim-colors-solarized: Solarized colorscheme
+""call minpac#add('romainl/vim-cool') " vim-cool: A very simple plugin that makes hlsearch more useful
+""call minpac#add('ryanoasis/vim-devicons') " vim-devicons: NERDTree icons
+""call minpac#add('rhysd/vim-grammarous') " vim-grammarous: vim grammar checker
+""call minpac#add(ludovicchabant/vim-gutentags') " vim-gutentags: vim tags
+""call minpac#add('RRethy/vim-hexokinase') " vim-hexokinase: Display colors in the file
+""call minpac#add('euclio/vim-markdown-composer') " vim-markdown-composer: Asynchronous markdown preview
+""call minpac#add('lifepillar/vim-mucomplete') " vim-mucomplete: Chained completion that works the way you want!
+""call minpac#add('simnalamburt/vim-mundo') " vim-mundo: Vim undo tree visualizer
+""call minpac#add('tpope/vim-obsession') " vim-obsession: Continuously updated session files
+""call minpac#add('sickill/vim-pasta') " vim-pasta: Pasting in Vim with indentation adjusted to destination context
+""call minpac#add('preservim/vim-pencil') " vim-pencil: Rethinking Vim as a tool for writing
+""call minpac#add('tpope/vim-projectionist') " vim-projectionist: Granular project configuration
+""call minpac#add('romainl/vim-qf') " vim-qf: Tame the quickfix window
+""call minpac#add('airblade/vim-rooter') " vim-rooter: Change working directory to project root
+""call minpac#add('tpope/vim-speeddating') " vim-speeddating: use CTRL-A/CTRL-X to increment dates, times and more
+""call minpac#add('christoomey/vim-system-copy') " vim-system-copy: Vim plugin for copying to the system clipboard with text-objects and motions
+""call minpac#add('kana/vim-textobj-entire') " vim-textobj-entire: Text objects for entire buffer
+""call minpac#add('kana/vim-textobj-line') " vim-textobj-line: Text objects for the current line
+""call minpac#add('kana/vim-textobj-user') " vim-textobj-user: Create your own text objects
+""call minpac#add('tpope/vim-unimpaired') " vim-unimpaired: Pairs of handy bracket mappings
+""call minpac#add('tpope/vim-vinegar') " vim-vinegar: Combine with netrw to create a delicious salad dressing
+""call minpac#add('fcpg/vim-waikiki') " vim-waikiki: Vim minimal wiki
+""call minpac#add('chaoren/vim-wordmotion') " vim-wordmotion: More useful word motions for vim
+""call minpac#add('jreybert/vimagit') " vimagit: Ease your git workflow within Vim
+""call minpac#add('LucHermitte/VimFold4C') " VimFold4C: Vim folding ftplugin for C & C++ (and similar languages)
+""call minpac#add('vimoutliner/vimoutline') " vimoutline: Work fast, think well
+""call minpac#add('lervag/vimtex') " vimtex: vim LaTEX plugin
+""call minpac#add('vimwiki/vimwiki') " vimwiki: Personal Wiki for Vim
+""call minpac#add('sysid/vimwiki-nirvana') " vimwiki-nirvana: vimwiki custom link handler
+""call minpac#add('lervag/wiki.vim') " wiki.vim: A wiki plugin for Vim
+
 " auto_mkdir2: Automatically create directory tree for new files {{{3
 ""call minpac#add('arp242/auto_mkdir2.vim')
 
