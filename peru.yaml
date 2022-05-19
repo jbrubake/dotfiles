@@ -17,7 +17,7 @@ git module gdb-dashboard:
     .gdbinit:
       - gdbinit
   pick: gdbinit
-  rev: 101cf69cc95f90956b6d9612a3468dac6422c87c
+  rev: bf619ab2129f70cd239c2361d6571333f08c7a08
 
 curl module mutt-bgedit:
   url: https://gitlab.com/muttmua/mutt/-/raw/master/contrib/bgedit-screen-tmux.sh
