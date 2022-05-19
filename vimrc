@@ -980,6 +980,13 @@ if exists('+termguicolors')
     set termguicolors                    " Enable GUI colors for the terminal to get truecolor
 endif
 
+" Turn on terminal undercurl support
+let &t_Cs = "\e[4:3m"
+let &t_Ce = "\e[4:0m"
+" Turn on terminal colored underline
+let &t_AU = "\e[58:5:%p1%d%;m"
+let &t_8u = "\e[58:2:%lu:%lu:%lum"
+
 " Custom colors {{{
 function! s:colorscheme_local() abort
     highlight Normal ctermbg=250 guibg=#002b36
