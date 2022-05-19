@@ -1026,6 +1026,8 @@ function! s:colorscheme_local() abort
     highlight SpellLocal cterm=underline ctermul=166 ctermbg=NONE gui=underline guisp=#d75f00 guibg=NONE
     highlight SpellRare  cterm=underline ctermul=135 ctermbg=NONE gui=underline guisp=#af5fff guibg=NONE
 
+    highlight DiffDelete term=bold ctermfg=12 ctermbg=6 guifg=#cf669f guibg=#5f0000
+    "
     " Make all types of diffs look the same {{{
     highlight! link diffAdded DiffAdd 
     highlight! link diffChanged DiffChange
