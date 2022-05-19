@@ -1034,9 +1034,9 @@ function! s:colorscheme_local() abort
     " }}}
     " vim-gitgutter {{{
     " The defaults aren't very good
-    highlight GitGutterAdd    ctermfg=40 ctermbg=NONE gui=bold guifg=#00d700 guibg=NONE
-    highlight GitGutterChange ctermfg=226 ctermbg=NONE gui=bold guifg=#ffff00 guibg=NONE
-    highlight GitGutterDelete ctermfg=160   ctermbg=NONE gui=bold guifg=#d70000 guibg=NONE
+    highlight GitGutterAdd    cterm=bold ctermfg=40  ctermbg=NONE gui=bold guifg=#00d700 guibg=NONE
+    highlight GitGutterChange cterm=bold ctermfg=226 ctermbg=NONE gui=bold guifg=#ffff00 guibg=NONE
+    highlight GitGutterDelete cterm=bold ctermfg=160 ctermbg=NONE gui=bold guifg=#d70000 guibg=NONE
     " }}}
 endfunction
 " Automatcially source custom colors when a colorscheme is loaded
