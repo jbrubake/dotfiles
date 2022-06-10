@@ -102,6 +102,8 @@ esac
 # test -e $INIT/volumeicon.sh && . $INIT/volumeicon.sh start
 # test -e $INIT/keepassx.sh   && . $INIT/keepassx.sh start
 
+test -e $INIT/cassowary   && . $INIT/cassowary start
+
 if type flatpak >/dev/null 2>&1; then
     if $( flatpak list | grep Signal >/dev/null ); then
         flatpak run org.signal.Signal &
