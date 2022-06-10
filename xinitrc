@@ -127,3 +127,7 @@ type teams >/dev/null 2>&1 && teams
 wait $wmpid
 
 # Do any necessary clean up
+if command -v virsh >/dev/null; then
+    virsh list | awk '/[[:digit:]]/ {print $2}' | xargs virsh shutdown
+fi
+
