@@ -52,6 +52,18 @@ dmenu.hiselforeground:  orange
 dmenu.outforeground:    purple
 dmenu.outbackground:    green
 
+! dmenu-pinentry {{{1
+dmenu-pinentry*font: monospace:size=14
+dmenu-pinentry*borderwidth: 1
+
+! dmenu-run {{{1
+dmenu-run*font: monospace:size=16
+dmenu-run*borderwidth: 1
+
+! dmenu-menu {{{1
+dmenu-menu*font: monospace:size=16
+dmenu-menu*borderwidth: 1
+
 ! st {{{1
 st.font:                Source Code Pro:size=12
 
@@ -135,3 +147,10 @@ xsetroot.mody:          16
 ! xautolock {{{1
 xautolock.time:         10
 xautolock.locker:       xlock -info ""
+
+! xfortune {{{1
+xfortune.gfont: liberationmono,20
+xfortune.xfont: -*-*-*-*-*-*-20-0-0-0-p-*-*-*
+xfortune.fg: white
+xfortune.bg: black
+
