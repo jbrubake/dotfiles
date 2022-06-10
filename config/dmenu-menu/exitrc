@@ -1,19 +1,9 @@
-export SUDO_ASKPASS=/usr/libexec/openssh/ssh-askpass
-COMMANDS[Hibernate]="sudo -A systemctl hibernate"
-COMMANDS[Suspend]="sudo -A systemctl suspend"
-COMMANDS[Power off]="sudo -A shutdown now"
-COMMANDS[Reboot]="sudo -A reboot now"
-COMMANDS[Log out]="pkill cwm"
-COMMANDS[Lock]="xlock"
+[Commands]
+# TODO: Need swap space for hibernation
+Log out   = "pkill cwm"   
+Lock      = 'xlock   '
+Power off = "sudo -A shutdown now"
+Reboot    = "sudo -A reboot now"
+Hibernate = "sudo -A systemctl hibernate"
+Suspend   = "sudo -A systemctl suspend"
 
-POSITION="center"
-FONT='sans:size=20'
-BORDER="3"
-FG="#ee1111"
-BG="grey"
-SELFG="black"
-SELBG="#eeeeee"
-HIFG="grey"
-HIBG="black"
-
-# vim: filetype=sh
