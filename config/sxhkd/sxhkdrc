@@ -37,7 +37,7 @@ mod4 + ctrl + Return
 # Various apps
 #
 F10
-    jumpapp -i Discord Discord
+    jumpapp -i Discord flatpak run com.discordapp.Discord
 F11
     jumpapp -i Signal flatpak run org.signal.Signal
 F12
