@@ -8,11 +8,11 @@ mod4 + s
 
 # Use dmenu to run a command
 Super_R
-    dmenu_run -l 10 -bw 1 -c -p Command:
+    dmenu-run -c -l 10 -p Command:
 
 # 3-finger saulte
 ctrl + alt + Delete
-    dmenu-menu exitrc
+    dmenu-menu exitrc -c
 
 # Browser
 mod4 + b
