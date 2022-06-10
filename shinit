@@ -20,7 +20,7 @@ if command -v zoxide >/dev/null; then
     if test -n "$BASH"; then
         eval "$(zoxide init bash --hook pwd)"
     else
-        eval "$(zoxide init posix --hook pwd)"
+        eval "$(zoxide init posix --hook prompt)"
     fi
 fi
 
