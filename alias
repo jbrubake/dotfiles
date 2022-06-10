@@ -89,6 +89,17 @@ fi
 alias lagrange='flatpak run fi.skyjake.Lagrange'
 alias signal='flatpak run org.signal.Signal'
 
+# Cassowary {{{1
+#
+if command -v cassowary >/dev/null 2>&1; then
+    alias word='cassowary -c guest-run winword'
+    alias excel='cassowary -c guest-run excel'
+    alias ppt='cassowary -c guest-run powerpnt'
+    alias pub='cassowary -c guest-run mspub'
+    alias onenote='cassowary -c guest-run onenote'
+    alias access='cassowary -c guest-run msaccess'
+fi
+
 # Miscellaneous {{{1
 #
 # Emulate clear(1) if I don't have it
