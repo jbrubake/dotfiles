@@ -22,6 +22,10 @@ test -x $INIT/keymaps.sh 2>&1 && $INIT/keymaps.sh
 test -x $INIT/touchpad-tap.sh 2>&1 && $INIT/touchpad-tap.sh
 command -v sxhkd >/dev/null && sxhkd &
 
+# Merge XResources/XDefaults {{{1
+test -r "$HOME/.Xresources" && xrdb -merge "$HOME/.Xresources"
+test -r "$HOME/.Xdefaults"  && xrdb -merge "$HOME/.Xdefaults"
+
 # Set wallpaper {{{1
 #
 if command -v feh >/dev/null; then
@@ -33,10 +37,6 @@ elif command -v xsetroot >/dev/null; then
         -bg "$(xrdb -query | awk '/xsetroot\.background/ {print $2}')" \
         -fg "$(xrdb -query | awk '/xsetroot\.foreground/ {print $2}')"
 fi
-
-# Merge XResources/XDefaults {{{1
-test -r "$HOME/.Xresources" && xrdb -merge "$HOME/.Xresources"
-test -r "$HOME/.Xdefaults"  && xrdb -merge "$HOME/.Xdefaults"
 
 # xset options {{{1
 #
@@ -68,6 +68,7 @@ fi
 
 # Start WM {{{1
 #
+
 case $WINDOWMANAGER in
 dwm)
     while true; do
