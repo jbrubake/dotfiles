@@ -71,12 +71,12 @@ fi
 # }
 # Play rpg-cli {1
 if command -v >/dev/null rpg-cli; then
-function cd () { # rpg-cli
-    builtin cd "$@"
+cd () { # rpg-cli
+    command cd "$@"
     rpg-cli cd -f .
     rpg-cli battle
 }
-function delve () {
+delve () {
     current=$(basename $PWD)
     number_re='^[0-9]+$'
 
@@ -110,7 +110,7 @@ lsp () { # Print numerical permissions at the start of ls -l output
         }'
     fi
 }
-function ip () {
+ip () {
 # 'ip get' prints current ip address and copies to clipboard
 # All other commands are passed to the real 'ip' command
 #
