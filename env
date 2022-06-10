@@ -17,10 +17,10 @@ export HOME LOGNAME UNAME TMPDIR TMP
 
 # XDG Directores {{{1
 # Defaults for now
-export XDG_DATA_HOME="$HOME/.local/share"        # data files
-export XDG_CONFIG_HOME="$HOME/.config"           # config files
-export XDG_STATE_HOME="$HOME/.local/state"       # state data (persist application restart)
-export XDG_CACHE_HOME="$HOME/.local/cache"       # non-essential data
+export XDG_DATA_HOME="$HOME/.local/share"  # data files (/usr/share)
+export XDG_CONFIG_HOME="$HOME/.config"     # config files (/etc)
+export XDG_STATE_HOME="$HOME/.local/state" # state data (/var/lib)
+export XDG_CACHE_HOME="$HOME/.local/cache" # non-essential data (/var/cache)
 
 # System defaults
 #
