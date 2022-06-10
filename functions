@@ -116,6 +116,7 @@ ip () {
 #
 # https://jip.dev/posts/dots/
 #
+
     # Use grc if it exists
     if command -v grc >/dev/null; then
         ip="grc ip"
@@ -123,31 +124,32 @@ ip () {
         ip="command ip"
     fi
 
-    if [[ "$1" == 'get' || "$1" == 'g' ]]; then
-        res=$(curl -s ipinfo.io/ip)
-        case $2 in
-            h | he | hel | help)
-            cat <<EOF
+    case "$1" in
+        g | ge | get)
+            res=$(curl -s ipinfo.io/ip)
+            case $2 in
+                c | co | cop | copy)
+                    if command -v xclip >/dev/null; then
+                        printf "%s" "$res" | xclip -in -selection clipboard
+                        printf "copied %s to clipboard\n" "$res"
+                    else
+                        printf "%s\n" "xclip is not installed" >&2
+                        printf "%s\n" "$res"
+                    fi
+                    ;;
+                h | he | hel | help)
+                    cat <<EOF
 Usage: ip get [copy]
 
 Print public IP address to stdout or to the X11 clipboard if [copy]
 is present
 EOF
-            ;;
-            c | co | cop | copy)
-                if command -v xclip >/dev/null; then
-                    printf "%s" "$res" | xclip -in -selection clipboard
-                    printf "copied %s to clipboard\n" "$res"
-                else
-                    printf "%s\n" "xclip is not installed"
-                fi
                 ;;
-            *)
-                printf "%s\n" "$res"
-        esac
-    else
-        $ip "$@"
-    fi
+                *) printf "%s\n" "$res" ;;
+            esac
+            ;;
+        *) $ip "$@" ;;
+    esac
 }
 google () { # Google something
     # Create search string if arguments were passed
