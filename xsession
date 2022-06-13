@@ -18,5 +18,5 @@ eval $( keychain --eval --nogui --agents ssh,gpg )
 
 
 # Finish setting up {{{1
-. ./.xinitrc
+. $HOME/.xinitrc
 
