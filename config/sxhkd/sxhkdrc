@@ -4,7 +4,7 @@ mod4 + p
 
 # Use the window list to raise and focus a particular window
 mod4 + s
-    winsearch -l 10 -bw 1 -c -p Window:
+    winsearch -c -p Window:
 
 # Use dmenu to run a command
 Super_R
