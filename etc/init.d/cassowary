@@ -1,0 +1,37 @@
+#!/bin/sh
+
+vm=cassowary-win10
+
+if ! command -v virsh >/dev/null 2>&1; then
+    printf "virsh not installed\n" >&2
+    exit 1
+fi
+
+if ! virsh list --all | grep -q "$vm" 2>/dev/null; then
+    printf "Domain '%s' does not exist\n" "$vm"
+    exit 1
+fi
+
+case "$1" in
+    start)
+        if virsh dominfo "$vm" | awk '/State:/ { if ($2 == "running") exit 1 }'; then
+            virsh start "$vm"
+        fi
+        ;;
+    restart)
+        if virsh dominfo "$vm" | awk '/State:/ { if ($2 == "running") exit 1 }'; then
+            virsh start "$vm"
+        else
+            virsh reboot "$vm"
+        fi
+        ;;
+    stop)
+        if virsh dominfo "$vm" | awk '/State:/ { if ($2 == "shut") exit 1 }'; then
+            virsh shutdown "$vm"
+        fi
+        ;;
+    status)
+        virsh dominfo "$vm"
+        ;;
+esac
+
