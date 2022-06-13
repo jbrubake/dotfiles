@@ -232,6 +232,13 @@ export MAIL
 PASSWORD_STORE_ENABLE_EXTENSIONS=true
 export PASSWORD_STORE_ENABLE_EXTENSIONS
 
+# pinentry stuff
+SSH_ASKPASS="$HOME/bin/pinentry-ssh-askpass"
+if [ -n "$DISPLAY" ]; then
+    SUDO_ASKPASS="$SSH_ASKPASS"
+fi
+export SSH_ASKPASS SUDO_ASKPASS
+
 # Configure tldr-sh client {{{2
 #
 if command -v tldr >/dev/null; then
