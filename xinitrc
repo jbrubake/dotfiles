@@ -104,12 +104,12 @@ esac
 
 test -e $INIT/cassowary   && . $INIT/cassowary start
 
-if type flatpak >/dev/null 2>&1; then
+if type flatpak 2>&1 >/dev/null; then
     if $( flatpak list | grep Signal >/dev/null ); then
         flatpak run org.signal.Signal &
     fi
 fi
-type teams >/dev/null 2>&1 && teams
+# type teams 2>&1 >/dev/null && teams
 
 # Start other apps {{{1
 #
