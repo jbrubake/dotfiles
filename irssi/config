@@ -41,7 +41,7 @@ aliases = {
   BANS = "BAN";
   BYE = "QUIT";
   C = "CLEAR";
-  CALC = "EXEC - if command -v bc >/dev/null 2>&1\\; then printf '%s=' '$*'\\; echo '$*' | bc -l\\; else echo bc was not found\\; fi";
+  CALC = "EXEC - if command -v bc 2>&1 >/dev/null\\; then printf '%s=' '$*'\\; echo '$*' | bc -l\\; else echo bc was not found\\; fi";
   CHAT = "DCC CHAT";
   DATE = "TIME";
   DEHIGHLIGHT = "DEHILIGHT";
