@@ -216,7 +216,7 @@ lh() { # List last "n" commands in history
 }
 manf() { # Open manpage for $1 at the first occurence of flag $2
 # https://jip.dev/posts/dots/
-      man -P "less -p \"^ +$2\"" $1
+      man -P "less -p \"^ +-$2\"" $1
 }
 wiki() { # Interact with wiki
 # Inspired by: https://vimwiki.github.io/vimwikiwiki/Tips%20and%20Snips.html
