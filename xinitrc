@@ -87,7 +87,13 @@ dwm)
     if command -v $WINDOWMANAGER >/dev/null; then
         $WINDOWMANAGER & wmpid=$!
     else
-        st & wmpid=$!
+        term="st gnome-terminal rxvt xterm"
+        for t in $term; do
+            if command -v "$t" >/dev/null; then
+                $t & wmpid=$!
+                break
+            fi
+        done
     fi
     ;;
 esac
