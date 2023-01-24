@@ -1055,7 +1055,11 @@ function! s:colorscheme_local() abort
     highlight SpellRare  cterm=underline ctermul=135 ctermbg=NONE gui=underline guisp=#af5fff guibg=NONE
 
     highlight DiffDelete term=bold ctermfg=12 ctermbg=6 guifg=#cf669f guibg=#5f0000
-    "
+
+    " Custom highlighting for 'name' when using ansible-vim
+    " The setup that makes this work is in ~/.vim/after/syntax/ansible.vim
+    highlight link my_ansible_name Structure
+
     " Make all types of diffs look the same {{{
     highlight! link diffAdded   DiffAdd 
     highlight! link diffChanged DiffChange
