@@ -86,7 +86,7 @@ if test -z "$PAGER"; then
     done
 unset pagers
 fi
-if test "$PAGER" == "vimpager"; then
+if test "$PAGER" = "vimpager"; then
     VIMPAGER_RC="$HOME/.vimrc"
     export VIMPAGER_RC
 fi
