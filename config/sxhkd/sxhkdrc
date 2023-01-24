@@ -14,6 +14,10 @@ Super_R
 ctrl + alt + Delete
     dmenu-menu exitrc -c
 
+# Terminal
+mod4 + t
+    my terminal
+
 # Browser
 mod4 + b
     jumpapp -c Navigator.Firefox firefox
@@ -37,11 +41,13 @@ mod4 + ctrl + Return
 # Various apps
 #
 F10
-    jumpapp -i Discord flatpak run com.discordapp.Discord
+    jumpapp -i discord Discord
 F11
     jumpapp -i Signal flatpak run org.signal.Signal
 F12
     jumpapp -i "Microsoft Teams" teams
+F9
+    jumpapp -i whalebird flatpak run social.whalebird.WhalebirdDesktop
 
 # Volume controls
 #
