@@ -29,11 +29,16 @@ if command -v flatpak >/dev/null; then
 fi
 
 # Setup PATH {{{1
-paths="/usr/local/bin /usr/local/games $HOME/bin $HOME/games $HOME/sbin"
+# TODO: think through PATH *order* better
+# TODO: e.g. ~/bin should be first followed by go/rust/perl/etc then system stuff
+# Path entries to add. Listed in order from least- to most-significant
+# NOTE: /{s,}bin is here because Fedora doesn't add it as it is just a symlink to
+# /usr/bin. However, certain (Alpine) LXC containers require it
+paths="/bin /sbin /usr/local/games /usr/local/bin $HOME/games $HOME/sbin $HOME/bin"
 for d in $paths; do
-    if [ -d "$d" ] && [ "$PATH" = "${PATH%"$d"*}" ]; then
-        PATH="$PATH:$d"
-    fi
+    # if [ -d "$d" ] && [ "$PATH" = "${PATH%"$d"*}" ]; then
+        PATH="$d:$PATH"
+    # fi
 done
 
 # Locale and timezone {{{1
@@ -210,6 +215,7 @@ export FZF_DEFAULT_COMMAND='rg --files'
 export DOTFILES=~/src/dotfiles
 
 # Create nerd-font variables
+# FIXME: This should be *executed* instead bc it requires bash, but that hangs
 if test -f "$HOME/share/nerd-font/scripts/i_all.sh"; then
     . "$HOME/share/nerd-font/scripts/i_all.sh"
 fi
