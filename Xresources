@@ -56,6 +56,10 @@ dmenu.outbackground:    green
 pinentry-dmenu*font: monospace:size=14
 pinentry-dmenu*borderwidth: 1
 
+! dclock {{{1
+dclock*background: BG
+dclock*led_off: BG
+
 ! dmenu-run {{{1
 dmenu-run*font: monospace:size=16
 dmenu-run*borderwidth: 1
