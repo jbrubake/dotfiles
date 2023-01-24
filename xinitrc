@@ -8,6 +8,7 @@ INIT=~/etc/init.d
 # Select Window Manager or Desktop Environment {{{2
 #
 # Supports:
+#   cwm
 #   dwm
 #   Any WM/DE that is run as a single command with no arguments
 #
@@ -17,9 +18,9 @@ WINDOWMANAGER=cwm
 
 # Setup displays, keymap and keybindings {{{1
 #
-test -x $INIT/displays.sh 2>&1 && $INIT/displays.sh
-test -x $INIT/keymaps.sh 2>&1 && $INIT/keymaps.sh
-test -x $INIT/touchpad-tap.sh 2>&1 && $INIT/touchpad-tap.sh
+test -x $INIT/displays.sh     && $INIT/displays.sh
+test -x $INIT/keymaps.sh      && $INIT/keymaps.sh
+test -x $INIT/touchpad-tap.sh && $INIT/touchpad-tap.sh
 test -x $INIT/wallpaper.sh    && $INIT/wallpaper.sh
 command -v sxhkd >/dev/null && sxhkd &
 
@@ -35,18 +36,19 @@ test -r "$HOME/.Xdefaults"  && xrdb -merge "$HOME/.Xdefaults"
 # app2 && \
 # ) &
 # Use sleep as necessary to sync things up)
-command -v xautolock >/dev/null && xautolock &
-command -v xbanish >/dev/null && xbanish &
-command -v xwrits >/dev/null && xwrits &
+command -v xautolock >/dev/null  && xautolock &
+command -v xbanish >/dev/null    && xbanish &
+command -v xwrits >/dev/null     && xwrits &
 command -v streamdeck >/dev/null && streamdeck &
-command -v mopidy >/dev/null && mopidy &
+command -v mopidy >/dev/null     && mopidy &
 
 # Show login related things {{{1
 #
 # This has to be done here instead of in .xsession
 # because it needs to be done *after* setting up the display and keyboard
+#
 if [ $_xlogin == 'yes' ]; then
-    type 2>&1 >/dev/null xfortune && xfortune ~/share/games/fortunes
+    type >/dev/null 2>&1 xfortune && xfortune ~/share/games/fortunes
     unset _xlogin
 fi
 
@@ -95,9 +97,7 @@ esac
 test -e $INIT/cassowary   && . $INIT/cassowary start
 
 if type flatpak 2>&1 >/dev/null; then
-    if $( flatpak list | grep Signal >/dev/null ); then
-        flatpak run org.signal.Signal &
-    fi
+    flatpak list | grep Signal >/dev/null && flatpak run org.signal.Signal &
 fi
 # type teams 2>&1 >/dev/null && teams
 

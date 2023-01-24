@@ -16,7 +16,6 @@ _xlogin='yes'
 # as it cannot get any input
 eval $( keychain --eval --nogui --agents ssh,gpg )
 
-
 # Finish setting up {{{1
 . $HOME/.xinitrc
 
