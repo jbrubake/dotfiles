@@ -20,28 +20,12 @@ WINDOWMANAGER=cwm
 test -x $INIT/displays.sh 2>&1 && $INIT/displays.sh
 test -x $INIT/keymaps.sh 2>&1 && $INIT/keymaps.sh
 test -x $INIT/touchpad-tap.sh 2>&1 && $INIT/touchpad-tap.sh
+test -x $INIT/wallpaper.sh    && $INIT/wallpaper.sh
 command -v sxhkd >/dev/null && sxhkd &
 
 # Merge XResources/XDefaults {{{1
 test -r "$HOME/.Xresources" && xrdb -merge "$HOME/.Xresources"
 test -r "$HOME/.Xdefaults"  && xrdb -merge "$HOME/.Xdefaults"
-
-# Set wallpaper {{{1
-#
-if command -v feh >/dev/null; then
-    feh --no-fehbg --bg-fill $HOME/.wallpaper0
-elif command -v xsetroot >/dev/null; then
-    xsetroot \
-        -mod "$(xrdb -query | awk '/xsetroot\.modx/ {print $2}')" \
-             "$(xrdb -query | awk '/xsetroot\.mody/ {print $2}')" \
-        -bg "$(xrdb -query | awk '/xsetroot\.background/ {print $2}')" \
-        -fg "$(xrdb -query | awk '/xsetroot\.foreground/ {print $2}')"
-fi
-
-# xset options {{{1
-#
-# Turn off audible bell
-xset b off
 
 # Start daemons {{{1
 #
