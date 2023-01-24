@@ -264,6 +264,18 @@ END
 sdfmap() { # Print ASCII map location of SDF user $1
     curl http://plewylli.sdf-eu.org/asciimap.cgi?$1
 }
+elinks() { # Reuse existing elinks instance
+# Based on elinks contrib/TIPS-AND-TRICKS
+    if command elinks -remote "ping()" 2>/dev/null; then
+        if [ -n "$1" ]; then
+            command elinks -remote "openURL($1,new-tab)"
+        else
+            command elinks -remote "reload()"
+        fi
+    else
+        command elinks $1
+    fi
+}
 # navi {1
 _navi_call() {
     local result="$(navi --path ~/share/navi "$@" </dev/tty)"
