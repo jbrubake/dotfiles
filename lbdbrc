@@ -1,0 +1,6 @@
+METHODS="m_muttalias m_gpg m_getent m_passwd m_finger m_inmail m_goobook"
+
+MY_FINGER_HOSTS="finger.orionarts.io localhost"
+#MAIL_DOMAIN_NAME="orionarts.io"
+MUTTALIAS_FILES=".mutt/aliases"
+
