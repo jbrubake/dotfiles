@@ -10,7 +10,7 @@ git module ls_colors:
     LS_COLORS:
       - dircolors
   pick: dircolors
-  rev: 52efc3b3df66fcc1ea19c8edeba769d5e42c7b97
+  rev: e36eebfb3e1b39497c6038cdc70c75109b6434de
 
 git module gdb-dashboard:
   url: https://github.com/cyrus-and/gdb-dashboard
@@ -18,7 +18,7 @@ git module gdb-dashboard:
     .gdbinit:
       - gdbinit
   pick: gdbinit
-  rev: bf619ab2129f70cd239c2361d6571333f08c7a08
+  rev: 9facea684a1933aa6c0a83784da5901ab45accf1
 
 curl module mutt-bgedit:
   url: https://gitlab.com/muttmua/mutt/-/raw/master/contrib/bgedit-screen-tmux.sh
