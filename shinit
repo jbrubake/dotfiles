@@ -7,10 +7,6 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
-# Load keys here so we have a chance to do so every time a shell
-# is spawned. This is really only needed for X
-keychain --quiet --nogui --ignore-missing $(cat "$HOME/.keychain/keylist")
-
 . "$HOME/.functions"
 . "$HOME/.alias"
 . "$HOME/.prompts"
