@@ -218,6 +218,10 @@ packadd! cfilter    " Filter quickfix or location lists
 " call minpac#status() to get plugin status
 
 packadd minpac
+if !exists('g:loaded_minpac')
+    " No plugins loaded
+else
+
 call minpac#init()
 call minpac#add('k-takata/minpac', {'type': 'opt'})
 
@@ -701,6 +705,7 @@ call minpac#add('freitass/todo.txt-vim')
 " <LocalLeader>X : Mark all completed
 " <LocalLeader>D : Move completed tasks to done file
 
+endif " minpac loaded
 " Mappings & Commands {{{1
 "========================
 " Help {{{2
