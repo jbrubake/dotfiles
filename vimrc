@@ -343,6 +343,23 @@ call minpac#add('vim-scripts/a.vim')
 
 " ansible-vim: Syntax highlighting Ansible's common filetypes {{{2
 call minpac#add('pearofducks/ansible-vim')
+let g:ansible_attribute_highlight      = 'ab' " highlight all key=value pairs
+let g:ansible_name_highlight           = 'b'  " highlight 'name:'
+let g:ansible_extra_keywords_highlight = 1    " highlight extra keywords
+
+" Highlight groups using specified group (:help E669)
+let g:ansible_normal_keywords_highlight      = 'Statement'
+let g:ansible_loop_keywords_highlight        = 'Statement'
+let g:ansible_extra_keywords_highlight_group = 'Delimiter'
+" See custom color settings below to customize 'name_highlight'
+
+" Properly highlight HCL Jinja templates
+let g:ansible_template_syntaxes = {'*.hcl.j2': 'hcl', '*.tf.j2': 'hcl'}
+
+" When to use filetype=yaml.ansible
+let g:ansible_ftdetect_filename_regex = '\v(playbook|site|main|local|requirements)\.ya?ml$'
+
+let g:ansible_goto_role_paths = './roles,../_common/roles'
 
 " CCTree: Vim CCTree plugin {{{2
 if has("cscope")
