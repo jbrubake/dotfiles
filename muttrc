@@ -68,6 +68,7 @@ set askbcc       = yes # Prompt for Bcc before editing
 set fcc_attach   = yes # Save attachments with sent messages
 # set forward_format = # Fwd: format
 # set forward_decode = yes # decode when forwarding
+# set forward_decrypt = yes # decrypt PGP message, when mime_forward and !mime_fw_d
 # set forward_quote = yes # include message in forwards
 # set attribution = # Reply string
 set reply_to     = yes # Automatically use Reply-To:
@@ -82,8 +83,22 @@ set editor          = "mutt-trim %s; $my_bin/mutt-bgedit $my_bin/mutt-edit %s"
 set abort_nosubject = no  # Allow composing messages with no Subject:
 
 set mailcap_path = "~/.mailcap"
+#
+# MIME-Types which should be automatically displayed. If a copiousoutput
+# exists, use it and display it in internal pager.
+# (if $implicit_autoview is set, this is automated for MIME types where
+#  an entry with copiousoutput exists in the mailcap)
+#
 auto_view text/html # Automatically view HTML email (bastards)
 # auto_view text/* application/* image/* audio/* # For lesspipe.sh
+#
+# MIME Lookup: Don't use mailcap directly for these MIME types but
+# look into mime-types first to find a better MIME-Type:
+#
+mime_lookup application/octet-stream
+#
+# List of MIME-Types to give a priority when reading multipart/alternative
+#
 alternative_order text/plain text/enriched text/html
 
 set ispell="aspell -e -c"       # Use aspell for spell checking
@@ -104,7 +119,8 @@ my_hdr X-Face: $(compface ~/share/avatars/me.xbm | $my_bin/mutt-quote-x-face)
 
 # Address book {{{1
 # ============
-set query_command = "goobook query '%s'" # Use goobook to search Google contacts
+set query_command = "lbdbq '%s'" # Use lbdbq to search multiple databases
+# set query_command = "goobook query '%s'" # Use goobook to search Google contacts
 
 # Display formats {{{1
 # ===============
