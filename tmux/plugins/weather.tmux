@@ -42,7 +42,11 @@ PLUGINS=$(tmux show-option -gqv @plugin_dir)
 source "$PLUGINS/utils/cache.sh"
 
 get_weather() {
-    curl http://wttr.in/$LOCATION?format=$FORMAT
+    weather=$(curl http://wttr.in/$LOCATION?format=$FORMAT 2>/dev/null | tr -s ' ')
+        echo ""
+    else
+        echo "$weather"
+    fi
 }
 
 get_value get_weather "$INTERVAL"
