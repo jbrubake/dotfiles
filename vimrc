@@ -78,6 +78,12 @@ set path^=$DOTFILES                  " Search for files in $DOTFILES
 set path+=~/work/fen-x/fenx-infra
 set path+=~/work/fen-x/fenx-infra/fenx_infra
 
+" ttymouse is not properly set if TERM=tmux*
+" and then I can't use the mouse to resize splits
+if &term =~ "tmux"
+    set ttymouse=sgr
+endif
+
 " Absolute & Hybrid line numbers by buffer status {{{2
 "
 " https://jeffkreeftmeijer.com/vim-number/
