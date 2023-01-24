@@ -14,8 +14,8 @@ fi
 
 # Start gpg and ssh agents {{{1
 #
-# Keys are loaded in ~/.bashrc to make sure all terminals in X load keys
-eval $( keychain --eval --agents ssh,gpg )
+keychain --quiet --nogui --ignore-missing $(cat "$HOME/.keychain/keylist")
+
 
 # MOTD {{{1
 if test  -e /run/motd.dynamic; then
@@ -38,3 +38,4 @@ case "$(uname -r)" in
 esac
 
 #vim: foldlevel=0
+
