@@ -88,6 +88,7 @@ fi
 #
 alias lagrange='flatpak run fi.skyjake.Lagrange'
 alias signal='flatpak run org.signal.Signal'
+alias whalebird='flatpak run social.whalebird.WhalebirdDesktop'
 
 # Cassowary {{{1
 #
