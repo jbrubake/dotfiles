@@ -16,13 +16,16 @@ INIT=~/etc/init.d
 #
 WINDOWMANAGER=cwm
 
+# xset options {{{1
+#
+xset b off # Turn off audible bell
+
 # Setup displays, keymap and keybindings {{{1
 #
 test -x $INIT/displays.sh     && $INIT/displays.sh
 test -x $INIT/keymaps.sh      && $INIT/keymaps.sh
 test -x $INIT/touchpad-tap.sh && $INIT/touchpad-tap.sh
 test -x $INIT/wallpaper.sh    && $INIT/wallpaper.sh
-command -v sxhkd >/dev/null && sxhkd &
 
 # Merge XResources/XDefaults {{{1
 test -r "$HOME/.Xresources" && xrdb -merge "$HOME/.Xresources"
@@ -49,6 +52,12 @@ command -v mopidy >/dev/null     && mopidy &
 #
 if [ $_xlogin == 'yes' ]; then
     type >/dev/null 2>&1 xfortune && xfortune ~/share/games/fortunes
+    if type >/dev/null 2>&1 my; then
+        t=$(my -v terminal)
+    else
+        t=xterm
+    fi
+    $t -e keychain --quiet --nogui --ignore-missing $(cat "$HOME/.keychain/keylist")
     unset _xlogin
 fi
 
