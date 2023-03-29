@@ -11,12 +11,8 @@
 ! 6    /  14  : cyan
 ! 7    /  15  : white
 
-#define BG          #002b36
 #define FG          #839496
-#define FADE        red
-#define CURSOR      FG
-#define POINTERBG   red
-#define POINTERFG   green
+#define BG          #002b36
 
 #define COLOR0      #171421
 #define COLOR8      #5e5c64
@@ -35,5 +31,9 @@
 #define COLOR7      #d0cfcc
 #define COLOR15     #ffffff
 
+#define FADE        red
+#define CURSOR      FG
+#define POINTERBG   red
+#define POINTERFG   green
 #define HILIGHT     COLOR8
 

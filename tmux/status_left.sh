@@ -37,10 +37,12 @@ fi
 
 home_network=$(plugin home-network)
 
+globe="$(emojify :earth_americas:)"
+
 printf "#[fg=white,bg=black]"
 printf "#[fg=cyan]#h:#[fg=magenta]#S"
 printf "#[fg=yellow]:up %s" "$(plugin uptime)"
-printf " %s%s" "$(emojify :earth_americas:)" "$(network_status)"
+printf " %s%s" "$globe" "$(network_status)"
 if [ -n "$home_network" ]; then
     printf "#[fg=green] [%s]" "$home_network"
 fi
