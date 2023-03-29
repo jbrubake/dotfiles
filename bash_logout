@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Do not run this script if a tmux/screen session exists
-type -p tmux && tmux list-sessions 2>&1 >/dev/null && return
-type -p screen && screen -ls 2>&1 >/dev/null && return
+type -p tmux   >/dev/null 2>&1 && tmux list-sessions
+type -p screen >/dev/null 2>&1 && screen -ls
 
 # If I am logging out completely, clear the screen
 #

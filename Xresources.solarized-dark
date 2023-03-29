@@ -11,35 +11,26 @@
 ! 6    /  14  : cyan
 ! 7    /  15  : white
 
-! Common
-!
-#define S_yellow        #b58900
-#define S_orange        #cb4b16
-#define S_red           #dc322f
-#define S_magenta       #d33682
-#define S_violet        #6c71c4
-#define S_blue          #268bd2
-#define S_cyan          #2aa198
-#define S_green         #859900
+#define S_yellow    #b58900
+#define S_orange    #cb4b16
+#define S_red       #dc322f
+#define S_magenta   #d33682
+#define S_violet    #6c71c4
+#define S_blue      #268bd2
+#define S_cyan      #2aa198
+#define S_green     #859900
 
-! Dark
-!
-#define S_base03        #002b36
-#define S_base02        #073642
-#define S_base01        #586e75
-#define S_base00        #657b83
-#define S_base0         #839496
-#define S_base1         #93a1a1
-#define S_base2         #eee8d5
-#define S_base3         #fdf6e3
+#define S_base03    #002b36
+#define S_base02    #073642
+#define S_base01    #586e75
+#define S_base00    #657b83
+#define S_base0     #839496
+#define S_base1     #93a1a1
+#define S_base2     #eee8d5
+#define S_base3     #fdf6e3
 
 #define BG          S_base03
 #define FG          S_base0
-#define FADE        S_base03
-#define CURSOR      S_base1
-#define POINTERBG   S_base01
-#define POINTERFG   S_base1
-#define HILIGHT     S_base2
                     
 #define COLOR0      S_base02
 #define COLOR1      S_red
@@ -58,3 +49,8 @@
 #define COLOR14     S_base1
 #define COLOR15     S_base3
 
+#define FADE        S_base03
+#define CURSOR      S_base1
+#define POINTERBG   S_base01
+#define POINTERFG   S_base1
+#define HILIGHT     S_base2
