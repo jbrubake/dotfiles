@@ -176,5 +176,8 @@ alias tnews="NNTPSERVER=news.tilde.club slrn -f $HOME/.jnewsrc.tilde"
 alias tree='command tree -CFI '.git' --dirsfirst'         # Better looking tree(1)
 alias unexec="find . -type f -exec chmod ogu-x '{}' \;"   # chmod -x ALL files in tree
 
+command -v colormake >/dev/null &&
+    alias make=colormake
+
 # vim: foldlevel=0
 
