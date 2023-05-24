@@ -184,5 +184,9 @@ if command -v vimx >/dev/null; then
     alias vi=vimx
 fi
 
+if command -v buku >/dev/null; then
+    alias b='buku --suggest'
+fi
+
 # vim: foldlevel=0
 
