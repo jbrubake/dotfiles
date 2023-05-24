@@ -33,30 +33,26 @@ command -v navi >/dev/null &&
 # Bash Completion {{{
 # System settings
 if ! shopt -oq posix; then
-    if [ -f /usr/share/bash-completion/bash_completion ]; then
-        . /usr/share/bash-completion/bash_completion
+    if [ -f /etc/profile.d/bash-completion.sh ]; then
+        . /etc/profile.d/bash-completion.sh
     elif [ -f /etc/bash_completion ]; then
         . /etc/bash_completion
-    elif [ -f /etc/profile.d/bash-completion.sh ]; then
-        . /etc/profile.d/bash-completion.sh
+    elif [ -f /usr/share/bash-completion/bash_completion ]; then
+        . /usr/share/bash-completion/bash_completion
     fi
 fi
 
-# System local settings
-for f in /usr/local/etc/bash_completion.d/* /usr/local/share/bash-completion/completions/* /usr/local/share/bash_completion.d/*; do
-    if test -e "$f"; then
-        . "$f"
+# System local settings (deprecated location)
+_backup_glob='@(#*#|*@(~|.@(bak|orig|rej|swp|dpkg*|rpm@(orig|new|save))))'
+for dir in /usr/local/share/bash_completion.d /usr/local/etc/bash_completion.d; do
+    if [[ -d $dir && -r $dir && -x $dir ]]; then
+        for i in "$dir"/*; do
+            [[ ${i##*/} != @($_backup_glob|Makefile*) && -f \
+                $i && -r $i ]] && . "$i"
+        done
     fi
 done
-unset f
-
-# Personal settings
-for f in ~/share/bash_completion.d/*; do
-    if test -e "$f"; then
-        . "$f"
-    fi
-done
-unset f
+unset dir i _backup_glob
 
 # Allow todo.sh alias to use bash completion
 command -v todo.sh >/dev/null &&
