@@ -6,9 +6,9 @@ source $PLUGINS/utils/plugins.sh
 system="$(emojify :computer:)"
 calendar="$(emojify :calendar:)"
 
-printf "#[fg=white,bg=black]"
-printf " #[fg=yellow]%s %s #[fg=white]| %s#[fg=white]" "$system" "$(plugin mem_usage)" "$(plugin load)"
-printf " |#[fg=green,bold] %s %s" "$calendar" "$(plugin clock)"
-printf "#[fg=white,none] | %s" "$(plugin weather)"
+printf "#[fg=white,bg=black] "
+printf "#[fg=yellow]%s %s #[fg=white]| %s#[fg=white] " "$system" "$(plugin mem_usage)" "$(plugin load)"
+printf "| #[fg=green,bold,bg=brightblack]%s %s#[bg=black] " "$calendar" "$(plugin clock)"
+printf "#[fg=white,none]| %s" "$(plugin weather)"
 printf " "
 
