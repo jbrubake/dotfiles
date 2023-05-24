@@ -39,5 +39,10 @@ if command -v xcape 2>&1 >/dev/null; then
     xcape -e 'Super_L=Super_R' # Super_L = Super_R by itself
 fi
 
-command -v sxhkd >/dev/null && sxhkd &
+if command -v sxhkd >/dev/null 2>&1; then
+    # Start sxhkd in $HOME, otherwise everything it
+    # starts will start in /
+    cd "$HOME"
+    sxhkd &
+fi
 
