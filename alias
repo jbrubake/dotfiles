@@ -179,5 +179,10 @@ alias unexec="find . -type f -exec chmod ogu-x '{}' \;"   # chmod -x ALL files i
 command -v colormake >/dev/null &&
     alias make=colormake
 
+if command -v vimx >/dev/null; then
+    alias vim=vimx
+    alias vi=vimx
+fi
+
 # vim: foldlevel=0
 
