@@ -199,6 +199,7 @@ if [ -n "$BASH" ]; then
 
     # History stuff
     #
+    HISTFILE="$XDG_STATE_HOME/misc/bash_history"
     HISTFILESIZE=50           # Max lines in history
     HISTCONTROL="ignoredups"  # No duplicate history entries
     HISTIGNORE="&:[bf]g:exit" # History ignores these matches
