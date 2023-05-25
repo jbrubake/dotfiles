@@ -3,18 +3,18 @@
 # Basic setup {{{1
 
 # Where my WM init scripts live
-INIT=~/etc/init.d
+# init_dir="$XDG_CONFIG_HOME/init.d"
+init_dir="$HOME/etc/init.d"
 
 # xset options {{{1
 #
 xset b off # Turn off audible bell
 
-# Setup displays, keymap and keybindings {{{1
+# Run custom X init scripts {{{1
 #
-test -x $INIT/displays.sh     && $INIT/displays.sh
-test -x $INIT/keymaps.sh      && $INIT/keymaps.sh
-test -x $INIT/touchpad-tap.sh && $INIT/touchpad-tap.sh
-test -x $INIT/wallpaper.sh    && $INIT/wallpaper.sh
+for f in $init_dir/*; do
+    [ -x "$f" ] && $f
+done
 
 # Merge XResources {{{1
 if [ -r "$HOME/.Xresources" ]; then
