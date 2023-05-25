@@ -262,6 +262,11 @@ export SSH_ASKPASS SUDO_ASKPASS
 GREP_COLORS='sl=:cx=:mt=1;31:fn=35:ln=32:bn=33:se=36'
 export GREP_COLORS
 
+# Move things into XDG directories {{{2
+
+ELINKS_CONFDIR=$XDG_CONFIG_HOME/elinks
+export ELINKS_CONFDIR
+
 # Configure tldr-sh client {{{2
 #
 if command -v tldr >/dev/null; then
