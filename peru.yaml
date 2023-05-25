@@ -2,7 +2,7 @@ imports:
   ls_colors: ./
   gdb-dashboard: ./
   mutt-bgedit: ./mutt/scripts
-  redact_pass: ./vim
+  redact_pass: ./vim/pack/manual/start
 
 git module ls_colors:
   url: https://github.com/trapd00r/LS_COLORS
@@ -29,10 +29,10 @@ curl module mutt-bgedit:
 git module redact_pass:
   url: https://git.zx2c4.com/password-store
   move:
-    contrib/vim/redact_pass.txt: doc/redact_pass.txt
-    contrib/vim/redact_pass.vim: after/plugin/redact_pass.vim
+    contrib/vim/redact_pass.txt: redact_pass/doc/redact_pass.txt
+    contrib/vim/redact_pass.vim: redact_pass/plugin/redact_pass.vim
   pick:
-    - doc/redact_pass.txt
-    - after/plugin/redact_pass.vim
+    - redact_pass/doc/redact_pass.txt
+    - redact_pass/plugin/redact_pass.vim
   rev: dddca73694d1ecc2381cde6c02a9d1466cf0ab41
 
