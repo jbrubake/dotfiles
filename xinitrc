@@ -5,17 +5,6 @@
 # Where my WM init scripts live
 INIT=~/etc/init.d
 
-# Select Window Manager or Desktop Environment {{{2
-#
-# Supports:
-#   cwm
-#   dwm
-#   Any WM/DE that is run as a single command with no arguments
-#
-# Default: run a terminal emulator
-#
-WINDOWMANAGER=cwm
-
 # xset options {{{1
 #
 xset b off # Turn off audible bell
@@ -27,9 +16,13 @@ test -x $INIT/keymaps.sh      && $INIT/keymaps.sh
 test -x $INIT/touchpad-tap.sh && $INIT/touchpad-tap.sh
 test -x $INIT/wallpaper.sh    && $INIT/wallpaper.sh
 
-# Merge XResources/XDefaults {{{1
-test -r "$HOME/.Xresources" && xrdb -merge "$HOME/.Xresources"
-test -r "$HOME/.Xdefaults"  && xrdb -merge "$HOME/.Xdefaults"
+# Merge XResources {{{1
+if [ -r "$HOME/.Xresources" ]; then
+    test -r "$HOME/.Xresources.$COLORSCHEME" &&
+        colorscheme="-DCOLORSCHEME=<$HOME/.Xresources.$COLORSCHEME>"
+    xrdb -merge "$HOME/.Xresources" $colorscheme
+    unset colorscheme
+fi
 
 # Start daemons {{{1
 #

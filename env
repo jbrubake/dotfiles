@@ -56,6 +56,26 @@ else
 fi
 export TZ
 
+# X-specific {{{1
+#
+if [ -n "$DISPLAY" ]; then
+    # Select Window Manager or Desktop Environment
+    #
+    # Supports:
+    #   Any WM/DE that is run as a single command with no arguments
+    #
+    WINDOWMANAGER=cwm
+    export WINDOWMANAGER
+
+    # Select Xresources colorscheme
+    #
+    # Colorscheme definitions must be placed in
+    # $HOME/.Xresources.$COLORSCHEME
+    #
+    COLORSCHEME=gnome-dark
+    export COLORSCHEME
+fi
+
 # Alternatives {{{1
 # EDITOR/VISUAL {{{2
 #
