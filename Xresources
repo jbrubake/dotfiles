@@ -3,8 +3,9 @@
 *customization:         -color
 
 ! Terminal colorscheme {{{1
-!#include ".Xresources.gnome-dark"
-#include ".Xresources.papercolor-dark"
+#ifdef COLORSCHEME
+#    include COLORSCHEME
+#endif
 
 *background:            BG
 *foreground:            FG
