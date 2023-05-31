@@ -209,7 +209,6 @@ function! NeatFoldText()
     return foldtextstart . repeat(foldchar, winwidth(0)-foldtextlength) .  foldtextend
 endfunction
 set foldtext=NeatFoldText()
-
 " Plugins {{{1
 "============
 " Optional packages {{{2
@@ -508,7 +507,7 @@ vmap <Leader>t<Bar> :Tabularize /<Bar><cr>
 " tagalong: Change an HTML(ish) tag and update the matching one {{{2
 call minpac#add('AndrewRadev/tagalong.vim')
 
-let g:tagalong_additional_filetypes = ['xhtml', 'phtml']
+let g:tagalong_additional_filetypes = ['sgml', 'xml', 'html', 'xhtml', 'phtml', 'php']
 
 " tagbar: Source code browser using ctags {{{2
 call minpac#add('preservim/tagbar')
