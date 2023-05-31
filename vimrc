@@ -30,6 +30,7 @@ set nocompatible " Don't be vi compatible
 " Remap Leader here because it may be used *before* the mapping section
 " Better than ',' which is used for backwards character searching
 let mapleader = ' '
+let maplocalleader = ' '
 
 " Basics {{{1
 " ======
