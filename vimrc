@@ -32,183 +32,6 @@ set nocompatible " Don't be vi compatible
 let mapleader = ' '
 let maplocalleader = ' '
 
-" Basics {{{1
-" ======
-filetype plugin indent on            " Load filetype plugins and indent settings
-
-set omnifunc=syntaxcomplete#Complete " Complete on syntax (CTL-X CTL-O to complete)
-
-set encoding=utf8                    " Use Unicode
-
-set noexrc                           " Do not source .exrc
-set autowrite                        " Write file when changing to a new file
-set wildmenu                         " Show wildmenu
-set wildmode=longest:full,full       " Tab complete longest part, then show wildmenu
-set backspace=indent,eol,start       " What BS can delete
-set backupdir=~/.vim/backup          " Where to put backup files
-set directory=~/.vim/tmp             " Where to put swap files
-set mouse=a                          " Use mouse everywhere
-set mousehide                        " Hide mouse while typing
-set incsearch                        " Incremental search
-set nolist                           " Do not show listchars
-set listchars=
-set listchars+=extends:>,precedes:<  " Show long line continuation chars
-set listchars+=tab:»\                " Show real tabs
-set listchars+=trail:.               " Show trailing spaces and higlight them
-set listchars+=eol:¬                 " Show end of line
-set listchars+=nbsp:+                " Show non-breaking space
-set cursorline                       " Highlight current line
-set visualbell                       " Blink instead of beep
-set relativenumber                   " Show relative line number
-set number                           " Show line number of current line
-set numberwidth=4                    " Allows line numbers up to 999
-set report=0                         " Always report when a : command changes something
-set shortmess=aOstT                  " Keep messages short
-set scrolloff=10                     " Keep 10 lines at top/bottom
-set sidescrolloff=10                 " Keep 10 lines at right/left
-set sidescroll=1                     " Horizontal scroll one column at a time
-set showtabline=0                    " Never show tabline
-set hidden                           " Allow hidden buffers
-set tags-=./tags                     " Remove ./tags and ./tags; from 'tags'
-set tags-=./tags;                    "  and prepend ./tags; in order to search
-set tags^=./tags;                    "  up the tree for the tags file
-set complete-=i                      " *Do not* search included files when completing
-set history=1000                     " Save more command history
-set fillchars=vert:\|,fold:―
-set undofile                         " Persistent undo tree
-set undodir=~/.vim/undo              " Put undo files here
-call mkdir(&undodir, "p", 0o700)
-set path^=$DOTFILES                  " Search for files in $DOTFILES
-set path+=~/work/fen-x/fenx-infra
-set path+=~/work/fen-x/fenx-infra/fenx_infra
-
-" ttymouse is not properly set if TERM=tmux*
-" and then I can't use the mouse to resize splits
-if &term =~ "tmux"
-    set ttymouse=sgr
-endif
-
-" Absolute & Hybrid line numbers by buffer status {{{2
-"
-" https://jeffkreeftmeijer.com/vim-number/
-augroup numbertoggle
-  autocmd!
-  autocmd BufEnter,FocusGained,InsertLeave,WinEnter * if &number && mode() != 'i' | set relativenumber   | endif
-  autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &number                  | set norelativenumber | endif
-augroup END
-
-" Automatically open quickfix window {{{2
-augroup quickfix
-    autocmd!
-    autocmd QuickFixCmdPost [^l]* cwindow
-    autocmd QuickFixCmdPost l*    lwindow
-augroup END
-
-" Searching {{{2
-if executable('rg')
-    set grepprg=rg\ --vimgrep
-endif
-
-" grep/lgrep without polluting the terminal or opening the first match
-"
-" Respects &grepprg
-"
-" https://gist.github.com/romainl/56f0c28ef953ffc157f36cc495947ab3
-function! Grep(...)
-    return system(join([&grepprg] + [expandcmd(join(a:000, ' '))], ' '))
-endfunction
-
-command! -nargs=+ -complete=file_in_path -bar Grep  cgetexpr Grep(<f-args>)
-command! -nargs=+ -complete=file_in_path -bar LGrep lgetexpr Grep(<f-args>)
-
-cnoreabbrev <expr> grep  (getcmdtype() ==# ':' && getcmdline() ==# 'grep')  ? 'Grep'  : 'grep'
-cnoreabbrev <expr> lgrep (getcmdtype() ==# ':' && getcmdline() ==# 'lgrep') ? 'LGrep' : 'lgrep'
-
-
-" Text Formatting/Layout {{{1
-"===========================
-set formatoptions+=rqlnj "  j: delete comment leader when joining lines
-                         "  l: do not break long lines in insert mode
-                         "  n: support numbered lists (:help formatlistpat)
-                         "  q: reformat comments with 'gq'
-                         "  r: insert comment leader on <Enter>
-set ignorecase           " Case insensitive by default
-set smartcase            "  but case sensitive if search string is multi-case
-set nowrap               " Long lines do not wrap
-set shiftround           " Indent at multiples of shiftwidth
-set expandtab            " Expand tabs to spaces
-set tabstop=4            " Real tabs are 4 spaces
-set softtabstop=4        " A tab is 4 spaces for a tab or backspace
-set shiftwidth=4         " Indent and <</>> is 4 spaces
-set textwidth=80         " Lines wrap at column 80
-set autoindent           " Automatically indent based on previous line
-set smartindent          " Automatic indenting is intelligent
-
-" Statusline {{{1
-" ==========
-function! SL_GitHunks()
-    if system('git rev-parse --is-inside-work-tree 2>/dev/null') !~ 'true'
-        return ''
-    endif
-    let [a,m,r] = GitGutterGetHunkSummary()
-    let s = printf('[+%d %~%d -%d] ', a, m, r)
-    return s
-endfunction
-
-function! SL_GitBranch()
-    let b = substitute(system('git rev-parse --abbrev-ref HEAD 2>/dev/null'), '\n\+$', '', '')
-    let s = strlen(b) ? ' ' . b . ' ' : ''
-    return s
-endfunction
-
-function! SL_isactive()
-    return g:statusline_winid == win_getid(winnr())
-endfunction
-
-function! Statusline() abort
-    let s = ' '
-    "let s .= '%{SL_GitBranch()} '
-    let s .= '%F'
-    let s .= '%m'
-    let s .= '%r'
-    let s .= ' '
-    let s .= '[%Y]'
-    let s .= '%='
-    "let s .= '%{SL_GitHunks()}'
-    let s .= '%l(%L):%c'
-    let s .= ' '
-    let s .= '[UNICODE 0x%B]'
-    return s
-endfunction
-
-set laststatus=2                 " Always show status line
-set statusline=%!Statusline()
-
-" Terminal window status line
-augroup termwindow | autocmd!
-    autocmd TerminalWinOpen * setlocal statusline=%t
-augroup end
-
-" Folding {{{1
-"============
-set foldenable                                   " Turn on folding
-set foldmethod=marker                            " Fold on the marker
-set foldopen=block,hor,mark,percent,quickfix,tag " What movements open folds
-
-" Right justify folded line count
-"
-" dhruvasagar (dhruvasagar.com/2013/03/28/vim-better-foldtext)
-function! NeatFoldText()
-    let line = ' ' . substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{' . '{\d*\s*', '', 'g') . ' '
-    let lines_count = v:foldend - v:foldstart + 1
-    let lines_count_text = '| ' . printf("%10s", lines_count . ' lines') . ' |'
-    let foldchar = matchstr(&fillchars, 'fold:\zs.')
-    let foldtextstart = strpart('+' . repeat(foldchar, v:foldlevel*2) . line, 0, (winwidth(0)*2)/3)
-    let foldtextend = lines_count_text . repeat(foldchar, 8)
-    let foldtextlength = strlen(substitute(foldtextstart . foldtextend, '.', 'x', 'g')) + &foldcolumn
-    return foldtextstart . repeat(foldchar, winwidth(0)-foldtextlength) .  foldtextend
-endfunction
-set foldtext=NeatFoldText()
 " Plugins {{{1
 "============
 " Optional packages {{{2
@@ -551,6 +374,35 @@ let g:tagbar_type_markdown = {
 
 " <leader>cs : query thesauras for word under cursor
 
+" todo-txt.vim: Vim plugin for Todo.txt {{{2
+call minpac#add('freitass/todo.txt-vim')
+
+" <LocalLeader>s   : Sort by priority
+" <LocalLeader>s+  : Sort on +Projects
+" <LocalLeader>s@  : Sort on @Contexts
+" <LocalLeader>sd  : Sort on due dates
+" <LocalLeader>sc  : Sort by context, then priority
+" <LocalLeader>scp : Sort by context, project, then priority
+" <LocalLeader>sp  : Sort by project, then priority
+" <LocalLeader>spc : Sort by project, context, then priority
+" <LocalLeader>-sd : Sort by due date. Entries with due date are at the beginning
+
+" <LocalLeader>j : Lower priority
+" <LocalLeader>k : Increase priority
+" <LocalLeader>a : Add priority (A)
+" <LocalLeader>b : Add priority (B)
+" <LocalLeader>c : Add priority (C)
+
+" <LocalLeader>d : Insert current date
+" date<tab> : (Insert mode) insert current date
+" due:      : (Insert mode) insert due: <date>
+" DUE:      : (Insert mode) insert DUE: <date>
+
+" <LocalLeader>x : Toggle done
+" <LocalLeader>C : Toggle cancelled
+" <LocalLeader>X : Mark all completed
+" <LocalLeader>D : Move completed tasks to done file
+
 endif " minpac loaded
 " vim-autoformat:  Provide easy code formatting in Vim by integrating existing code formatters {{{2
 call minpac#add('vim-autoformat/vim-autoformat')
@@ -714,36 +566,184 @@ let g:vimtex_view_method = 'zathura'
 " webapi-vim: Needed for vim-gist {{{2
 call minpac#add('mattn/webapi-vim')
 
-" todo-txt.vim: Vim plugin for Todo.txt {{{2
-call minpac#add('freitass/todo.txt-vim')
+" Basics {{{1
+" ======
+filetype plugin indent on            " Load filetype plugins and indent settings
 
-" <LocalLeader>s   : Sort by priority
-" <LocalLeader>s+  : Sort on +Projects
-" <LocalLeader>s@  : Sort on @Contexts
-" <LocalLeader>sd  : Sort on due dates
-" <LocalLeader>sc  : Sort by context, then priority
-" <LocalLeader>scp : Sort by context, project, then priority
-" <LocalLeader>sp  : Sort by project, then priority
-" <LocalLeader>spc : Sort by project, context, then priority
-" <LocalLeader>-sd : Sort by due date. Entries with due date are at the beginning
+set omnifunc=syntaxcomplete#Complete " Complete on syntax (CTL-X CTL-O to complete)
 
-" <LocalLeader>j : Lower priority
-" <LocalLeader>k : Increase priority
-" <LocalLeader>a : Add priority (A)
-" <LocalLeader>b : Add priority (B)
-" <LocalLeader>c : Add priority (C)
+set encoding=utf8                    " Use Unicode
 
-" <LocalLeader>d : Insert current date
-" date<tab> : (Insert mode) insert current date
-" due:      : (Insert mode) insert due: <date>
-" DUE:      : (Insert mode) insert DUE: <date>
+set noexrc                           " Do not source .exrc
+set autowrite                        " Write file when changing to a new file
+set wildmenu                         " Show wildmenu
+set wildmode=longest:full,full       " Tab complete longest part, then show wildmenu
+set backspace=indent,eol,start       " What BS can delete
+set backupdir=~/.vim/backup          " Where to put backup files
+set directory=~/.vim/tmp             " Where to put swap files
+set mouse=a                          " Use mouse everywhere
+set mousehide                        " Hide mouse while typing
+set incsearch                        " Incremental search
+set nolist                           " Do not show listchars
+set listchars=
+set listchars+=extends:>,precedes:<  " Show long line continuation chars
+set listchars+=tab:»\                " Show real tabs
+set listchars+=trail:.               " Show trailing spaces and higlight them
+set listchars+=eol:¬                 " Show end of line
+set listchars+=nbsp:+                " Show non-breaking space
+set cursorline                       " Highlight current line
+set visualbell                       " Blink instead of beep
+set relativenumber                   " Show relative line number
+set number                           " Show line number of current line
+set numberwidth=4                    " Allows line numbers up to 999
+set report=0                         " Always report when a : command changes something
+set shortmess=aOstT                  " Keep messages short
+set scrolloff=10                     " Keep 10 lines at top/bottom
+set sidescrolloff=10                 " Keep 10 lines at right/left
+set sidescroll=1                     " Horizontal scroll one column at a time
+set showtabline=0                    " Never show tabline
+set hidden                           " Allow hidden buffers
+set tags-=./tags                     " Remove ./tags and ./tags; from 'tags'
+set tags-=./tags;                    "  and prepend ./tags; in order to search
+set tags^=./tags;                    "  up the tree for the tags file
+set complete-=i                      " *Do not* search included files when completing
+set history=1000                     " Save more command history
+set fillchars=vert:\|,fold:―
+set undofile                         " Persistent undo tree
+set undodir=~/.vim/undo              " Put undo files here
+call mkdir(&undodir, "p", 0o700)
+set path^=$DOTFILES                  " Search for files in $DOTFILES
+set path+=~/work/fen-x/fenx-infra
+set path+=~/work/fen-x/fenx-infra/fenx_infra
 
-" <LocalLeader>x : Toggle done
-" <LocalLeader>C : Toggle cancelled
-" <LocalLeader>X : Mark all completed
-" <LocalLeader>D : Move completed tasks to done file
+" ttymouse is not properly set if TERM=tmux*
+" and then I can't use the mouse to resize splits
+if &term =~ "tmux"
+    set ttymouse=sgr
+endif
 
-endif " minpac loaded
+" Absolute & Hybrid line numbers by buffer status {{{2
+"
+" https://jeffkreeftmeijer.com/vim-number/
+augroup numbertoggle
+  autocmd!
+  autocmd BufEnter,FocusGained,InsertLeave,WinEnter * if &number && mode() != 'i' | set relativenumber   | endif
+  autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &number                  | set norelativenumber | endif
+augroup END
+
+" Automatically open quickfix window {{{2
+augroup quickfix
+    autocmd!
+    autocmd QuickFixCmdPost [^l]* cwindow
+    autocmd QuickFixCmdPost l*    lwindow
+augroup END
+
+" Searching {{{2
+if executable('rg')
+    set grepprg=rg\ --vimgrep
+endif
+
+" grep/lgrep without polluting the terminal or opening the first match
+"
+" Respects &grepprg
+"
+" https://gist.github.com/romainl/56f0c28ef953ffc157f36cc495947ab3
+function! Grep(...)
+    return system(join([&grepprg] + [expandcmd(join(a:000, ' '))], ' '))
+endfunction
+
+command! -nargs=+ -complete=file_in_path -bar Grep  cgetexpr Grep(<f-args>)
+command! -nargs=+ -complete=file_in_path -bar LGrep lgetexpr Grep(<f-args>)
+
+cnoreabbrev <expr> grep  (getcmdtype() ==# ':' && getcmdline() ==# 'grep')  ? 'Grep'  : 'grep'
+cnoreabbrev <expr> lgrep (getcmdtype() ==# ':' && getcmdline() ==# 'lgrep') ? 'LGrep' : 'lgrep'
+
+
+" Text Formatting/Layout {{{1
+"===========================
+set formatoptions+=rqlnj "  j: delete comment leader when joining lines
+                         "  l: do not break long lines in insert mode
+                         "  n: support numbered lists (:help formatlistpat)
+                         "  q: reformat comments with 'gq'
+                         "  r: insert comment leader on <Enter>
+set ignorecase           " Case insensitive by default
+set smartcase            "  but case sensitive if search string is multi-case
+set nowrap               " Long lines do not wrap
+set shiftround           " Indent at multiples of shiftwidth
+set expandtab            " Expand tabs to spaces
+set tabstop=4            " Real tabs are 4 spaces
+set softtabstop=4        " A tab is 4 spaces for a tab or backspace
+set shiftwidth=4         " Indent and <</>> is 4 spaces
+set textwidth=80         " Lines wrap at column 80
+set autoindent           " Automatically indent based on previous line
+set smartindent          " Automatic indenting is intelligent
+
+" Statusline {{{1
+" ==========
+function! SL_GitHunks()
+    if system('git rev-parse --is-inside-work-tree 2>/dev/null') !~ 'true'
+        return ''
+    endif
+    let [a,m,r] = GitGutterGetHunkSummary()
+    let s = printf('[+%d %~%d -%d] ', a, m, r)
+    return s
+endfunction
+
+function! SL_GitBranch()
+    let b = substitute(system('git rev-parse --abbrev-ref HEAD 2>/dev/null'), '\n\+$', '', '')
+    let s = strlen(b) ? ' ' . b . ' ' : ''
+    return s
+endfunction
+
+function! SL_isactive()
+    return g:statusline_winid == win_getid(winnr())
+endfunction
+
+function! Statusline() abort
+    let s = ' '
+    "let s .= '%{SL_GitBranch()} '
+    let s .= '%F'
+    let s .= '%m'
+    let s .= '%r'
+    let s .= ' '
+    let s .= '[%Y]'
+    let s .= '%='
+    "let s .= '%{SL_GitHunks()}'
+    let s .= '%l(%L):%c'
+    let s .= ' '
+    let s .= '[UNICODE 0x%B]'
+    return s
+endfunction
+
+set laststatus=2                 " Always show status line
+set statusline=%!Statusline()
+
+" Terminal window status line
+augroup termwindow | autocmd!
+    autocmd TerminalWinOpen * setlocal statusline=%t
+augroup end
+
+" Folding {{{1
+"============
+set foldenable                                   " Turn on folding
+set foldmethod=marker                            " Fold on the marker
+set foldopen=block,hor,mark,percent,quickfix,tag " What movements open folds
+
+" Right justify folded line count
+"
+" dhruvasagar (dhruvasagar.com/2013/03/28/vim-better-foldtext)
+function! NeatFoldText()
+    let line = ' ' . substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{' . '{\d*\s*', '', 'g') . ' '
+    let lines_count = v:foldend - v:foldstart + 1
+    let lines_count_text = '| ' . printf("%10s", lines_count . ' lines') . ' |'
+    let foldchar = matchstr(&fillchars, 'fold:\zs.')
+    let foldtextstart = strpart('+' . repeat(foldchar, v:foldlevel*2) . line, 0, (winwidth(0)*2)/3)
+    let foldtextend = lines_count_text . repeat(foldchar, 8)
+    let foldtextlength = strlen(substitute(foldtextstart . foldtextend, '.', 'x', 'g')) + &foldcolumn
+    return foldtextstart . repeat(foldchar, winwidth(0)-foldtextlength) .  foldtextend
+endfunction
+set foldtext=NeatFoldText()
+
 " Mappings & Commands {{{1
 "========================
 " Help {{{2
