@@ -551,6 +551,10 @@ let g:tagbar_type_markdown = {
 
 " <leader>cs : query thesauras for word under cursor
 
+endif " minpac loaded
+" vim-autoformat:  Provide easy code formatting in Vim by integrating existing code formatters {{{2
+call minpac#add('vim-autoformat/vim-autoformat')
+
 " vim-commentary: Commenting keymaps {{{2
 call minpac#add('tpope/vim-commentary')
 
