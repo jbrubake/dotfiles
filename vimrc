@@ -127,10 +127,11 @@ cnoreabbrev <expr> lgrep (getcmdtype() ==# ':' && getcmdline() ==# 'lgrep') ? 'L
 
 " Text Formatting/Layout {{{1
 "===========================
-set formatoptions+=rqln  " Insert comment leader on return, let gq format
-                         "  comments and do not break an already long line
-                         "  during insert, support numbered/bulleted lists
-set formatoptions+=j     " Delete comment character when joining lines
+set formatoptions+=rqlnj "  j: delete comment leader when joining lines
+                         "  l: do not break long lines in insert mode
+                         "  n: support numbered lists (:help formatlistpat)
+                         "  q: reformat comments with 'gq'
+                         "  r: insert comment leader on <Enter>
 set ignorecase           " Case insensitive by default
 set smartcase            "  but case sensitive if search string is multi-case
 set nowrap               " Long lines do not wrap
