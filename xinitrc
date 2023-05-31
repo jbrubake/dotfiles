@@ -86,15 +86,15 @@ esac
 
 # Start desktop apps {{{1
 #
-# test -e $INIT/conky.sh      && . $INIT/conky.sh start
-# test -e $INIT/tint2.sh      && . $INIT/tint2.sh start
-# test -e $INIT/ipager.sh     && . $INIT/ipager.sh start
-# test -e $INIT/trayer.sh     && . $INIT/trayer.sh start
-# test -e $INIT/bmpanel.sh    && . $INIT/bmpanel.sh start
-# test -e $INIT/volumeicon.sh && . $INIT/volumeicon.sh start
-# test -e $INIT/keepassx.sh   && . $INIT/keepassx.sh start
+# test -e $init_dir/conky.sh      && . $init_dir/conky.sh start
+# test -e $init_dir/tint2.sh      && . $init_dir/tint2.sh start
+# test -e $init_dir/ipager.sh     && . $init_dir/ipager.sh start
+# test -e $init_dir/trayer.sh     && . $init_dir/trayer.sh start
+# test -e $init_dir/bmpanel.sh    && . $init_dir/bmpanel.sh start
+# test -e $init_dir/volumeicon.sh && . $init_dir/volumeicon.sh start
+# test -e $init_dir/keepassx.sh   && . $init_dir/keepassx.sh start
 
-test -e $INIT/cassowary   && . $INIT/cassowary start
+# test -e $init_dir/cassowary   && . $init_dir/cassowary start
 
 if type flatpak 2>&1 >/dev/null; then
     flatpak list | grep Signal >/dev/null && flatpak run org.signal.Signal &
