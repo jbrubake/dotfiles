@@ -49,6 +49,7 @@ if [ $_xlogin == 'yes' ]; then
     else
         t=xterm
     fi
+    eval $( keychain --eval --nogui --agents ssh,gpg )
     $t -e keychain --quiet --nogui --ignore-missing $(cat "$HOME/.keychain/keylist")
     unset _xlogin
 fi
