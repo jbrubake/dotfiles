@@ -750,6 +750,7 @@ endif " minpac loaded
 " Window Management: {{{2
 " ==================
 " See vim-tmux-pilot configuration
+
 " Resize windows with C-[hjkl] {{{3
 nnoremap <C-j> <C-w>-
 nnoremap <C-k> <C-w>+
@@ -771,6 +772,11 @@ function! ToggleMaximizeCurrentWindow()
     endif
 endfunction
 nnoremap <silent> <C-W>m :call ToggleMaximizeCurrentWindow() <cr>
+
+" Terminal Mode {{{3
+"
+" <leader><Esc>: Enter normal mode
+tnoremap <leader><Esc> <C-\><C-n>
 
 " <leader>e[wsvt]:      edit in current file's directory {{{2
 cnoremap %% <C-R>=fnameescape(expand('%:h')).'/'<cr>
