@@ -319,16 +319,34 @@ _hb_hr_hbl() {
 }
 #}
 lh() { # List last "n" commands in history
+#
+# Arguments:
+#   $1: number of commands to show
+#
     history | tail -"$1"
 }
 manf() { # Open manpage for $1 at the first occurence of flag $2
 #
 # https://jip.dev/posts/dots/
+#
+# Arguments:
+#   $1: manpage to open
+#   $2: flag to jump to
+#
       man -P "less -p \"^ +-$2\"" $1
 }
 wiki() { # Interact with wiki
 #
 # Inspired by: https://vimwiki.github.io/vimwikiwiki/Tips%20and%20Snips.html
+#
+# Globals:
+#   BROWSER
+#   WIKI_DIR
+#
+# Arguments:
+#   $1: edit|git|make|view|help
+#   $2: arguments needed by $1
+#
     if test -z "$WIKI_DIR"; then
         printf "%s\n" '$WIKI_DIR is not defined'
         return 1
@@ -370,12 +388,20 @@ END
             ;;
         esac
 }
-sdfmap() { # Print ASCII map location of SDF user $1
+sdfmap() { # Print ASCII map location of SDF user
+#
+# Arguments:
+#   $1: user to print
+#
     curl http://plewylli.sdf-eu.org/asciimap.cgi?$1
 }
 elinks() { # Reuse existing elinks instance
 #
 # Based on elinks contrib/TIPS-AND-TRICKS
+#
+# Arguments:
+#   $1: URL to open
+#
     if command elinks -remote "ping()" 2>/dev/null; then
         if [ -n "$1" ]; then
             command elinks -remote "openURL($1,new-tab)"
