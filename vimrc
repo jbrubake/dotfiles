@@ -832,8 +832,8 @@ nnoremap <silent> ]<Space> :<C-u>put =repeat(nr2char(10),v:count)<Bar>execute "'
 nnoremap [e kddp
 nnoremap ]e jddkP
 
-" <leader>/:               clear search shighlighting {{{2
-noremap <silent> <leader>/ :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
+" <leader><leader>:               clear search shighlighting {{{2
+noremap <silent> <leader><leader> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
 
 " <Tab>:            % {{{2
 nmap <tab> %
