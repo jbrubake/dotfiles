@@ -16,7 +16,6 @@ fi
 #
 keychain --quiet --nogui --ignore-missing $(cat "$HOME/.keychain/keylist")
 
-
 # MOTD {{{1
 if test  -e /run/motd.dynamic; then
     cat /run/motd.dynamic

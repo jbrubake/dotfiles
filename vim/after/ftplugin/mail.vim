@@ -9,11 +9,12 @@ setlocal foldmethod=expr foldlevel=1 foldminlines=2
 " match ErrorMsg '\s\+$' Highlight the trailing space at the end of
 "                        broken lines, to provide a visual distinction
 "                        between “soft” and “hard” line breaks
-setlocal textwidth=72
 setlocal formatoptions=aq
 setlocal comments=nb:>
-setlocal spell
 match ErrorMsg '\s\+$'
+
+setlocal textwidth=72
+setlocal spell
 
 " goobook address completion for emails {{{1
 "

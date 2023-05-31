@@ -105,19 +105,20 @@ lsp () { # Print numerical permissions at the start of ls -l output
                 for (i = 0; i <= 8; i++)
                     k += ((substr($1, i+2, 1) ~ /[rwx]/) * 2^(8-i));
                 if(k)
-                    printf("%0o ",k);
+                    printf("%0o ", k);
                 print;
         }'
     fi
 }
-ip () {
-# 'ip get' prints current ip address and copies to clipboard
-# All other commands are passed to the real 'ip' command
+ip () { # Add 'get' command to ip(8)
 #
 # https://jip.dev/posts/dots/
 #
-
-    # Use grc if it exists
+# 'ip get' prints current ip address and copies to clipboard
+# All other commands are passed to the real 'ip' command
+#
+# Use grc if it is available
+#
     if command -v grc >/dev/null; then
         ip="grc ip"
     else
@@ -185,13 +186,13 @@ rtfm() { # Check various forms of documentation
 #### hb/hr/hbl {
 # Bold, Reverse-Video and Blinking highlighted search
 #
-# Args:
-#  $1 - search string
-#  $2 - optional foreground color number
+# Arguments:
+#   $1: search string
+#   $2: optional foreground color number
 #
 # Examples:
-# who | hb "$USER" 1 
-# ps | hr ".*$PPID.*" | hbl ".*$$.*"
+#   who | hb "$USER" 1 
+#   ps | hr ".*$PPID.*" | hbl ".*$$.*"
 ####
 hb() {
     local fx="[1m"
@@ -215,10 +216,12 @@ lh() { # List last "n" commands in history
     history | tail -"$1"
 }
 manf() { # Open manpage for $1 at the first occurence of flag $2
+#
 # https://jip.dev/posts/dots/
       man -P "less -p \"^ +-$2\"" $1
 }
 wiki() { # Interact with wiki
+#
 # Inspired by: https://vimwiki.github.io/vimwikiwiki/Tips%20and%20Snips.html
     if test -z "$WIKI_DIR"; then
         printf "%s\n" '$WIKI_DIR is not defined'
@@ -265,6 +268,7 @@ sdfmap() { # Print ASCII map location of SDF user $1
     curl http://plewylli.sdf-eu.org/asciimap.cgi?$1
 }
 elinks() { # Reuse existing elinks instance
+#
 # Based on elinks contrib/TIPS-AND-TRICKS
     if command elinks -remote "ping()" 2>/dev/null; then
         if [ -n "$1" ]; then
