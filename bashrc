@@ -20,11 +20,20 @@ shopt -s  no_empty_cmd_completion # Don't TAB complete a blank line
 shopt -so ignoreeof    # Ctl+D does not exit shell
 # }}}
 # Keybindings {{{
-# fzf
-test -f /usr/share/fzf/shell/key-bindings.bash && \
-    . /usr/share/fzf/shell/key-bindings.bash
-test -f /usr/local/share/fzf/key-bindings.bash && \
-    . /usr/local/share/fzf/key-bindings.bash
+# fzf {{{
+if type fzf >/dev/null 2>&1; then
+    for f in /usr/share/fzf/shell/*.bash /usr/local/share/fzf/shell/*.bash; do
+        [ -f "$f" ] && . "$f"
+    done
+
+    # Override __fzfcmd because it uses fzf-tmux whenever FZF_TMUX_OPTS is set
+    # *even* if FZF_TMUX is *not* set
+    __fzfcmd() {
+        [[ -n "${TMUX_PANE-}" ]] && [[ "${FZF_TMUX:-0}" != 0 ]] &&
+            echo "fzf-tmux ${FZF_TMUX_OPTS:--d${FZF_TMUX_HEIGHT:-40%}} -- " || echo "fzf"
+    }
+fi
+# }}}
 command -v passmenu >/dev/null &&
     bind -x '"\C-]": passmenu --type'
 command -v navi >/dev/null &&

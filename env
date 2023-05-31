@@ -168,6 +168,53 @@ if test "$( tput colors )" -ge 0 && command -v dircolors >/dev/null; then
     unset colorfile localcolorfile
 fi
 
+# fzf {{{1
+if command -v fzf >/dev/null; then
+    # Options for *all* fzf processes
+    FZF_DEFAULT_OPTS='
+        --layout=reverse
+        --height=50%'
+
+    # Options for fzf-tmux
+    #     Open in a floating pane
+    FZF_TMUX_OPTS="-p $FZF_DEFAULT_OPTS"
+
+    # fzf-tmux height (needed for C-t, C-r and M-c)
+    FZF_TMUX_HEIGHT=
+
+    # Options for C-r history search
+    FZF_CTRL_R_OPTS='--preview-window down:5 --preview "echo {2..}"'
+
+    # C-t file search command
+    FZF_CTRL_T_COMMAND=
+
+    # Options for C-t file search
+    FZF_CTRL_T_OPTS='--preview "
+        if   [ -f {} ]; then bat -pp --color always {}
+        elif [ -d {} ]; then tree -C -L 1 --gitignore --noreport {}
+        fi"'
+
+    # M-c directory search command
+    FZF_ALT_C_COMMAND=
+
+    # Options for M-c directory search
+    FZF_ALT_C_OPTS='--preview "tree -C -L 1 --gitignore --noreport {}"'
+
+    type rg >/dev/null 2>&1 &&
+        FZF_DEFAULT_COMMAND='rg --files'
+
+    export FZF_DEFAULT_OPTS
+    export FZF_DEFAULT_COMMAND
+    export FZF_TMUX
+    export FZF_TMUX_OPTS
+    export FZF_TMUX_HEIGHT
+    export FZF_CTRL_R_OPTS
+    export FZF_CTRL_T_COMMAND
+    export FZF_CTRL_T_OPTS
+    export FZF_ALT_C_COMMAND
+    export FZF_ALT_C_OPTS
+fi
+
 # Development {{{1
 # Perl {{{2
 #
@@ -236,9 +283,6 @@ fi
 
 export WIKI_DIR=~/wiki
 export WIKI_SITE=~/wiki/site
-
-export FZF_DEFAULT_OPTS='--layout=reverse'
-export FZF_DEFAULT_COMMAND='rg --files'
 
 export DOTFILES=~/src/dotfiles
 
