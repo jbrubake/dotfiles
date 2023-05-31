@@ -46,17 +46,17 @@
 *font: Source Code Pro:size=12
 
 ! dmenu {{{1
-dmenu.font:             monospace:size=10
-dmenu.background:       #222222
-dmenu.foreground:       #bbbbbb
-dmenu.selbackground:    #005577
-dmenu.selforeground:    #eeeeee
-dmenu.hibackground:     #005577
-dmenu.hiforeground:     orange
-dmenu.hiselbackground:  #005577
-dmenu.hiselforeground:  orange
-dmenu.outforeground:    purple
-dmenu.outbackground:    green
+dmenu*font:             monospace:size=10
+dmenu*background:       #222222
+dmenu*foreground:       #bbbbbb
+dmenu*selbackground:    #005577
+dmenu*selforeground:    #eeeeee
+dmenu*hibackground:     #005577
+dmenu*hiforeground:     orange
+dmenu*hiselbackground:  #005577
+dmenu*hiselforeground:  orange
+dmenu*outforeground:    purple
+dmenu*outbackground:    green
 
 ! pinentry-dmenu {{{1
 pinentry-dmenu*font: monospace:size=14
