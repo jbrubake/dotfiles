@@ -230,6 +230,11 @@ call minpac#init()
 call minpac#add('k-takata/minpac', {'type': 'opt'})
 
 " EVALUATING {{{2
+""call minpac#add('luochen1990/rainbow') " Rainbow Parentheses Improved
+""call minpac#add('vim-scripts/YankRing.vim') " Maintains a history of previous yanks, changes and deletes 
+""call minpac#add('jpalardy/vim-slime') " A vim plugin to give you some slime
+""call minpac#add('sjl/gundo.vim') " Graph your Vim undo tree in style
+""call minpac#add('mtth/scratch.vim') " Unobtrusive scratch window
 ""call minpac#add('dbeniamine/cheat.sh-vim') " cheat.sh-vim: A vim plugin to access cheat.sh sheets
 ""call minpac#add('neoclide/coc-snippets') " coc-snippets: snippets for coc
 ""call minpac#add('vim-scripts/Conque-GDB') " conque-gdb: integrate gdb with vim
@@ -284,7 +289,7 @@ call minpac#add('k-takata/minpac', {'type': 'opt'})
 ""call minpac#add('lervag/vimtex') " vimtex: vim LaTEX plugin
 ""call minpac#add('vimwiki/vimwiki') " vimwiki: Personal Wiki for Vim
 ""call minpac#add('sysid/vimwiki-nirvana') " vimwiki-nirvana: vimwiki custom link handler
-""call minpac#add('lervag/wiki.vim') " wiki.vim: A wiki plugin for Vim
+""call minpac#add('preservim/vim-lexical') " vim-lexical: Build on Vim's spell/thes/dict completion
 
 " auto_mkdir2: Automatically create directory tree for new files {{{3
 ""call minpac#add('arp242/auto_mkdir2.vim')
