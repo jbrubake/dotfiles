@@ -1003,21 +1003,31 @@ syntax enable
 set hlsearch            " Highlight search matches
 let c_comment_strings=1 " Highlight strings in C comments
 
-if exists('+termguicolors')
-    set t_8f=[38;2;%lu;%lu;%lum        " Enable 24-bit foreground colors
-    set t_8b=[48;2;%lu;%lu;%lum        " Enable 24-bit background colors
-    set termguicolors                    " Enable GUI colors for the terminal to get truecolor
+if &term =~ '256color\|alacritty'
+    if has('termguicolors')
+        " Enable GUI colors for the terminal
+        set termguicolors                    " Enable GUI colors for the terminal to get truecolor
+        " XXX: Uneeded now?
+        " set t_8f=[38;2;%lu;%lu;%lum        " Enable 24-bit foreground colors
+        " set t_8b=[48;2;%lu;%lu;%lum        " Enable 24-bit background colors
+
+        let &t_Ts = "\e[9m"  "strikethrough
+        let &t_Te = "\e[29m"
+
+	    let &t_Us = "\e[4:2m" " underdouble
+	    let &t_ds = "\e[4:4m" " underdotted
+	    let &t_Ds = "\e[4:5m" " underdashed
+        let &t_Cs = "\e[4:3m" " undercurl
+        let &t_Ce = "\e[4:0m"
+
+        let &t_AU = "\e[58:5:%p1%d%;m"     " colored underline
+        let &t_8u = "\e[58:2:%lu:%lu:%lum"
+
+        " ???
+        " let &t_RB = "\e]11;?"
+        " let &t_RF = "\e]10;?"
+    endif
 endif
-
-" Turn on terminal undercurl support
-let &t_Cs = "\e[4:3m"
-let &t_Ce = "\e[4:0m"
-" Turn on terminal colored underline
-let &t_AU = "\e[58:5:%p1%d%;m"
-let &t_8u = "\e[58:2:%lu:%lu:%lum"
-
-let &t_RB = "\e]11;?"
-let &t_RF = "\e]10;?"
 
 " Custom colors {{{
 function! s:colorscheme_local() abort
@@ -1051,9 +1061,9 @@ function! s:colorscheme_local() abort
 
     " Spelling colors
     highlight SpellBad   cterm=undercurl ctermul=160 ctermbg=NONE gui=undercurl guisp=#d70000 guibg=NONE
-    highlight SpellCap   cterm=underline ctermul=226 ctermbg=NONE gui=underline guisp=#ffff00 guibg=NONE
-    highlight SpellLocal cterm=underline ctermul=166 ctermbg=NONE gui=underline guisp=#d75f00 guibg=NONE
-    highlight SpellRare  cterm=underline ctermul=135 ctermbg=NONE gui=underline guisp=#af5fff guibg=NONE
+    highlight SpellCap   cterm=undercurl ctermul=226 ctermbg=NONE gui=underline guisp=#ffff00 guibg=NONE
+    highlight SpellLocal cterm=undercurl ctermul=166 ctermbg=NONE gui=underline guisp=#d75f00 guibg=NONE
+    highlight SpellRare  cterm=undercurl ctermul=135 ctermbg=NONE gui=underline guisp=#af5fff guibg=NONE
 
     highlight DiffDelete term=bold ctermfg=12 ctermbg=6 guifg=#cf669f guibg=#5f0000
 
