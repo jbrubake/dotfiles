@@ -177,7 +177,7 @@ function! Statusline() abort
     "let s .= '%{SL_GitHunks()}'
     let s .= '%l(%L):%c'
     let s .= ' '
-    let s .= '[ASCII 0x%B]'
+    let s .= '[UNICODE 0x%B]'
     return s
 endfunction
 
