@@ -110,6 +110,42 @@ lsp () { # Print numerical permissions at the start of ls -l output
         }'
     fi
 }
+df () { # Prettify df(1)
+#
+# Use grc if it is available
+#
+    if command -v grc >/dev/null; then
+        df="grc df"
+    else
+        df="command df"
+    fi
+
+    $df -hT
+}
+du () { # Prettify du(1)
+#
+# Use grc if it is available
+#
+    if command -v grc >/dev/null; then
+        du="grc du"
+    else
+        du="command du"
+    fi
+
+    $du -h
+}
+du1 () { # Prettify du(1), one level only
+#
+# Use grc if it is available
+#
+    if command -v grc >/dev/null; then
+        du="grc du"
+    else
+        du="command du"
+    fi
+
+    $du -h --max-depth=1
+}
 ip () { # Add 'get' command to ip(8)
 #
 # https://jip.dev/posts/dots/
