@@ -422,6 +422,9 @@ call minpac#add('junegunn/fzf')
 " fzf plugin is located here
 set rtp+=/usr/local/share/fzf
 
+" fzf-checkout.vim: Manage branches and tags with fzf {{{2
+call minpac#add('stsewd/fzf-checkout.vim')
+
 " fzf.vim: fzf vim plugin {{{2
 call minpac#add('junegunn/fzf.vim')
 
@@ -439,9 +442,6 @@ call minpac#add('junegunn/fzf.vim')
 " :Commits          " Git commits (vim-fugitive)
 noremap <C-p> :Files<CR>
 noremap <Leader>b :Buffers<CR>
-
-" fzf-checkout.vim: Manage branches and tags with fzf {{{2
-call minpac#add('stsewd/fzf-checkout.vim')
 
 " gemini-vim-syntax: Syntax highlighting for text/gemini files {{{2
 call minpac#add('https://tildegit.org/sloum/gemini-vim-syntax')
@@ -554,6 +554,14 @@ let g:tagbar_type_markdown = {
 
 " <leader>cs : query thesauras for word under cursor
 
+" vim-commentary: Commenting keymaps {{{2
+call minpac#add('tpope/vim-commentary')
+
+" gc{motion} : Toggle commenting over {motion}
+" gcc        : Toggle commenting of [count] lines
+" {Visual}gc : Toggle commenting of highlighted lines
+" gcu        : Uncomment current and adjacent lines
+
 " vim-closetag: Easily close HTML/XML tags {{{2
 call minpac#add('alvan/vim-closetag')
 
@@ -569,13 +577,8 @@ call minpac#add('alvan/vim-closetag')
 " Use closetag in these files
 let g:closetag_filenames = "*.sgml,*.xml,*.html,*.xhtml,*.phtml,*.php"
 
-" vim-commentary: Commenting keymaps {{{2
-call minpac#add('tpope/vim-commentary')
-
-" gc{motion} : Toggle commenting over {motion}
-" gcc        : Toggle commenting of [count] lines
-" {Visual}gc : Toggle commenting of highlighted lines
-" gcu        : Uncomment current and adjacent lines
+" vim-css3-syntax: CSS3 syntax support for built-in syntax/css.vim {{{2
+call minpac#add('hail2u/vim-css3-syntax')
 
 " vim-fugitive: Git in Vim {{{2
 call minpac#add('tpope/vim-fugitive')
@@ -648,9 +651,6 @@ call minpac#add('tpope/vim-repeat')
 " vim-rhubarb: GitHub extension for fugitive.vim {{{2
 call minpac#add('tpope/vim-rhubarb')
 
-" vim-sxhkdrc: Vim syntax for sxhkd's configuration files {{{2
-call minpac#add('baskerville/vim-sxhkdrc')
-
 " vim-surround: Modify surrounding characters {{{2
 call minpac#add('tpope/vim-surround')
 
@@ -677,8 +677,8 @@ call minpac#add('tpope/vim-surround')
 
 " No configuration needed
 
-" vim-tmux: Vim plugin for .tmux.conf {{{2
-call minpac#add('tmux-plugins/vim-tmux')
+" vim-sxhkdrc: Vim syntax for sxhkd's configuration files {{{2
+call minpac#add('baskerville/vim-sxhkdrc')
 
 " vim-tmux-pilot: Unified navigation of splits and tabs in nvim and tmux {{{2
 call minpac#add('urbainvaes/vim-tmux-pilot')
@@ -697,6 +697,9 @@ else
     let g:pilot_key_l='<a-l>'
     let g:pilot_key_p='<a-\>'
 endif
+
+" vim-tmux: Vim plugin for .tmux.conf {{{2
+call minpac#add('tmux-plugins/vim-tmux')
 
 " vimtex: vim LaTeX plugin {{{2
 call minpac#add('lervag/vimtex')
