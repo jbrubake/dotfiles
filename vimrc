@@ -778,6 +778,11 @@ nnoremap <silent> <C-W>m :call ToggleMaximizeCurrentWindow() <cr>
 " <leader><Esc>: Enter normal mode
 tnoremap <leader><Esc> <C-\><C-n>
 
+" Searching {{{2
+"
+" Metacharacters do not need escaped (very magic, :help \v)
+nnoremap / /\v
+vnoremap / /\v
 " <leader>e[wsvt]:      edit in current file's directory {{{2
 cnoremap %% <C-R>=fnameescape(expand('%:h')).'/'<cr>
 map <leader>ew :e %%
