@@ -43,7 +43,7 @@ command -v mopidy >/dev/null     && mopidy &
 # because it needs to be done *after* setting up the display and keyboard
 #
 if [ $_xlogin == 'yes' ]; then
-    type >/dev/null 2>&1 xfortune && xfortune ~/share/games/fortunes
+    type >/dev/null 2>&1 xfortune && xfortune "$HOME/share/games/fortunes"
     if type >/dev/null 2>&1 my; then
         t=$(my -v terminal)
     else
@@ -55,14 +55,13 @@ fi
 
 # Start WM {{{1
 #
-
 case $WINDOWMANAGER in
 dwm)
     while true; do
         xsetroot -name "$(date "+%F %R")"
         sleep 1m
     done &
-    ~/src/dwm/dwm & wmpid=$!
+    "$HOME/src/dwm/dwm" & wmpid=$!
     # dwm_statusbar.sh &
     ;;
 
