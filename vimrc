@@ -75,6 +75,9 @@ set tags^=./tags;                    "  up the tree for the tags file
 set complete-=i                      " *Do not* search included files when completing
 set history=1000                     " Save more command history
 set fillchars=vert:\|,fold:―
+set undofile                         " Persistent undo tree
+set undodir=~/.vim/undo              " Put undo files here
+call mkdir(&undodir, "p", 0o700)
 set path^=$DOTFILES                  " Search for files in $DOTFILES
 set path+=~/work/fen-x/fenx-infra
 set path+=~/work/fen-x/fenx-infra/fenx_infra
