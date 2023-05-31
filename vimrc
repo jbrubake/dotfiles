@@ -563,7 +563,7 @@ call minpac#add('alvan/vim-closetag')
 "       </table>
 
 " Use closetag in these files
-let g:closetag_filenames = "*.html,*.xhtml,*.phtml"
+let g:closetag_filenames = "*.sgml,*.xml,*.html,*.xhtml,*.phtml,*.php"
 
 " vim-commentary: Commenting keymaps {{{2
 call minpac#add('tpope/vim-commentary')
