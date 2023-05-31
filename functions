@@ -179,7 +179,7 @@ define() { # Define words and phrases with google
 rtfm() { # Check various forms of documentation
     man "$@" ||
         [[ -f "/usr/share/info/$@.info*" ]] && info "$@" ||
-        echo "No info entry for $@" >/dev/stderr &&
+        printf "No info entry for \n" "$@" >&2 &&
         "$@" --help ||
         openurl "http://duckduckgo.com/?q=%21documentation+for+$@" ;
 }
