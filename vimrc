@@ -600,7 +600,7 @@ let g:gitgutter_sign_removed_first_line = ''
 let g:gitgutter_sign_modified_removed = ''
 
 " vim-hcl: Syntax highlighting for HCL {{{2
-call minpac#add('jvirtanen/vim-hcl', {'rev':'main', 'type': 'opt'})
+call minpac#add('jvirtanen/vim-hcl')
 
 " vim-IndentCommentPrefix: Indents comments sensibly {{{2
 call minpac#add('inkarkat/vim-IndentCommentPrefix')
