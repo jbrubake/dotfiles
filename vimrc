@@ -646,6 +646,10 @@ let g:vim_markdown_conceal_code_blocks = 0
  
 " vim-markdown-folding: Fold Markdown files on headers
 call minpac#add('masukomi/vim-markdown-folding')
+
+" vim-plugin-AnsiEsc: ansi escape sequences concealed, but highlighted as specified (conceal) {{{2
+call minpac#add('powerman/vim-plugin-AnsiEsc')
+
 " vim-repeat: Enable repeating supported plugin maps with "."{{{2
 call minpac#add('tpope/vim-repeat')
 
