@@ -230,6 +230,7 @@ fi
 if type cpanm >/dev/null 2>&1; then
     PERL_CPANM_HOME=$XDG_CACHE_HOME/cpanm
     export PERL_CPANM_HOME
+    mkdir -p "$PERL_CPANM_HOME"
 fi
 
 # ARM cross-compiler {{{2
