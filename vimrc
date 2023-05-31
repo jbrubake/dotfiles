@@ -794,7 +794,7 @@ map <leader>et :tabe %%
 " Kevin Kuchta (www.vimbits.com/bits/317)
 function! g:ToggleColorColumn()
     if &colorcolumn == ''
-        setlocal colorcolumn=70
+        setlocal colorcolumn=80
     else
         setlocal colorcolumn&
     endif
