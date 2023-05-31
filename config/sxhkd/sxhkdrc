@@ -22,6 +22,10 @@ mod4 + t
 mod4 + b
     jumpapp -c Navigator.Firefox firefox
 
+# Add bookmark to buku
+mod4 + B
+    bukuadd
+
 # Main terminal
 #
 # if 'main' session is not running, launch it detached and then
