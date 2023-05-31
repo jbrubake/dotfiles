@@ -1,2 +1,3 @@
-" Set options for git commit files
-setlocal tw=68 spell
+setlocal textwidth=68
+setlocal spell
+

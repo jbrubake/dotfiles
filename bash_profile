@@ -12,3 +12,4 @@ source "$HOME/.profile" # non-bash specific login config
 source "$HOME/.bashrc"  # interactive setup. not sourced by default
 
 # vim: foldlevel=0
+
