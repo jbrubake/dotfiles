@@ -446,9 +446,6 @@ noremap <Leader>b :Buffers<CR>
 " gemini-vim-syntax: Syntax highlighting for text/gemini files {{{2
 call minpac#add('https://tildegit.org/sloum/gemini-vim-syntax')
 
-" pnfo: View NFO files in vim {{{2
-call minpac#add('trapd00r/pnfo')
-
 " scss-syntax: Sassy CSS for vim {{{2
 call minpac#add('cakebaker/scss-syntax.vim')
 
