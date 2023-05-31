@@ -136,7 +136,7 @@ fi
 # Miscellaneous {{{1
 #
 # Emulate clear(1) if I don't have it
-command -v clear >/dev/null || alias clear='echo -en "\e[2J\e[H"'
+command -v clear >/dev/null || alias clear='printf "\e[2J\e[H\n"'
 
 # If todo.txt is installed, make it simpler to access
 command -v todo.sh >/dev/null && alias t=todo.sh
