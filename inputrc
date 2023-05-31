@@ -1,21 +1,32 @@
+$if mode=emacs
+
 # The following line is actually equivalent to "\C-?": delete-char
 "\e[3~": delete-char
 
-# VT
+# $if term=vt
 "\e[1~": beginning-of-line
 "\e[4~": end-of-line
+# $endif
 
-# kvt
+# $if term=kvt
 "\e[H": beginning-of-line
 "\e[F": end-of-line
+# $endif
 
-# rxvt and konsole (i.e. the KDE-app...)
-"\e[7~": beginning-of-line
-"\e[8~": end-of-line
+$if term=rxvt
+    "\e[7~": beginning-of-line
+    "\e[8~": end-of-line
+$endif
 
-# VT220
-"\eOH": beginning-of-line
-"\eOF": end-of-line
+$if term=konsole
+    "\e[7~": beginning-of-line
+    "\e[8~": end-of-line
+$endif
+
+$if term=vt220
+    "\eOH": beginning-of-line
+    "\eOF": end-of-line
+$endif
 
 # Allow 8-bit input/output
 #
@@ -50,8 +61,8 @@ set expand-tilde on
 set mark-symlinked-directories on
 
 # 'Magic Space'
-# Insert a space character then performs
-# a history expansion in the line
+# Inputting a 'magic-space' after history expansion characters
+# (e.g., !*, !!) performs the history expansion in-line
 $if Bash
     Space: magic-space
 $endif
@@ -67,4 +78,6 @@ $endif
 
 # Make Alt+s cycle through Tab completion list
 "\es": menu-complete
+
+$endif # mode=emacs
 
