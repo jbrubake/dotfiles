@@ -54,8 +54,8 @@ set colored-stats on
 # Append ls -F character to Tab completion
 set visible-stats on
 
-# Expand homedir name
-set expand-tilde on
+# Do not expand homedir name
+set expand-tilde off
 
 # Tab completion on symlinked directories adds the '/'
 set mark-symlinked-directories on
