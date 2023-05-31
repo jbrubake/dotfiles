@@ -260,7 +260,7 @@ EOF
 }
 google () { # Google something
     # Create search string if arguments were passed
-    if [[ "$*" ]]; then
+    if [ $# != 0 ]; then
         # Google search strings replace spaces with '+'
         IFS='+'
         local search_string="$*"
@@ -284,10 +284,10 @@ define() { # Define words and phrases with google
 }
 rtfm() { # Check various forms of documentation
     man "$@" ||
-        [[ -f "/usr/share/info/$@.info*" ]] && info "$@" ||
+        [ -f "/usr/share/info/$@.info*" ] && info "$@" ||
         printf "No info entry for \n" "$@" >&2 &&
-        "$@" --help ||
-        openurl "http://duckduckgo.com/?q=%21documentation+for+$@" ;
+            "$@" --help ||
+            openurl "http://duckduckgo.com/?q=%21documentation+for+$@" ;
 }
 #### hb/hr/hbl {
 # Bold, Reverse-Video and Blinking highlighted search
