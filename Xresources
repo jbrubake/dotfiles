@@ -1,4 +1,9 @@
 ! vim: foldenable foldmethod=marker
+!
+! System-wide XResources configuration
+!
+! Put host specific resources in ~/.Xresources-<hostname>
+!
 
 *customization:         -color
 
