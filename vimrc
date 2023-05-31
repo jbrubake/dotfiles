@@ -286,7 +286,6 @@ call minpac#add('k-takata/minpac', {'type': 'opt'})
 ""call minpac#add('jreybert/vimagit') " vimagit: Ease your git workflow within Vim
 ""call minpac#add('LucHermitte/VimFold4C') " VimFold4C: Vim folding ftplugin for C & C++ (and similar languages)
 ""call minpac#add('vimoutliner/vimoutline') " vimoutline: Work fast, think well
-""call minpac#add('lervag/vimtex') " vimtex: vim LaTEX plugin
 ""call minpac#add('vimwiki/vimwiki') " vimwiki: Personal Wiki for Vim
 ""call minpac#add('sysid/vimwiki-nirvana') " vimwiki-nirvana: vimwiki custom link handler
 ""call minpac#add('preservim/vim-lexical') " vim-lexical: Build on Vim's spell/thes/dict completion
@@ -698,6 +697,11 @@ else
     let g:pilot_key_l='<a-l>'
     let g:pilot_key_p='<a-\>'
 endif
+
+" vimtex: vim LaTeX plugin {{{2
+call minpac#add('lervag/vimtex')
+
+let g:vimtex_view_method = 'zathura'
 
 " webapi-vim: Needed for vim-gist {{{2
 call minpac#add('mattn/webapi-vim')
