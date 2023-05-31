@@ -227,6 +227,11 @@ if test -d "$HOME/lib/perl5/"; then
     export PATH PERL5LIB PERL_LOCAL_LIB_ROOT PERL_MB_OPT PERL_MM_OPT
 fi
 
+if type cpanm >/dev/null 2>&1; then
+    PERL_CPANM_HOME=$XDG_CACHE_HOME/cpanm
+    export PERL_CPANM_HOME
+fi
+
 # ARM cross-compiler {{{2
 #
 if test -d "$HOME/opt/arm-none-eabi/"; then
