@@ -156,9 +156,9 @@ fi
 
 
 alias ':q'=exit                                           # Exit like it's vim
-alias +x='chmod +x "$@"'                                  # Make file executable
+alias +x='chmod +x'                                  # Make file executable
 [ -n "$BASH" ] &&
-    alias -- -x='chmod -x "$@"'                           # Make file non-executable
+    alias -- -x='chmod -x'                           # Make file non-executable
 alias bell='printf "\a"'                                  # Ring the bell
 alias df='df -hT'                                         # Make df output nicer
 alias dut='du -h --max-depth=1'                           # du(1) prints totals for one level down
