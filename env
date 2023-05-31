@@ -54,7 +54,10 @@ done
 : "${LANGUAGE:=en_US.UTF-8}"
 : "${LC_CTYPE:=en_US.UTF-8}"
 : "${LC_ALL:=en_US.UTF-8}"
-export LANG LANGUAGE LC_CTYPE LC_ALL
+export LANG
+export LANGUAGE
+export LC_CTYPE
+export LC_ALL
 
 if [ -r /etc/timezone ]; then
     TZ=$( cat /etc/timezone )
@@ -101,7 +104,9 @@ unset editors
 fi
 VISUAL=$EDITOR
 FCEDIT=$EDITOR
-export VISUAL FCEDIT EDITOR
+export VISUAL
+export FCEDIT
+export EDITOR
 
 # PAGER/MANPAGER {{{2
 #
@@ -123,12 +128,14 @@ if test "$PAGER" = "vimpager"; then
     export VIMPAGER_RC
 fi
 MANPAGER=$PAGER
-export PAGER MANPAGER
+export PAGER
+export MANPAGER
 
 if command -v ack >/dev/null; then
     ACK_PAGER=$PAGER
     ACK_PAGER_COLOR=$PAGER
-    export ACK_PAGER ACK_PAGER_COLOR
+    export ACK_PAGER
+    export ACK_PAGER_COLOR
 fi
 
 # Web browser {{{2
@@ -224,7 +231,10 @@ if test -d "$HOME/lib/perl5/"; then
     PERL_LOCAL_LIB_ROOT="$HOME/lib/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"
     PERL_MB_OPT="--install_base $HOME/lib/perl5"
     PERL_MM_OPT="INSTALL_BASE=$HOME/lib/perl5"
-    export PATH PERL5LIB PERL_LOCAL_LIB_ROOT PERL_MB_OPT PERL_MM_OPT
+    export PERL5LIB
+    export PERL_LOCAL_LIB_ROOT
+    export PERL_MB_OPT
+    export PERL_MM_OPT
 fi
 
 if type cpanm >/dev/null 2>&1; then
@@ -284,7 +294,9 @@ if [ -n "$BASH" ]; then
     HISTCONTROL="ignoredups"  # No duplicate history entries
     HISTIGNORE="&:[bf]g:exit" # History ignores these matches
 
-    export HISTFILESIZE HISTCONTROL HISTIGNORE
+    export HISTFILESIZE
+    export HISTCONTROL
+    export HISTIGNORE
 fi
 
 export WIKI_DIR=~/wiki
@@ -322,7 +334,8 @@ SSH_ASKPASS="$HOME/bin/pinentry-ssh-askpass"
 if [ -n "$DISPLAY" ]; then
     SUDO_ASKPASS="$SSH_ASKPASS"
 fi
-export SSH_ASKPASS SUDO_ASKPASS
+export SSH_ASKPASS
+export SUDO_ASKPASS
 
 # *grep Colors
 #
@@ -355,8 +368,12 @@ if command -v tldr >/dev/null; then
     TLDR_PARAM='reset white'
     TLDR_EPARAM='white'
 
-    export TLDR_PARAM TLDR_EPARAM TLDR_CODE
-    export TLDR_DESCRIPTION TLDR_HEADER TLDR_QUOTE
+    export TLDR_PARAM
+    export TLDR_EPARAM
+    export TLDR_CODE
+    export TLDR_DESCRIPTION
+    export TLDR_HEADER
+    export TLDR_QUOTE
 fi
 
 # Remove duplicate entries from PATH {{{2
