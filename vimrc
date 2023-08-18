@@ -27,6 +27,10 @@ autocmd BufWritePost ~/.vimrc nested source ~/.vimrc
 
 set nocompatible " Don't be vi compatible
 
+if has ('clientserver') && empty(v:servername) && exists('*remote_startserver')
+    call remote_startserver('VIM')
+endif
+
 " Remap Leader here because it may be used *before* the mapping section
 " Better than ',' which is used for backwards character searching
 let mapleader = ' '
