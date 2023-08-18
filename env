@@ -38,6 +38,7 @@ fi
 # Setup PATH {{{1
 # TODO: think through PATH *order* better
 # TODO: e.g. ~/bin should be first followed by go/rust/perl/etc then system stuff
+# TODO: only add entry if it exists
 # Path entries to add. Listed in order from least- to most-significant
 # NOTE: /{s,}bin is here because Fedora doesn't add it as it is just a symlink to
 # /usr/bin. However, certain (Alpine) LXC containers require it
@@ -253,12 +254,15 @@ fi
 # Python {{{2
 # Sigh. Python can't find user site-packages because I refuse to use
 # .local or whatever other silly crap it expects
-PYTHONPATH=$HOME/lib/python3/site-packages
-test -d "$PYTHONPATH/bin" && PATH="$PYTHONPATH/bin:$PATH"
-export PYTHONPATH
+# PYTHONPATH=$HOME/lib/python3/site-packages
+# test -d "$PYTHONPATH/bin" && PATH="$PYTHONPATH/bin:$PATH"
+# export PYTHONPATH
 
 # Rust {{{2
 [ -d "$HOME/.cargo/bin" ] && PATH="$PATH:$HOME/.cargo/bin"
+# TODO: These things *don't* really all belong in ~/share
+# CARGO_HOME=$XDG_DATA_HOME/cargo
+# export CARGO_HOME
 
 # Packer {{{2
 PACKER_CONFIG_DIR=$XDG_STATE_HOME
