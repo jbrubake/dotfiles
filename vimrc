@@ -237,11 +237,11 @@ let g:colorizer_disable_bufleave = 0 " Only highlight above files
 " Highlight X11 colornames in Xresources and such
 let g:colorizer_x11_names = 1
 
-" fugitive-gitlab: A vim extension to fugitive.vim for GitLab support {{{2
-call minpac#add('shumphrey/fugitive-gitlab.vim')
-
 " fugitive-gitea: Plugin for :Gbrowse to work with GITea server {{{2
 call minpac#add('borissov/fugitive-gitea')
+
+" fugitive-gitlab: A vim extension to fugitive.vim for GitLab support {{{2
+call minpac#add('shumphrey/fugitive-gitlab.vim')
 
 " fzf: Fuzzy finder {{{2
 call minpac#add('junegunn/fzf')
@@ -411,14 +411,6 @@ endif " minpac loaded
 " vim-autoformat:  Provide easy code formatting in Vim by integrating existing code formatters {{{2
 call minpac#add('vim-autoformat/vim-autoformat')
 
-" vim-commentary: Commenting keymaps {{{2
-call minpac#add('tpope/vim-commentary')
-
-" gc{motion} : Toggle commenting over {motion}
-" gcc        : Toggle commenting of [count] lines
-" {Visual}gc : Toggle commenting of highlighted lines
-" gcu        : Uncomment current and adjacent lines
-
 " vim-closetag: Easily close HTML/XML tags {{{2
 call minpac#add('alvan/vim-closetag')
 
@@ -433,6 +425,14 @@ call minpac#add('alvan/vim-closetag')
 
 " Use closetag in these files
 let g:closetag_filenames = "*.sgml,*.xml,*.html,*.xhtml,*.phtml,*.php"
+
+" vim-commentary: Commenting keymaps {{{2
+call minpac#add('tpope/vim-commentary')
+
+" gc{motion} : Toggle commenting over {motion}
+" gcc        : Toggle commenting of [count] lines
+" {Visual}gc : Toggle commenting of highlighted lines
+" gcu        : Uncomment current and adjacent lines
 
 " vim-css3-syntax: CSS3 syntax support for built-in syntax/css.vim {{{2
 call minpac#add('hail2u/vim-css3-syntax')
@@ -500,7 +500,7 @@ let g:vim_markdown_override_foldtext = 0
 let g:vim_markdown_follow_anchor = 1
 let g:vim_markdown_conceal_code_blocks = 0
  
-" vim-markdown-folding: Fold Markdown files on headers
+" vim-markdown-folding: Fold Markdown files on headers {{{2
 call minpac#add('masukomi/vim-markdown-folding')
 
 " vim-plugin-AnsiEsc: ansi escape sequences concealed, but highlighted as specified (conceal) {{{2
@@ -541,6 +541,9 @@ call minpac#add('tpope/vim-surround')
 " vim-sxhkdrc: Vim syntax for sxhkd's configuration files {{{2
 call minpac#add('baskerville/vim-sxhkdrc')
 
+" vim-tmux: Vim plugin for .tmux.conf {{{2
+call minpac#add('tmux-plugins/vim-tmux')
+
 " vim-tmux-pilot: Unified navigation of splits and tabs in nvim and tmux {{{2
 call minpac#add('urbainvaes/vim-tmux-pilot')
 
@@ -558,9 +561,6 @@ else
     let g:pilot_key_l='<a-l>'
     let g:pilot_key_p='<a-\>'
 endif
-
-" vim-tmux: Vim plugin for .tmux.conf {{{2
-call minpac#add('tmux-plugins/vim-tmux')
 
 " vimtex: vim LaTeX plugin {{{2
 call minpac#add('lervag/vimtex')
