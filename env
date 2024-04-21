@@ -285,6 +285,9 @@ esac
 LOCATEDB="$HOME/var/lib/locate/locate.db"
 export LOCATEDB
 
+LESSHISTFILE="$XDG_STATE_HOME/misc/lesshst"
+mkdir -p "$(dirname "$LESSHISTFILE")"
+
 if [ -n "$BASH" ]; then
     # Filename completion ignores backups and vim swap files
     #
