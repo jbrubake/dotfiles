@@ -304,6 +304,8 @@ if [ -n "$BASH" ]; then
     export HISTFILESIZE
     export HISTCONTROL
     export HISTIGNORE
+
+    mkdir -p "$(dirname "$HISTFILE")"
 fi
 
 export WIKI_DIR=~/wiki
