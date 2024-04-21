@@ -1,0 +1,98 @@
+import = ["xresources.toml",]
+
+working_directory = "None"
+live_config_reload = true
+ipc_socket = true
+
+[window]
+dimensions.columns = 0
+dimensions.lines = 0
+position = "None"
+padding.x = 0
+padding.y = 0
+dynamic_padding = false
+decorations = "Full"
+opacity = 1.0
+blur = false
+startup_mode = "Windowed"
+title = "Alacritty"
+dynamic_title = true
+class.instance = "Alacritty"
+class.general = "Alacritty"
+decorations_theme_variant = "None"
+resize_increments = false
+option_as_alt = "None"
+
+[scrolling]
+history = 100000
+multiplier = 3
+
+[colors.search]
+matches.foreground = "#181818"
+matches.background = "#ac4242"
+focused_match.foreground = "#181818"
+focused_match.background = "#f4b47f"
+
+[colors.hints]
+start.foreground = "#181818"
+start.background = "#f4bf75"
+end.foreground = "#181818"
+end.background = "#ac4242"
+
+[colors.selection]
+text = "CellBackground"
+background = "CellForeground"
+
+[colors.footer_bar]
+foreground = "#181818"
+background = "#d8d8d8"
+
+[colors.line_indicator]
+foreground = "None"
+background = "None"
+
+[colors]
+transparent_background_colors = false
+draw_bold_text_with_bright_colors = false
+
+[bell]
+animation = "Linear"
+duration = 0
+color = "#ffffff"
+command = "None"
+
+[selection]
+semantic_escape_chars = ",│`|:\"' ()[]{}<>\t"
+save_to_clipboard = false
+
+[cursor]
+style.shape = "Block"
+style.blinking = "Off"
+blink_interval = 750
+blink_timeout = 5
+unfocused_hollow = true
+thickness = 0.15
+vi_mode_style = "None"
+
+[terminal]
+osc52 = "OnlyCopy"
+
+[font.offset]
+x = 0
+y = 0
+
+[font]
+builtin_box_drawing = true
+
+[mouse]
+hide_when_typing = false
+# See documenation for bindings
+
+[hints]
+alphabet = "jfkdls;ahgurieowpq"
+# See documentation for enabled
+
+[keyboard]
+# bindings = 
+# See documentation for bindings
+
