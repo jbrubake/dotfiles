@@ -44,6 +44,6 @@ if command -v sxhkd >/dev/null 2>&1; then
     # Start sxhkd in $HOME, otherwise everything it
     # starts will start in /
     cd "$HOME"
-    sxhkd &
+    exec sxhkd &
 fi
 
