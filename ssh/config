@@ -1,22 +1,19 @@
-# Ubuntu likes to hash known hosts which prevents
-# bash hostname completion from working
+Include ~/.ssh/config.d/*.conf
+
 Host *
+    # Ubuntu likes to hash known hosts which prevents
+    # bash hostname completion from working
     HashKnownHosts no
+    ControlMaster auto
+    ControlPath ~/.ssh/sockets/%r@%h:%p
+    ControlPersist 300
 
 # Force IPv4 everywhere
 Host *
     AddressFamily inet
 
-Include config.base
-Include config.local
-
 # sshtron
 Host tron
     HostName sshtron.zachlatta.com
     User green
-
-# localhost
-Host local
-    HostName localhost
-    Port 2022
 
