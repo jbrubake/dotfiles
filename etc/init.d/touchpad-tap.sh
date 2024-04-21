@@ -1,6 +1,9 @@
 #!/bin/sh
-
-id=$(xinput | grep Touchpad | sed -e 's/.*id=\([^\t]*\).*$/\1/')
-prop=$(xinput list-props $id | grep 'Tapping Enabled (' | sed -e 's/^.*(\([^)]*\)).*$/\1/')
-xinput set-prop $id $prop 1
+#
+name=$(xinput --list --name-only | grep Touchpad | head -1)
+prop=$(xinput list-props "$name" |
+           grep -i 'Tapping Enabled (' |
+           awk '{print $4}' |
+           tr -d '():')
+xinput set-prop "$name" "$prop" 1
 
