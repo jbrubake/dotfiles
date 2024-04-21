@@ -412,6 +412,9 @@ elinks() { # Reuse existing elinks instance
         command elinks $1
     fi
 }
+ping() { # Wrap ping(1) to allow pinging by SSH Host entry
+    command ping $(__gethost "$@")
+}
 # navi {1
 _navi_call() {
     local result="$(navi --path ~/share/navi "$@" </dev/tty)"
@@ -437,5 +440,27 @@ _navi_widget() {
 }
 # Helper Functions {1
 # (prefix names with '__')
+__gethost() { # Call gethost with the last argument passed
+#
+# This allows wrapping commands to use your SSH config to
+# resolve hostname while still being able to pass options
+# to them
+#
+# Example: ping -c10 <host> will call gethost <host> but
+# still see the -c10 option
+#
+    options=
+    host=
+    i=0
+    for arg; do
+        i=$((i+1))
+        if [ "$i" -lt "$#" ]; then
+            options="$options $arg"
+        else
+            host=$(gethost "$arg")
+        fi
+    done
+    echo $options $host
+}
 
 # vim: foldlevel=0 foldmarker={,}
