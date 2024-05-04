@@ -1,4 +1,4 @@
-import = ["xresources.toml",]
+import = ["~/.config/alacritty/xresources.toml"]
 
 working_directory = "None"
 live_config_reload = true
