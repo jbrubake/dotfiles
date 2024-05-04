@@ -22,11 +22,11 @@ export HOME LOGNAME UNAME TMPDIR TMP
 # XDG Directores {{{1
 # Defaults for now
 #
-# XDG_*=<path>                      # Purpose (equivalent)            # Default
-XDG_CONFIG_HOME="$HOME/.config"     # config files (/etc)             # ~/.config
-XDG_CACHE_HOME="$HOME/.local/cache" # non-essential data (/var/cache) # ~/.cache
-XDG_DATA_HOME="$HOME/.local/share"  # data files (/usr/share)         # ~/.local/share
-XDG_STATE_HOME="$HOME/.local/state" # state data (/var/lib)           # ~/.local/state
+# XDG_*=<path>                   # Purpose (equivalent)            # Default
+XDG_CONFIG_HOME="$HOME/.config"  # config files (/etc)             # ~/.config
+XDG_CACHE_HOME="$HOME/var/cache" # non-essential data (/var/cache) # ~/.cache
+XDG_DATA_HOME="$HOME/share"      # data files (/usr/share)         # ~/.local/share
+XDG_STATE_HOME="$HOME/var/lib"   # state data (/var/lib)           # ~/.local/state
 export XDG_CONFIG_HOME XDG_CACHE_HOME XDG_DATA_HOME XDG_STATE_HOME
 
 # System defaults
