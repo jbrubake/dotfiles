@@ -8,15 +8,17 @@ test -n "$color_flag" && LS_COLOR_ALWAYS='--color=always'
 
 # My standard ls aliases {{{1
 #
-if command -v exa >/dev/null; then
+command -v exa >/dev/null && _ls=exa
+command -v eza >/dev/null && _ls=eza
+if [ -n "$_ls" ]; then
     LS_OPTS="--group-directories-first --sort extension"
-    alias ls="command  exa $color_flag $LS_OPTS --classify"
-    alias la="command  exa $color_flag $LS_OPTS -a --classify"
-    alias ll="command  exa $color_flag $LS_OPTS -lg --icons"
-    alias lal="command exa $color_flag $LS_OPTS -lag --icons"
-    alias l.="command  exa $color_flag $LS_OPTS --classify -d .*"
+    alias ls="command  "$_ls" $color_flag $LS_OPTS --classify"
+    alias la="command  "$_ls" $color_flag $LS_OPTS -a --classify"
+    alias ll="command  "$_ls" $color_flag $LS_OPTS -lg --icons"
+    alias lal="command "$_ls" $color_flag $LS_OPTS -lag --icons"
+    alias l.="command  "$_ls" $color_flag $LS_OPTS --classify -d .*"
     alias lsap="lsp -lA --icons" # lsp is a function defined in ~/.functions
-
+    unset _ls
 else
     LS_OPTS="--group-directories-first -XF --dereference-command-line-symlink-to-dir"
     alias ls="command  ls $color_flag $LS_OPTS"
