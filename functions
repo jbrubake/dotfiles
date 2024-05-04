@@ -158,8 +158,10 @@ lsp () { # Print numerical permissions at the start of ls -l output
 #   LS_COLOR_ALWAYS
 #   LS_OPTS
 #
-    if command -v exa >/dev/null; then
-        command exa $LS_COLOR_ALWAYS $LS_OPTS -l "$@" |
+    command -v exa >/dev/null && _ls=exa
+    command -v eza >/dev/null && _ls=eza
+    if [ -n "$_ls" ]; then
+        command "$_ls" $LS_COLOR_ALWAYS $LS_OPTS -l "$@" |
             awk '{
                 mode = gensub("\x1b[^m]*m", "", "g", $1)
                 k = 0;
