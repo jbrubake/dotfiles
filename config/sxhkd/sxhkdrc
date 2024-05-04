@@ -45,13 +45,11 @@ mod4 + ctrl + Return
 # Various apps
 #
 F10
-    jumpapp -i discord Discord
+    jumpapp -i discord discord
 F11
-    jumpapp -i Signal flatpak run org.signal.Signal
-F12
-    jumpapp -i "Microsoft Teams" teams
+    jumpapp -i signal signal-desktop
 F9
-    jumpapp -i whalebird flatpak run social.whalebird.WhalebirdDesktop
+    jumpapp -i whalebird whalebird
 
 # Volume controls
 #
