@@ -2,6 +2,7 @@ imports:
   ls_colors: ./
   gdb-dashboard: ./
   mutt-bgedit: ./mutt/scripts
+  nerd-fonts: ./config/fontconfig/conf.d
   redact_pass: ./vim/pack/manual/start
 
 git module ls_colors:
@@ -25,6 +26,11 @@ curl module mutt-bgedit:
   filename: mutt-bgedit
   executable: mutt-bgedit
   sha1: a41d6fbcfc7ea498679cf43e22b6d7c8f05e877f
+
+# NOTE: The git repo is huge so using curl is faster
+curl module nerd-fonts:
+  url: https://raw.githubusercontent.com/ryanoasis/nerd-fonts/4b528bf1b5ea638965bc9f634bd7a13301060548/10-nerd-font-symbols.conf
+  filename: 10-nerd-font-symbols.conf
 
 git module redact_pass:
   url: https://git.zx2c4.com/password-store
