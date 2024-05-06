@@ -81,7 +81,6 @@ if command -v grc >/dev/null; then
     alias mtr='grc mtr'
     alias netstat='grc netstat'
     alias nmap='grc nmap'
-    alias ping='grc ping'
     alias tcpdump='grc tcpdump'
     alias traceroute='grc traceroute'
     alias traceroute6='grc traceroute6'

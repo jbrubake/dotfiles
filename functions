@@ -415,7 +415,16 @@ elinks() { # Reuse existing elinks instance
     fi
 }
 ping() { # Wrap ping(1) to allow pinging by SSH Host entry
-    command ping $(__gethost "$@")
+#
+# Use grc if it is available
+#
+    if command -v grc >/dev/null; then
+        ping="grc ping"
+    else
+        ping="command ping"
+    fi
+
+    $ping $(__gethost "$@")
 }
 # navi {1
 _navi_call() {
