@@ -57,12 +57,15 @@ alias calendar='( $(my calendar)& )'
 
 # GRC Highlighting {{{1
 
+# Aliases that will exist only if grc is found {{{2
+#
 if command -v grc >/dev/null; then
     alias grc="grc -es"
 
     alias configure='grc ./configure'
 
     alias free='grc free -h'
+
     alias jobs='jobs -l | grcat conf.jobs'
 
     alias as='grc as'
@@ -115,6 +118,18 @@ if command -v grc >/dev/null; then
 
     alias semanage='grc semanage'
     alias getsebool='grc getsebool'
+fi
+
+# Aliases that will exist even if grc is not found {{{2
+#
+if command -v grc >/dev/null; then
+    alias df='grc df -hT'
+    alias du='grc du -h'
+    alias du1='grc du -h --max-depth=1'
+else
+    alias df='df -hT'
+    alias du='du -h'
+    alias du1='du -h --max-depth=1'
 fi
 
 # Cassowary {{{1
