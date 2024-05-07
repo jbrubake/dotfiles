@@ -75,10 +75,11 @@ fi
 if [[ -z $HOSTFILE && -r "$HOME/.ssh/known_hosts" ]]; then
     HOSTFILE="$HOME/.hosts"
 fi
-# terraform
-if command -v terraform >/dev/null; then
+# terraform / opentofu
+command -v terraform >/dev/null &&
     complete -C $(command -v terraform) terraform
-fi
+command -v tofu >/dev/null &&
+    complete -C $(command -v tofu) tofu
 # }}}
 
 # vim: foldlevel=0
