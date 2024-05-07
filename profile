@@ -14,7 +14,15 @@ fi
 
 # Start gpg and ssh agents {{{1
 #
-keychain --quiet --nogui --ignore-missing $(cat "$HOME/.keychain/keylist")
+eval $( keychain --eval --nogui --agents ssh,gpg )
+# Find all SSH public keys and add the corresponding private key
+#
+# Using basename to remove the extension doesn't work because keychain
+# cannot find the key without the entire path
+# The --confhost option to keychain is supposed to use IdentityFile
+# to find the key path but I cannot get that to work
+keychain --quiet --nogui --ignore-missing \
+    $(find "$HOME/.ssh" -name '*.pub' | rev | cut -f 2- -d. | rev)
 
 # MOTD {{{1
 if test  -e /run/motd.dynamic; then

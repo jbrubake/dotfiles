@@ -6,9 +6,8 @@
 # Setup Environment {{{1
 . "$HOME/.env"      # common environment
 
-# Set a flag indicating X is the logon environment so
-# .xinitrc can run login related stuff
-_xlogin='yes'
+# Start gpg and ssh agents
+eval $(keychain --eval --nogui --agents ssh,gpg)
 
 # Finish setting up {{{1
 . $HOME/.xinitrc

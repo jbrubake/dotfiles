@@ -37,23 +37,6 @@ command -v xbanish >/dev/null    && xbanish &
 command -v streamdeck >/dev/null && streamdeck &
 command -v mopidy >/dev/null     && mopidy &
 
-# Show login related things {{{1
-#
-# This has to be done here instead of in .xsession
-# because it needs to be done *after* setting up the display and keyboard
-#
-if [ $_xlogin == 'yes' ]; then
-    type >/dev/null 2>&1 xfortune && xfortune "$HOME/share/games/fortunes"
-    if type >/dev/null 2>&1 my; then
-        t=$(my -v terminal)
-    else
-        t=xterm
-    fi
-    eval $( keychain --eval --nogui --agents ssh,gpg )
-    $t -e keychain --quiet --nogui --ignore-missing $(cat "$HOME/.keychain/keylist")
-    unset _xlogin
-fi
-
 # Start WM {{{1
 #
 case $WINDOWMANAGER in
@@ -84,6 +67,29 @@ dwm)
     fi
     ;;
 esac
+
+# Show login related things {{{1
+#
+# These are tasks that would be run in ~/.xsession except that
+# they need to run *after* the window manager is launched
+#
+# Simple test to see if startx was executed
+if ! ps x | grep [s]tartx; then
+    type >/dev/null 2>&1 xfortune && xfortune "$HOME/share/games/fortunes"
+    if type >/dev/null 2>&1 my; then
+        t=$(my -v terminal)
+    else
+        t=xterm
+    fi
+    # Find all SSH public keys and add the corresponding private key
+    #
+    # Using basename to remove the extension doesn't work because keychain
+    # cannot find the key without the entire path
+    # The --confhost option to keychain is supposed to use IdentityFile
+    # to find the key path but I cannot get that to work
+    $t -e keychain --quiet --nogui --ignore-missing \
+        $(find "$HOME/.ssh" -name '*.pub' | rev | cut -f 2- -d. | rev)
+fi
 
 # Start desktop apps {{{1
 #
