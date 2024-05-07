@@ -242,7 +242,7 @@ google () { # Google something
     openurl "www.google.com/$url"
 }
 define() { # Define words and phrases with google
-    local y="$@"
+    y="$@"
     curl -sA"Opera" "http://www.google.com/search?q=define:${y// /+}" |
         grep -Eo '<li>[^<]+' |
         sed 's/^<li>//g' |
