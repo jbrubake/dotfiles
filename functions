@@ -208,8 +208,7 @@ ip () { # Add 'get' command to ip(8)
                         printf "%s" "$res" | xclip -in -selection clipboard
                         printf "copied %s to clipboard\n" "$res"
                     else
-                        printf "%s\n" "xclip is not installed" >&2
-                        printf "%s\n" "$res"
+                        printf "%s\n" "not copied: xclip is not installed" >&2
                     fi
                     ;;
                 h | he | hel | help)
@@ -220,8 +219,8 @@ Print public IP address to stdout or to the X11 clipboard if [copy]
 is present
 EOF
                 ;;
-                *) printf "%s\n" "$res" ;;
             esac
+            printf "%s\n" "$res"
             ;;
         *) $ip "$@" ;;
     esac
