@@ -21,7 +21,7 @@ shopt -so ignoreeof    # Ctl+D does not exit shell
 # }}}
 # Keybindings {{{
 # fzf {{{
-if type fzf >/dev/null 2>&1; then
+if command -v fzf >/dev/null; then
     for f in /usr/share/fzf/shell/*.bash /usr/local/share/fzf/shell/*.bash; do
         [ -f "$f" ] && . "$f"
     done

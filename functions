@@ -70,7 +70,7 @@ else
 fi
 # }
 # Play rpg-cli {1
-if command -v >/dev/null rpg-cli; then
+if command -v rpg-cli >/dev/null; then
 cd () { # rpg-cli
     command cd "$@"
     rpg-cli cd -f .
@@ -225,8 +225,7 @@ ip () { # Add 'get' command to ip(8)
 # 'ip get' prints current ip address and copies to clipboard
 # All other commands are passed to the real 'ip' command
 #
-# Use grc if it is available
-#
+    # Use grc if it is available
     if command -v grc >/dev/null; then
         ip="grc ip"
     else
@@ -265,10 +264,10 @@ google () { # Google something
     if [ $# != 0 ]; then
         # Google search strings replace spaces with '+'
         IFS='+'
-        local search_string="$*"
+        search_string="$*"
         unset IFS
 
-        local url="search?hl=en&lr=&ie=UTF-8&oe=UTF-8&q="
+        url="search?hl=en&lr=&ie=UTF-8&oe=UTF-8&q="
         url="$url$search_string&btnG=Google+Search"
     fi
 
@@ -303,20 +302,20 @@ rtfm() { # Check various forms of documentation
 #   ps | hr ".*$PPID.*" | hbl ".*$$.*"
 ####
 hb() {
-    local fx="[1m"
+    fx="[1m"
     _hb_hr_hbl "$1" "$fx" "$2"
 }
 hr() {
-    local fx="[7m"
+    fx="[7m"
     _hb_hr_hbl "$1" "$fx" "$2"
 }
 hbl() {
-    local fx="[5m"
+    fx="[5m"
     _hb_hr_hbl "$1" "$fx" "$2"
 }
 _hb_hr_hbl() {
-    test $2 && local color="[38;5;$3m"
-    local reset="[0m"
+    test $2 && color="[38;5;$3m"
+    reset="[0m"
     sed "s/\($1\)/$2$color\1$reset/gI"
 }
 #}
@@ -428,22 +427,22 @@ ping() { # Wrap ping(1) to allow pinging by SSH Host entry
 }
 # navi {1
 _navi_call() {
-    local result="$(navi --path ~/share/navi "$@" </dev/tty)"
+    result="$(navi --path ~/share/navi "$@" </dev/tty)"
     if [ -z "${result}" ]; then
         result="$(navi --path ~/share/navi --print </dev/tty)"
     fi
     printf "%s" "$result"
 }
 _navi_widget() {
-    local -r input="${READLINE_LINE}"
-    local -r last_command="$(echo "${input}" | navi fn widget::last_command)"
+    input="${READLINE_LINE}"
+    last_command="$(echo "${input}" | navi fn widget::last_command)"
 
     if [ -z "${last_command}" ]; then 
-        local -r output="$(_navi_call --print --fzf-overrides '--no-select-1')"
+        output="$(_navi_call --print --fzf-overrides '--no-select-1')"
     else
-        local -r find="$last_command"
-        local -r replacement="$(_navi_call --print --query "${last_command}")"
-        local -r output="${input//$find/$replacement}"
+        find="$last_command"
+        replacement="$(_navi_call --print --query "${last_command}")"
+        output="${input//$find/$replacement}"
     fi
 
     READLINE_LINE="$output"
@@ -475,3 +474,4 @@ __gethost() { # Call gethost with the last argument passed
 }
 
 # vim: foldlevel=0 foldmarker={,}
+

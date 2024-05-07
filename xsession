@@ -7,7 +7,8 @@
 . "$HOME/.env"      # common environment
 
 # Start gpg and ssh agents
-eval $(keychain --eval --nogui --agents ssh,gpg)
+command -v keychain >/dev/null &&
+    eval $(keychain --eval --nogui --agents ssh,gpg)
 
 # Finish setting up {{{1
 . $HOME/.xinitrc
