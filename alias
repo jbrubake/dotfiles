@@ -29,7 +29,7 @@ else
     alias lsap="lsp -lA" # lsp is a function defined in ~/.functions
 fi
 
-# Force color in *grep {{{1
+# Try color in *grep {{{1
 #
 alias grep="grep $color_flag"
 unset color_flag
@@ -46,8 +46,7 @@ fi
 # OS specific aliases {{{1
 #
 case $(uname -o) in
-    *)
-        ;;
+    *) ;;
 esac
 
 # Alternatives {{{1
@@ -119,7 +118,7 @@ fi
 
 # Cassowary {{{1
 #
-if command -v cassowary 2>&1 >/dev/null; then
+if command -v cassowary >/dev/null; then
     alias word='cassowary -c guest-run winword'
     alias excel='cassowary -c guest-run excel'
     alias ppt='cassowary -c guest-run powerpnt'
@@ -131,7 +130,7 @@ fi
 # Miscellaneous {{{1
 #
 # Emulate clear(1) if I don't have it
-command -v clear >/dev/null || alias clear='printf "\e[2J\e[H\n"'
+command -v clear >/dev/null || alias clear='tput clear'
 
 # If todo.txt is installed, make it simpler to access
 command -v todo.sh >/dev/null && alias t=todo.sh
@@ -148,7 +147,6 @@ elif command -v curl >/dev/null; then
 else
     alias myip='printf "wget or curl not available\n"'
 fi
-
 
 alias ':q'=exit                                           # Exit like it's vim
 alias +x='chmod +x'                                  # Make file executable
@@ -172,6 +170,7 @@ alias unexec="find . -type f -exec chmod ogu-x '{}' \;"   # chmod -x ALL files i
 command -v colormake >/dev/null &&
     alias make=colormake
 
+# Use vimx if available so it can access system clipboard
 if command -v vimx >/dev/null; then
     alias vim=vimx
     alias vi=vimx

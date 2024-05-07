@@ -3,12 +3,11 @@
 # ~/.env: environment variables
 
 # Set location of libsh
-LIBSH=$HOME/lib/libsh/libsh.sh
-export LIBSH
+export LIBSH=$HOME/lib/libsh/libsh.sh
 
-BASH_ENV="$HOME/.env"   # non-interactive setup
-ENV="$HOME/.shinit" # equivalent to .bashrc for sh
-export BASH_ENV ENV
+export BASH_ENV="$HOME/.env"   # non-interactive setup
+export ENV="$HOME/.shinit" # equivalent to .bashrc for sh
+
 
 # Sane defaults {{{1
 #
@@ -22,12 +21,11 @@ export HOME LOGNAME UNAME TMPDIR TMP
 # XDG Directores {{{1
 # Defaults for now
 #
-# XDG_*=<path>                   # Purpose (equivalent)            # Default
-XDG_CONFIG_HOME="$HOME/.config"  # config files (/etc)             # ~/.config
-XDG_CACHE_HOME="$HOME/var/cache" # non-essential data (/var/cache) # ~/.cache
-XDG_DATA_HOME="$HOME/share"      # data files (/usr/share)         # ~/.local/share
-XDG_STATE_HOME="$HOME/var/lib"   # state data (/var/lib)           # ~/.local/state
-export XDG_CONFIG_HOME XDG_CACHE_HOME XDG_DATA_HOME XDG_STATE_HOME
+# XDG_*=<path>                          # Purpose (equivalent)            # Default
+export XDG_CONFIG_HOME="$HOME/.config"  # config files (/etc)             # ~/.config
+export XDG_CACHE_HOME="$HOME/var/cache" # non-essential data (/var/cache) # ~/.cache
+export XDG_DATA_HOME="$HOME/share"      # data files (/usr/share)         # ~/.local/share
+export XDG_STATE_HOME="$HOME/var/lib"   # state data (/var/lib)           # ~/.local/state
 
 # System defaults
 #
@@ -56,17 +54,13 @@ done
 : "${LANGUAGE:=en_US.UTF-8}"
 : "${LC_CTYPE:=en_US.UTF-8}"
 : "${LC_ALL:=en_US.UTF-8}"
-export LANG
-export LANGUAGE
-export LC_CTYPE
-export LC_ALL
+export LANG LANGUAGE LC_CTYPE LC_ALL
 
 if [ -r /etc/timezone ]; then
-    TZ=$( cat /etc/timezone )
+    export TZ=$( cat /etc/timezone )
 else
-    TZ="America/New_York"
+    export TZ="America/New_York"
 fi
-export TZ
 
 # X-specific {{{1
 #
@@ -76,22 +70,20 @@ if [ -n "$DISPLAY" ]; then
     # Supports:
     #   Any WM/DE that is run as a single command with no arguments
     #
-    WINDOWMANAGER=cwm
-    export WINDOWMANAGER
+    export WINDOWMANAGER=cwm
 
     # Select Xresources colorscheme
     #
     # Colorscheme definitions must be placed in
     # $HOME/.Xresources.$COLORSCHEME
     #
-    COLORSCHEME=gnome-dark
-    export COLORSCHEME
+    export COLORSCHEME=gnome-dark
 fi
 
 # Alternatives {{{1
 # EDITOR/VISUAL {{{2
 #
-if command -v >/dev/null my; then
+if command -v my >/dev/null; then
     EDITOR=$(my -v editor 2>/dev/null)
 fi
 if test -z "$EDITOR"; then
@@ -104,15 +96,13 @@ if test -z "$EDITOR"; then
     done
 unset editors
 fi
-VISUAL=$EDITOR
-FCEDIT=$EDITOR
-export VISUAL
-export FCEDIT
 export EDITOR
+export VISUAL=$EDITOR
+export FCEDIT=$EDITOR
 
 # PAGER/MANPAGER {{{2
 #
-if command -v >/dev/null my; then
+if command -v my >/dev/null; then
     PAGER=$(my -v pager 2>/dev/null)
 fi
 if test -z "$PAGER"; then
@@ -126,30 +116,25 @@ if test -z "$PAGER"; then
 unset pagers
 fi
 if test "$PAGER" = "vimpager"; then
-    VIMPAGER_RC="$HOME/.vimrc"
-    export VIMPAGER_RC
+    export VIMPAGER_RC="$HOME/.vimrc"
 fi
-MANPAGER=$PAGER
 export PAGER
-export MANPAGER
+export MANPAGER=$PAGER
 
 if command -v ack >/dev/null; then
-    ACK_PAGER=$PAGER
-    ACK_PAGER_COLOR=$PAGER
-    export ACK_PAGER
-    export ACK_PAGER_COLOR
+    export ACK_PAGER=$PAGER
+    export ACK_PAGER_COLOR=$PAGER
 fi
 
 # Web browser {{{2
 #
-if command -v >/dev/null my; then
+if command -v my >/dev/null; then
     BROWSER=$(my -v browser 2>/dev/null)
 fi
 if test -z "$BROWSER"; then
     browsers="elinks links w3m lynx"
-    if test -n "$DISPLAY"; then
+    test -n "$DISPLAY" &&
         browsers="firefox chrome chromium netsurf $browsers"
-    fi
     for b in $browsers; do
         if command -v "$b" >/dev/null; then
             BROWSER="$b"
@@ -180,48 +165,37 @@ fi
 # fzf {{{1
 if command -v fzf >/dev/null; then
     # Options for *all* fzf processes
-    FZF_DEFAULT_OPTS='
+    export FZF_DEFAULT_OPTS='
         --layout=reverse
         --height=50%'
 
     # Options for fzf-tmux
     #     Open in a floating pane
-    FZF_TMUX_OPTS="-p $FZF_DEFAULT_OPTS"
+    export FZF_TMUX_OPTS="-p $FZF_DEFAULT_OPTS"
 
     # fzf-tmux height (needed for C-t, C-r and M-c)
-    FZF_TMUX_HEIGHT=
+    export FZF_TMUX_HEIGHT=
 
     # Options for C-r history search
-    FZF_CTRL_R_OPTS='--preview-window down:5 --preview "echo {2..}"'
+    export FZF_CTRL_R_OPTS='--preview-window down:5 --preview "echo {2..}"'
 
     # C-t file search command
-    FZF_CTRL_T_COMMAND=
+    export FZF_CTRL_T_COMMAND=
 
     # Options for C-t file search
-    FZF_CTRL_T_OPTS='--preview "
+    export FZF_CTRL_T_OPTS='--preview "
         if   [ -f {} ]; then bat -pp --color always {}
         elif [ -d {} ]; then tree -C -L 1 --gitignore --noreport {}
         fi"'
 
     # M-c directory search command
-    FZF_ALT_C_COMMAND=
+    export FZF_ALT_C_COMMAND=
 
     # Options for M-c directory search
-    FZF_ALT_C_OPTS='--preview "tree -C -L 1 --gitignore --noreport {}"'
+    export FZF_ALT_C_OPTS='--preview "tree -C -L 1 --gitignore --noreport {}"'
 
-    type rg >/dev/null 2>&1 &&
-        FZF_DEFAULT_COMMAND='rg --files'
-
-    export FZF_DEFAULT_OPTS
-    export FZF_DEFAULT_COMMAND
-    export FZF_TMUX
-    export FZF_TMUX_OPTS
-    export FZF_TMUX_HEIGHT
-    export FZF_CTRL_R_OPTS
-    export FZF_CTRL_T_COMMAND
-    export FZF_CTRL_T_OPTS
-    export FZF_ALT_C_COMMAND
-    export FZF_ALT_C_OPTS
+    command -v rg >/dev/null &&
+        export FZF_DEFAULT_COMMAND='rg --files'
 fi
 
 # Development {{{1
@@ -229,19 +203,14 @@ fi
 #
 if test -d "$HOME/lib/perl5/"; then
     PATH="$HOME/lib/perl5/bin${PATH:+:${PATH}}"
-    PERL5LIB="$HOME/lib/perl5/${PERL5LIB:+:${PERL5LIB}}"
-    PERL_LOCAL_LIB_ROOT="$HOME/lib/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"
-    PERL_MB_OPT="--install_base $HOME/lib/perl5"
-    PERL_MM_OPT="INSTALL_BASE=$HOME/lib/perl5"
-    export PERL5LIB
-    export PERL_LOCAL_LIB_ROOT
-    export PERL_MB_OPT
-    export PERL_MM_OPT
+    export PERL5LIB="$HOME/lib/perl5/${PERL5LIB:+:${PERL5LIB}}"
+    export PERL_LOCAL_LIB_ROOT="$HOME/lib/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"
+    export PERL_MB_OPT="--install_base $HOME/lib/perl5"
+    export PERL_MM_OPT="INSTALL_BASE=$HOME/lib/perl5"
 fi
 
-if type cpanm >/dev/null 2>&1; then
-    PERL_CPANM_HOME=$XDG_CACHE_HOME/cpanm
-    export PERL_CPANM_HOME
+if command -v cpanm >/dev/null; then
+    export PERL_CPANM_HOME=$XDG_CACHE_HOME/cpanm
     mkdir -p "$PERL_CPANM_HOME"
 fi
 
@@ -255,21 +224,18 @@ fi
 # Python {{{2
 # Sigh. Python can't find user site-packages because I refuse to use
 # .local or whatever other silly crap it expects
-# PYTHONPATH=$HOME/lib/python3/site-packages
-# test -d "$PYTHONPATH/bin" && PATH="$PYTHONPATH/bin:$PATH"
-# export PYTHONPATH
+ export PYTHONPATH=$HOME/lib/python3/site-packages
+ test -d "$PYTHONPATH/bin" && PATH="$PYTHONPATH/bin:$PATH"
 
 # Rust {{{2
 [ -d "$HOME/.cargo/bin" ] && PATH="$PATH:$HOME/.cargo/bin"
 # TODO: These things *don't* really all belong in ~/share
-# CARGO_HOME=$XDG_DATA_HOME/cargo
-# export CARGO_HOME
+export CARGO_HOME=$XDG_CACHE_HOME/cargo
 
 # Packer {{{2
-PACKER_CONFIG_DIR=$XDG_STATE_HOME
-PACKER_CONFIG=$XDG_CONFIG_HOME/packerconfig
-PACKER_CACHE_DIR=$XDG_CACHE_HOME/packer
-export PACKER_CONFIG_DIR
+export PACKER_CONFIG_DIR=$XDG_STATE_HOME
+export PACKER_CONFIG=$XDG_CONFIG_HOME/packerconfig
+export PACKER_CACHE_DIR=$XDG_CACHE_HOME/packer
 
 # Go {{{2
 if [ -d "/opt/go/bin" ]; then
@@ -283,69 +249,62 @@ case "$(uname -o)" in
 esac
 
 # Miscellaneous {{{1
-LOCATEDB="$HOME/var/lib/locate/locate.db"
-export LOCATEDB
+export LOCATEDB="$HOME/var/lib/locate/locate.db"
 
 LESSHISTFILE="$XDG_STATE_HOME/misc/lesshst"
 mkdir -p "$(dirname "$LESSHISTFILE")"
 
+# Bash-specific {{{1
 if [ -n "$BASH" ]; then
     # Filename completion ignores backups and vim swap files
     #
-    FIGNORE="~:.swp"
-    export FIGNORE
+    export FIGNORE="~:.swp"
 
     # History stuff
     #
-    HISTFILE="$XDG_STATE_HOME/misc/bash_history"
-    HISTFILESIZE=50           # Max lines in history
-    HISTCONTROL="ignoredups"  # No duplicate history entries
-    HISTIGNORE="&:[bf]g:exit" # History ignores these matches
-
-    export HISTFILESIZE
-    export HISTCONTROL
-    export HISTIGNORE
+    export HISTFILE="$XDG_STATE_HOME/misc/bash_history"
+    export HISTSIZE=100              # Max history entries
+    export HISTFILESIZE=200          # Allow average of two lines per entry
+    export HISTCONTROL="erasedups"   # No duplicate history entries
+    export HISTIGNORE="&:[bf]g:exit" # History ignores these matches
 
     mkdir -p "$(dirname "$HISTFILE")"
+
+    # Create nerd-font variables
+    test -f "$HOME/share/nerd-font/scripts/i_all.sh" &&
+        . "$HOME/share/nerd-font/scripts/i_all.sh"
 fi
 
-export WIKI_DIR=~/wiki
-export WIKI_SITE=~/wiki/site
-
-export DOTFILES=~/src/dotfiles
-
-# Create nerd-font variables
-# FIXME: This should be *executed* instead bc it requires bash, but that hangs
-if test -f "$HOME/share/nerd-font/scripts/i_all.sh"; then
-    . "$HOME/share/nerd-font/scripts/i_all.sh"
+if [ -d ~/wiki ]; then
+    export WIKI_DIR=~/wiki
+    export WIKI_SITE=~/wiki/site
 fi
+
+[ -d ~/src/dotfiles ] &&
+    export DOTFILES=~/src/dotfiles
 
 # Always use my .inputrc
 if [ -r "$HOME/.inputrc" ]; then
-    INPUTRC="$HOME/.inputrc"
-    export INPUTRC
+    export INPUTRC="$HOME/.inputrc"
 fi
 
 # Set news server
 # NNTPSERVER=nntp.aioe.org
-NNTPSERVER=snews://news.eternal-september.org
-export NNTPSERVER
+export NNTPSERVER=snews://news.eternal-september.org
 
 # Set local mail directory
-MAIL="$HOME/.maildir/local"
-export MAIL
+export MAIL="$HOME/.maildir/local"
 
 # Enable pass(1) extensions
-PASSWORD_STORE_ENABLE_EXTENSIONS=true
-export PASSWORD_STORE_ENABLE_EXTENSIONS
+command -v pass >/dev/null &&
+    export PASSWORD_STORE_ENABLE_EXTENSIONS=true
 
 # pinentry stuff
-SSH_ASKPASS="$HOME/bin/pinentry-ssh-askpass"
+[ -x "$HOME/bin/pinentry-ssh-askpass" ] &&
+    export SSH_ASKPASS="$HOME/bin/pinentry-ssh-askpass"
 if [ -n "$DISPLAY" ]; then
-    SUDO_ASKPASS="$SSH_ASKPASS"
+    export SUDO_ASKPASS="$SSH_ASKPASS"
 fi
-export SSH_ASKPASS
-export SUDO_ASKPASS
 
 # *grep Colors
 #
@@ -360,33 +319,26 @@ export SUDO_ASKPASS
 # bn    byte offset
 # se    separators
 #
-GREP_COLORS='sl=:cx=:mt=1;31:fn=35:ln=32:bn=33:se=36'
-export GREP_COLORS
+export GREP_COLORS='sl=:cx=:mt=1;31:fn=35:ln=32:bn=33:se=36'
 
 # Move things into XDG directories {{{2
 
-ELINKS_CONFDIR=$XDG_CONFIG_HOME/elinks
-export ELINKS_CONFDIR
+command -v elinks >/dev/null &&
+    export ELINKS_CONFDIR=$XDG_CONFIG_HOME/elinks
 
 # Configure tldr-sh client {{{2
 #
 if command -v tldr >/dev/null; then
-    TLDR_HEADER='underline bold magenta'
-    TLDR_QUOTE='white'
-    TLDR_DESCRIPTION='italic bold blue'
-    TLDR_CODE='bold yellow'
-    TLDR_PARAM='reset white'
-    TLDR_EPARAM='white'
-
-    export TLDR_PARAM
-    export TLDR_EPARAM
-    export TLDR_CODE
-    export TLDR_DESCRIPTION
-    export TLDR_HEADER
-    export TLDR_QUOTE
+    export TLDR_HEADER='underline bold magenta'
+    export TLDR_QUOTE='white'
+    export TLDR_DESCRIPTION='italic bold blue'
+    export TLDR_CODE='bold yellow'
+    export TLDR_PARAM='reset white'
+    export TLDR_EPARAM='white'
 fi
 
 # Remove duplicate entries from PATH {{{2
 PATH=$(printf %s "$PATH" | awk -vRS=: '!a[$0]++' | paste -s -d:)
 
 # vim: foldlevel=0
+
