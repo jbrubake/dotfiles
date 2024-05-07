@@ -44,6 +44,16 @@ else
     alias -="cd -"
 fi
 
+# X aliases {{{1
+#
+if [ -n "$DISPLAY" ]; then
+    # Use vimx if available so it can access system clipboard
+    if command -v vimx >/dev/null; then
+        alias vim=vimx
+        alias vi=vimx
+    fi
+fi
+
 # OS specific aliases {{{1
 #
 case $(uname -o) in
@@ -185,12 +195,6 @@ alias unexec="find . -type f -exec chmod ogu-x '{}' \;"   # chmod -x ALL files i
 
 command -v colormake >/dev/null &&
     alias make=colormake
-
-# Use vimx if available so it can access system clipboard
-if command -v vimx >/dev/null; then
-    alias vim=vimx
-    alias vi=vimx
-fi
 
 if command -v buku >/dev/null; then
     alias b='buku --suggest'
