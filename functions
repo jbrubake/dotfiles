@@ -78,16 +78,15 @@ cd () { # rpg-cli
 }
 delve () {
     current=$(basename $PWD)
-    number_re='^[0-9]+$'
-
-    if [[ $current =~ $number_re ]]; then
-        next=$(($current + 1))
-        command mkdir -p $next && cd $next && rpg-cli ls
-    elif [[ -d 1 ]] ; then
-        cd 1 && rpg-cli ls
-    else
-        command mkdir -p dungeon/1 && cd dungeon/1 && rpg-cli ls
-    fi
+    case $current in
+        # starting the delve
+        *[!0123456789]* ) next=dungeon/1 ;;
+        # now we're delving
+        [!0]*)            next=$((current + 1)) ;;
+    esac
+    command mkdir -p "$next" &&
+        cd "$next" &&
+        rpg-cli ls
 }
 fi # rpg-cli }
 # Miscellaneous {1
