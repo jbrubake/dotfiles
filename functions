@@ -297,9 +297,13 @@ manf() { # Open manpage for $1 at the first occurence of flag $2
 #
 # Arguments:
 #   $1: manpage to open
-#   $2: flag to jump to
+#   $2: flag to jump to (omit the first '-')
 #
-      man -P "less -p \"^ +-$2\"" $1
+    case $MANPAGER in
+        vimpager) _pager="vimpager -c 'silent! /^  *-$2/'" ;;
+        *)        _pager="less --pattern '^  *-$2'" ;;
+    esac
+    man -P "$_pager" $1
 }
 wiki() { # Interact with wiki
 #
