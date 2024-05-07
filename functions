@@ -253,7 +253,6 @@ rtfm() { # Check various forms of documentation
     man "$@" ||
         [ -f "/usr/share/info/$@.info*" ] && info "$@" ||
         printf "No info entry for \n" "$@" >&2 &&
-            "$@" --help ||
             openurl "http://duckduckgo.com/?q=%21documentation+for+$@" ;
 }
 #### hb/hr/hbl {
