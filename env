@@ -56,12 +56,6 @@ done
 : "${LC_ALL:=en_US.UTF-8}"
 export LANG LANGUAGE LC_CTYPE LC_ALL
 
-if [ -r /etc/timezone ]; then
-    export TZ=$( cat /etc/timezone )
-else
-    export TZ="America/New_York"
-fi
-
 # X-specific {{{1
 #
 if [ -n "$DISPLAY" ]; then
