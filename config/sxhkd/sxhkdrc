@@ -51,6 +51,21 @@ F11
 F9
     jumpapp -i whalebird whalebird
 
+# Screenshots
+#
+Print
+    screenshot area
+shift + Print
+    screenshot current
+alt + Print
+    screenshot screen
+ctrl + Print
+    screenshot -d 5 area
+ctrl + shift + Print
+    screenshot -d 5 current
+ctrl + alt + Print
+    screenshot -d 5 screen
+
 # Volume controls
 #
 XF86AudioMute
