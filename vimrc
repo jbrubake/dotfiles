@@ -794,7 +794,7 @@ function! ToggleMaximizeCurrentWindow()
 endfunction
 nnoremap <silent> <C-W>m :call ToggleMaximizeCurrentWindow() <cr>
 
-" Terminal Mode {{{3
+" Terminal Mode {{{2
 "
 " <leader><Esc>: Enter normal mode
 tnoremap <leader><Esc> <C-\><C-n>
@@ -817,7 +817,10 @@ function! g:ToggleColorColumn()
 endfunction
 nnoremap <silent> <leader>c :call g:ToggleColorColumn()<cr>
 
-" <leader>s:                split line {{{2
+" <leader>l:        toggle listchars {{{2
+nnoremap <silent> <leader>l :set list!<cr>
+
+" <leader>s:        split line {{{2
 "
 " https://gist.github.com/romainl/3b8cdc6c3748a363da07b1a625cfc666
 function! BreakHere()
@@ -825,6 +828,9 @@ function! BreakHere()
     call histdel("/", -1)
 endfunction
 nnoremap <leader>s :<C-u>call BreakHere()<CR>
+
+" <leader><leader>:     clear search highlighting {{{2
+noremap <silent> <leader><leader> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
 
 " fN:               set foldlevel=N {{{2
 noremap <leader>f0 :set foldlevel=0<cr>
@@ -848,15 +854,9 @@ nnoremap <silent> ]<Space> :<C-u>put =repeat(nr2char(10),v:count)<Bar>execute "'
 nnoremap [e kddp
 nnoremap ]e jddkP
 
-" <leader><leader>:               clear search shighlighting {{{2
-noremap <silent> <leader><leader> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
-
 " <Tab>:            % {{{2
 nmap <tab> %
 vmap <tab> %
-
-" <leader>l:        toggle listchars {{{2
-nnoremap <silent> <leader>l :set list!<cr>
 
 " Y:                yank to end (consistent with C and D) {{{2
 nnoremap Y y$
