@@ -278,6 +278,7 @@ if [ -d ~/wiki ]; then
     export WIKI_SITE=~/wiki/site
 fi
 
+# This is used in vimrc and scripts/curlvim
 [ -d ~/src/dotfiles ] &&
     export DOTFILES=~/src/dotfiles
 
