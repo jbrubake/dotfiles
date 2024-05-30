@@ -232,9 +232,13 @@ export PACKER_CONFIG=$XDG_CONFIG_HOME/packerconfig
 export PACKER_CACHE_DIR=$XDG_CACHE_HOME/packer
 
 # Go {{{2
-if [ -d "/opt/go/bin" ]; then
-    PATH="$PATH:/opt/go/bin"
-fi
+[ -d "/opt/go/bin" ] && PATH="$PATH:/opt/go/bin"
+export GOPATH=~
+export GOCACHE=~/var/cache/go-build
+export GOMODCACHE=~/var/cache/go-build/mod
+mkdir -p "$GOPATH"
+mkdir -p "$GOCACHE"
+mkdir -p "$GOMODCACHE"
 
 # System specific {{{1
 #
