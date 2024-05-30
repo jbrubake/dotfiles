@@ -20,7 +20,7 @@ unbind-mouse all
 bind-key 4S-r           restart
 bind-key 4S-q           quit
 bind-key 4-l            lock
-bind-key 4-t            terminal
+bind-key 4-T            terminal # backup binding in case the sxhkd one fails
 
 bind-key M-F4           window-close
 
