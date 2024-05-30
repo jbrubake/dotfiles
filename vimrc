@@ -868,10 +868,8 @@ cnoremap w!! w !sudo tee % >/dev/null
 cnoremap <C-P> <Up>
 cnoremap <C-N> <Down>
 
-" <leader>[=-#]:    underline current line {{{2
-nnoremap <leader>= yyp^v$r=
-nnoremap <leader>- yyp^v$r-
-nnoremap <leader># yyp^v$r#
+" <leader>u[c]:     underline current line with [c] {{{2
+nnoremap <leader>u yypVr
 
 " zl / zh:          horizontal left/right scrolling {{{2
 nnoremap zl zL
