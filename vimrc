@@ -804,12 +804,7 @@ tnoremap <leader><Esc> <C-\><C-n>
 " Metacharacters do not need escaped (very magic, :help \v)
 nnoremap / /\v
 vnoremap / /\v
-" <leader>e[wsvt]:      edit in current file's directory {{{2
-cnoremap %% <C-R>=fnameescape(expand('%:h')).'/'<cr>
-map <leader>ew :e %%
-map <leader>es :sp %%
-map <leader>ev :vsp %%
-map <leader>et :tabe %%
+
 " <leader>c:        toggle colorcolumn {{{2
 "
 " Kevin Kuchta (www.vimbits.com/bits/317)
@@ -868,10 +863,6 @@ nnoremap Y y$
 
 " :w!!:             write file when I forget to sudo {{{2
 cnoremap w!! w !sudo tee % >/dev/null
-
-" Q:                reflow paragraph {{{2
-nnoremap Q gqap
-vnoremap Q gq
 
 " <C-P> / <C-N>:    command history navigation {{{2
 cnoremap <C-P> <Up>
