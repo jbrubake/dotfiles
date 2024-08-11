@@ -15,7 +15,7 @@ MAILTO=jbrubake
 # *  *  *  *  * command to be executed
 
 0 * * * *    nice run-parts "$HOME/etc/cron.hourly"
-*/5 * * * *   chronic cloudsync >> "$HOME/var/log/rclonesync.log" 2>&1
+*/5 * * * *  chronic cloudsync
 */15 * * * *   chronic checkmail
 
 
