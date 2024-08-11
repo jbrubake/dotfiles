@@ -8,7 +8,7 @@ calendar="$(emojify :calendar:)"
 
 printf "#[fg=white,bg=black] "
 printf "#[fg=yellow]%s %s #[fg=white]| %s#[fg=white] " "$system" "$(plugin mem_usage)" "$(plugin load)"
-printf "| #[fg=green,bold,bg=brightblack]%s %s#[bg=black] " "$calendar" "$(plugin clock)"
+printf "| #[fg=yellow,bold]%s %s#[bg=black] " "$calendar" "$(plugin clock)"
 printf "#[fg=white,none]| %s" "$(plugin weather)"
 printf " "
 
