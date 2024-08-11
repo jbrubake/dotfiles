@@ -90,6 +90,13 @@ delve () {
 }
 fi # rpg-cli }
 # Miscellaneous {1
+rmh() { # Remove a host from ~/.ssh/known_hosts
+    # Although ssh-keygen -R can be used to remove host entries, that requires
+    # both adding the port (which I don't feel like remembering) and enclosing
+    # the host in '[]' (which is too much typing)
+    #
+    printf 'g/^\[\\?%s/d\nw\nq\n' "$1" | ed ~/.ssh/known_hosts
+}
 http_code () { # Get meaning of HTTP error code
 	code=$1
 
