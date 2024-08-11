@@ -202,5 +202,7 @@ fi
 
 alias pickfont="fc-list | sed -e 's/.*: //' -e 's/,.*//' -e 's/:.*//' | sort -u | fzf"
 
+alias r='fc -s'
+
 # vim: foldlevel=0
 
