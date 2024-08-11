@@ -18,3 +18,7 @@ Host tron
     HostName sshtron.zachlatta.com
     User green
 
+Host github.com
+    HostName github.com
+    IdentityFile ~/.ssh/keys/github
+
