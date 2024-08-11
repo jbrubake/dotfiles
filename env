@@ -337,7 +337,7 @@ if command -v tldr >/dev/null; then
 fi
 
 # Remove duplicate entries from PATH {{{2
-PATH=$(printf %s "$PATH" | awk -vRS=: '!a[$0]++' | paste -s -d:)
+PATH=$(printf %s "$PATH" | awk -vRS=: '!a[$0]++' | paste -s -d: -)
 
 # vim: foldlevel=0
 
