@@ -48,7 +48,7 @@
 *fading:                40
 
 ! Defaults {{{1
-*font: Source Code Pro:size=12
+*font: Source Code Pro:size=10
 
 ! dmenu {{{1
 dmenu*font:             monospace:size=10
