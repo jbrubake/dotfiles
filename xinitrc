@@ -97,6 +97,7 @@ fi
 # Start desktop apps {{{1
 #
 command -v signal-desktop >/dev/null && signal-desktop
+command -v discord        >/dev/null && discord
 
 # Start other apps {{{1
 #
