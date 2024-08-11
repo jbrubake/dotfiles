@@ -149,3 +149,7 @@ interpret "color.sl"
 % Keybindings
 include ".slrn/keybindings"
 
+set sorting_method 12 % custom sorting
+set custom_sort_order Highscore,Score,Date|date
+set custom_sort_by_threads 1
+
