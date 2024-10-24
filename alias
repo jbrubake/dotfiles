@@ -42,7 +42,7 @@ else
     alias ll="command  ls $LS_OPTS -lh"
     alias lla="command ls $LS_OPTS -lhA"
     alias l.="command  ls $LS_OPTS -d .*"
-    alias l.l="command ls $LS_OPTS -lhd .*"
+    alias ll.="command ls $LS_OPTS -lhd .*"
     alias lsap="lsp -A" # lsp is a function defined in ~/.functions
 fi
 unset _ls
