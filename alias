@@ -236,8 +236,11 @@ fi
 
 alias ':q'=exit                                           # Exit like it's vim
 alias +x='chmod +x'                                  # Make file executable
-[ -n "$BASH" ] &&
+if [ -n "$BASH" ]; then
     alias -- -x='chmod -x'                           # Make file non-executable
+else
+    alias -x='chmod -x'
+fi
 alias bell='printf "\a"'                                  # Ring the bell
 alias gist="vim '+Gist -l'"                               # Open Gist browser
 alias jobs='jobs -l'                                      # List PID
