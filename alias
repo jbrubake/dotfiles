@@ -17,7 +17,7 @@
 have() { command -v "$1" >/dev/null; }
 
 # Color flag for ls and grep
-test "$( tput colors )" -ge 0 && color_flag='--color=auto'
+[ "$( tput colors )" -ge 0 ] && color_flag='--color=auto'
 
 # My standard ls aliases {{{1
 #
@@ -53,7 +53,7 @@ unset color_flag
 # Easier navigation {{{1
 alias ..="cd .."
 alias ...="cd ../.."
-if test -n "$BASH"; then
+if [ -n "$BASH" ]; then
     alias -- -="cd -"
 else
     alias -="cd -"
