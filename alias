@@ -217,7 +217,7 @@ else
     if have highlight; then
         alias cat='highlight --force -O truecolor --style $HIGHLIGHT_STYLE'
     elif have bat; then
-        alias cat='bat --decorations never --paging never'
+            alias cat='bat -p --paging never --theme $BAT_STYLE'
     elif have pygmentize; then
         alias cat='pygmentize -O style=$PYGMENTIZE_STYLE -g'
     fi
