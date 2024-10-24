@@ -2,13 +2,28 @@
 #
 # Jeremy Brubaker <jbru362@gmail.com>
 
+# Helper functions {{{1
+# NOTE: these are unset at the end of the file
+#
+# have {{{2
+#
+# @description Check PATH for a command
+#
+# @arg $1 str Command to search for
+#
+# @exitcode true if found
+# @exitcode false if not found
+#
+have() { command -v "$1" >/dev/null; }
+
 # Color flag for ls and grep
 test "$( tput colors )" -ge 0 && color_flag='--color=auto'
 
 # My standard ls aliases {{{1
 #
-command -v exa >/dev/null && _ls=exa
-command -v eza >/dev/null && _ls=eza
+_ls=
+have exa && _ls=exa
+have eza && _ls=eza
 if [ -n "$_ls" ]; then
     export LS_OPTS="--group-directories-first --sort extension -F $color_flag"
     alias ls="command  "$_ls" $LS_OPTS"
@@ -47,8 +62,8 @@ fi
 # X aliases {{{1
 #
 if [ -n "$DISPLAY" ]; then
-    # Use vimx if available so it can access system clipboard
-    if command -v vimx >/dev/null; then
+    # force using vimx so Vim can access the system clipboard
+    if have vimx; then
         alias vim=vimx
         alias vi=vimx
     fi
@@ -69,7 +84,7 @@ alias calendar='( $(my calendar)& )'
 
 # Aliases that will exist only if grc is found {{{2
 #
-if command -v grc >/dev/null; then
+if have grc; then
     alias grc="grc -es"
 
     alias configure='grc ./configure'
@@ -83,10 +98,12 @@ if command -v grc >/dev/null; then
     alias gcc='grc gcc'
     alias g++='grc g++'
 
-    alias docker='grc docker'
-    alias docker-compose='grc docker-compose'
-    alias docker-machine='grc docker-machine'
-    alias kubectl='grc kubectl'
+    if have docker; then
+        alias docker='grc docker'
+        alias docker-compose='grc docker-compose'
+        alias docker-machine='grc docker-machine'
+        alias kubectl='grc kubectl'
+    fi
 
     alias dig='grc dig'
     alias ifconfig='grc ifconfig'
@@ -132,7 +149,7 @@ fi
 
 # Aliases that will exist even if grc is not found {{{2
 #
-if command -v grc >/dev/null; then
+if have grc; then
     alias df='grc df -hT'
     alias du='grc du -h'
     alias du1='grc du -h --max-depth=1'
@@ -144,7 +161,7 @@ fi
 
 # Cassowary {{{1
 #
-if command -v cassowary >/dev/null; then
+if have cassowary; then
     alias word='cassowary -c guest-run winword'
     alias excel='cassowary -c guest-run excel'
     alias ppt='cassowary -c guest-run powerpnt'
@@ -155,20 +172,17 @@ fi
 
 # Miscellaneous {{{1
 #
-# Emulate clear(1) if I don't have it
-command -v clear >/dev/null || alias clear='tput clear'
-
-# If todo.txt is installed, make it simpler to access
-command -v todo.sh >/dev/null && alias t=todo.sh
+have clear || alias clear='tput clear' # emulate clear(1) if I don't have it
+have todo.sh && alias t=todo.sh
 
 # If my pager is not less, make me think it is
 test "x$PAGER" != 'xless' && alias less="$PAGER" && alias zless="$PAGER"
 
 # Get my real IP
 #
-if command -v wget >/dev/null; then
+if have wget; then
     alias myip='wget http://ipecho.net/plain -O - -q; echo'
-elif command -v curl >/dev/null; then
+elif have curl; then
     alias myip='curl http://ipecho.net/plain; echo'
 else
     alias myip='printf "wget or curl not available\n"'
@@ -185,24 +199,24 @@ alias klsshd="kill -TERM \$(cat $HOME/var/run/sshd.pid)"  # Stop user sshd
 alias loc='locate -d "$LOCATEDB" "$@"'                    # Use my personal locate(1) db
 alias lsshd="/usr/sbin/sshd -f $HOME/etc/ssh/sshd_config" # Start user sshd
 alias nu="who | cut -d' ' -f1 | uniq | wc -l"             # Get number of logged on users
-command -v reset >/dev/null ||
-    alias reset='tput sgr0'                               # Reset terminal
+have reset || alias reset='tput sgr0'                               # Reset terminal
 alias rpg=rpg-cli                                         # rpg-cli but shorter
 alias sudo='sudo '                                        # Enable aliases to be sudo’ed
 alias tnews="NNTPSERVER=news.tilde.club slrn -f $HOME/.jnewsrc.tilde"
 alias tree='command tree -CFI '.git' --dirsfirst'         # Better looking tree(1)
 alias unexec="find . -type f -exec chmod ogu-x '{}' \;"   # chmod -x ALL files in tree
 
-command -v colormake >/dev/null &&
-    alias make=colormake
+have colormake && alias make=colormake
 
-if command -v buku >/dev/null; then
-    alias b='buku --suggest'
-fi
+have buku && alias b='buku --suggest'
 
 alias pickfont="fc-list | sed -e 's/.*: //' -e 's/,.*//' -e 's/:.*//' | sort -u | fzf"
 
 alias r='fc -s'
+
+# Cleanup {{{1
+#
+unset have
 
 # vim: foldlevel=0
 
