@@ -16,6 +16,8 @@
 #
 have() { command -v "$1" >/dev/null; }
 
+# Defaults {{{1
+#
 # Color flag for ls and grep
 [ "$( tput colors )" -ge 0 ] && color_flag='--color=auto'
 
@@ -59,7 +61,7 @@ else
     alias -="cd -"
 fi
 
-# X aliases {{{1
+# X-specific {{{1
 #
 if [ -n "$DISPLAY" ]; then
     # force using vimx so Vim can access the system clipboard
@@ -69,7 +71,7 @@ if [ -n "$DISPLAY" ]; then
     fi
 fi
 
-# OS specific aliases {{{1
+# OS-specific {{{1
 #
 case $(uname -o) in
     *) ;;
@@ -147,7 +149,7 @@ if have grc; then
     alias getsebool='grc getsebool'
 fi
 
-# Aliases that will exist even if grc is not found {{{2
+# Aliases that differ if grc is not found {{{2
 #
 if have grc; then
     alias df='grc df -hT'
@@ -216,6 +218,7 @@ alias r='fc -s'
 
 # Cleanup {{{1
 #
+unset color_flag
 unset have
 
 # vim: foldlevel=0
