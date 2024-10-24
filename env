@@ -382,6 +382,9 @@ fi
 #
 export GREP_COLORS='sl=:cx=:mt=1;31:fn=35:ln=32:bn=33:se=36'
 
+# local-only SSH server
+export LOCAL_SSHD_CONFIG=$HOME/etc/sshd/sshd_config
+
 # Move things into XDG directories {{{2
 
 have elinks &&
