@@ -414,6 +414,10 @@ done
 # NOTE: adding a final : simplifies the awk
 PATH=$(printf %s "$PATH:" | awk -vRS=: '!a[$0]++' | paste -s -d: -)
 
+# Include local settings {{{1
+#
+[ -r "$HOME/.env.local" ] && . "$HOME/.env.local"
+
 # Cleanup {{{1
 #
 unset pathadd
