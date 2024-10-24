@@ -93,6 +93,10 @@ export LANG LANGUAGE LC_CTYPE LC_ALL
 # X-specific {{{1
 #
 if [ -n "$DISPLAY" ]; then
+
+    export PYGMENTIZE_STYLE=solarized-light
+    export HIGHLIGHT_STYLE=base16/google-dark
+
     # Select Window Manager or Desktop Environment
     #
     # Supports:
@@ -132,6 +136,47 @@ if have ack; then
     export ACK_PAGER=$PAGER
     export ACK_PAGER_COLOR=$PAGER
 fi
+
+# Configure pager {{{3
+for p in "$PAGER" "$MANPAGER"; do
+    case $p in
+        vimpager)
+            export VIMPAGER_RC="$HOME/.vimrc" ;;
+        less)
+            # Prevent groff from emitting escapes itself or the following will not work
+            export GROFF_NO_SGR=1
+
+            # Make formatting codes look nicer
+            # mb blink
+            # md bold
+            # me bold, blink, underline off
+            # so reverse
+            # se reverse off
+            # us underline
+            # ue underline off
+            export LESS_TERMCAP_mb=$(tput blink)
+            export LESS_TERMCAP_md=$(tput bold; tput setaf 39)
+            export LESS_TERMCAP_me=$(tput sgr0)
+            export LESS_TERMCAP_so=$(tput smso)
+            export LESS_TERMCAP_se=$(tput sgr0)
+            export LESS_TERMCAP_us=$(tput sitm; tput setaf 79)
+            export LESS_TERMCAP_ue=$(tput sgr0)
+
+            export LESSCHARSET='utf-8';
+            export LESS='-R'
+
+            # Colorize things if highlight or pygmentize is available
+            #
+            # The '||' here is intentional, see rhbz@1254837
+            if have highlight; then
+                export LESSOPEN="||highlight --force -O truecolor --style $HIGHLIGHT_STYLE %s"
+            elif have pygmentize; then
+                export LESSOPEN="||pygmentize -O style=$PYGMENTIZE_STYLE -g %s"
+            fi
+            ;;
+    esac
+    unset p
+done
 
 # Web browser {{{2
 #
