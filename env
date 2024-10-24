@@ -18,6 +18,22 @@ export HOME LOGNAME UNAME TMPDIR TMP
 # Helper functions {{{1
 # NOTE: these are unset at the end of the file
 #
+# pathadd {{{2
+#
+# @description Add an entry to the front of PATH.
+# If the entry is present, it is not added again.
+#
+# @arg $1 str Entry to add
+#
+# @set PATH
+#
+pathadd() {
+    case :$PATH: in
+        *:$1:*) ;;
+        *) PATH=$1:$PATH ;;
+    esac
+}
+
 # have {{{2
 #
 # @description Check PATH for a command
@@ -61,25 +77,22 @@ export XDG_CACHE_HOME="$HOME/var/cache" # non-essential data (/var/cache) # ~/.c
 export XDG_DATA_HOME="$HOME/share"      # data files (/usr/share)         # ~/.local/share
 export XDG_STATE_HOME="$HOME/var/lib"   # state data (/var/lib)           # ~/.local/state
 
-# System defaults
-#
-if have flatpak; then
+have flatpak &&
     export XDG_DATA_DIRS=$XDG_DATA_HOME/flatpak/exports/share:$XDG_DATA_DIRS
-    [ -d ~/bin/.flatpak ] && PATH=~/bin/.flatpak:$PATH
-fi
 
 # Setup PATH {{{1
-# TODO: think through PATH *order* better
-# TODO: e.g. ~/bin should be first followed by go/rust/perl/etc then system stuff
-# TODO: only add entry if it exists
-# Path entries to add. Listed in order from least- to most-significant
-# NOTE: /{s,}bin is here because Fedora doesn't add it as it is just a symlink to
-# /usr/bin. However, certain (Alpine) LXC containers require it
-paths="/bin /sbin /usr/local/games /usr/local/bin $HOME/games $HOME/sbin $HOME/bin"
-for d in $paths; do
-    # if [ -d "$d" ] && [ "$PATH" = "${PATH%"$d"*}" ]; then
-        PATH="$d:$PATH"
-    # fi
+#
+# Make sure standard directories are in PATH. Listed in order from least- to most-significant
+# NOTE: /{s,}bin is here because some systems do not add it as it is just a symlink to
+# /usr/{s,}bin. However, certain (Alpine) LXC containers require it
+for d in \
+    /bin \
+    /sbin \
+    /usr/local/bin \
+    /usr/local/sbin \
+    "$HOME/bin" \
+; do
+    [ -d "$d" ] && pathadd "$d"
 done
 
 # Locale and timezone {{{1
@@ -242,7 +255,7 @@ fi
 #
 perl_dir=$HOME/lib/perl5
 if [ -d "$perl_dir" ]; then
-    PATH=$perl_dir/bin${PATH:+:${PATH}}
+    pathadd "$perl_dir/bin"
     export PERL5LIB=$perl_dir/${PERL5LIB:+:${PERL5LIB}}
     export PERL_LOCAL_LIB_ROOT=$perl_dir${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}
     export PERL_MB_OPT="--install_base $perl_dir"
@@ -257,19 +270,19 @@ fi
 
 # ARM cross-compiler {{{2
 #
-if [ -d "$HOME/opt/arm-none-eabi/" ]; then
-    PATH="$HOME/opt/arm-none-eabi/bin:$PATH"
-    PATH="$HOME/opt/aarch64-elf/bin:$PATH"
-fi
+[ -d "$HOME/opt/arm-none-eabi/" ] &&
+    pathadd "$HOME/opt/arm-none-eabi/bin"
+[ -d "$HOME/opt/aarch64-elf/bin/" ] &&
+    pathadd "$HOME/opt/aarch64-elf/bin"
 
 # Python {{{2
 # Sigh. Python can't find user site-packages because I refuse to use
 # .local or whatever other silly crap it expects
  export PYTHONPATH=$HOME/lib/python3/site-packages
- [ -d "$PYTHONPATH/bin" ] && PATH="$PYTHONPATH/bin:$PATH"
+[ -d "$PYTHONPATH/bin" ] && pathadd "$PYTHONPATH/bin"
 
 # Rust {{{2
-[ -d "$HOME/.cargo/bin" ] && PATH="$PATH:$HOME/.cargo/bin"
+[ -d "$HOME/.cargo/bin" ] && pathadd "$HOME/.cargo/bin"
 # TODO: These things *don't* really all belong in ~/share
 export CARGO_HOME=$XDG_CACHE_HOME/cargo
 
@@ -279,7 +292,7 @@ export PACKER_CONFIG=$XDG_CONFIG_HOME/packerconfig
 export PACKER_CACHE_DIR=$XDG_CACHE_HOME/packer
 
 # Go {{{2
-[ -d "/opt/go/bin" ] && PATH="$PATH:/opt/go/bin"
+[ -d "/opt/go/bin" ] && pathadd "/opt/go/bin"
 export GOPATH=~
 export GOCACHE=~/var/cache/go-build
 export GOMODCACHE=~/var/cache/go-build/mod
@@ -383,8 +396,25 @@ if have tldr; then
     export TLDR_EPARAM='white'
 fi
 
-# Remove duplicate entries from PATH {{{2
-PATH=$(printf %s "$PATH" | awk -vRS=: '!a[$0]++' | paste -s -d: -)
+# Finalize PATH {{{1
+#
+# Add personal directories. Listed in order from least- to most-significant
+# NOTE: do not use pathadd as I want to force these entries to be at the front
+for d in \
+    ~/games \
+    ~/sbin \
+    ~/bin/.flatpak \
+    ~/bin \
+; do
+    [ -d "$d" ] && PATH=$d:$PATH
+done 
+
+# NOTE: adding a final : simplifies the awk
+PATH=$(printf %s "$PATH:" | awk -vRS=: '!a[$0]++' | paste -s -d: -)
+
+# Cleanup {{{1
+#
+unset pathadd
 unset have
 unset pick
 
