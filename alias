@@ -71,16 +71,15 @@ unset _ls
 
 # Try color in *grep {{{1
 #
-alias grep="grep $color_flag"
-unset color_flag
+alias grep="grep $color_flag" # force color in *grep
 
 # Easier navigation {{{1
-alias ..="cd .."
-alias ...="cd ../.."
+alias ..="cd .." # up one directory
+alias ...="cd ../.." # up two directories
 if [ -n "$BASH" ]; then
-    alias -- -="cd -"
+    alias -- -="cd -" # cd to previous directory
 else
-    alias -="cd -"
+    alias -="cd -" # cd to previous directory
 fi
 
 # X-specific {{{1
@@ -100,16 +99,16 @@ case $(uname -o) in
 esac
 
 # Alternatives {{{1
-alias term='( $(my terminal)& )'
-alias calc='( $(my calculator)& )'
-alias calendar='( $(my calendar)& )'
+alias term='( $(my terminal)& )'     # open terminal
+alias calc='( $(my calculator)& )'   # open calculator
+alias calendar='( $(my calendar)& )' # open calendar
 
 # GRC Highlighting {{{1
 
 # Aliases that will exist only if grc is found {{{2
 #
 if have grc; then
-    alias grc="grc -es"
+    alias grc="grc -es" # colorize stderr and stdout
 
     alias configure='grc ./configure'
 
@@ -176,11 +175,11 @@ fi
 if have grc; then
     alias df='grc df -hT'
     alias du='grc du -h'
-    alias du1='grc du -h --max-depth=1'
+    alias du1='grc du -h --max-depth=1' # top-level summary
 else
     alias df='df -hT'
     alias du='du -h'
-    alias du1='du -h --max-depth=1'
+    alias du1='du -h --max-depth=1' # top-level summary
 fi
 
 # Cassowary {{{1
@@ -223,6 +222,8 @@ else
     fi
 fi
 
+# Miscellaneous {{{1
+#
 # Get my real IP
 #
 if have wget; then
@@ -249,7 +250,7 @@ alias rpg=rpg-cli                                         # rpg-cli but shorter
 alias sudo='sudo '                                        # Enable aliases to be sudo’ed
 alias tnews="NNTPSERVER=news.tilde.club slrn -f $HOME/.jnewsrc.tilde"
 alias tree='command tree -CFI '.git' --dirsfirst'         # Better looking tree(1)
-alias unexec="find . -type f -exec chmod ogu-x '{}' \;"   # chmod -x ALL files in tree
+alias unexec="find . -type f -exec chmod ogu-x '{}' \;"   # chmod -x ALL files in tree (needed when copying from Windows)
 
 have colormake && alias make=colormake
 
