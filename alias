@@ -198,29 +198,31 @@ fi
 have clear || alias clear='tput clear' # emulate clear(1) if I don't have it
 have todo.sh && alias t=todo.sh
 
-# If my pager is not less, make me think it is {{{2
-if [ "$PAGER" != 'less' ]; then
-    case $PAGER in
-        bat) pager='bat -p -pager less' ;;
-        *)  pager=$PAGER ;;
-    esac
-    alias  less=$pager
-    alias zless=$pager
-    unset pager
-fi
-
-# Better cat {{{2
-if [ "$PAGER" = 'vimpager' ]; then
-    alias cat='vimcat'
-else
-    if have highlight; then
-        alias cat='highlight --force -O truecolor --style $HIGHLIGHT_STYLE'
-    elif have bat; then
-            alias cat='bat -p --paging never --theme $BAT_STYLE'
-    elif have pygmentize; then
-        alias cat='pygmentize -O style=$PYGMENTIZE_STYLE -g'
-    fi
-fi
+# PAGER / cat {{{1
+#
+# - less / zless calls $PAGER
+# - syntax highlight cat if possible (depends on *_STYLE variables)
+#
+case $PAGER in
+    vimpager)
+        alias  less='vimpager'
+        alias zless='vimpager'
+        alias cat='vimcat' ;;
+    bat)
+        alias  less='bat -p -pager less'
+        alias zless='bat -p -pager less'
+        alias cat='bat -p --paging never' ;;
+    *)
+        alias  less=$PAGER
+        alias zless=$PAGER
+        if have highlight; then
+            alias cat='highlight --force -O truecolor --style ${HIGHLIGHT_STYLE:-solarized-dark}'
+        elif have bat; then
+            alias cat='bat -p --paging never --theme ${BAT_STYLE:-solarized-light}'
+        elif have pygmentize; then
+            alias cat='pygmentize -O style=${PYGMENTIZE_STYLE:-solarized-light} -g'
+        fi ;;
+esac
 
 # Miscellaneous {{{1
 #
