@@ -196,8 +196,7 @@ if [ "$( tput colors )" -ge 0 ] && have dircolors; then
         colorfile=/etc/DIR_COLORS
     fi
 
-    test -r "$HOME/.dircolors.local" && localcolorfile="$HOME/.dircolors.local"
-    eval $(cat $colorfile $localcolorfile | dircolors -)
+    eval $(dircolors "$colorfile")
 
     unset colorfile localcolorfile
 fi
