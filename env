@@ -90,35 +90,33 @@ done
 : "${LC_ALL:=$LANG}"
 export LANG LANGUAGE LC_CTYPE LC_ALL
 
-# X-specific {{{1
+# Colors 'n' Stuff {{{1
 #
-if [ -n "$DISPLAY" ]; then
+export PYGMENTIZE_STYLE=solarized-light
+export HIGHLIGHT_STYLE=base16/google-dark
 
-    export PYGMENTIZE_STYLE=solarized-light
-    export HIGHLIGHT_STYLE=base16/google-dark
+# X-specific {{{2
+#
+# Select Window Manager or Desktop Environment
+#
+# Supports:
+#   Any WM/DE that is run as a single command with no arguments
+#
+export WINDOWMANAGER=cwm
 
-    # Select Window Manager or Desktop Environment
-    #
-    # Supports:
-    #   Any WM/DE that is run as a single command with no arguments
-    #
-    export WINDOWMANAGER=cwm
+# Select Xresources colorscheme
+#
+# Colorscheme definitions must be placed in
+# $HOME/.Xresources.$COLORSCHEME
+#
+export COLORSCHEME=gnome-dark
 
-    # Select Xresources colorscheme
-    #
-    # Colorscheme definitions must be placed in
-    # $HOME/.Xresources.$COLORSCHEME
-    #
-    export COLORSCHEME=gnome-dark
-
-    # Give Vim access to the terminal colorscheme. See ~/.vimrc
-    export VIM_TERMINAL_COLORS=$(awk '$2 ~ /COLOR/ {print gensub(/COLOR/, "", "1", $2), $3}' \
-        ~/.Xresources."$COLORSCHEME" |
-            sort -n |
-            sed -e '1i[' -e '$a]' -e 's/^/"/' -e 's/$/"/' -e '$!s/$/,/' |
-            tr -d '\n')
-
-fi
+# Give Vim access to the terminal colorscheme. See ~/.vimrc
+export VIM_TERMINAL_COLORS=$(awk '$2 ~ /COLOR/ {print gensub(/COLOR/, "", "1", $2), $3}' \
+    ~/.Xresources."$COLORSCHEME" |
+        sort -n |
+        sed -e '1i[' -e '$a]' -e 's/^/"/' -e 's/$/"/' -e '$!s/$/,/' |
+        tr -d '\n')
 
 # Alternatives {{{1
 # EDITOR/VISUAL {{{2
