@@ -221,5 +221,5 @@ alias r='fc -s'
 unset color_flag
 unset have
 
-# vim: foldlevel=0
+# vim: ft=sh foldlevel=0
 
