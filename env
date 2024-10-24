@@ -12,7 +12,7 @@ export ENV="$HOME/.shinit" # equivalent to .bashrc for sh
 : "${LOGNAME:=$(id -un)}"
 : "${UNAME:=$(uname)}"
 : "${TMPDIR:=/tmp}"
-: "${TMP:=/tmp}"
+: "${TMP:=$TMPDIR}"
 export HOME LOGNAME UNAME TMPDIR TMP
 
 # XDG Directores {{{1
@@ -48,9 +48,9 @@ done
 # Locale and timezone {{{1
 #
 : "${LANG:=en_US.UTF-8}"
-: "${LANGUAGE:=en_US.UTF-8}"
-: "${LC_CTYPE:=en_US.UTF-8}"
-: "${LC_ALL:=en_US.UTF-8}"
+: "${LANGUAGE:=$LANG}"
+: "${LC_CTYPE:=$LANG}"
+: "${LC_ALL:=$LANG}"
 export LANG LANGUAGE LC_CTYPE LC_ALL
 
 # X-specific {{{1
@@ -192,13 +192,15 @@ fi
 # Development {{{1
 # Perl {{{2
 #
-if test -d "$HOME/lib/perl5/"; then
-    PATH="$HOME/lib/perl5/bin${PATH:+:${PATH}}"
-    export PERL5LIB="$HOME/lib/perl5/${PERL5LIB:+:${PERL5LIB}}"
-    export PERL_LOCAL_LIB_ROOT="$HOME/lib/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"
-    export PERL_MB_OPT="--install_base $HOME/lib/perl5"
-    export PERL_MM_OPT="INSTALL_BASE=$HOME/lib/perl5"
+perl_dir=$HOME/lib/perl5
+if [ -d "$perl_dir" ]; then
+    PATH=$perl_dir/bin${PATH:+:${PATH}}
+    export PERL5LIB=$perl_dir/${PERL5LIB:+:${PERL5LIB}}
+    export PERL_LOCAL_LIB_ROOT=$perl_dir${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}
+    export PERL_MB_OPT="--install_base $perl_dir"
+    export PERL_MM_OPT=INSTALL_BASE=$perl_dir
 fi
+unset perl_dir
 
 if command -v cpanm >/dev/null; then
     export PERL_CPANM_HOME=$XDG_CACHE_HOME/cpanm
