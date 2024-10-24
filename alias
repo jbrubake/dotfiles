@@ -251,7 +251,6 @@ alias nu="who | cut -d' ' -f1 | uniq | wc -l"             # Get number of logged
 have reset || alias reset='tput sgr0'                               # Reset terminal
 alias rpg=rpg-cli                                         # rpg-cli but shorter
 alias sudo='sudo '                                        # Enable aliases to be sudo’ed
-alias tnews="NNTPSERVER=news.tilde.club slrn -f $HOME/.jnewsrc.tilde"
 alias tree='command tree -CFI '.git' --dirsfirst'         # Better looking tree(1)
 alias unexec="find . -type f -exec chmod ogu-x '{}' \;"   # chmod -x ALL files in tree (needed when copying from Windows)
 
