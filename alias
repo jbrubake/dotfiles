@@ -177,8 +177,17 @@ fi
 have clear || alias clear='tput clear' # emulate clear(1) if I don't have it
 have todo.sh && alias t=todo.sh
 
-# If my pager is not less, make me think it is
-test "x$PAGER" != 'xless' && alias less="$PAGER" && alias zless="$PAGER"
+# If my pager is not less, make me think it is {{{2
+if [ "$PAGER" != 'less' ]; then
+    case $PAGER in
+        bat) pager='bat -p -pager less' ;;
+        *)  pager=$PAGER ;;
+    esac
+    alias  less=$pager
+    alias zless=$pager
+    unset pager
+fi
+
 
 # Get my real IP
 #
