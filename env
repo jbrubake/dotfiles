@@ -309,7 +309,8 @@ case "$(uname -o)" in
 esac
 
 # Bash-specific {{{1
-if [ -n "$BASH" ]; then
+#
+if have bash; then
     # Filename completion ignores backups and vim swap files
     #
     export FIGNORE="~:.swp"
