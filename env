@@ -298,6 +298,10 @@ mkdir -p "$GOPATH"
 mkdir -p "$GOCACHE"
 mkdir -p "$GOMODCACHE"
 
+# Other {{{2
+[ -r "unix://$XDG_RUNTIME_DIR/podman/podman.sock" ] &&
+    export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/podman/podman.sock 
+
 # System specific {{{1
 #
 case "$(uname -o)" in
