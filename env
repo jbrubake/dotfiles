@@ -192,10 +192,10 @@ export BROWSER
 if [ "$( tput colors )" -ge 0 ] && have dircolors; then
     # If colorfile remains blank, dircolors will use defaults
     colorfile=
-    if test -r "$HOME/.dircolors"; then
-        colorfile="$HOME/.dircolors" 
-    elif test -r "/etc/DIR_COLORS"; then
-        colorfile='/etc/DIR_COLORS'
+    if [ -r "$HOME/.dircolors" ]; then
+        colorfile=$HOME/.dircolors 
+    elif [ -r "/etc/DIR_COLORS" ]; then
+        colorfile=/etc/DIR_COLORS
     fi
 
     test -r "$HOME/.dircolors.local" && localcolorfile="$HOME/.dircolors.local"
@@ -260,7 +260,7 @@ fi
 
 # ARM cross-compiler {{{2
 #
-if test -d "$HOME/opt/arm-none-eabi/"; then
+if [ -d "$HOME/opt/arm-none-eabi/" ]; then
     PATH="$HOME/opt/arm-none-eabi/bin:$PATH"
     PATH="$HOME/opt/aarch64-elf/bin:$PATH"
 fi
@@ -269,7 +269,7 @@ fi
 # Sigh. Python can't find user site-packages because I refuse to use
 # .local or whatever other silly crap it expects
  export PYTHONPATH=$HOME/lib/python3/site-packages
- test -d "$PYTHONPATH/bin" && PATH="$PYTHONPATH/bin:$PATH"
+ [ -d "$PYTHONPATH/bin" ] && PATH="$PYTHONPATH/bin:$PATH"
 
 # Rust {{{2
 [ -d "$HOME/.cargo/bin" ] && PATH="$PATH:$HOME/.cargo/bin"
@@ -319,7 +319,7 @@ if [ -n "$BASH" ]; then
     mkdir -p "$(dirname "$HISTFILE")"
 
     # Create nerd-font variables
-    test -f "$HOME/share/nerd-font/scripts/i_all.sh" &&
+    [ -f "$HOME/share/nerd-font/scripts/i_all.sh" ] &&
         . "$HOME/share/nerd-font/scripts/i_all.sh"
 fi
 
