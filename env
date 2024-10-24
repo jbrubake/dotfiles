@@ -2,9 +2,6 @@
 #
 # ~/.env: environment variables
 
-# Set location of libsh
-export LIBSH=$HOME/lib/libsh/libsh.sh
-
 export BASH_ENV=$HOME/.bash.env # non-interactive setup
 export ENV="$HOME/.shinit" # equivalent to .bashrc for sh
 
