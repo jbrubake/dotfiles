@@ -244,7 +244,7 @@ else
     alias -x='chmod -x'
 fi
 alias bell='printf "\a"'                                  # Ring the bell
-alias gist="vim '+Gist -l'"                               # Open Gist browser
+alias gist='vim "+Gist -l"'                               # Open Gist browser
 alias jobs='jobs -l'                                      # List PID
 alias klsshd='kill -TERM $(command cat $(sshd -f "$LOCAL_SSHD_CONFIG" -T | grep pidfile | cut -d" " -f2))'  # Stop user sshd
 alias loc='locate -d "$LOCATEDB" "$@"'                    # Use my personal locate(1) db
