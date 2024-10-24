@@ -15,6 +15,20 @@ export ENV="$HOME/.shinit" # equivalent to .bashrc for sh
 : "${TMP:=$TMPDIR}"
 export HOME LOGNAME UNAME TMPDIR TMP
 
+# Helper functions {{{1
+# NOTE: these are unset at the end of the file
+#
+# have {{{2
+#
+# @description Check PATH for a command
+#
+# @arg $1 str Command to search for
+#
+# @exitcode true if found
+# @exitcode false if not found
+#
+have() { command -v "$1" >/dev/null; }
+
 # XDG Directores {{{1
 # Defaults for now
 #
@@ -26,7 +40,7 @@ export XDG_STATE_HOME="$HOME/var/lib"   # state data (/var/lib)           # ~/.l
 
 # System defaults
 #
-if command -v flatpak >/dev/null; then
+if have flatpak; then
     export XDG_DATA_DIRS=$XDG_DATA_HOME/flatpak/exports/share:$XDG_DATA_DIRS
     [ -d ~/bin/.flatpak ] && PATH=~/bin/.flatpak:$PATH
 fi
@@ -112,7 +126,7 @@ fi
 export PAGER
 export MANPAGER=$PAGER
 
-if command -v ack >/dev/null; then
+if have ack; then
     export ACK_PAGER=$PAGER
     export ACK_PAGER_COLOR=$PAGER
 fi
@@ -138,7 +152,7 @@ export BROWSER
 
 # dircolors {{{1
 #
-if test "$( tput colors )" -ge 0 && command -v dircolors >/dev/null; then
+if [ "$( tput colors )" -ge 0 ] && have dircolors; then
     # If colorfile remains blank, dircolors will use defaults
     colorfile=
     if test -r "$HOME/.dircolors"; then
@@ -154,7 +168,7 @@ if test "$( tput colors )" -ge 0 && command -v dircolors >/dev/null; then
 fi
 
 # fzf {{{1
-if command -v fzf >/dev/null; then
+if have fzf; then
     # Options for *all* fzf processes
     export FZF_DEFAULT_OPTS='
         --layout=reverse
@@ -185,7 +199,7 @@ if command -v fzf >/dev/null; then
     # Options for M-c directory search
     export FZF_ALT_C_OPTS='--preview "tree -C -L 1 --gitignore --noreport {}"'
 
-    command -v rg >/dev/null &&
+    have rg &&
         export FZF_DEFAULT_COMMAND='rg --files'
 fi
 
@@ -202,7 +216,7 @@ if [ -d "$perl_dir" ]; then
 fi
 unset perl_dir
 
-if command -v cpanm >/dev/null; then
+if have cpanm; then
     export PERL_CPANM_HOME=$XDG_CACHE_HOME/cpanm
     mkdir -p "$PERL_CPANM_HOME"
 fi
@@ -294,7 +308,7 @@ export NNTPSERVER=snews://news.eternal-september.org
 export MAIL="$HOME/.maildir/local"
 
 # Enable pass(1) extensions
-command -v pass >/dev/null &&
+have pass &&
     export PASSWORD_STORE_ENABLE_EXTENSIONS=true
 
 # pinentry stuff
@@ -321,12 +335,12 @@ export GREP_COLORS='sl=:cx=:mt=1;31:fn=35:ln=32:bn=33:se=36'
 
 # Move things into XDG directories {{{2
 
-command -v elinks >/dev/null &&
+have elinks &&
     export ELINKS_CONFDIR=$XDG_CONFIG_HOME/elinks
 
 # Configure tldr-sh client {{{2
 #
-if command -v tldr >/dev/null; then
+if have tldr; then
     export TLDR_HEADER='underline bold magenta'
     export TLDR_QUOTE='white'
     export TLDR_DESCRIPTION='italic bold blue'
@@ -337,6 +351,7 @@ fi
 
 # Remove duplicate entries from PATH {{{2
 PATH=$(printf %s "$PATH" | awk -vRS=: '!a[$0]++' | paste -s -d: -)
+unset have
 
 # vim: foldlevel=0
 
