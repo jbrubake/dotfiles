@@ -29,6 +29,29 @@ export HOME LOGNAME UNAME TMPDIR TMP
 #
 have() { command -v "$1" >/dev/null; }
 
+# pick {{{2
+#
+# @description Wrapper for my that uses defaults
+# if my is not installed
+#
+# @arg $1 str Category to pass to my
+# @arg $@ str Alternatives if my is not installed
+#
+# @stdout Result of my or first alternative found in PATH
+pick() {
+    if have my; then
+        my -v "$1" 2>/dev/null
+    else
+        shift
+        for p in $@; do
+            if have "$p"; then
+                printf "$p"
+                return
+            fi
+        done
+    fi
+}
+
 # XDG Directores {{{1
 # Defaults for now
 #
@@ -88,43 +111,14 @@ fi
 # Alternatives {{{1
 # EDITOR/VISUAL {{{2
 #
-if command -v my >/dev/null; then
-    EDITOR=$(my -v editor 2>/dev/null)
-fi
-if test -z "$EDITOR"; then
-    editors="vim vi nano pico ed"
-    for e in $editors; do
-        if command -v "$e" >/dev/null; then
-            EDITOR="$e"
-            break
-        fi
-    done
-unset editors
-fi
-export EDITOR
+export EDITOR=$(pick editor "vim vi nano pico ed")
 export VISUAL=$EDITOR
 export FCEDIT=$EDITOR
 
 # PAGER/MANPAGER {{{2
 #
-if command -v my >/dev/null; then
-    PAGER=$(my -v pager 2>/dev/null)
-fi
-if test -z "$PAGER"; then
-    pagers="vimpager less most more"
-    for p in $pagers; do
-        if command -v "$p" >/dev/null; then
-            PAGER="$p"
-            break
-        fi
-    done
-unset pagers
-fi
-if test "$PAGER" = "vimpager"; then
-    export VIMPAGER_RC="$HOME/.vimrc"
-fi
-export PAGER
-export MANPAGER=$PAGER
+export PAGER=$(pick pager "less most more")
+export MANPAGER=$(pick manpager "less most more")
 
 if have ack; then
     export ACK_PAGER=$PAGER
@@ -133,21 +127,11 @@ fi
 
 # Web browser {{{2
 #
-if command -v my >/dev/null; then
-    BROWSER=$(my -v browser 2>/dev/null)
-fi
-if test -z "$BROWSER"; then
-    browsers="elinks links w3m lynx"
-    test -n "$DISPLAY" &&
-        browsers="firefox chrome chromium netsurf $browsers"
-    for b in $browsers; do
-        if command -v "$b" >/dev/null; then
-            BROWSER="$b"
-            break
-        fi
-    done
-    unset browsers
-fi
+browsers="elinks links w3m lynx"
+[ -n "$DISPLAY" ] &&
+    browsers="firefox google-chrome chromium netsurf $browsers"
+BROWSER=$(pick browser "$browsers")
+unset browsers
 export BROWSER
 
 # dircolors {{{1
@@ -352,6 +336,7 @@ fi
 # Remove duplicate entries from PATH {{{2
 PATH=$(printf %s "$PATH" | awk -vRS=: '!a[$0]++' | paste -s -d: -)
 unset have
+unset pick
 
 # vim: foldlevel=0
 
