@@ -103,8 +103,8 @@ export LANG LANGUAGE LC_CTYPE LC_ALL
 
 # Colors 'n' Stuff {{{1
 #
-export PYGMENTIZE_STYLE=solarized-light
-export HIGHLIGHT_STYLE=base16/google-dark
+have pygmentize && export PYGMENTIZE_STYLE=solarized-light
+have highlight &&  export HIGHLIGHT_STYLE=base16/google-dark
 
 # X-specific {{{2
 #
