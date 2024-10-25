@@ -9,6 +9,8 @@
 
 source "$HOME/.shinit" # common interactive shell configuration
 
+have() { command -v "$1" >/dev/null; }
+
 # Shell options {{{
 shopt -s  cdspell      # Fix spelling errors in cd commands
 shopt -s  extglob      # Advanced pathname expansion
@@ -22,7 +24,7 @@ shopt -so ignoreeof    # Ctl+D does not exit shell
 # }}}
 # Keybindings {{{
 # fzf {{{
-if command -v fzf >/dev/null; then
+if have fzf; then
     for f in /usr/share/fzf/shell/*.bash /usr/local/share/fzf/shell/*.bash; do
         [ -f "$f" ] && . "$f"
     done
@@ -35,9 +37,9 @@ if command -v fzf >/dev/null; then
     }
 fi
 # }}}
-command -v passmenu >/dev/null &&
+have passmenu &&
     bind -x '"\C-]": passmenu --type'
-command -v navi >/dev/null &&
+have navi &&
     bind -x '"\C-g": _navi_widget'
 # }}}
 # Bash Completion {{{
@@ -65,7 +67,7 @@ done
 unset dir i _backup_glob
 
 # Allow todo.sh alias to use bash completion
-command -v todo.sh >/dev/null &&
+    have todo.sh &&
     complete -F _todo t
 
 # fzf completion
@@ -77,10 +79,10 @@ if [[ -z $HOSTFILE && -r "$HOME/.ssh/known_hosts" ]]; then
     HOSTFILE="$HOME/.hosts"
 fi
 # terraform / opentofu
-command -v terraform >/dev/null &&
-    complete -C $(command -v terraform) terraform
-command -v tofu >/dev/null &&
-    complete -C $(command -v tofu) tofu
+    have terraform &&
+        complete -C $(have terraform) terraform
+    have tofu &&
+        complete -C $(have tofu) tofu
 # }}}
 
 # vim: foldlevel=0
