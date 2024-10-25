@@ -564,6 +564,17 @@ if v:shell_error == 0
 endif
 
 " AUTOMATIC {{{2
+" indentLine: Display the indentation levels with thin vertical lines {{{3
+call minpac#add('wickles/indentLine')
+
+let g:indentLine_char = '│'
+let g:indentLine_bufTypeExclude = ['help', 'terminal', 'markdown']
+"let g:indentLine_bufNameExclude = ['tagbar?']
+" Hide indents on cursor line
+let g:indentLine_concealcursor = ''
+" Use this if JSON quotes are hidden
+" let g:vim_json_syntax_conceal = 0
+
 " tabular: Smart alignment of tables {{{3
 call minpac#add('godlygeek/tabular')
 
