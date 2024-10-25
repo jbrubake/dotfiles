@@ -20,11 +20,39 @@ prompt_detached () {
         printf "%s%sd%s" "$pre" "${detached}" "$post"
     fi
 }
-# prompt_jobs: Get running and stopped jobs {{{2
+# prompt_running: Get running jobs {{{2
 # Only works under Bash
-prompt_jobs () {
-    printf "%s&/%sz" "$( jobs -r | wc -l | tr -d " " )" "$( jobs -s | wc -l | tr -d " " )"
+prompt_running() {
+    j="$( jobs -r | wc -l | tr -d " " )"
+    [ "$j" -ne 0 ] && printf '%s&' "$j"
 }
+
+# prompt_stopped: Get stopped jobs {{{2
+# Only works under Bash
+prompt_stopped() {
+    j="$( jobs -s | wc -l | tr -d " " )"
+    [ "$j" -ne 0 ] && printf '%sz' "$j"
+}
+
+# prompt_combine: Combine strings {{{2
+#
+# If the resulting string is empty then nothing is printed
+prompt_combine() {
+    pre=$1; shift
+    post=$1; shift
+    sep=$1; shift
+
+    s=$1; shift
+    oldifs=$IFS
+    IFS='
+'
+    for i in $@; do
+        s=$s$sep$i
+    done
+    IFS=$oldifs
+    [ -n "$s" ] && printf %s%s%s "$pre" "$s" "$post"
+}
+
 # prompt_load: Get system load {{{2
 prompt_load () {
     local one=
@@ -236,7 +264,7 @@ PS1="$PS1\n"
 PS1="$PS1$user_clr\u$at_clr@$hostname_clr\h "
 PS1="$PS1$ssh_clr$(prompt_ssh) "
 PS1="$PS1\$(prompt_git '$bracket_clr($git_branch_clr' '$git_status_clr' '$bracket_clr) ')"
-PS1="$PS1$bracket_clr{$jobs_clr\$(prompt_jobs)\$(prompt_detached '|' '')$bracket_clr} "
+PS1="$PS1$(prompt_combine "$bracket_clr{$jobs_clr" "$bracket_clr} " '|' $(prompt_running) $(prompt_stopped) $(prompt_detached))"
 PS1="$PS1$bracket_clr!$history_clr\! "
 PS1="$PS1\$(prompt_error '$error_clr')$reset"
 PS1="$PS1\n"
