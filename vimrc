@@ -307,7 +307,7 @@ let g:ansible_extra_keywords_highlight_group = 'Delimiter'
 " See custom color settings below to customize 'name_highlight'
 
 " Properly highlight HCL Jinja templates
-let g:ansible_template_syntaxes = {'*.hcl.j2': 'hcl', '*.tf.j2': 'hcl'}
+let g:ansible_template_syntaxes = {'*.hcl.j2': 'hcl', '*.tf.j2': 'hcl', '*.sh.j2': 'sh'}
 
 " When to use filetype=yaml.ansible
 let g:ansible_ftdetect_filename_regex = '\v(playbook|site|main|local|requirements)\.ya?ml$'
