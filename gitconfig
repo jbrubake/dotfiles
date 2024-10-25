@@ -42,3 +42,10 @@
 	untracked = cyan
 [diff-so-fancy]
 	stripLeadingSymbols = false
+
+[sendemail]
+    smtpserver = smtp.googlemail.com
+    smtpencryption = tls
+    smtpserverport = 587
+    smtpuser = jbru362@gmail.com
+
