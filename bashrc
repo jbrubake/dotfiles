@@ -43,28 +43,29 @@ have navi &&
     bind -x '"\C-g": _navi_widget'
 # }}}
 # Bash Completion {{{
-# System settings
-if ! shopt -oq posix; then
-    if [ -f /etc/profile.d/bash-completion.sh ]; then
-        . /etc/profile.d/bash-completion.sh
-    elif [ -f /etc/bash_completion ]; then
-        . /etc/bash_completion
-    elif [ -f /usr/share/bash-completion/bash_completion ]; then
-        . /usr/share/bash-completion/bash_completion
-    fi
-fi
 
-# System local settings (deprecated location)
-_backup_glob='@(#*#|*@(~|.@(bak|orig|rej|swp|dpkg*|rpm@(orig|new|save))))'
-for dir in /usr/local/share/bash_completion.d /usr/local/etc/bash_completion.d; do
-    if [[ -d $dir && -r $dir && -x $dir ]]; then
-        for i in "$dir"/*; do
-            [[ ${i##*/} != @($_backup_glob|Makefile*) && -f \
-                $i && -r $i ]] && . "$i"
-        done
-    fi
-done
-unset dir i _backup_glob
+# Load deprecated directories
+#
+# Basic structure ripped from /usr/share/bash-completion/bash_completion
+#
+if shopt -q progcomp; then
+    _backup_glob='@(#*#|*@(~|.@(bak|orig|rej|swp|dpkg*|rpm@(orig|new|save))))'
+    for d in \
+        /etc/bash_completion.d \
+        /usr/share/bash_completion.d \
+        /usr/local/etc/bash_completion.d \
+        /usr/local/share/bash_completion.d \
+    ; do
+        if [[ -d $d && -r $d && -x $d ]]; then
+            for i in "$d"/*; do
+                [[ ${i##*/} != @($_backup_glob|Makefile*) && -f \
+                    $i && -r $i ]] && . "$i"
+            done
+            unset i
+        fi
+    done
+    unset d _backup_glob
+
 
 # Allow todo.sh alias to use bash completion
     have todo.sh &&
