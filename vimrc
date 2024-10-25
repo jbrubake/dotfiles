@@ -499,6 +499,13 @@ call minpac#add('baskerville/vim-sxhkdrc')
 
 autocmd load_plugins FileType sxhkdrc packadd vim-sxhkdrc
 
+" vim-terraform: basic vim/terraform integration {{{3
+call minpac#add('hashivim/vim-terraform')
+
+autocmd load_plugins FileType hcl packadd vim-terraform
+autocmd load_plugins FileType json packadd vim-terraform
+autocmd load_plugins FileType terraform packadd vim-terraform
+
 " vim-tmux: Vim plugin for .tmux.conf {{{3
 call minpac#add('tmux-plugins/vim-tmux', {'type': 'opt'})
 
