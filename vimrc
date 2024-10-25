@@ -62,14 +62,18 @@ augroup load_plugins
 augroup END
 
 " EVALUATING {{{2
-"" call minpac#add('hail2u/vim-css3-syntax') " vim-css3-syntax: CSS3 syntax support for built-in syntax/css.vim {{{3
+" Lisp stuff {{{3
+call minpac#add('https://github.com/vlime/vlime') " vlime: A Common Lisp dev environment for Vim
+call minpac#add('https://github.com/kovisoft/paredit') " paredit: Structured Editing of Lisp S-expressions
+let g:vlime_cl_impl = "clisp"
+function! VlimeBuildServerCommandFor_clisp(vlime_loader, vlime_eval)
+    return ["clisp", "-i", "~/quicklisp/setup.lisp",
+                   \ "-i", a:vlime_loader,
+                   \ "-x", a:vlime_eval,
+                   \ "-repl"]
+endfunction
 
-"" call minpac#add('jvirtanen/vim-hcl') " vim-hcl: Syntax highlighting for HCL {{{3
-
-"" call minpac#add('wsdjeg/vim-irssi-syntax') " vim-irssi-syntax: syntax file for irssi configuration files {{{3
-
-""call minpac#add('powerman/vim-plugin-AnsiEsc') " vim-plugin-AnsiEsc: ansi escape sequences concealed, but highlighted as specified (conceal) {{{3
-
+call minpac#add('https://github.com/junegunn/vim-easy-align') " vim-easy-align: A Vim alignment plugin {{{3
 
 ""call minpac#add('luochen1990/rainbow') " Rainbow Parentheses Improved {{{3
 
