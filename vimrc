@@ -1111,6 +1111,9 @@ if &term =~ '256color\|alacritty'
         " ???
         " let &t_RB = "\e]11;?"
         " let &t_RF = "\e]10;?"
+
+        " Make terminal colors match underlying terminal
+        let g:terminal_ansi_colors = $VIM_TERMINAL_COLORS
     endif
 endif
 
