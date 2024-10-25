@@ -318,6 +318,10 @@ mkdir -p "$GOPATH"
 mkdir -p "$GOCACHE"
 mkdir -p "$GOMODCACHE"
 
+# gcloud {{{2
+#
+[ -d '/opt/google-cloud-sdk/bin' ] && pathadd /opt/google-cloud-sdk/bin
+
 # Other {{{2
 [ -r "unix://$XDG_RUNTIME_DIR/podman/podman.sock" ] &&
     export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/podman/podman.sock 

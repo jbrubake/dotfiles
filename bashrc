@@ -70,6 +70,10 @@ unset dir i _backup_glob
     have todo.sh &&
     complete -F _todo t
 
+# gcloud
+[ -f /opt/google-cloud-sdk/completion.bash.inc ] &&
+    . /opt/google-cloud-sdk/completion.bash.inc
+
 # fzf completion
 if test -f /usr/local/share/fzf/completion.bash; then
     . /usr/local/share/fzf/completion.bash
