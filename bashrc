@@ -66,20 +66,19 @@ if shopt -q progcomp; then
     done
     unset d _backup_glob
 
+    # Allow todo.sh alias to use bash completion
+    have todo.sh && complete -F _todo t
 
-# Allow todo.sh alias to use bash completion
-    have todo.sh &&
-    complete -F _todo t
+    # terraform / opentofu
+    have terraform && complete -C terraform terraform
+    have tofu && complete -C tofu tofu
 
-# gcloud
-[ -f /opt/google-cloud-sdk/completion.bash.inc ] &&
-    . /opt/google-cloud-sdk/completion.bash.inc
+    # gcloud
+    [ -f /opt/google-cloud-sdk/completion.bash.inc ] &&
+        . /opt/google-cloud-sdk/completion.bash.inc
 
-# terraform / opentofu
-    have terraform &&
-        complete -C $(have terraform) terraform
-    have tofu &&
-        complete -C $(have tofu) tofu
+fi
+
 # }}}
 
 # vim: foldlevel=0
