@@ -413,6 +413,11 @@ export LOCAL_SSHD_CONFIG=$HOME/etc/sshd/sshd_config
 #
 LOCATION='Odenton, MD'
 
+# Hostnames for bash-completion
+if [ -r "$HOME/.ssh/known_hosts" ]; then
+    export HOSTFILE="$HOME/.ssh/known_hosts"
+fi
+
 # Move things into XDG directories {{{2
 
 have elinks &&
