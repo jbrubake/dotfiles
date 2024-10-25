@@ -78,10 +78,7 @@ unset dir i _backup_glob
 if test -f /usr/local/share/fzf/completion.bash; then
     . /usr/local/share/fzf/completion.bash
 fi
-# Hostnames for bash-completion
-if [[ -z $HOSTFILE && -r "$HOME/.ssh/known_hosts" ]]; then
-    HOSTFILE="$HOME/.hosts"
-fi
+
 # terraform / opentofu
     have terraform &&
         complete -C $(have terraform) terraform
