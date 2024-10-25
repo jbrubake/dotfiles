@@ -210,21 +210,6 @@ autocmd bufenter * if (winnr("$") == 1 &&
 
 " NOTE: See 'Colors and Syntax Settings' for more
 
-" vim-sneak: The missing motion for Vim {{{3
-""call minpac#add('justinmk/vim-sneak')
-
-" sS works like fF, except searches for two characters
-" Use zZ instead in operations (s is taken by surround.vim)
-"
-" [count]s limits search to a vertical column of 2*[count]
-
-" s goes not next match
-" S goes to previous match
-let  g:sneak#s_next = 1
-
-" Enable label mode
-let g:sneak#label = 1
-
 " a.vim: Swap header and source files {{{2
 call minpac#add('vim-scripts/a.vim')
 
