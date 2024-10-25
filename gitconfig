@@ -12,18 +12,7 @@
 [github]
 	user  = "jbrubake"
 [alias]
-	aa  = !git ls-files -d | xargs -r git rm && git ls-files -m -o --exclude-standard | xargs -r git add
-	aup = "!sh -c 'git ls-files -m | grep $1 | xargs -r git add' -"
-	ag  = "!sh -c 'git ls-files -m -o --exclude-standard | grep $1 | xargs -r git add' -"
-	agp = "!sh -c 'git ls-files -m -o --exclude-standard | grep $1 | xargs -r git add -p' -"
-	cg  = "!sh -c 'git ls-files -m | grep $1 | xargs -r git checkout' -"
-	dg  = "!sh -c 'git ls-files -m | grep $1 | xargs -r git diff' -"
-	pg  = "!sh -c 'git ls-files -m | grep $1 | xargs -r git diff --cached' -"
-	rmg = "!sh -c 'git ls-files -d | grep $1 | xargs -r git rm' -"
-	rsg = "!sh -c 'git ls-files -c | grep $1 | xargs -r git reset' -"
     lg = log --color --graph --date=format:'%Y-%m-%d %H:%M:%S' --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset'
-	si  = !git svn show-ignore > .git/info/exclude
-    ap = add --patch
 	s = status -s                       ; View the current working tree status using the short format.
     last = "!sh -c '~/bin/git-last.sh'" ; Print out last commit message from current branch for each file/directory in pwd
 	aliases = config --get-regexp alias ; List aliases.
