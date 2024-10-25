@@ -446,7 +446,7 @@ __gethost() { # Call gethost with the last argument passed
             host=$(gethost "$arg")
         fi
     done
-    echo $options $host
+    printf '%s %s\n' "$options" "$host"
 }
 
 # vim: foldlevel=0 foldmarker={,}
