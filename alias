@@ -57,19 +57,10 @@ alias lsap='lsp'"$lsap_opts" # lsp is defined in ~/.functions
 
 unset _ls ls_opts la_opts ll_opts lla_opts ld_opts lld_opts ldap_opts
 
-# Try color in *grep {{{1
-#
-[ "$( tput colors )" -ge 0 ] && color_flag='--color=auto'
-alias grep="grep $color_flag" # force color in *grep
-
-# Easier navigation {{{1
-alias ..="cd .." # up one directory
-alias ...="cd ../.." # up two directories
-if [ -n "$BASH" ]; then
-    alias -- -="cd -" # cd to previous directory
-else
-    alias -="cd -" # cd to previous directory
-fi
+# cd {{{1
+alias  ..='cd ..'          # up one directory
+alias ...='cd ../..'       # up two directories
+alias ${BASH:+--} -='cd -' # cd to previous directory
 
 # X-specific {{{1
 #
@@ -77,7 +68,7 @@ if [ -n "$DISPLAY" ]; then
     # force using vimx so Vim can access the system clipboard
     if have vimx; then
         alias vim=vimx
-        alias vi=vimx
+        alias  vi=vimx
     fi
 fi
 
@@ -88,9 +79,9 @@ case $(uname -o) in
 esac
 
 # Alternatives {{{1
-alias term='( $(my terminal)& )'     # open terminal
-alias calc='( $(my calculator)& )'   # open calculator
-alias calendar='( $(my calendar)& )' # open calendar
+alias     term='( $(my terminal)& )'
+alias     calc='( $(my calculator)& )'
+alias calendar='( $(my calendar)& )'
 
 # GRC Highlighting {{{1
 
@@ -182,11 +173,6 @@ if have cassowary; then
     alias access='cassowary -c guest-run msaccess'
 fi
 
-# Miscellaneous {{{1
-#
-have clear || alias clear='tput clear' # emulate clear(1) if I don't have it
-have todo.sh && alias t=todo.sh
-
 # PAGER / cat {{{1
 #
 # - less / zless calls $PAGER
@@ -213,45 +199,53 @@ case $PAGER in
         fi ;;
 esac
 
+# Get my real IP {{{1
+#
+if have curl; then
+    alias   myip='curl http://ipecho.net/plain; echo'
+elif have wget; then
+    alias   myip='wget http://ipecho.net/plain -O - -q; echo'
+else
+    alias   myip='printf "wget or curl not available\n"'
+fi
+
 # Miscellaneous {{{1
 #
-# Get my real IP
-#
-if have wget; then
-    alias myip='wget http://ipecho.net/plain -O - -q; echo'
-elif have curl; then
-    alias myip='curl http://ipecho.net/plain; echo'
-else
-    alias myip='printf "wget or curl not available\n"'
+[ "$( tput colors )" -ge 0 ] && color_flag='--color=auto'
+
+have reset || alias reset='tput sgr0'  # reset terminal
+have clear || alias clear='tput clear' # emulate clear(1) if I don't have it
+              alias   cls='clear'      # windows clear
+
+have todo.sh   && alias    t='todo.sh'        # easier todo.sh
+have rpg-cli   && alias  rpg='rpg-cli'        # easier rpg-cli
+have colormake && alias make='colormake'      # use colormake
+have buku      && alias    b='buku --suggest' # easier buku
+
+alias             +x='chmod +x' # make file executable
+alias ${BASH:+--} -x='chmod -x' # make file non-executable 
+
+alias      :q='exit'                                    # exit like it's vim
+alias    bell='printf "\a"'                             # ring the bell
+alias    gist='vim "+Gist -l"'                          # open Gist browser
+alias    grep="grep $color_flag"                        # force color in *grep
+alias     loc='locate -d "$LOCATEDB" "$@"'              # use my personal locate(1) db
+alias      nu="who | cut -d' ' -f1 | uniq | wc -l"      # get number of logged on users
+alias       r='fc -s'                                   # ^old^new but global
+alias    sudo='sudo '                                   # enable aliases to be sudo’ed
+alias   tree='command tree -CFI ".git" --dirsfirst'     # better looking tree(1)
+alias unexec='find . -type f -exec chmod ogu-x "{}" \;' # chmod -x all FILES in tree (needed when copying from Windows)
+
+alias pickfont='fc-list | sed -e "s/.*: //" -e "s/,.*//" -e "s/:.*//" | sort -u | fzf'
+
+# start / stop a local-only ssh server
+if have sshd; then
+    alias klsshd='kill -TERM $(command cat $(sshd -f "$LOCAL_SSHD_CONFIG" -T | grep pidfile | cut -d" " -f2))'  # Stop user sshd
+    alias lsshd='/usr/sbin/sshd -f "$LOCAL_SSHD_CONFIG"'
 fi
 
-alias ':q'=exit                                           # Exit like it's vim
-alias +x='chmod +x'                                  # Make file executable
-if [ -n "$BASH" ]; then
-    alias -- -x='chmod -x'                           # Make file non-executable
-else
-    alias -x='chmod -x'
-fi
-alias bell='printf "\a"'                                  # Ring the bell
-alias gist='vim "+Gist -l"'                               # Open Gist browser
-alias jobs='jobs -l'                                      # List PID
-alias klsshd='kill -TERM $(command cat $(sshd -f "$LOCAL_SSHD_CONFIG" -T | grep pidfile | cut -d" " -f2))'  # Stop user sshd
-alias loc='locate -d "$LOCATEDB" "$@"'                    # Use my personal locate(1) db
-alias lsshd='/usr/sbin/sshd -f "$LOCAL_SSHD_CONFIG"' # Start user sshd
-alias nu="who | cut -d' ' -f1 | uniq | wc -l"             # Get number of logged on users
-have reset || alias reset='tput sgr0'                               # Reset terminal
-alias rpg=rpg-cli                                         # rpg-cli but shorter
-alias sudo='sudo '                                        # Enable aliases to be sudo’ed
-alias tree='command tree -CFI '.git' --dirsfirst'         # Better looking tree(1)
-alias unexec="find . -type f -exec chmod ogu-x '{}' \;"   # chmod -x ALL files in tree (needed when copying from Windows)
 
-have colormake && alias make=colormake
 
-have buku && alias b='buku --suggest'
-
-alias pickfont="fc-list | sed -e 's/.*: //' -e 's/,.*//' -e 's/:.*//' | sort -u | fzf"
-
-alias r='fc -s'
 
 # Cleanup {{{1
 #
