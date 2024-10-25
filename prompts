@@ -23,14 +23,14 @@ prompt_detached () {
 # prompt_running: Get running jobs {{{2
 # Only works under Bash
 prompt_running() {
-    j="$( jobs -r | wc -l | tr -d " " )"
+    j="$( \jobs -r | wc -l | tr -d " " )"
     [ "$j" -ne 0 ] && printf '%s&' "$j"
 }
 
 # prompt_stopped: Get stopped jobs {{{2
 # Only works under Bash
 prompt_stopped() {
-    j="$( jobs -s | wc -l | tr -d " " )"
+    j="$( \jobs -s | wc -l | tr -d " " )"
     [ "$j" -ne 0 ] && printf '%sz' "$j"
 }
 
