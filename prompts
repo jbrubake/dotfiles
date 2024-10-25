@@ -246,10 +246,9 @@ if test -n "$BASH"; then
 #############################################
 # This prompt looks roughly like this:
 #
-# 'pwd
-# 'user@host (ssh) (git branch) [git status]'
-# '{background/suspended|detached} [history] [$?]'
-# '$ '
+# pwd
+# user@host ssh (git branch git status) {background|suspended|detached} !history [$?]
+# $_
 #############################################
 
 PS1="$reset"

@@ -69,7 +69,7 @@ setkey article next_high_score         "nh"  % next article with high score
 setkey article next_same_subject       "ns"  % next article with same subject
 setkey article previous                ""  % previous unread article
 setkey article skip_to_next_group      "ng"  % go to the next group
-    setkey article skip_to_previous_group  "<Esc><Left>"  % go to the previous group
+setkey article skip_to_previous_group  "<Esc><Left>"  % go to the previous group
 
 % Actions {{{2
 setkey article browse_url              "<Esc>U"  % Search for URL and follow it

@@ -440,6 +440,7 @@ __gethost() { # Call gethost with the last argument passed
     i=0
     for arg; do
         i=$((i+1))
+        # Passthru all but the last arg
         if [ "$i" -lt "$#" ]; then
             options="$options $arg"
         else
