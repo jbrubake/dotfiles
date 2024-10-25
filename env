@@ -54,9 +54,11 @@ have() { command -v "$1" >/dev/null; }
 #
 # @stdout Result of my or first alternative found in PATH
 pick() {
-    if have my; then
-        my -v "$1" 2>/dev/null
-    else
+    unset p
+    have my && 
+        p=$(my -v "$1" 2>/dev/null)
+
+    if [ -z "$p" ]; then
         shift
         for p in $@; do
             if have "$p"; then
@@ -64,6 +66,8 @@ pick() {
                 return
             fi
         done
+    else
+        printf "$p"
     fi
 }
 
