@@ -29,9 +29,7 @@ INTERVAL=$(( 60 * 60 )) # 1 hour
 FORMAT="+%c+%t"
 
 # Weather location
-LOCATION="Springfield, VA"
-
-LOCATION=${LOCATION// /+}
+location=${LOCATION// /+}
 
 # Get script location (OK even if it is a link because
 # support scripts should also be linked here)
@@ -42,7 +40,7 @@ PLUGINS=$(tmux show-option -gqv @plugin_dir)
 source "$PLUGINS/utils/cache.sh"
 
 get_weather() {
-    curl http://wttr.in/$LOCATION?format=$FORMAT 2>/dev/null | tr -s ' '
+    curl http://wttr.in/$location?format=$FORMAT 2>/dev/null | tr -s ' '
 }
 
 get_value get_weather "$INTERVAL"
