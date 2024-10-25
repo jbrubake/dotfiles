@@ -663,7 +663,7 @@ set number                           " Show line number of current line
 set numberwidth=4                    " Allows line numbers up to 999
 set report=0                         " Always report when a : command changes something
 set shortmess=aOstT                  " Keep messages short
-set scrolloff=10                     " Keep 10 lines at top/bottom
+set scrolloff=99                     " Basically keep cursor centered on the screen vertically
 set sidescrolloff=10                 " Keep 10 lines at right/left
 set sidescroll=1                     " Horizontal scroll one column at a time
 set showtabline=0                    " Never show tabline
