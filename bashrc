@@ -13,6 +13,7 @@ source "$HOME/.shinit" # common interactive shell configuration
 shopt -s  cdspell      # Fix spelling errors in cd commands
 shopt -s  extglob      # Advanced pathname expansion
 shopt -s  histappend   # Append to HISTFIL on exit - don't clobber it
+shopt -s  lithist      # Preserve newlines in history
 shopt -s  checkwinsize # Update LINES/COLUMNS after each command
 shopt -s  cmdhist      # Try to save multiline commands as one history entry
 shopt -s  histverify   # Allow verification of history substitution
