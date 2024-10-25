@@ -346,8 +346,6 @@ autocmd load_plugins FileType cisco packadd cisco.vim
 " Colorizer: Color hex codes and color names{{{3
 call minpac#add('chrisbra/Colorizer', {'type': 'opt'})
 
-" Highlight colors in a range (entire buffer by default):
-"   :[range]ColorHighlight [match|syntax]
 " Turn off color:
 "   :ColorClear
 " Toggle color:
@@ -464,6 +462,7 @@ call minpac#add('airblade/vim-gitgutter', {'type': 'opt'})
 set updatetime=100
 
 " Use fontawesome icons as signs
+" NOTE: requires a 'nerd font'
 let g:gitgutter_sign_added = ''
 let g:gitgutter_sign_modified = 'ﰣ'
 let g:gitgutter_sign_removed = ''
