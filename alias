@@ -17,13 +17,35 @@
 have() { command -v "$1" >/dev/null; }
 
 
+# grc(1)-only aliases {{{1
+#
+# Put these first so that they can be overriden
+#
+if have grc; then
+    GRC_OPTS='-es' # colorize stderr and stdout
+    _grc='grc $GRC_OPTS'
+    alias grc=$_grc
+
+    # Create alias for all configs found *if* the command exists
+    # TODO: check for directory existence
+    for c in /usr/share/grc/conf.* ~/.grc/*; do
+        c=${c##*/}; c=${c#conf.} # extract command name
+        have $c && alias $c="$_grc $c"
+    done
+
+    # Always create these
+    alias configure="$_grc ./configure"
+    alias   printev='printenv | grcat conf.printenv'
+    alias   jobs="$_jobs${BASH:+ | grcat conf.jobs}" # colorized version
+fi
+
 # ls(1) {{{1
 #
-if [ "$LS" = 'ls' ]; then
-    command ls --version | grep -q GNU && _ls=gnu-ls
-else
-    _ls=$LS
-fi
+_ls=$LS
+case $LS in
+    ls) command ls --version | grep -q GNU && _ls=gnu-ls ;;
+    '') LS=ls; _ls=$LS ;;
+esac
 
 case $_ls in
     eza | exa)
@@ -171,26 +193,6 @@ fi
 # fall back if grc(1) not available
 _jobs='jobs -l' # list PIDs
 alias jobs=$jobs
-
-# grc(1)-only aliases {{{2
-#
-if have grc; then
-    GRC_OPTS='-es' # colorize stderr and stdout
-    _grc='grc $GRC_OPTS'
-    alias grc=$_grc
-
-    # Create alias for all configs found *if* the command exists
-    # TODO: check for directory existence
-    for c in /usr/share/grc/conf.* ~/.grc/*; do
-        c=${c##*/}; c=${c#conf.} # extract command name
-        have $c && alias $c="$_grc $c"
-    done
-
-    # Always create these
-    alias configure="$_grc ./configure"
-    alias   printev='printenv | grcat conf.printenv'
-    alias   jobs="$_jobs${BASH:+ | grcat conf.jobs}" # colorized version
-fi
 
 # Use grc(1) if available {{{2
 #
