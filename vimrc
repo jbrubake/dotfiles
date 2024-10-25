@@ -1285,7 +1285,7 @@ autocmd Filetype mail setlocal completefunc=MailcompleteC
 
 " Local Vimrc {{{1
 " ===========
-if filereadable(expand("~/.vimrc.local"))
-    source ~/.vimrc.local
+if filereadable(expand("~/etc/vimrc.local"))
+    source ~/etc/vimrc.local
 endif
 
