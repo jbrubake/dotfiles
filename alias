@@ -120,14 +120,17 @@ case $PAGER in
         fi ;;
 esac
 
-# Get my real IP {{{1
+# Get public IP & ipinfo.io{{{1
 #
 if have curl; then
     alias   myip='curl http://ipecho.net/plain; echo'
+    alias ipinfo='curl http://ipinfo.io; echo'
 elif have wget; then
     alias   myip='wget http://ipecho.net/plain -O - -q; echo'
+    alias ipinfo='wget http://ipinfo.io -O - -q; echo'
 else
     alias   myip='printf "wget or curl not available\n"'
+    alias ipinfo='myip'
 fi
 
 # Miscellaneous {{{1
