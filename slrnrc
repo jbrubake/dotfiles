@@ -129,6 +129,7 @@ set highlight_urls 1
 %set use_blink 1
 
 % Swap between formats with 'toggle_group_formats'
+% (run slrn -d to pull group descriptions needed by %d)
 group_display_format 0 "  %F%-5u  %n%45g%d"
 group_display_format 1 "  %F%-5u  %n%50g%-8l-%h"
 group_display_format 2 "  %F%-5u [%-6t]  %n"

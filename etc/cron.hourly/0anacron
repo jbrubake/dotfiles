@@ -22,4 +22,6 @@ done
 if [ $online = 0 ]; then
     exit 0
 fi
+
 /usr/sbin/anacron -s -t $HOME/etc/anacrontab -S $HOME/var/spool/anacron
+
