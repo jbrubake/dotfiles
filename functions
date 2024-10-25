@@ -192,6 +192,7 @@ lsp () { # Print numerical permissions at the start of ls -l output
     fi
     unset _opts
 }
+unalias ip 2>/dev/null
 ip () { # Add 'get' command to ip(8)
 #
 # https://jip.dev/posts/dots/
@@ -389,6 +390,7 @@ elinks() { # Reuse existing elinks instance
         command elinks $1
     fi
 }
+unalias ping 2>/dev/null
 ping() { # Wrap ping(1) to allow pinging by SSH Host entry
 #
 # Use grc if it is available
