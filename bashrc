@@ -75,11 +75,6 @@ if shopt -q progcomp; then
 [ -f /opt/google-cloud-sdk/completion.bash.inc ] &&
     . /opt/google-cloud-sdk/completion.bash.inc
 
-# fzf completion
-if test -f /usr/local/share/fzf/completion.bash; then
-    . /usr/local/share/fzf/completion.bash
-fi
-
 # terraform / opentofu
     have terraform &&
         complete -C $(have terraform) terraform
