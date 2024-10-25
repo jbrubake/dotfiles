@@ -59,8 +59,6 @@ call minpac#add('k-takata/minpac', {'type': 'opt'})
 " EVALUATING {{{2
 ""call minpac#add('luochen1990/rainbow') " Rainbow Parentheses Improved {{{3
 
-""call minpac#add('vim-scripts/YankRing.vim') " Maintains a history of previous yanks, changes and deletes  {{{3
-
 ""call minpac#add('jpalardy/vim-slime') " A vim plugin to give you some slime {{{3
 
 ""call minpac#add('sjl/gundo.vim') " Graph your Vim undo tree in style {{{3
@@ -595,6 +593,11 @@ call minpac#add('tpope/vim-surround')
 "     will be stripped from the closing tag.
 
 " No configuration needed
+"
+" YankRing.vim: Maintains a history of previous yanks, changes and deletes  {{{3
+call minpac#add('vim-scripts/YankRing.vim')
+
+let g:yankring_history_dir = '$HOME/var/cache'
 
 " vim-sxhkdrc: Vim syntax for sxhkd's configuration files {{{2
 call minpac#add('baskerville/vim-sxhkdrc')
