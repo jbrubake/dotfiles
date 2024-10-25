@@ -210,21 +210,6 @@ autocmd bufenter * if (winnr("$") == 1 &&
 
 " NOTE: See 'Colors and Syntax Settings' for more
 
-" vim-sneak: The missing motion for Vim {{{3
-""call minpac#add('justinmk/vim-sneak')
-
-" sS works like fF, except searches for two characters
-" Use zZ instead in operations (s is taken by surround.vim)
-"
-" [count]s limits search to a vertical column of 2*[count]
-
-" s goes not next match
-" S goes to previous match
-let  g:sneak#s_next = 1
-
-" Enable label mode
-let g:sneak#label = 1
-
 " a.vim: Swap header and source files {{{2
 call minpac#add('vim-scripts/a.vim')
 
@@ -1030,21 +1015,6 @@ if has("cscope")
 
 endif
 
-" vim-sneak {{{2
-
-" Add vim-sneak functionality to fFtT
-" nmap f <Plug>Sneak_f
-" nmap F <Plug>Sneak_F ne
-" xmap f <Plug>Sneak_f
-" xmap F <Plug>Sneak_F ne
-" omap f <Plug>Sneak_f
-" omap F <Plug>Sneak_F
-" nmap t <Plug>Sneak_t
-" nmap T <Plug>Sneak_T
-" xmap t <Plug>Sneak_t
-" xmap T <Plug>Sneak_T
-" omap t <Plug>Sneak_t
-" omap T <Plug>Sneak_T
 " My wiki {{{1
 " Find wiki files
 set path^=$WIKI_DIR/content
