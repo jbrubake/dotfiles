@@ -56,7 +56,21 @@ else
 call minpac#init()
 call minpac#add('k-takata/minpac', {'type': 'opt'})
 
+" augroup for loading optional plugins
+augroup load_plugins
+    autocmd!
+augroup END
+
 " EVALUATING {{{2
+"" call minpac#add('hail2u/vim-css3-syntax') " vim-css3-syntax: CSS3 syntax support for built-in syntax/css.vim {{{3
+
+"" call minpac#add('jvirtanen/vim-hcl') " vim-hcl: Syntax highlighting for HCL {{{3
+
+"" call minpac#add('wsdjeg/vim-irssi-syntax') " vim-irssi-syntax: syntax file for irssi configuration files {{{3
+
+""call minpac#add('powerman/vim-plugin-AnsiEsc') " vim-plugin-AnsiEsc: ansi escape sequences concealed, but highlighted as specified (conceal) {{{3
+
+
 ""call minpac#add('luochen1990/rainbow') " Rainbow Parentheses Improved {{{3
 
 ""call minpac#add('jpalardy/vim-slime') " A vim plugin to give you some slime {{{3
@@ -210,14 +224,73 @@ autocmd bufenter * if (winnr("$") == 1 &&
 
 " NOTE: See 'Colors and Syntax Settings' for more
 
-" a.vim: Swap header and source files {{{2
-call minpac#add('vim-scripts/a.vim')
+" fzf: Fuzzy finder {{{3
+""call minpac#add('junegunn/fzf')
+
+" fzf plugin is located here
+""set rtp+=/usr/local/share/fzf
+
+" fzf-checkout.vim: Manage branches and tags with fzf {{{3
+""call minpac#add('stsewd/fzf-checkout.vim')
+
+" fzf.vim: fzf vim plugin {{{3
+""call minpac#add('junegunn/fzf.vim')
+
+" :Files [PATH]     " Files ($FZF_DEFAULT_COMMAND)
+" :GFiles [OPTS]    " Git files (git ls-files)
+" :GFiles?          " Git files (git status)
+" :Buffers
+" :Rg [PATTERN]     " Search using ripgrep
+" :Lines [QUERY]    " Lines in all buffers
+" :BLines [QUERY]   " Lines in current buffer
+" :Tags [QUERY]     " Tags in current project (ctags -R)
+" :BTags [QUERY]    " Tags in current buffer
+" :Marks            " Marks
+" :Snippets         " Snippets (UltiSnips)
+" :Commits          " Git commits (vim-fugitive)
+" noremap <C-p> :Files<CR>
+" noremap <Leader>b :Buffers<CR>
+
+" SimplyFold: No-BS Python code folding{{{3
+""call minpac#add('tmhedberg/SimpylFold')
+
+" vim-autoformat:  Provide easy code formatting in Vim by integrating existing code formatters {{{3
+""call minpac#add('vim-autoformat/vim-autoformat')
+
+" vim-IndentCommentPrefix: Indents comments sensibly {{{3
+""call minpac#add('inkarkat/vim-IndentCommentPrefix')
+
+" >>  : Indent, keeping comment prefix where it is
+" <<  : Deindent, keeping comment prefix where it is
+" g>> : Indent, including comment prefix
+
+" Use single > or < in Visual mode
+
+" Comment chars in this list will *not* be left in column 1
+"let g:IndentCommentPrefix_Blacklist = ['#', '>']
+
+" Any string in this list *will* remain in column 1
+"let g:IndentCommentPrefix_Whitelist = ['REMARK:']
+
+" vim-ingo-library: library functions required by IndentCommentPrefix {{{3
+""call minpac#add('inkarkat/vim-ingo-library')
+
+" vim-markdown-folding: Fold Markdown files on headers {{{3
+""call minpac#add('masukomi/vim-markdown-folding', {'type': 'opt'})
+
+""autocmd load_plugins FileType markdown packadd vim-markdown-folding
+
+" OPTIONAL {{{2
+" a.vim: Swap header and source files {{{3
+call minpac#add('vim-scripts/a.vim', {'type': 'opt'})
 
 " :A : Switch between header and source files
 " :AS: Split and switch
 " :AV: Vertical split and switch
 
-" ansible-vim: Syntax highlighting Ansible's common filetypes {{{2
+autocmd load_plugins FileType c packadd a.vim
+
+" ansible-vim: Syntax highlighting Ansible's common filetypes {{{3
 call minpac#add('pearofducks/ansible-vim')
 let g:ansible_attribute_highlight      = 'ab' " highlight all key=value pairs
 let g:ansible_name_highlight           = 'b'  " highlight 'name:'
@@ -237,9 +310,9 @@ let g:ansible_ftdetect_filename_regex = '\v(playbook|site|main|local|requirement
 
 let g:ansible_goto_role_paths = './roles,../_common/roles'
 
-" CCTree: Vim CCTree plugin {{{2
+" CCTree: Vim CCTree plugin {{{3
 if has("cscope")
-    call minpac#add('hari-rangarajan/CCTree')
+    call minpac#add('hari-rangarajan/CCTree', {'type': 'opt'})
 
     " See Mappings & Commands -> Cscope for mappings
 
@@ -251,19 +324,23 @@ if has("cscope")
     " or if defined in $CSCOPE_DB
     function! s:load_cscope_db()
         if filereadable("cscope.out")
+            packadd CCTree
             CCTreeLoadDB cscope.out
         elseif $CSCOPE_DB != ""
+            packadd CCTree
             CCTreeLoadDB $CSCOPE_DB
         endif
     endfunction
     autocmd VimEnter * call s:load_cscope_db()
 endif
 
-" cisco.vim: syntax highlighting for Cisco config files {{{2
-call minpac#add('vim-scripts/cisco.vim')
+" cisco.vim: Vim syntax for cisco configuration files {{{3
+call minpac#add('momota/cisco.vim', {'type': 'opt'})
 
-" Colorizer: Color hex codes and color names{{{2
-call minpac#add('chrisbra/Colorizer')
+autocmd load_plugins FileType cisco packadd cisco.vim
+
+" Colorizer: Color hex codes and color names{{{3
+call minpac#add('chrisbra/Colorizer', {'type': 'opt'})
 
 " Highlight colors in a range (entire buffer by default):
 "   :[range]ColorHighlight [match|syntax]
@@ -278,49 +355,190 @@ let g:colorizer_disable_bufleave = 0 " Only highlight above files
 " Highlight X11 colornames in Xresources and such
 let g:colorizer_x11_names = 1
 
-" fugitive-gitea: Plugin for :Gbrowse to work with GITea server {{{2
-call minpac#add('borissov/fugitive-gitea')
+execute 'au Filetype ' . g:colorizer_auto_filetype . ' packadd Colorizer | ColorToggle'
 
-" fugitive-gitlab: A vim extension to fugitive.vim for GitLab support {{{2
-call minpac#add('shumphrey/fugitive-gitlab.vim')
+" fugitive-gitea: Plugin for :Gbrowse to work with GITea server {{{3
+call minpac#add('borissov/fugitive-gitea', {'type': 'opt'})
 
-" fzf: Fuzzy finder {{{2
-call minpac#add('junegunn/fzf')
+" fugitive-gitlab: A vim extension to fugitive.vim for GitLab support {{{3
+call minpac#add('shumphrey/fugitive-gitlab.vim', {'type': 'opt'})
 
-" fzf plugin is located here
-set rtp+=/usr/local/share/fzf
+" gemini-vim-syntax: Syntax highlighting for text/gemini files {{{3
+call minpac#add('https://tildegit.org/sloum/gemini-vim-syntax', {'type': 'opt'})
 
-" fzf-checkout.vim: Manage branches and tags with fzf {{{2
-call minpac#add('stsewd/fzf-checkout.vim')
+autocmd load_plugins FileType gmi packadd gemini-vim-syntax
 
-" fzf.vim: fzf vim plugin {{{2
-call minpac#add('junegunn/fzf.vim')
+" scss-syntax: Sassy CSS for vim {{{3
+call minpac#add('cakebaker/scss-syntax.vim', {'type': 'opt'})
 
-" :Files [PATH]     " Files ($FZF_DEFAULT_COMMAND)
-" :GFiles [OPTS]    " Git files (git ls-files)
-" :GFiles?          " Git files (git status)
-" :Buffers
-" :Rg [PATTERN]     " Search using ripgrep
-" :Lines [QUERY]    " Lines in all buffers
-" :BLines [QUERY]   " Lines in current buffer
-" :Tags [QUERY]     " Tags in current project (ctags -R)
-" :BTags [QUERY]    " Tags in current buffer
-" :Marks            " Marks
-" :Snippets         " Snippets (UltiSnips)
-" :Commits          " Git commits (vim-fugitive)
-noremap <C-p> :Files<CR>
-noremap <Leader>b :Buffers<CR>
+autocmd load_plugins FileType scss packadd scss-syntax-vim
 
-" gemini-vim-syntax: Syntax highlighting for text/gemini files {{{2
-call minpac#add('https://tildegit.org/sloum/gemini-vim-syntax')
+" tagalong: Change an HTML(ish) tag and update the matching one {{{3
+call minpac#add('AndrewRadev/tagalong.vim')
 
-" scss-syntax: Sassy CSS for vim {{{2
-call minpac#add('cakebaker/scss-syntax.vim')
+let g:tagalong_additional_filetypes = ['xml', 'html', 'php']
 
-" SimplyFold: No-BS Python code folding{{{2
-call minpac#add('tmhedberg/SimpylFold')
+execute 'au Filetype ' . join(g:tagalong_additional_filetypes, ',') . ' packadd tagalong.vim'
 
-" tabular: Smart alignment of tables {{{2
+" todo-txt.vim: Vim plugin for Todo.txt {{{3
+call minpac#add('freitass/todo.txt-vim', {'type': 'opt'})
+
+" <LocalLeader>s   : Sort by priority
+" <LocalLeader>s+  : Sort on +Projects
+" <LocalLeader>s@  : Sort on @Contexts
+" <LocalLeader>sd  : Sort on due dates
+" <LocalLeader>sc  : Sort by context, then priority
+" <LocalLeader>scp : Sort by context, project, then priority
+" <LocalLeader>sp  : Sort by project, then priority
+" <LocalLeader>spc : Sort by project, context, then priority
+" <LocalLeader>-sd : Sort by due date. Entries with due date are at the beginning
+
+" <LocalLeader>j : Lower priority
+" <LocalLeader>k : Increase priority
+" <LocalLeader>a : Add priority (A)
+" <LocalLeader>b : Add priority (B)
+" <LocalLeader>c : Add priority (C)
+
+" <LocalLeader>d : Insert current date
+" date<tab> : (Insert mode) insert current date
+" due:      : (Insert mode) insert due: <date>
+" DUE:      : (Insert mode) insert DUE: <date>
+
+" <LocalLeader>x : Toggle done
+" <LocalLeader>C : Toggle cancelled
+" <LocalLeader>X : Mark all completed
+" <LocalLeader>D : Move completed tasks to done file
+
+autocmd load_plugins FileType todo packadd todo.txt-vim
+
+" vim-closetag: Easily close HTML/XML tags {{{3
+call minpac#add('alvan/vim-closetag', {'type': 'opt'})
+
+"   Current content:
+"       <table|
+"   Press >:
+"       <table>|</table>
+"   Press > again:
+"       <table>
+"           |
+"       </table>
+
+" Use closetag in these files
+let g:closetag_filenames = "*.sgml,*.xml,*.html,*.xhtml,*.phtml,*.php"
+autocmd load_plugins FileType  sgml packadd vim-closetag
+autocmd load_plugins FileType   xml packadd vim-closetag
+autocmd load_plugins FileType  html packadd vim-closetag
+autocmd load_plugins FileType xhtml packadd vim-closetag
+autocmd load_plugins FileType phtml packadd vim-closetag
+autocmd load_plugins FileType   php packadd vim-closetag
+
+" vim-fugitive: Git in Vim {{{3
+call minpac#add('tpope/vim-fugitive', {'type': 'opt'})
+"set completopt-=preview " disable issue body preview
+
+" Load plugin on-demand
+" TODO: Add these and the gitlab/gitea plugins to a list/augroup which is all
+" loaded at once
+command -nargs=? Git packadd vim-fugitive | packadd vim-fugitive-blame-ext | packadd vim-rhubarb | :Git <args>
+
+" vim-fugitive-blame-ext: extend vim-fugitive to show commit message on statusline in :Gblame {{{3
+call minpac#add('tommcdo/vim-fugitive-blame-ext', {'type': 'opt'})
+
+" vim-gist: Edit github.com gists with vim {{{3
+call minpac#add('mattn/vim-gist', {'type': 'opt'})
+
+" Load plugin on-demand
+command -nargs=? Gist packadd webapi-vim | packadd vim-gist | :Gist <args>
+
+let g:gist_post_private = 1 " Private gists by default
+                            " :Gist -P to create public Gist
+
+" vim-gitgutter: Use the sign column to show git chanages {{{3
+call minpac#add('airblade/vim-gitgutter', {'type': 'opt'})
+
+" The default updatetime of 4000ms is not good for async update
+set updatetime=100
+
+" Use fontawesome icons as signs
+let g:gitgutter_sign_added = ''
+let g:gitgutter_sign_modified = 'ﰣ'
+let g:gitgutter_sign_removed = ''
+let g:gitgutter_sign_removed_first_line = ''
+let g:gitgutter_sign_modified_removed = ''
+
+" vim-ini-fold: folding for ini-like files {{{3
+call minpac#add('matze/vim-ini-fold')
+
+autocmd load_plugins FileType dosini packadd vim-ini-fold
+
+" vim-markdown: Markdown vim mode {{{3
+call minpac#add('preservim/vim-markdown', {'type': 'opt'})
+
+let g:vim_markdown_frontmatter = 1
+let g:vim_markdown_folding_style_pythonic = 1
+let g:vim_markdown_folding_level = 1
+let g:vim_markdown_override_foldtext = 0
+let g:vim_markdown_follow_anchor = 1
+let g:vim_markdown_conceal_code_blocks = 0
+
+autocmd load_plugins FileType markdown packadd vim-markdown
+ 
+" vim-redact-pass: Do not write passwords into vim files when using pass(1) {{{3
+call minpac#add('https://dev.sanctum.geek.nz/code/vim-redact-pass.git', {'type': 'opt', 'rev': 'master'})
+
+au BufRead **/pass*/*.txt packadd vim-redact-pass
+
+" vim-rhubarb: GitHub extension for fugitive.vim {{{3
+call minpac#add('tpope/vim-rhubarb', {'type': 'opt'})
+
+" vim-sxhkdrc: Vim syntax for sxhkd's configuration files {{{3
+call minpac#add('baskerville/vim-sxhkdrc')
+
+autocmd load_plugins FileType sxhkdrc packadd vim-sxhkdrc
+
+" vim-tmux: Vim plugin for .tmux.conf {{{3
+call minpac#add('tmux-plugins/vim-tmux', {'type': 'opt'})
+
+autocmd load_plugins FileType tmux packadd vim-tmux
+
+" vim-tmux-pilot: Unified navigation of splits and tabs in nvim and tmux {{{3
+call minpac#add('urbainvaes/vim-tmux-pilot')
+
+" Use Alt+[hjkl] to navigate windows
+if has ('unix') " set convert-meta off in .inputrc makes Alt not the Meta key
+    let g:pilot_key_h='h'
+    let g:pilot_key_j='j'
+    let g:pilot_key_k='k'
+    let g:pilot_key_l='l'
+    let g:pilot_key_p='\'
+else
+    let g:pilot_key_h='<a-h>'
+    let g:pilot_key_j='<a-j>'
+    let g:pilot_key_k='<a-k>'
+    let g:pilot_key_l='<a-l>'
+    let g:pilot_key_p='<a-\>'
+endif
+
+" vimtex: vim LaTeX plugin {{{3
+call minpac#add('lervag/vimtex', {'type': 'opt'})
+
+let g:vimtex_view_method = 'zathura'
+
+autocmd load_plugins FileType tex packadd vimtex
+
+" webapi-vim: Needed for vim-gist {{{3
+call minpac#add('mattn/webapi-vim', {'type': 'opt'})
+
+endif " minpac loaded
+
+" Conditionally load git related plugins {{{3
+silent! !git rev-parse --is-inside-work-tree >/dev/null 2>&1
+if v:shell_error == 0
+    packadd vim-gitgutter
+endif
+
+" AUTOMATIC {{{2
+" tabular: Smart alignment of tables {{{3
 call minpac#add('godlygeek/tabular')
 
 " :Tabularize /<delimiter>/<format>
@@ -373,12 +591,7 @@ vmap <Leader>t,     :Tabularize /,<cr>
 nmap <Leader>t<Bar> :Tabularize /<Bar><cr>
 vmap <Leader>t<Bar> :Tabularize /<Bar><cr>
 
-" tagalong: Change an HTML(ish) tag and update the matching one {{{2
-call minpac#add('AndrewRadev/tagalong.vim')
-
-let g:tagalong_additional_filetypes = ['sgml', 'xml', 'html', 'xhtml', 'phtml', 'php']
-
-" tagbar: Source code browser using ctags {{{2
+" tagbar: Source code browser using ctags {{{3
 call minpac#add('preservim/tagbar')
 
 " ctags commands
@@ -416,58 +629,7 @@ let g:tagbar_type_markdown = {
     \ 'kind2scope' : {'s' : 'section',},
     \ 'sort'       : 0}
 
-
-" <leader>cs : query thesauras for word under cursor
-
-" todo-txt.vim: Vim plugin for Todo.txt {{{2
-call minpac#add('freitass/todo.txt-vim')
-
-" <LocalLeader>s   : Sort by priority
-" <LocalLeader>s+  : Sort on +Projects
-" <LocalLeader>s@  : Sort on @Contexts
-" <LocalLeader>sd  : Sort on due dates
-" <LocalLeader>sc  : Sort by context, then priority
-" <LocalLeader>scp : Sort by context, project, then priority
-" <LocalLeader>sp  : Sort by project, then priority
-" <LocalLeader>spc : Sort by project, context, then priority
-" <LocalLeader>-sd : Sort by due date. Entries with due date are at the beginning
-
-" <LocalLeader>j : Lower priority
-" <LocalLeader>k : Increase priority
-" <LocalLeader>a : Add priority (A)
-" <LocalLeader>b : Add priority (B)
-" <LocalLeader>c : Add priority (C)
-
-" <LocalLeader>d : Insert current date
-" date<tab> : (Insert mode) insert current date
-" due:      : (Insert mode) insert due: <date>
-" DUE:      : (Insert mode) insert DUE: <date>
-
-" <LocalLeader>x : Toggle done
-" <LocalLeader>C : Toggle cancelled
-" <LocalLeader>X : Mark all completed
-" <LocalLeader>D : Move completed tasks to done file
-
-endif " minpac loaded
-" vim-autoformat:  Provide easy code formatting in Vim by integrating existing code formatters {{{2
-call minpac#add('vim-autoformat/vim-autoformat')
-
-" vim-closetag: Easily close HTML/XML tags {{{2
-call minpac#add('alvan/vim-closetag')
-
-"   Current content:
-"       <table|
-"   Press >:
-"       <table>|</table>
-"   Press > again:
-"       <table>
-"           |
-"       </table>
-
-" Use closetag in these files
-let g:closetag_filenames = "*.sgml,*.xml,*.html,*.xhtml,*.phtml,*.php"
-
-" vim-commentary: Commenting keymaps {{{2
+" vim-commentary: Commenting keymaps {{{3
 call minpac#add('tpope/vim-commentary')
 
 " gc{motion} : Toggle commenting over {motion}
@@ -475,85 +637,10 @@ call minpac#add('tpope/vim-commentary')
 " {Visual}gc : Toggle commenting of highlighted lines
 " gcu        : Uncomment current and adjacent lines
 
-" vim-css3-syntax: CSS3 syntax support for built-in syntax/css.vim {{{2
-call minpac#add('hail2u/vim-css3-syntax')
-
-" vim-fugitive: Git in Vim {{{2
-call minpac#add('tpope/vim-fugitive')
-"set completopt-=preview " disable issue body preview
-
-" vim-fugitive-blame-ext: extend vim-fugitive to show commit message on statusline in :Gblame {{{2
-call minpac#add('tommcdo/vim-fugitive-blame-ext')
-
-" vim-gist: Edit github.com gists with vim {{{2
-call minpac#add('mattn/vim-gist')
-
-let g:gist_post_private = 1 " Private gists by default
-                            " :Gist -P to create public Gist
-
-" vim-gitgutter: Use the sign column to show git chanages {{{2
-call minpac#add('airblade/vim-gitgutter')
-
-" The default updatetime of 4000ms is not good for async update
-set updatetime=100
-
-" Use fontawesome icons as signs
-let g:gitgutter_sign_added = ''
-let g:gitgutter_sign_modified = 'ﰣ'
-let g:gitgutter_sign_removed = ''
-let g:gitgutter_sign_removed_first_line = ''
-let g:gitgutter_sign_modified_removed = ''
-
-" vim-hcl: Syntax highlighting for HCL {{{2
-call minpac#add('jvirtanen/vim-hcl')
-
-" vim-IndentCommentPrefix: Indents comments sensibly {{{2
-call minpac#add('inkarkat/vim-IndentCommentPrefix')
-
-" >>  : Indent, keeping comment prefix where it is
-" <<  : Deindent, keeping comment prefix where it is
-" g>> : Indent, including comment prefix
-
-" Use single > or < in Visual mode
-
-" Comment chars in this list will *not* be left in column 1
-"let g:IndentCommentPrefix_Blacklist = ['#', '>']
-
-" Any string in this list *will* remain in column 1
-"let g:IndentCommentPrefix_Whitelist = ['REMARK:']
-
-" vim-ingo-library: library functions required by IndentCommentPrefix {{{2
-call minpac#add('inkarkat/vim-ingo-library')
-
-" vim-ini-fold: folding for ini-like files {{{2
-call minpac#add('matze/vim-ini-fold')
-
-" vim-irssi-syntax: syntax file for irssi configuration files {{{2
-call minpac#add('wsdjeg/vim-irssi-syntax')
-
-" vim-markdown: Markdown vim mode {{{2
-call minpac#add('plasticboy/vim-markdown')
-
-let g:vim_markdown_frontmatter = 1
-let g:vim_markdown_folding_style_pythonic = 1
-let g:vim_markdown_folding_level = 1
-let g:vim_markdown_override_foldtext = 0
-let g:vim_markdown_follow_anchor = 1
-let g:vim_markdown_conceal_code_blocks = 0
- 
-" vim-markdown-folding: Fold Markdown files on headers {{{2
-call minpac#add('masukomi/vim-markdown-folding')
-
-" vim-plugin-AnsiEsc: ansi escape sequences concealed, but highlighted as specified (conceal) {{{2
-call minpac#add('powerman/vim-plugin-AnsiEsc')
-
-" vim-repeat: Enable repeating supported plugin maps with "."{{{2
+" vim-repeat: Enable repeating supported plugin maps with "."{{{3
 call minpac#add('tpope/vim-repeat')
 
-" vim-rhubarb: GitHub extension for fugitive.vim {{{2
-call minpac#add('tpope/vim-rhubarb')
-
-" vim-surround: Modify surrounding characters {{{2
+" vim-surround: Modify surrounding characters {{{3
 call minpac#add('tpope/vim-surround')
 
 " ds<t>         : delete <t>
@@ -583,38 +670,6 @@ call minpac#add('tpope/vim-surround')
 call minpac#add('vim-scripts/YankRing.vim')
 
 let g:yankring_history_dir = '$HOME/var/cache'
-
-" vim-sxhkdrc: Vim syntax for sxhkd's configuration files {{{2
-call minpac#add('baskerville/vim-sxhkdrc')
-
-" vim-tmux: Vim plugin for .tmux.conf {{{2
-call minpac#add('tmux-plugins/vim-tmux')
-
-" vim-tmux-pilot: Unified navigation of splits and tabs in nvim and tmux {{{2
-call minpac#add('urbainvaes/vim-tmux-pilot')
-
-" Use Alt+[hjkl] to navigate windows
-if has ('unix') " set convert-meta off in .inputrc makes Alt not the Meta key
-    let g:pilot_key_h='h'
-    let g:pilot_key_j='j'
-    let g:pilot_key_k='k'
-    let g:pilot_key_l='l'
-    let g:pilot_key_p='\'
-else
-    let g:pilot_key_h='<a-h>'
-    let g:pilot_key_j='<a-j>'
-    let g:pilot_key_k='<a-k>'
-    let g:pilot_key_l='<a-l>'
-    let g:pilot_key_p='<a-\>'
-endif
-
-" vimtex: vim LaTeX plugin {{{2
-call minpac#add('lervag/vimtex')
-
-let g:vimtex_view_method = 'zathura'
-
-" webapi-vim: Needed for vim-gist {{{2
-call minpac#add('mattn/webapi-vim')
 
 " Basics {{{1
 " ======
