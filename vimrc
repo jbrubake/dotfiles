@@ -169,8 +169,6 @@ call minpac#add('https://github.com/junegunn/vim-easy-align') " vim-easy-align: 
 
 ""call minpac#add('kana/vim-textobj-line') " vim-textobj-line: Text objects for the current line {{{3
 
-""call minpac#add('kana/vim-textobj-user') " vim-textobj-user: Create your own text objects {{{3
-
 ""call minpac#add('tpope/vim-unimpaired') " vim-unimpaired: Pairs of handy bracket mappings {{{3
 
 ""call minpac#add('tpope/vim-vinegar') " vim-vinegar: Combine with netrw to create a delicious salad dressing {{{3
@@ -505,6 +503,19 @@ call minpac#add('hashivim/vim-terraform')
 autocmd load_plugins FileType hcl packadd vim-terraform
 autocmd load_plugins FileType json packadd vim-terraform
 autocmd load_plugins FileType terraform packadd vim-terraform
+
+" vim-textobj-sentence: Improving native sentence text object and motion {{{3
+call minpac#add('preservim/vim-textobj-sentence', {'type': 'opt'})
+
+augroup textobj_sentence
+    autocmd!
+    autocmd FileType markdown packadd vim-textobj-user | packadd vim-textobj-sentence | call textobj#sentence#init()
+    autocmd FileType text     packadd vim-textobj-user | packadd vim-textobj-sentence | call textobj#sentence#init()
+augroup END
+
+" vim-textobj-user: Create your own text objects {{{3
+" (required by vim-textobj-sentence)
+call minpac#add('kana/vim-textobj-user', {'type': 'opt'})
 
 " vim-tmux: Vim plugin for .tmux.conf {{{3
 call minpac#add('tmux-plugins/vim-tmux', {'type': 'opt'})
