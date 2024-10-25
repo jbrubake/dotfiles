@@ -16,7 +16,7 @@
     lt  = log --graph       --pretty='%C(auto)%<(7)%h%d %s %C(green)(%cs) %C(cyan)<%aN>'
     lta = log --graph --all --pretty='%C(auto)%<(7)%h%d %s %C(green)(%cs) %C(cyan)<%aN>'
 	s = status -s                       ; View the current working tree status using the short format.
-    last = "!sh -c '~/bin/git-last.sh'" ; Print out last commit message from current branch for each file/directory in pwd
+    last = "!sh -c '~/bin/git-last'"    ; Print out last commit message for each file/directory in pwd
 	aliases = config --get-regexp alias ; List aliases.
 [color]
 	ui = true
