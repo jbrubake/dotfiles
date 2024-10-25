@@ -202,6 +202,20 @@ BROWSER=$(pick browser "$browsers")
 unset browsers
 export BROWSER
 
+# ls {{{2
+#
+export LS=$(pick ls 'eza exa ls')
+[ "$( tput colors )" -ge 0 ] && color_flag='--color=auto'
+case $LS in
+    eza | exa) export LS_OPTS="--group-directories-first --sort extension -F $color_flag" ;;
+    ls) if command ls --version | grep -q GNU; then
+            export LS_OPTS="--group-directories-first -hXFH $color_flag"
+        else
+            export LS_OPTS='-XFH'
+        fi ;;
+esac
+unset color_flag
+
 # dircolors {{{1
 #
 if [ "$( tput colors )" -ge 0 ] && have dircolors; then

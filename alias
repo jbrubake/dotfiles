@@ -16,61 +16,50 @@
 #
 have() { command -v "$1" >/dev/null; }
 
-# Defaults {{{1
-#
-# Color flag for ls and grep
-[ "$( tput colors )" -ge 0 ] && color_flag='--color=auto'
 
-# My standard ls aliases {{{1
+# ls(1) {{{1
 #
-if have exa; then
-    _ls=exa
-elif have eza; then
-    _ls=eza
-elif command ls --version | grep -q GNU; then
-    _ls=gnu-ls
+if [ "$LS" = 'ls' ]; then
+    command ls --version | grep -q GNU && _ls=gnu-ls
 else
-    _ls=ls
+    _ls=$LS
 fi
 
 case $_ls in
     eza | exa)
-        export LS_OPTS="--group-directories-first --sort extension -F $color_flag"
-        alias ls='command  '"$_ls"' $LS_OPTS'
-        alias la='command  '"$_ls"' $LS_OPTS -a'
-        alias ll='command  '"$_ls"' $LS_OPTS -lg'
-        alias lla='command '"$_ls"' $LS_OPTS -lag'
-        alias l.='command  '"$_ls"' $LS_OPTS -d .*'
-        alias ll.='command '"$_ls"' $LS_OPTS -lg -d .*'
-        alias lsap='lsp -A --icons' # lsp is defined in ~/.functions
+        ls_opts=''; ll_opts='-lg';
+        la_opts='-a'; lla_opts='-lag';
+        ld_opts='-d .*'; lld_opts='-lg -d .*';
+        lsap_opts=''
         ;;
     gnu-ls) # GNU ls
-        export LS_OPTS="--group-directories-first -hXFH $color_flag"
-        alias ls='command  ls $LS_OPTS'
-        alias la='command  ls $LS_OPTS -A'
-        alias ll='command  ls $LS_OPTS -l'
-        alias lla='command ls $LS_OPTS -lA'
-        alias l.='command  ls $LS_OPTS -d .*'
-        alias ll.='command ls $LS_OPTS -ld .*'
-        alias lsap="lsp -A" # lsp is defined in ~/.functions
+        ls_opts=''; ll_opts='-l';
+        la_opts='-A'; lla_opts='-lA';
+        ld_opts='-d .*'; lld_opts='-l -d .*';
+        lsap_opts=''
         ;;
     ls) # POSIX ls
-        export LS_OPTS="-XFH"
-        alias ls='command  ls $LS_OPTS'
-        alias la='command  ls $LS_OPTS -a'
-        alias ll='command  ls $LS_OPTS -l'
-        alias lla='command ls $LS_OPTS -la'
-        alias l.='command  ls $LS_OPTS -d .*'
-        alias ll.='command ls $LS_OPTS -ld .*'
-        alias lsap="lsp -a" # lsp is defined in ~/.functions
+        ls_opts=''; ll_opts='-l';
+        la_opts='-a'; lla_opts='-la';
+        ld_opts='-d .*'; lld_opts='-lg -d .*';
+        lsap_opts=''
         ;;
     *) printf 'How did we get here?' >&2 ;;
 esac
 
-unset _ls
+alias ls="command  $LS $ls_opts"'  $LS_OPTS'
+alias ll="command  $LS $ll_opts"'  $LS_OPTS'
+alias la="command  $LS $la_opts"'  $LS_OPTS'
+alias lla="command $LS $lla_opts"' $LS_OPTS'
+alias l.="command  $LS $ld_opts"'  $LS_OPTS'
+alias ll.="command $LS $lld_opts"' $LS_OPTS'
+alias lsap='lsp'"$lsap_opts" # lsp is defined in ~/.functions
+
+unset _ls ls_opts la_opts ll_opts lla_opts ld_opts lld_opts ldap_opts
 
 # Try color in *grep {{{1
 #
+[ "$( tput colors )" -ge 0 ] && color_flag='--color=auto'
 alias grep="grep $color_flag" # force color in *grep
 
 # Easier navigation {{{1
