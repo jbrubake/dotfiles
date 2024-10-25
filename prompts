@@ -288,10 +288,10 @@ $prompt_clr$ $reset"
 fi # End sh-specific section
 # }}}
 # Clean up {{{1
- unset dir_clr slash_clr hostname_clr at_clr bracket_clr
- unset git_branch_clr git_status_clr
- unset history_clr error_clr prompt_clr user_clr root_user_clr
- unset ssh_clr jobs_clr
- unset reset
+unset dir_clr slash_clr hostname_clr at_clr bracket_clr
+unset git_branch_clr git_status_clr
+unset history_clr error_clr prompt_clr user_clr root_user_clr
+unset ssh_clr jobs_clr
+unset reset
 
 # vim: foldlevel=0
