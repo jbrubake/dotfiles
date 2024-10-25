@@ -522,6 +522,11 @@ call minpac#add('tmux-plugins/vim-tmux', {'type': 'opt'})
 
 autocmd load_plugins FileType tmux packadd vim-tmux
 
+" vim-tridactyl: Syntax plugin for Tridactyl configuration files {{{3
+call minpac#add('tridactyl/vim-tridactyl')
+
+autocmd load_plugins FileType tridactyl packadd vim-tridactyl
+
 " vim-tmux-pilot: Unified navigation of splits and tabs in nvim and tmux {{{3
 call minpac#add('urbainvaes/vim-tmux-pilot')
 
