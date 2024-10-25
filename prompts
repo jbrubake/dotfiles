@@ -79,13 +79,7 @@ prompt_uptime () {
 }
 
 # prompt_ssh: Determine if running under ssh {{{2
-prompt_ssh () {
-    if [ -n "$SSH_CLIENT$SSH2_CLIENT$SSH_TTY" ]; then
-        printf "%s" 'ssh'
-    else
-        printf "%s" 'local'
-    fi
-}
+prompt_ssh () { [ -n "$SSH_CLIENT$SSH2_CLIENT$SSH_TTY" ]; }
 
 # prompt_tty: Get tty {{{2
 prompt_tty () {
@@ -262,7 +256,7 @@ PS1="$reset"
 PS1="$PS1\$(prompt_pwd '$dir_clr' '$slash_clr')"
 PS1="$PS1\n"
 PS1="$PS1$user_clr\u$at_clr@$hostname_clr\h "
-PS1="$PS1$ssh_clr$(prompt_ssh) "
+PS1="$PS1$ssh_clr$(prompt_ssh && echo 'ssh ')"
 PS1="$PS1\$(prompt_git '$bracket_clr($git_branch_clr' '$git_status_clr' '$bracket_clr) ')"
 PS1="$PS1$(prompt_combine "$bracket_clr{$jobs_clr" "$bracket_clr} " '|' $(prompt_running) $(prompt_stopped) $(prompt_detached))"
 PS1="$PS1$bracket_clr!$history_clr\! "
