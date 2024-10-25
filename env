@@ -135,16 +135,17 @@ export VIM_TERMINAL_COLORS=$(awk '$2 ~ /COLOR/ {print gensub(/COLOR/, "", "1", $
         tr -d '\n')
 
 # Alternatives {{{1
+#
 # EDITOR/VISUAL {{{2
 #
-export EDITOR=$(pick editor "vim vi nano pico ed")
+export EDITOR=$(pick editor 'vim vi nano pico ed')
 export VISUAL=$EDITOR
 export FCEDIT=$EDITOR
 
 # PAGER/MANPAGER {{{2
 #
-export PAGER=$(pick pager "less most more")
-export MANPAGER=$(pick manpager "less most more")
+export PAGER=$(pick pager 'less most more')
+export MANPAGER=$(pick manpager 'less most more')
 
 if have ack; then
     export ACK_PAGER=$PAGER
@@ -194,7 +195,7 @@ done
 
 # Web browser {{{2
 #
-browsers="elinks links w3m lynx"
+browsers='elinks links w3m lynx'
 [ -n "$DISPLAY" ] &&
     browsers="firefox google-chrome chromium netsurf $browsers"
 BROWSER=$(pick browser "$browsers")
