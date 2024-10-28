@@ -16,6 +16,11 @@
 #
 have() { command -v "$1" >/dev/null; }
 
+# Defaults {{{1
+#
+# Defining the eventual alias happens in one of two places
+# because it may end up using grc(1)
+jobs='jobs -l' # list PIDs
 
 [ "$( tput colors )" -ge 0 ] && color_flag='--color=auto'
 
@@ -38,7 +43,7 @@ if have grc; then
     # Always create these
     alias configure="$_grc ./configure"
     alias   printev='printenv | grcat conf.printenv'
-    alias   jobs="$_jobs${BASH:+ | grcat conf.jobs}" # colorized version
+    alias   jobs="$jobs${BASH:+ | grcat conf.jobs}" # colorized version
 fi
 
 # ls(1) {{{1
@@ -195,7 +200,6 @@ if have sshd; then
 fi
 
 # fall back if grc(1) not available
-_jobs='jobs -l' # list PIDs
 alias jobs=$jobs
 
 # Use grc(1) if available {{{2
@@ -210,7 +214,7 @@ alias free="${_grc:+"$_grc "}free -h"             # human-readable is better
 unset color_flag
 unset have
 unset _grc
-unset _jobs
+unset jobs
 
 # vim: ft=sh foldlevel=0
 
