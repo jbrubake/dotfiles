@@ -78,15 +78,21 @@ case $_ls in
     *) printf 'How did we get here?' >&2 ;;
 esac
 
-alias ls="command  $LS $ls_opts"'  $LS_OPTS'
-alias ll="command  $LS $ll_opts"'  $LS_OPTS'
-alias la="command  $LS $la_opts"'  $LS_OPTS'
-alias lla="command $LS $lla_opts"' $LS_OPTS'
-alias l.="command  $LS $ld_opts"'  $LS_OPTS'
-alias ll.="command $LS $lld_opts"' $LS_OPTS'
+# Force color if using grc with an ls that supports color
+have grc && case $LS_OPTS in
+    *color*) [ "$_ls" = 'gnu-ls' ] && grc_col=' --color=always' ;;
+    *) grc_col= ;;
+esac
+
+alias   ls="$LS $ls_opts "'$LS_OPTS'
+alias   ll="${_grc:+"$_grc "}$LS $ll_opts "'$LS_OPTS'" $grc_col"
+alias   la="$LS $la_opts "'$LS_OPTS'
+alias  lla="${_grc:+"$_grc "} $LS $lla_opts "'$LS_OPTS'" $grc_col"
+alias   l.="$LS $ld_opts "'$LS_OPTS'
+alias  ll.="${_grc:+"$_grc "} $LS $lld_opts "'$LS_OPTS'" $grc_col"
 alias lsap='lsp'"$lsap_opts" # lsp is defined in ~/.functions
 
-unset _ls ls_opts la_opts ll_opts lla_opts ld_opts lld_opts ldap_opts
+unset _ls ls_opts la_opts ll_opts lla_opts ld_opts lld_opts ldap_opts grc_col
 
 # cd {{{1
 alias  ..='cd ..'          # up one directory
