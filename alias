@@ -131,8 +131,10 @@ case $PAGER in
         alias zless='bat -p -pager less'
         alias cat='bat -p --paging never' ;;
     *)
-        alias  less=$PAGER
-        alias zless=$PAGER
+        if [ "$PAGER" != less ]; then
+            alias  less=$PAGER
+            alias zless=$PAGER
+        fi
         if have highlight; then
             alias cat='highlight --force -O truecolor --style ${HIGHLIGHT_STYLE:-solarized-dark}'
         elif have bat; then
