@@ -17,6 +17,8 @@
 have() { command -v "$1" >/dev/null; }
 
 
+[ "$( tput colors )" -ge 0 ] && color_flag='--color=auto'
+
 # grc(1)-only aliases {{{1
 #
 # Put these first so that they can be overriden
@@ -49,20 +51,22 @@ esac
 
 case $_ls in
     eza | exa)
-        ls_opts=''; ll_opts='-lg';
-        la_opts='-a'; lla_opts='-lag';
+        LS_OPTS="$LS_OPTS $color_flag"
+        ls_opts='';      ll_opts='-lg';
+        la_opts='-a';    lla_opts='-lag';
         ld_opts='-d .*'; lld_opts='-lg -d .*';
         lsap_opts=''
         ;;
     gnu-ls) # GNU ls
-        ls_opts=''; ll_opts='-l';
-        la_opts='-A'; lla_opts='-lA';
+        LS_OPTS="$LS_OPTS $color_flag"
+        ls_opts='';      ll_opts='-l';
+        la_opts='-A';    lla_opts='-lA';
         ld_opts='-d .*'; lld_opts='-l -d .*';
         lsap_opts=''
         ;;
     ls) # POSIX ls
-        ls_opts=''; ll_opts='-l';
-        la_opts='-a'; lla_opts='-la';
+        ls_opts='';      ll_opts='-l';
+        la_opts='-a';    lla_opts='-la';
         ld_opts='-d .*'; lld_opts='-lg -d .*';
         lsap_opts=''
         ;;
@@ -159,8 +163,6 @@ fi
 
 # Miscellaneous {{{1
 #
-[ "$( tput colors )" -ge 0 ] && color_flag='--color=auto'
-
 have reset || alias reset='tput sgr0'  # reset terminal
 have clear || alias clear='tput clear' # emulate clear(1) if I don't have it
               alias   cls='clear'      # windows clear
