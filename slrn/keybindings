@@ -117,7 +117,7 @@ setkey article header_page_down      "^D"       % Scroll down one page
 setkey article header_page_up        "^U"   % Scroll up one page
 setkey article goto_article          ""    % Move to article (number)
 setkey article goto_last_read          ""  % go to the last read article
-setkey article locate_article          "" % Locate article by Message-ID
+setkey article locate_article          "<Esc>l" % Locate article by Message-ID
 setkey article mark_spot               "m"  % Mark current article position
 setkey article subject_search_backward "S"  % Subject search backward
 setkey article subject_search_forward  "s"  % Subject search forward
@@ -171,6 +171,7 @@ setkey article untag_headers           "<Esc>#" % Remove all numerical tags
 % color.sl {{{3
     setkey article edit_colors "\eec"
     setkey article edit_colors "Z"
+
 % Readline mode {{{1
 
 setkey readline bdel          "<Backspace>"%Delete backward
