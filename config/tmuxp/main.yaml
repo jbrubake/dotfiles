@@ -1,16 +1,50 @@
 session_name: main
+start_directory: $HOME
+global_options: {}
+
 windows:
-  - window_name: apps
-    layout: 08ca,191x49,0,0[191x8,0,0,1,191x3,0,9,2,191x36,0,13{99x36,0,13[99x11,0,13,3,99x11,0,25,4,99x12,0,37,5],91x36,100,13[91x7,100,13,6,91x9,100,21,7,91x9,100,31,8,91x8,100,41,11]}]
-    panes:
-      - ticker
-      - cointop --only-table
-      - slrn -w0
-      - NNTPSERVER=news.tilde.club slrn -w0 -f /home/jbrubake/.jnewsrc.tilde
-      - newsboat
-      - hackernews_tui
-      - tuir
-      - weechat
-  - window_name: bash
-    panes:
-      - blank
+
+- window_name: btop
+  options:
+    visual-bell: off
+    monitor-activity: off
+  panes:
+  - shell: /usr/bin/btop
+
+- window_name: logs
+  options:
+    visual-bell: off
+    monitor-activity: off
+  panes:
+  - shell: /usr/bin/grc -es journalctl -f
+
+- window_name: wtf
+  options:
+    visual-bell: off
+    monitor-activity: off
+  panes:
+  - shell: /usr/local/bin/wtfutil
+
+- window_name: apps
+  layout: tiled
+  options:
+    visual-bell: off
+    monitor-activity: off
+  panes:
+    - shell: /usr/bin/slrn -w0
+      focus: true
+    - shell: /usr/bin/slrn -w0 -f .jnewsrc.tilde -h snews://news.tilde.club
+    - shell: weechat
+
+    - shell: mutt
+    - shell: /usr/bin/newsboat
+    - shell: /usr/local/bin/hackernews_tui
+
+    - shell: /usr/local/bin/tuir
+    - shell: $HOME/bin/ticker
+    - shell: /usr/bin/cointop --only-table
+
+- window_name: bash
+  focus: true
+  panes:
+    - null
