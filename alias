@@ -151,7 +151,20 @@ case $PAGER in
             alias zless=$PAGER
         fi
         if have highlight; then
-            alias cat='highlight --force -O truecolor --style ${HIGHLIGHT_STYLE:-solarized-dark}'
+            cat() {
+                # if stdout is the terminal, use highlight but loop through $@
+                # so it works properly. Add '-' to read stdin if not given
+                if [ -t 1 ]; then
+                    [ $# -eq 0 ] && set -- -
+                    for _a in $@; do
+                            highlight --force -O truecolor --style "${HIGHLIGHT_STYLE:-solarized-dark}" "$_a"
+                    done
+                # Use cat(1) if redirecting stdout so no color escapes are
+                # printed
+                else
+                    /bin/cat $@
+                fi
+            }
         elif have bat; then
             alias cat='bat -p --paging never --theme ${BAT_STYLE:-solarized-light}'
         elif have pygmentize; then
