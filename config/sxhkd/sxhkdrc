@@ -32,7 +32,7 @@ mod4 + B
 # connect to it on the second window (which is the one after 'apps')
 mod4 + Return
     if ! tmux ls | grep -q ^main: ; then tmuxp load -d main; fi; \
-    jumpapp -t main $(my -v terminal) -t main -e tmux new -t main \; select-window -t 2 \;
+    wmctrl -xa main || tabbed -cd -n main -r2 alacritty --embed ID -e ~/src/scripts/launchterm main
 
 # Apps terminal
 #
