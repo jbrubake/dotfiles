@@ -147,6 +147,10 @@ case $PAGER in
         if [ "$PAGER" != less ]; then
             alias  less=$PAGER
             alias zless=$PAGER
+        else
+            # NOTE: $LESS is not being passed to less(1)
+            alias  less="less $LESS"
+            alias zless="less $LESS"
         fi
         if have highlight; then
             cat() {

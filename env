@@ -180,6 +180,9 @@ for p in "$PAGER" "$MANPAGER"; do
     unset p
 done
 
+# Pass $LESS to MANPAGER if it is less
+[ "$MANPAGER" = 'less' ] && MANPAGER="less $LESS"
+
 # Web browser {{{2
 #
 browsers='elinks links w3m lynx'
