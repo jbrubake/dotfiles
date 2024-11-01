@@ -22,8 +22,6 @@ have() { command -v "$1" >/dev/null; }
 # because it may end up using grc(1)
 jobs='jobs -l' # list PIDs
 
-[ "$( tput colors )" -ge 0 ] && color_flag='--color=auto'
-
 # grc(1)-only aliases {{{1
 #
 # Put these first so that they can be overriden
@@ -56,14 +54,14 @@ esac
 
 case $_ls in
     eza | exa)
-        LS_OPTS="$LS_OPTS $color_flag"
+        LS_OPTS="$LS_OPTS"
         ls_opts='';      ll_opts='-lg';
         la_opts='-a';    lla_opts='-lag';
         ld_opts='-d .*'; lld_opts='-lg -d .*';
         lsap_opts=''
         ;;
     gnu-ls) # GNU ls
-        LS_OPTS="$LS_OPTS $color_flag"
+        LS_OPTS="$LS_OPTS"
         ls_opts='';      ll_opts='-l';
         la_opts='-A';    lla_opts='-lA';
         ld_opts='-d .*'; lld_opts='-l -d .*';
@@ -79,10 +77,10 @@ case $_ls in
 esac
 
 # Force color if using grc with an ls that supports color
-have grc && case $LS_OPTS in
-    *color*) [ "$_ls" = 'gnu-ls' ] && grc_col=' --color=always' ;;
-    *) grc_col= ;;
-esac
+unset grc_col
+if have grc && [ -n "$HAS_COLOR" ] && [ "$_ls" = 'gnu-ls' ]; then
+    grc_col='--color=always'
+fi
 
 alias   ls="$LS $ls_opts "'$LS_OPTS'
 alias   ll="${_grc:+"$_grc "}$LS $ll_opts "'$LS_OPTS'" $grc_col"
@@ -202,7 +200,7 @@ alias ${BASH:+--} -x='chmod -x' # make file non-executable
 alias      :q='exit'                                    # exit like it's vim
 alias    bell='printf "\a"'                             # ring the bell
 alias    gist='vim "+Gist -l"'                          # open Gist browser
-alias    grep="grep $color_flag"                        # force color in *grep
+alias    grep="grep ${HAS_COLOR:+--color=auto}"         # force color in *grep
 alias     loc='locate -d "$LOCATEDB" "$@"'              # use my personal locate(1) db
 alias      nu="who | cut -d' ' -f1 | uniq | wc -l"      # get number of logged on users
 alias       r='fc -s'                                   # ^old^new but global
