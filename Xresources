@@ -79,6 +79,9 @@ dmenu-run*borderwidth: 1
 dmenu-menu*font: monospace:size=16
 dmenu-menu*borderwidth: 1
 
+! tabbed {{{1
+tabbed.font: monospace:size=8
+
 ! winsearch {{{1
 winsearch*font: monospace:size=16
 winsearch*borderwidth: 1
