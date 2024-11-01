@@ -166,7 +166,7 @@ for p in "$PAGER" "$MANPAGER"; do
             # because *this* file may be sourced *before* TERM is defined
 
             export LESSCHARSET='utf-8';
-            export LESS='-R'
+            export LESS='-R --quit-if-one-screen'
 
             # Colorize things if highlight or pygmentize is available
             #
