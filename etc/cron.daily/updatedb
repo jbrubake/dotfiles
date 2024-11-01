@@ -1,4 +1,4 @@
 #!/bin/sh
 
-updatedb -l 0 -n ".git" -U "$HOME" -o "$HOME/var/lib/locate/locate.db"
+updatedb -l0 -n .git -U "$HOME" -o "$LOCATEDB"
 
