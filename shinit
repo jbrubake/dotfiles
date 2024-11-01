@@ -20,3 +20,26 @@ if command -v zoxide >/dev/null; then
     fi
 fi
 
+# These cannot be set until TERM is defined
+if [ "$PAGER" = 'less' ] || [ "$MANPAGER" = 'less' ]; then
+    # Prevent groff from emitting escapes itself or the following will not work
+    export GROFF_NO_SGR=1
+
+    # Make formatting codes look nicer
+    # mb blink
+    # md bold
+    # me bold, blink, underline off
+    # so reverse
+    # se reverse off
+    # us underline
+    # ue underline off
+    # TODO: these need set in .bashrc because TERM isn't defined in xsession
+    export LESS_TERMCAP_mb=$(tput blink)
+    export LESS_TERMCAP_md=$(tput bold; tput setaf 39)
+    export LESS_TERMCAP_me=$(tput sgr0)
+    export LESS_TERMCAP_so=$(tput smso)
+    export LESS_TERMCAP_se=$(tput sgr0)
+    export LESS_TERMCAP_us=$(tput sitm; tput setaf 79)
+    export LESS_TERMCAP_ue=$(tput sgr0)
+fi
+
