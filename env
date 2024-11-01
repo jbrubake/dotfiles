@@ -88,6 +88,7 @@ have flatpak &&
 # NOTE: /{s,}bin is here because some systems do not add it as it is just a symlink to
 # /usr/{s,}bin. However, certain (Alpine) LXC containers require it
 for d in \
+    /usr/local/games \
     /bin \
     /sbin \
     /usr/local/bin \
