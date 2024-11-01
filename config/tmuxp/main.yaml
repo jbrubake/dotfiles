@@ -40,7 +40,7 @@ windows:
     - shell: /usr/bin/newsboat
     - shell: /usr/local/bin/hackernews_tui
 
-    - shell: /usr/local/bin/tuir
+    - shell:
     - shell: $HOME/bin/ticker
     - shell: /usr/bin/cointop --only-table
 
