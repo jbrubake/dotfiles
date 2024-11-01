@@ -168,7 +168,7 @@ case $PAGER in
                 fi
             }
         elif have bat; then
-            alias cat='bat -p --paging never --theme ${BAT_STYLE:-solarized-light}'
+            alias cat='bat -p --paging never'
         elif have pygmentize; then
             alias cat='pygmentize -O style=${PYGMENTIZE_STYLE:-solarized-light} -g'
         fi ;;
