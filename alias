@@ -214,6 +214,8 @@ alias unexec='find . -type f -exec chmod ogu-x "{}" \;' # chmod -x all FILES in 
 
 alias pickfont='fc-list | sed -e "s/.*: //" -e "s/,.*//" -e "s/:.*//" | sort -u | fzf'
 
+have mgitstatus && alias gits='mgitstatus -e -c' # Get status of git repos
+
 # start / stop a local-only ssh server
 if have sshd; then
     alias klsshd='kill -TERM $(command cat $(sshd -f "$LOCAL_SSHD_CONFIG" -T | grep pidfile | cut -d" " -f2))'  # Stop user sshd
