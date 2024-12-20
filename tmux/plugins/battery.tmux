@@ -1,78 +1,59 @@
 #!/bin/sh
-
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+# Copyright 2021 Jeremy Brubaker <jbru362@gmail.com>
+#
+# abstract: print battery status
+#
 # Seconds until script output cache is stale
 INTERVAL=60
 
-# Get script location (OK even if it is a link because
-# support scripts should also be linked here)
-# PWD=$(dirname "$0")
-# test "$PWD" == "." && PWD=$(pwd)
-# source "$PWD/utils/cache.sh"
-PLUGINS=$(tmux show-option -gqv @plugin_dir)
-source "$PLUGINS/utils/cache.sh"
-source "$PLUGINS/utils/utils.sh"
+# 10% to 100%
+unplugged='󰁺󰁻󰁼󰁽󰁾󰁿󰂀󰂁󰂂󰁹'
+# 10% to 100%
+charging='󰢜󰂆󰂇󰂈󰢝󰂉󰢞󰂊󰂋󰂅'
+# number of icons
+icon_len=10
 
-battery_status() {
-    if is_wsl; then
-		battery=$(find /sys/class/power_supply/*/status | tail -n1)
-		awk '{print tolower($0);}' "$battery"
-	elif command -v "pmset" >/dev/null; then
-		pmset -g batt | awk -F '; *' 'NR==2 { print $2 }'
-	elif command -v "acpi" >/dev/null; then
-		acpi -b | awk '{gsub(/,/, ""); print tolower($3); exit}'
-	elif command -v "upower" >/dev/null; then
-		battery=$(upower -e | grep -E 'battery|DisplayDevice'| tail -n1)
-		upower -i $battery | awk '/state/ {print $2}'
-	elif command -v "termux-battery-status" >/dev/null; then
-		termux-battery-status | jq -r '.status' | awk '{printf("%s%", tolower($1))}'
-	elif command -v "apm" >/dev/null; then
-		battery=$(apm -a)
-		if [ $battery -eq 0 ]; then
-			echo "discharging"
-		elif [ $battery -eq 1 ]; then
-			echo "charging"
-		fi
-	fi
+# Colorization threshholds
+RED_THRESH=50
+YELLOW_THRESH=75
+
+# Get the battery name
+get_battery() { upower -e | grep battery; }
+
+# Is the AC adapter plugged in?
+is_plugged_in() {
+    [ $(upower -i $(upower -e | grep AC) | awk '/online:/ {print $2}') = 'yes' ]
 }
 
-battery_percentage() {
-	# percentage displayed in the 2nd field of the 2nd row
-	if is_wsl; then
-		battery=$(find /sys/class/power_supply/*/capacity | tail -n1)
-		cat "$battery"
-	elif command -v "pmset" >/dev/null; then
-		pmset -g batt | grep -o "[0-9]\{1,3\}%"
-	elif command -v "acpi" >/dev/null; then
-		acpi -b | grep -m 1 -Eo "[0-9]+%"
-	elif command -v "upower" >/dev/null; then
-        # use DisplayDevice if available otherwise battery
-		battery=$(upower -e | grep -E 'battery|DisplayDevice'| tail -n1)
-		if [ -z "$battery" ]; then
-			return
-		fi
-		percentage=$(upower -i $battery | awk '/percentage:/ {print $2}')
+battery() {
+    # Get current % charge
+    charge=$(upower -i $(get_battery) | awk '/percentage:/ {print $2}' | sed 's/%//')
 
-		if [ "$percentage" ]; then
-			echo ${percentage%.*%}
-			return
-		fi
+    i=$((charge / icon_len + 1))            # convert charge to index into $unplugged / $charging
+    [ "$i" -gt "$icon_len" ] && i=$icon_len # max of $icon_len
 
-		energy=$(upower -i $battery | awk -v nrg="$energy" '/energy:/ {print nrg+$2}')
-		energy_full=$(upower -i $battery | awk -v nrgfull="$energy_full" '/energy-full:/ {print nrgfull+$2}')
-		if [ -n "$energy" ] && [ -n "$energy_full" ]; then
-			echo $energy $energy_full | awk '{printf("%d%%", ($1/$2)*100)}'
-		fi
-	elif command -v "termux-battery-status" >/dev/null; then
-		termux-battery-status | jq -r '.percentage' | awk '{printf("%d%%", $1)}'
-	elif command -v "apm" >/dev/null; then
-		apm -l
-	fi
+    # Which icon set to use?
+    if is_plugged_in; then
+        icons=$charging
+    else
+        icons=$unplugged
+    fi
+
+    # <icon> <charge>%
+    printf '%s%s %s%%' "$(colorize "$charge" "$RED_THRESH" "$YELLOW_THRESH")" "$(echo "$icons" | cut -c"$i")" "$charge"
 }
 
-get_battery() {
-    battery_percentage
-    battery_status
-}
-
-get_battery
-# get_value get_battery "$INTERVAL"

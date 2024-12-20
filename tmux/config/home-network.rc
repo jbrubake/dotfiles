@@ -1,5 +1,0 @@
-#!/bin/sh
-
-interface="home"
-name="orion"
-server="10.36.2.1"

@@ -2,43 +2,27 @@
 
 # Seconds until script output cache is stale
 INTERVAL=60
-YELLOW_LOAD=50
-RED_LOAD=70
-
-# Get script location (OK even if it is a link because
-# support scripts should also be linked here)
-# PWD=$(dirname "$0")
-# test "$PWD" == "." && PWD=$(pwd)
-# source "$PWD/utils/cache.sh"
-PLUGINS=$(tmux show-option -gqv @plugin_dir)
-source "$PLUGINS/utils/cache.sh"
+YELLOW_THRESH=50
+RED_THRESH=70
 
 CORES=$(grep 'model name' /proc/cpuinfo | wc -l)
-
-colorize_load() {
-    if [ $1 -ge $RED_LOAD ]; then
-        color="red"
-    elif [ $1 -ge $YELLOW_LOAD ]; then
-        color="yellow"
-    else
-        color="green"
-    fi
-
-    printf "#[fg=%s]%s" "$color" "$1"
-}
-
 get_load_average() {
     printf "%.0f" $(echo "$1 / $CORES * 100" | bc -l)
 }
 
-get_load(){
+load(){
+    format=${1:-%o/%f/%F}
+
     set -- $(uptime | awk -F: '{printf $NF}' | tr -d ',' )
 
-    ave1=$(colorize_load $(get_load_average $1))
-    ave5=$(colorize_load $(get_load_average $2))
-    ave15=$(colorize_load $(get_load_average $3))
+    ave1=$(get_load_average $1)
+    ave5=$(get_load_average $2)
+    ave15=$(get_load_average $3)
 
-    printf "%s%%/%s%%/%s%%" $ave1 $ave5 $ave15
+    ave1=$(colorize "$((100-ave1))" "$RED_THRESH" "$YELLOW_THRESH")$ave1
+    ave5=$(colorize "$((100-ave5))" "$RED_THRESH" "$YELLOW_THRESH")$ave5
+    ave15=$(colorize "$((100-ave15))" "$RED_THRESH" "$YELLOW_THRESH")$ave15
+
+    printf %s "$(printf %s "$format" | sed -e "s/%o/$ave1/" -e "s/%f/$ave5/" -e "s/%F/$ave15/")"
 }
 
-get_value get_load "$INTERVAL"
