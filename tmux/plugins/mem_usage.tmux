@@ -2,45 +2,20 @@
 
 # Seconds until script output cache is stale
 INTERVAL=60
-YELLOW_USAGE=50
-RED_USAGE=70
+YELLOW_THRESH=50
+RED_THRESH=70
 
-# Get script location (OK even if it is a link because
-# support scripts should also be linked here)
-# PWD=$(dirname "$0")
-# test "$PWD" == "." && PWD=$(pwd)
-# source "$PWD/utils/cache.sh"
-PLUGINS=$(tmux show-option -gqv @plugin_dir)
-source "$PLUGINS/utils/cache.sh"
+get_remaining_pct() { echo "$((100 - $2 / $1 * 100))"; }
 
-colorize_usage() {
-    if [ $1 -ge $RED_USAGE ]; then
-        color="red"
-    elif [ $1 -ge $YELLOW_USAGE ]; then
-        color="yellow"
-    else
-        color="green"
-    fi
+mem_usage(){
+    format=${1:-%u/%t}
 
-    printf "#[fg=%s]" "$color"
-}
-
-get_usage_average() {
-    printf "%.0f" $(echo "$1 / $2 * 100" | bc -l)
-}
-
-get_usage(){
     # Determine average-based color
     set -- $(free | awk 'NR == 2 {print $2, $3}')
-    color=$(colorize_usage $(get_usage_average "$2" "$1"))
+    color=$(colorize "$(get_remaining_pct "$1" "$2")" "$RED_THRESH" "$YELLOW_THRESH")
 
     # Get human readable values
     set -- $(free -h | awk 'NR == 2 {print $2, $3}')
-    total="$1"
-    used="$2"
-
-    printf "%s%s/%s" "$color" "$used" "$total"
+    printf %s%s "$color" "$(printf %s "$format" | sed -e "s/%t/$1/" -e "s/%u/$2/")"
 }
-
-get_value get_usage "$INTERVAL"
 
