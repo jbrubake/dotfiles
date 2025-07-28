@@ -32,12 +32,13 @@ xmodmap -e "keycode 108 = Alt_L"
 xmodmap -e "add control = Control_L"
 xmodmap -e "add mod1 = Alt_L Meta_L"
 xmodmap -e "add mod2 = Num_Lock"
-xmodmap -e "add mod4 = Super_L"
+xmodmap -e "add mod4 = Super_L Super_R"
+xmodmap -e "keycode 207 = Hyper_L"
 
 if command -v xcape >/dev/null 2>&1; then
     # Control_L = Escape by itself
-    # Super_L = Super_R by itself
-    xcape -e 'Control_L=Escape;Super_L=Super_R'
+    # Super_*   = Hyper_L by itself
+    xcape -e 'Control_L=Escape;Super_L=Hyper_L;Super_R=Hyper_L'
 fi
 
 if command -v sxhkd >/dev/null 2>&1; then

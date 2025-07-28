@@ -7,7 +7,7 @@ mod4 + s
     winsearch -c -p Window:
 
 # Use dmenu to run a command
-Super_R
+Hyper_L
     dmenu-run -c -l 10 -p Command:
 
 # 3-finger saulte
