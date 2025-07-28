@@ -23,7 +23,9 @@ left() { # {{{1
     printf ' '
 
     # host:session
+    printf '#[range=user|new]'
     printf '  #[fg=color171]#h'
+    printf '#[norange]'
 
     # uptime
     printf '#[fg=color252] | '
@@ -65,19 +67,25 @@ right() { # {{{1
     printf '#[fg=color252,bg=color233] '
 
     # memory usage
+    printf '#[range=user|memory]'
     printf '  %s' "$(plugin mem_usage '%u/%t')"
+    printf '#[norange]'
 
     # system load
+    printf '#[range=user|load]'
     printf '#[fg=color252] | '
     printf '  %s' "$(plugin load '%o%/%f%/%F%')"
+    printf '#[norange]'
 
     # updates
     printf '#[fg=color252] | '
     printf '󰒃 %s' "$(plugin updates '#[fg=color033,bold]%t #[fg=$TMUX_COLOR_RED]( %s)#[fg=color033] updates')"
 
     # weather
+    printf '#[range=user|weather]'
     printf '#[fg=color252] |' # <-- space intentionally skipped
     printf '%s' "$(plugin weather '+%c%C+%t+(%f)')"
+    printf '#[norange]'
 
     # rpg-cli status
     printf '#[fg=color252] | '
