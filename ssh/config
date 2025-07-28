@@ -5,7 +5,7 @@ Host *
     # bash hostname completion from working
     HashKnownHosts no
     ControlMaster auto
-    ControlPath ~/.ssh/sockets/%r@%h:%p
+    ControlPath ~/.ssh/sockets/%r@%k:%p
     ControlPersist 300
     IdentitiesOnly yes
 
