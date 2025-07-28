@@ -18,6 +18,13 @@
 	s = status -s                       ; View the current working tree status using the short format.
     last = "!sh -c '~/bin/git-last'"    ; Print out last commit message for each file/directory in pwd
 	aliases = config --get-regexp alias ; List aliases.
+    whatadded = log --diff-filter=A --  ; Find commit that added a file
+    fixup = commit --amend --no-edit    ; Amend without editing commit message
+    stage-all = add --all               ; Stage everything
+    unstage-all = reset HEAD            ; Unstage everything
+    undo-merge = reset --hard ORIG_HEAD ; Undo a merge
+    delouse = !git reset HEAD~1 && git commit --allow-empty --no-verify -C "$(git sha HEAD)" ; 'Empty' last commit but keep commit message
+
 [color]
 	ui = true
 [color "branch"]
