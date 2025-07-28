@@ -42,6 +42,7 @@ if have grc; then
     alias configure="$_grc ./configure"
     alias  printenv="$_grc -c conf.printenv printenv"
     alias      jobs="$jobs${BASH:+ | grcat conf.jobs}" # colorized version
+    alias   tcpdump="$_grc tcpdump -l"
 fi
 
 # ls(1) {{{1
