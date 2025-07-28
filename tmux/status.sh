@@ -37,12 +37,14 @@ left() { # {{{1
     printf ' #[fg=color214]%s#[fg=none]' "$(plugin clock '%a, %d-%b %H:%M')"
     printf '#[norange]'
 
-    # network status
+    # network status and internet POP
     printf '#[fg=color252] | '
-    printf '󰖟 %s' "$(plugin uplink ',#[fg=$TMUX_COLOR_YELLOW]No DNS ,#[fg=$TMUX_COLOR_RED]Down ')"
-
-    # internet POP
-    printf '#[fg=color252](%s)' "$(plugin ip_location '%c, %C')"
+    case $(plugin uplink ",#[fg=$TMUX_COLOR_YELLOW]No DNS ,#[fg=$TMUX_COLOR_RED]Down ") in
+        'No DNS') color=$TMUX_COLOR_YELLOW ;;
+        'Down')   color=$TMUX_COLOR_RED ;;
+        *)      color=$TMUX_COLOR_GREEN ;;
+    esac
+    printf '󰖟 [#[fg=%s]%s#[fg=color252]]' "$color" "$(plugin ip_location '%c, %R')"
 
     # VPN status
     if ip --brief address | grep -q ^jeremy-range; then
