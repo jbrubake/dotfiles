@@ -19,7 +19,8 @@ plugin() {
     plugin=$1; shift
     . $TMUX_PLUGIN_DIR/plugins/$plugin.tmux
 
-    get_value "$plugin" "$@"
+    # Default INTERVAL is 5 minutes
+    get_value "$plugin" "${INTERVAL:-300}" "$@"
 }
 
 # Cache functions {{{1
@@ -51,13 +52,15 @@ TMUX_PLUGIN_CACHE=${XDG_CACHE_HOME:-~/.cache}/tmux
 # @stdout cached or new value
 #
 get_value() {
-    plugin=$1; shift
+    case $# in
+        0) return ;;                           # no plugin to run
+        1) plugin=$1; interval=300; shift 1 ;; # use default interval
+        *) plugin=$1; interval=$2;  shift 2 ;;
+    esac
 
-    unset INTERVAL
     delta="$(( $(now) - $(get_cache_time "$plugin") ))"
 
-    # Default INTERVAL is 5 minutes
-    if [ "$delta" -lt "${INTERVAL:-300}" ]; then
+    if [ "$delta" -lt "$interval" ]; then
         get_cache "$plugin"
     else
         set_cache "$plugin" "$@"
