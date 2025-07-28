@@ -15,15 +15,15 @@ TMUX_COLOR_GREEN=color42
 # TMUX_COLOR_GREEN=color40
 
 # used in window status format
-TMUX_WINDOW_FORMAT='#I#F #W,,[],black' # Format: <window index><window flags> <window name>
-TMUX_BAR_COLOR=black                     # default status bar background color
+TMUX_WINDOW_FORMAT='#I#F #W,,[],color233' # Format: <window index><window flags> <window name>
+TMUX_BAR_COLOR=color233                     # default status bar background color
 
 left() { # {{{1
     # spacing
     printf ' '
 
     # host:session
-    printf '  #[fg=cyan]#h'
+    printf '  #[fg=color171]#h'
 
     # uptime
     printf '#[fg=color252] | '
@@ -32,12 +32,12 @@ left() { # {{{1
     # clock
     printf '#[fg=color252] | '
     printf '#[range=user|clock]'
-    printf ' #[fg=yellow,bold]%s#[fg=none]' "$(plugin clock '%a, %d-%b %H:%M')"
+    printf ' #[fg=color214,bold]%s#[fg=none]' "$(plugin clock '%a, %d-%b %H:%M')"
     printf '#[norange]'
 
     # network status
     printf '#[fg=color252] | '
-    printf '󰖟 %s' "$(plugin uplink ',#[fg=brightyellow]No DNS ,#[fg=brightred]Down ')"
+    printf '󰖟 %s' "$(plugin uplink ',#[fg=$TMUX_COLOR_YELLOW]No DNS ,#[fg=$TMUX_COLOR_RED]Down ')"
 
     # internet POP
     printf '#[fg=color252](%s)' "$(plugin ip_location '%c, %C')"
@@ -54,15 +54,15 @@ left() { # {{{1
     fi
 
     # end
-    printf '#[fg=color252,bg=black]  '
+    printf '#[fg=color252,bg=color233]  '
 
     # reset
-    printf '#[fg=color252,bg=black]'
+    printf '#[fg=color252,bg=color233]'
 }
 
 right() { # {{{1
     # leader
-    printf '#[fg=color252,bg=black] '
+    printf '#[fg=color252,bg=color233] '
 
     # memory usage
     printf '  %s' "$(plugin mem_usage '%u/%t')"
@@ -73,7 +73,7 @@ right() { # {{{1
 
     # updates
     printf '#[fg=color252] | '
-    printf '󰒃 %s' "$(plugin updates '#[fg=brightblue,bold]%t #[fg=brightred]( %s)#[fg=brightblue] updates')"
+    printf '󰒃 %s' "$(plugin updates '#[fg=color033,bold]%t #[fg=$TMUX_COLOR_RED]( %s)#[fg=color033] updates')"
 
     # weather
     printf '#[fg=color252] |' # <-- space intentionally skipped
@@ -88,7 +88,7 @@ right() { # {{{1
     printf '%s' "$(plugin battery)"
 
     # reset
-    printf '#[fg=color252,bg=black]'
+    printf '#[fg=color252,bg=color233]'
 
     # TODO: right bar is shifted one space to the left which results in the wrong color there at times
     # spacing (needed to keep the last character on the screen)
@@ -108,7 +108,7 @@ window() { # {{{1
     format=${format:-#I#F #W}
     active=${active:-()}
     inactive=${inactive:-[]}
-    bar=${bar:-black}
+    bar=${bar:-color233}
 
     # split character pairs
     preactive=$(echo $active | cut -c1)
@@ -120,19 +120,19 @@ window() { # {{{1
         # Current window
         *\**) pre=$preactive; post=$postactive
         case $window in
-            *Z*) fg=yellow; bg=$bar; other=none ;; # zoomed
-            *)   fg=green;  bg=$bar; other=bold ;; # other
+            *Z*) fg=color130; bg=$bar; other=none ;; # zoomed
+            *)   fg=color042; bg=$bar; other=bold ;; # other
         esac ;;
 
         # Inactive window
         *) pre=$preinactive; post=$postinactive
         case $window in
-            *-*)     fg=white;  bg=$bar; other=none ;; # last
-            *~*)     fg=green;  bg=$bar; other=none ;; # silent
-            *M*)     fg=green;  bg=$bar; other=none ;; # marked
+            *-*)     fg=color255; bg=$bar; other=none ;; # last
+            *~*)     fg=color042; bg=$bar; other=none ;; # silent
+            *M*)     fg=color042; bg=$bar; other=none ;; # marked
             *\#* | \
-            *!*)     fg=red;    bg=$bar; other=none ;; # activity | bell
-            *)       fg=brightblack; bg=$bar; other=none ;; # other
+            *!*)     fg=color203; bg=$bar; other=none ;; # activity | bell
+            *)       fg=color201; bg=$bar; other=none ;; # other
         esac ;;
     esac
 
