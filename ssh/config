@@ -8,9 +8,7 @@ Host *
     ControlPath ~/.ssh/sockets/%r@%k:%p
     ControlPersist 300
     IdentitiesOnly yes
-
-# Force IPv4 everywhere
-Host *
+    # Force IPv4 everywhere
     AddressFamily inet
 
 # sshtron
