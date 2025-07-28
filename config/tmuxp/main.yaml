@@ -15,8 +15,10 @@ windows:
   options:
     visual-bell: off
     monitor-activity: off
+  layout: be21,239x57,0,0[239x20,0,0,2,239x36,0,21,17]
   panes:
   - shell: /usr/bin/grc -es journalctl -f
+  - shell: /usr/bin/multitail -cT ansi $HOME/var/log/*.log
 
 - window_name: wtf
   options:
