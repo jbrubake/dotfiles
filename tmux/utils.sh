@@ -109,7 +109,12 @@ get_cache_fn() { echo "$TMUX_PLUGIN_CACHE/$1.cache"; }
 #
 # @stdout Time of last update in seconds since the epoch
 #
-get_cache_time() { stat --format %Y "$(get_cache_fn "$1")" 2>/dev/null || echo "0"; }
+get_cache_time() {
+    __cache_fn=$(get_cache_fn "$1")
+    stat --format %Y "$__cache_fn" 2>/dev/null &&
+        [ -s "$__cache_fn" ] ||
+        echo "0"
+}
 
 # clear_cache {{{2
 #
