@@ -34,7 +34,7 @@ xmodmap -e "add mod1 = Alt_L Meta_L"
 xmodmap -e "add mod2 = Num_Lock"
 xmodmap -e "add mod4 = Super_L"
 
-if command -v xcape 2>&1 >/dev/null; then
+if command -v xcape >/dev/null 2>&1; then
     # Control_L = Escape by itself
     # Super_L = Super_R by itself
     xcape -e 'Control_L=Escape;Super_L=Super_R'
