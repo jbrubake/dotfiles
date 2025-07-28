@@ -73,8 +73,11 @@ fi
 if command -v rpg-cli >/dev/null; then
 cd () { # rpg-cli
     command cd "$@"
-    rpg-cli cd -f .
-    rpg-cli battle
+    wap=$(nmcli dev wifi show 2>/dev/null | grep SSID | cut -d' ' -f2)
+    if [ "$wap" != 'classroom' ]; then
+        rpg-cli cd -f .
+        rpg-cli battle
+    fi
 }
 delve () {
     current=$(basename $PWD)
