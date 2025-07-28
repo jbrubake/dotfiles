@@ -1152,30 +1152,28 @@ let c_comment_strings=1 " Highlight strings in C comments
 
 if &term =~ '256color\|alacritty'
     if has('termguicolors')
-        " Enable GUI colors for the terminal
-        set termguicolors                    " Enable GUI colors for the terminal to get truecolor
-        " XXX: Uneeded now?
-        " set t_8f=[38;2;%lu;%lu;%lum        " Enable 24-bit foreground colors
-        " set t_8b=[48;2;%lu;%lu;%lum        " Enable 24-bit background colors
+        set termguicolors " Enable truecolor in the terminal
 
-        let &t_Ts = "\e[9m"  "strikethrough
-        let &t_Te = "\e[29m"
+        let &t_Ts = "\e[9m"  " strikethrough
+        let &t_Te = "\e[29m" " strikethrough end
 
 	    let &t_Us = "\e[4:2m" " underdouble
 	    let &t_ds = "\e[4:4m" " underdotted
 	    let &t_Ds = "\e[4:5m" " underdashed
         let &t_Cs = "\e[4:3m" " undercurl
-        let &t_Ce = "\e[4:0m"
+        let &t_Ce = "\e[4:0m" " undercurl / underline end
 
         let &t_AU = "\e[58:5:%p1%d%;m"     " colored underline
-        let &t_8u = "\e[58:2:%lu:%lu:%lum"
+        let &t_8u = "\e[58:2:%lu:%lu:%lum" " underline color
 
         " ???
+        " I was trying to use these to get terminal fg/bg in vim
+        " (see my comp.editors post)
         " let &t_RB = "\e]11;?"
         " let &t_RF = "\e]10;?"
 
         " Make terminal colors match underlying terminal
-        let g:terminal_ansi_colors = $VIM_TERMINAL_COLORS
+        " let g:terminal_ansi_colors = $VIM_TERMINAL_COLORS
     endif
 endif
 
