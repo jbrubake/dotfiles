@@ -20,7 +20,7 @@ TMUX_BAR_COLOR=color233                     # default status bar background colo
 
 left() { # {{{1
     # spacing
-    printf ' '
+    printf ' #[bold]'
 
     # host:session
     printf '#[range=user|new]'
@@ -34,7 +34,7 @@ left() { # {{{1
     # clock
     printf '#[fg=color252] | '
     printf '#[range=user|clock]'
-    printf ' #[fg=color214,bold]%s#[fg=none]' "$(plugin clock '%a, %d-%b %H:%M')"
+    printf ' #[fg=color214]%s#[fg=none]' "$(plugin clock '%a, %d-%b %H:%M')"
     printf '#[norange]'
 
     # network status
@@ -64,7 +64,7 @@ left() { # {{{1
 
 right() { # {{{1
     # leader
-    printf '#[fg=color252,bg=color233] '
+    printf '#[fg=color252,bg=color233,bold] '
 
     # memory usage
     printf '#[range=user|memory]'
@@ -79,7 +79,7 @@ right() { # {{{1
 
     # updates
     printf '#[fg=color252] | '
-    printf '󰒃 %s' "$(plugin updates '#[fg=color033,bold]%t #[fg=$TMUX_COLOR_RED]( %s)#[fg=color033] updates')"
+    printf '󰒃 %s' "$(plugin updates "#[fg=color033]%t #[fg=$TMUX_COLOR_RED]( %s)#[fg=color033] updates")"
 
     # weather
     printf '#[range=user|weather]'
