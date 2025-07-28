@@ -40,3 +40,6 @@ Thumbs.db
 ###############
 tags
 cscope.out
+# gcc dependency files
+*.d
+.gdb_history
