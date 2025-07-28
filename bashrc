@@ -78,7 +78,7 @@ if shopt -q progcomp; then
     have todo.sh && complete -F _todo t
 
     # terraform / opentofu
-    have terraform && complete -C terraform terraform
+    have terraform&& complete -C terraform terraform
     have tofu && complete -C tofu tofu
 
     # gcloud

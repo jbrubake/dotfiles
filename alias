@@ -40,8 +40,8 @@ if have grc; then
 
     # Always create these
     alias configure="$_grc ./configure"
-    alias   printev='printenv | grcat conf.printenv'
-    alias   jobs="$jobs${BASH:+ | grcat conf.jobs}" # colorized version
+    alias  printenv="$_grc -c conf.printenv printenv"
+    alias      jobs="$jobs${BASH:+ | grcat conf.jobs}" # colorized version
 fi
 
 # ls(1) {{{1
