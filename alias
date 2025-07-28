@@ -208,6 +208,7 @@ alias    grep="grep ${HAS_COLOR:+--color=auto}"         # force color in *grep
 alias     loc='locate -d "$LOCATEDB" "$@"'              # use my personal locate(1) db
 alias      nu="who | cut -d' ' -f1 | uniq | wc -l"      # get number of logged on users
 alias       r='fc -s'                                   # ^old^new but global
+alias    ship='ip --brief address'                      # short IP interface overview
 alias    sudo='sudo '                                   # enable aliases to be sudo’ed
 alias   tree='command tree -CFI ".git" --dirsfirst'     # better looking tree(1)
 alias unexec='find . -type f -exec chmod ogu-x "{}" \;' # chmod -x all FILES in tree (needed when copying from Windows)
