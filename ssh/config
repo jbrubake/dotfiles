@@ -11,7 +11,6 @@ Host *
     # Force IPv4 everywhere
     AddressFamily inet
 
-# sshtron
 Host tron
     HostName sshtron.zachlatta.com
     User green
