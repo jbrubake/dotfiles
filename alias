@@ -158,23 +158,57 @@ case $PAGER in
         fi
         if have highlight; then
             cat() {
-                # if stdout is the terminal, use highlight but loop through $@
-                # so it works properly. Add '-' to read stdin if not given
-                if [ -t 1 ]; then
-                    [ $# -eq 0 ] && set -- -
-                    for _a in $@; do
-                            highlight --force -O truecolor --style "${HIGHLIGHT_STYLE:-solarized-dark}" "$_a"
-                    done
-                # Use cat(1) if redirecting stdout so no color escapes are
-                # printed
-                else
+                # Use cat(1) if no files are given or if redirecting stdout
+                # (avoid colors)
+                if [ $# -eq 0 ] || ! [ -t 1 ]; then
                     /bin/cat $@
+                else
+                    # If stdout is the terminal, use highlight but loop through
+                    # $@ so it works properly
+                    for _a in "$@"; do
+                        # Emulate cat(1) ENOENT error message
+                        if ! [ -r "$_a" ]; then
+                            printf '/bin/cat: %s: No such file or directory\n' "$_a" >&2
+                            continue
+                        fi
+                        highlight --force -O truecolor --style "${HIGHLIGHT_STYLE:-solarized-dark}" "$_a"
+                    done
                 fi
             }
         elif have bat; then
-            alias cat='bat --decorations never --paging never'
+            cat() {
+                # Use cat(1) if no files are given or if redirecting stdout
+                # (avoid colors)
+                if [ $# -eq 0 ] || ! [ -t 1 ]; then
+                    /bin/cat $@
+                else
+                    for _a in $@; do
+                        # Emulate cat(1) ENOENT error message
+                        if ! [ -r "$_a" ]; then
+                            printf '/bin/cat: %s: No such file or directory\n' "$_a" >&2
+                            continue
+                        fi
+                        bat --decorations never --paging never "$_a"
+                    done
+                fi
+            }
         elif have pygmentize; then
-            alias cat='pygmentize -O style=${PYGMENTIZE_STYLE:-solarized-light} -g'
+            cat() {
+                # Use cat(1) if no files are given or if redirecting stdout
+                # (avoid colors)
+                if [ $# -eq 0 ] || ! [ -t 1 ]; then
+                    /bin/cat $@
+                else
+                    for _a in $@; do
+                        # Emulate cat(1) ENOENT error message
+                        if ! [ -r "$_a" ]; then
+                            printf '/bin/cat: %s: No such file or directory\n' "$_a" >&2
+                            continue
+                        fi
+                        pygmentize -O style=${PYGMENTIZE_STYLE:-solarized-light} -g "$_a"
+                    done
+                fi
+            }
         fi ;;
 esac
 
