@@ -34,14 +34,6 @@ mod4 + Return
     if ! tmux ls | grep -q ^main: ; then tmuxp load -d main; fi; \
     wmctrl -xa main || tabbed -cd -n main -r2 alacritty --embed ID -e ~/src/scripts/launchterm main
 
-# Apps terminal
-#
-# if 'main' session is not running, launch it detached and then
-# connect to it on the apps window
-mod4 + ctrl + Return
-    if ! tmux ls | grep -q ^main: ; then tmuxp load -d main; fi; \
-    jumpapp -t apps $(my -v terminal) -t apps -e tmux new -t main \; select-window -t apps \;
-
 # Various apps
 #
 mod4 + F10
