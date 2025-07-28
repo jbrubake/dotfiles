@@ -293,7 +293,9 @@ fi
 
 # Rust {{{2
 [ -d "$HOME/.cargo/bin" ] && pathadd "$HOME/.cargo/bin"
-export CARGO_HOME=$XDG_CACHE_HOME/cargo
+[ -d "$HOME/opt/rust/bin" ] && pathadd "$HOME/opt/rust/bin"
+[ -d "$HOME/opt/rust" ] && export RUSTUP_HOME="$HOME/opt/rust"
+[ -d "$XDG_CACHE_HOME/cargo" ] && export CARGO_HOME=$XDG_CACHE_HOME/cargo
 
 # Packer {{{2
 export PACKER_CONFIG_DIR=$XDG_STATE_HOME
