@@ -44,7 +44,14 @@ have navi &&
 # }}}
 # Bash Completion {{{
 
-# Load deprecated directories
+# Load Bash completion framework
+. /usr/share/bash-completion/bash_completion
+
+# Redefine have() because the Bash completion script unsets it
+# Seriously? WTF?
+have() { command -v "$1" >/dev/null; }
+
+# Load local and deprecated completion directories
 #
 # Basic structure ripped from /usr/share/bash-completion/bash_completion
 #
@@ -55,6 +62,7 @@ if shopt -q progcomp; then
         /usr/share/bash_completion.d \
         /usr/local/etc/bash_completion.d \
         /usr/local/share/bash_completion.d \
+        /usr/local/share/bash-completion/completions \
     ; do
         if [[ -d $d && -r $d && -x $d ]]; then
             for i in "$d"/*; do
