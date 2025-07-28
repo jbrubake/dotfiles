@@ -88,8 +88,11 @@ right() { # {{{1
     printf '#[norange]'
 
     # rpg-cli status
-    printf '#[fg=color252] | '
-    printf '󱡂 %s' "$(plugin rpg_status '%c-%l: %H hp')"
+    wap=$(nmcli dev wifi show 2>/dev/null | grep SSID | cut -d' ' -f2)
+    if [ "$wap" != 'classroom' ]; then
+        printf '#[fg=color252] | '
+        printf '󱡂 %s' "$(plugin rpg_status '%c-%l: %H hp')"
+    fi
 
     # battery
     printf '#[fg=color252] | '
