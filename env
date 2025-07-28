@@ -432,7 +432,7 @@ fi
 # Add personal directories. Listed in order from least- to most-significant
 # NOTE: do not use pathadd as I want to force these entries to be at the front
 for d in \
-    ~/games \
+    ~/games/bin \
     ~/sbin \
     ~/bin/.flatpak \
     ~/bin \
