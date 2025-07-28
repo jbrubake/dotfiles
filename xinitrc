@@ -98,6 +98,7 @@ fi
 #
 command -v signal-desktop >/dev/null && signal-desktop
 command -v discord        >/dev/null && discord
+command -v firefox        >/dev/null && firefox &
 
 # Start other apps {{{1
 #
