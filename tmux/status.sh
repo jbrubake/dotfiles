@@ -24,7 +24,7 @@ left() { # {{{1
 
     # host:session
     printf '#[range=user|new]'
-    printf '  #[fg=color171]#h'
+    printf '  #[fg=color44]#{client_user}@#[fg=color171]#h'
     printf '#[norange]'
 
     # uptime
