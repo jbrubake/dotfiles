@@ -32,10 +32,12 @@ if have grc; then
     alias grc=$_grc
 
     # Create alias for all configs found *if* the command exists
-    # TODO: check for directory existence
-    for c in /usr/share/grc/conf.* ~/.grc/*; do
-        c=${c##*/}; c=${c#conf.} # extract command name
-        have $c && alias $c="$_grc $c"
+    for d in /usr/share/grc ~/.grc; do
+        ! [ -d "$d" ] && continue
+        for c in "$d"/conf.*; do
+            c=${c##*/}; c=${c#conf.} # extract command name
+            have $c && alias $c="$_grc $c"
+        done
     done
 
     # Always create these
