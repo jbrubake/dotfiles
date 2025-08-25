@@ -77,6 +77,11 @@ call minpac#add('https://github.com/junegunn/vim-easy-align') " vim-easy-align: 
 
 call minpac#add('https://github.com/slint-ui/vim-slint') " Support for the slint language {{{3
 
+" flex-bison-syntax: Flex & Bison syntax highlighting for vim {{{3
+call minpac#add('calincru/flex-bison-syntax')
+
+autocmd load_plugins FileType bison,flex packadd flex-bison-syntax
+
 ""call minpac#add('luochen1990/rainbow') " Rainbow Parentheses Improved {{{3
 
 ""call minpac#add('jpalardy/vim-slime') " A vim plugin to give you some slime {{{3
