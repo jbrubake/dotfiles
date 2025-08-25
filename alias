@@ -255,6 +255,8 @@ alias pickfont='fc-list | sed -e "s/.*: //" -e "s/,.*//" -e "s/:.*//" | sort -u 
 
 alias rcbb='telnet realitycheckbbs.org -l "Jeremy Brubaker"'
 
+alias md2html='pandoc -f markdown' # convert Markdown to HTML
+
 have mgitstatus && alias gits='mgitstatus -e -c' # Get status of git repos
 
 # start / stop a local-only ssh server
