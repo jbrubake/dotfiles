@@ -75,6 +75,8 @@ endfunction
 
 call minpac#add('https://github.com/junegunn/vim-easy-align') " vim-easy-align: A Vim alignment plugin {{{3
 
+call minpac#add('https://github.com/slint-ui/vim-slint') " Support for the slint language {{{3
+
 ""call minpac#add('luochen1990/rainbow') " Rainbow Parentheses Improved {{{3
 
 ""call minpac#add('jpalardy/vim-slime') " A vim plugin to give you some slime {{{3
