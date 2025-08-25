@@ -82,9 +82,9 @@ if shopt -q progcomp; then
     # Allow todo.sh alias to use bash completion
     have todo.sh && complete -F _todo t
 
-    # terraform / opentofu
-    have terraform&& complete -C terraform terraform
-    have tofu && complete -C tofu tofu
+    # terraform / tofu
+    have terraform && complete -C "$(command -v terraform)" terraform
+    have tofu      && complete -C "$(command -v tofu)" tofu
 
     # gcloud
     [ -f /opt/google-cloud-sdk/completion.bash.inc ] &&
