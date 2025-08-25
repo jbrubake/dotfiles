@@ -7,8 +7,8 @@ notes: todo fixme xxx
 	@# Prints out all TODO, FIXME and XXX comments
 
 todo:
-	-@grep -r -H 'TODO:[[:blank:]]' | sed -e 's/:.*TODO/: TODO/'
+	-@grep 'TODO:[[:blank:]]'  $$(find . -not -path './.*' -type f) | sed -e 's/:.*TODO/: TODO/' -e 's@^./@@'
 fixme:
-	-@grep -r -H 'FIXME:[[:blank:]]' | sed -e 's/:.*TODO/: TODO/'
+	-@grep 'FIXME:[[:blank:]]' $$(find . -not -path './.*' -type f) | sed -e 's/:.*TODO/: TODO/' -e 's@^./@@'
 xxx:
-	-@grep -r -H 'XXX:[[:blank:]]' | sed -e 's/:.*TODO/: TODO/'
+	-@grep 'XXX:[[:blank:]]'   $$(find . -not -path './.*' -type f) | sed -e 's/:.*TODO/: TODO/' -e 's@^./@@'
