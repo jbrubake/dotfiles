@@ -2,7 +2,6 @@
 
 command -v xwrits >/dev/null || exit
 
-xwrits \
-    typetime=40 \
-    after=15 +clock &
+xwrits typetime=55 after=5 +clock +lock &
+xwrits typetime=5 after=1 +clock &
 
