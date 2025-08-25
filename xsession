@@ -4,7 +4,8 @@
 # directly into X. Setup should be the same after that
 
 # Setup Environment {{{1
-. "$HOME/.env"      # common environment
+. /etc/profile # login shells load this automatically
+. "$HOME/.env" # common environment
 
 # Start gpg and ssh agents
 command -v keychain >/dev/null &&
