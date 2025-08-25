@@ -682,7 +682,7 @@ call minpac#add('tpope/vim-commentary')
 " {Visual}gc : Toggle commenting of highlighted lines
 " gcu        : Uncomment current and adjacent lines
 
-" vim-repeat: Enable repeating supported plugin maps with "."{{{3
+" vim-repeat: Enable repeating supported plugin maps with "." {{{3
 call minpac#add('tpope/vim-repeat')
 
 " vim-surround: Modify surrounding characters {{{3
@@ -811,11 +811,11 @@ cnoreabbrev <expr> lgrep (getcmdtype() ==# ':' && getcmdline() ==# 'lgrep') ? 'L
 
 " Text Formatting/Layout {{{1
 "===========================
-set formatoptions+=rqlnj "  j: delete comment leader when joining lines
-                         "  l: do not break long lines in insert mode
-                         "  n: support numbered lists (:help formatlistpat)
-                         "  q: reformat comments with 'gq'
-                         "  r: insert comment leader on <Enter>
+set formatoptions+=rqlnj " j: delete comment leader when joining lines
+                         " l: do not break long lines in insert mode
+                         " n: support numbered lists (:help formatlistpat)
+                         " q: reformat comments with 'gq'
+                         " r: insert comment leader on <Enter>
 set ignorecase           " Case insensitive by default
 set smartcase            "  but case sensitive if search string is multi-case
 set nowrap               " Long lines do not wrap
@@ -865,7 +865,8 @@ function! Statusline() abort
     return s
 endfunction
 
-set laststatus=2                 " Always show status line
+set laststatus=2 " Always show status line
+
 set statusline=%!Statusline()
 
 " Terminal window status line
@@ -951,7 +952,7 @@ tnoremap <leader><Esc> <C-\><C-n>
 nnoremap / /\v
 vnoremap / /\v
 
-" <leader>c:        toggle colorcolumn {{{2
+" <leader>c:           toggle colorcolumn {{{2
 "
 " Kevin Kuchta (www.vimbits.com/bits/317)
 function! g:ToggleColorColumn()
@@ -963,10 +964,10 @@ function! g:ToggleColorColumn()
 endfunction
 nnoremap <silent> <leader>c :call g:ToggleColorColumn()<cr>
 
-" <leader>l:        toggle listchars {{{2
+" <leader>l:           toggle listchars {{{2
 nnoremap <silent> <leader>l :set list!<cr>
 
-" <leader>s:        split line {{{2
+" <leader>s:           split line {{{2
 "
 " https://gist.github.com/romainl/3b8cdc6c3748a363da07b1a625cfc666
 function! BreakHere()
@@ -975,10 +976,10 @@ function! BreakHere()
 endfunction
 nnoremap <leader>s :<C-u>call BreakHere()<CR>
 
-" <leader><leader>:     clear search highlighting {{{2
+" <leader><leader>:    clear search highlighting {{{2
 noremap <silent> <leader><leader> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
 
-" fN:               set foldlevel=N {{{2
+" fN:                  set foldlevel=N {{{2
 noremap <leader>f0 :set foldlevel=0<cr>
 noremap <leader>f1 :set foldlevel=1<cr>
 noremap <leader>f2 :set foldlevel=2<cr>
@@ -996,38 +997,38 @@ noremap <leader>f9 :set foldlevel=9<cr>
 nnoremap <silent> [<Space> :<C-u>put!=repeat(nr2char(10),v:count)<Bar>execute "']+1"<CR>
 nnoremap <silent> ]<Space> :<C-u>put =repeat(nr2char(10),v:count)<Bar>execute "'[-1"<CR>
 
-" [e / ]e:          exchange current line with previous/next {{{2
+" [e / ]e:             exchange current line with previous/next {{{2
 nnoremap [e kddp
 nnoremap ]e jddkP
 
-" <Tab>:            % {{{2
+" <Tab>:               % {{{2
 nmap <tab> %
 vmap <tab> %
 
-" Y:                yank to end (consistent with C and D) {{{2
+" Y:                   yank to end (consistent with C and D) {{{2
 nnoremap Y y$
 
-" :w!!:             write file when I forget to sudo {{{2
+" :w!!:                write file when I forget to sudo {{{2
 cnoremap w!! w !sudo tee % >/dev/null
 
-" <C-P> / <C-N>:    command history navigation {{{2
+" <C-P> / <C-N>:       command history navigation {{{2
 cnoremap <C-P> <Up>
 cnoremap <C-N> <Down>
 
-" <leader>u[c]:     underline current line with [c] {{{2
+" <leader>u[c]:        underline current line with [c] {{{2
 nnoremap <leader>u yypVr
 
-" zl / zh:          horizontal left/right scrolling {{{2
+" zl / zh:             horizontal left/right scrolling {{{2
 nnoremap zl zL
 nnoremap zh zH
 
-" DiffOrig:         diff of buffer and file {{{2
+" DiffOrig:            diff of buffer and file {{{2
 " command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
             " \ | wincmd p | diffthis
 
-" <F2>:                 toggle relative/absoute line numbers {{{2
+" <F2>:                toggle relative/absoute line numbers {{{2
 nnoremap <F2> :set norelativenumber!<CR>
-" vim-fugitive & vim-gitgutter {{{2
+" vim-fugitive & vim-gitgutter: {{{2
 "
 nnoremap <leader>gg :Git<CR>
 
@@ -1047,7 +1048,7 @@ nnoremap <leader>ghu <Plug>(GitGutterUndoHunk)
 vnoremap <leader>ghs <Plug>(GitGutterStageHunk)
 vnoremap <leader>ghu <Plug>(GitGutterUndoHunk)
 
-" fzf {{{2
+" fzf: {{{2
 "
 nnoremap <leader>gc :Commits<CR>
 nnoremap <leader>gb :GBranches<CR>
@@ -1112,12 +1113,13 @@ if has("cscope")
     nmap <C-]><C-]>f :vert scscope find f <C-R>=expand("<cfile>")<CR><CR>
     nmap <C-]><C-]>i :vert scscope find i ^<C-R>=expand("<cfile>")<CR>$<CR>
     nmap <C-]><C-]>d :vert scscope find d <C-R>=expand("<cword>")<CR><CR>
-
 endif
 
 " My wiki {{{1
+"
 " Find wiki files
 set path^=$WIKI_DIR/content
+
 " Open wiki index
 nnoremap <leader>ni :e $WIKI_DIR/content/index.md<CR>
 
@@ -1131,7 +1133,8 @@ nnoremap <leader>nn :Ngrep<Space>
 
 " Colors and Syntax Settings {{{1
 " ==========================
-" HilightSwap: make 'hi out' the reverse of 'hi in' {{{2
+" HilightSwap: make 'hi out' the reverse of 'hi in' {{{
+"
 " Based on https://vi.stackexchange.com/a/21547
 function! HighlightSwap(in, out)
     let l:hi = execute('hi ' . a:in)
@@ -1154,6 +1157,7 @@ function! HighlightSwap(in, out)
 
     call execute(printf("hi %s cterm=%s,reverse ctermfg=%s ctermbg=%s gui=%s,reverse guifg=%s guibg=%s", a:out, l:cterm, l:ctermfg, l:ctermbg, l:gui, l:guifg, l:guibg))
 endfunction " }}}
+
 syntax enable
 set hlsearch            " Highlight search matches
 let c_comment_strings=1 " Highlight strings in C comments
@@ -1190,6 +1194,19 @@ function! s:colorscheme_local() abort
     " Use the terminal's background color as the default
     highlight Normal ctermbg=NONE guibg=NONE
 
+    " Non-printing characters
+    highlight NonText    ctermfg=166 ctermbg=NONE guifg=#d75f00 guibg=NONE
+    highlight SpecialKey ctermfg=166 ctermbg=NONE guifg=#d75f00 guibg=NONE
+
+    " Gutter and line number column
+    highlight  LineNr ctermbg=NONE guibg=NONE
+    highlight! link SignColumn LineNr
+
+    " Custom highlighting for 'name' when using ansible-vim
+    " The setup that makes this work is in ~/.vim/after/syntax/ansible.vim
+    highlight link my_ansible_name Structure
+
+    " Status line {{{
     " Active window status line
     highlight StatusLine   ctermfg=12 ctermbg=15 guifg=#4271ae guibg=#ffffff
     " In-active window status line
@@ -1199,35 +1216,24 @@ function! s:colorscheme_local() abort
     highlight! link StatusLineTerm   StatusLine
     highlight! link StatusLineTermNC StatusLineNC
 
-    " Non-printing characters
-    highlight NonText    ctermfg=166 ctermbg=NONE guifg=#d75f00 guibg=NONE
-    highlight SpecialKey ctermfg=166 ctermbg=NONE guifg=#d75f00 guibg=NONE
-
-    " Gutter and line number column
-    highlight  LineNr ctermbg=NONE guibg=NONE
-    highlight! link SignColumn LineNr
-
-    " Column and row highlighting
+    " Statusline user colors
+    highlight! link User1 StatusLine
+    " }}}
+    " Column and row highlighting {{{
     highlight ColorColumn  cterm=NONE            ctermbg=23                          guibg=#003644
     highlight CursorLine   cterm=NONE            ctermbg=23                          guibg=#003644
     highlight CursorLineNr cterm=NONE ctermfg=15 ctermbg=NONE gui=NONE guifg=#ffffff guibg=NONE
-
-    " Statusline user colors
-    highlight! link User1 StatusLine
-
-    " Spelling colors
+    " }}}
+    " Spelling colors {{{
     highlight SpellBad   cterm=undercurl ctermul=160 ctermbg=NONE gui=undercurl guisp=#d70000 guibg=NONE
     highlight SpellCap   cterm=undercurl ctermul=226 ctermbg=NONE gui=underline guisp=#ffff00 guibg=NONE
     highlight SpellLocal cterm=undercurl ctermul=166 ctermbg=NONE gui=underline guisp=#d75f00 guibg=NONE
     highlight SpellRare  cterm=undercurl ctermul=135 ctermbg=NONE gui=underline guisp=#af5fff guibg=NONE
-
+    " }}}
+    " Diffs {{{
     highlight DiffDelete term=bold ctermfg=12 ctermbg=6 guifg=#cf669f guibg=#5f0000
 
-    " Custom highlighting for 'name' when using ansible-vim
-    " The setup that makes this work is in ~/.vim/after/syntax/ansible.vim
-    highlight link my_ansible_name Structure
-
-    " Make all types of diffs look the same {{{
+    " Make all types of diffs look the same
     highlight! link diffAdded   DiffAdd 
     highlight! link diffChanged DiffChange
     highlight! link diffRemoved DiffDelete
@@ -1240,6 +1246,7 @@ function! s:colorscheme_local() abort
     highlight GitGutterDelete cterm=bold ctermfg=160 ctermbg=NONE gui=bold guifg=#d70000 guibg=NONE
     " }}}
 endfunction
+
 " Automatcially source custom colors when a colorscheme is loaded
 " unless we are running vimpager
 if !exists('g:vimpager.enabled')
