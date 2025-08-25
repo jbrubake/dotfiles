@@ -1,6 +1,7 @@
 imports: 
   ls_colors: ./
   gdb-dashboard: ./
+  irssi-colors-solarized: ./irssi
   mutt-bgedit: ./mutt/scripts
   nerd-fonts: ./config/fontconfig/conf.d
   redact_pass: ./vim/pack/manual/start
@@ -21,6 +22,9 @@ git module gdb-dashboard:
   pick: gdbinit
   rev: 616ed5100d3588bb70e3b86737ac0609ce0635cc
 
+git module irssi-colors-solarized:
+  url: https://github.com/huyz/irssi-colors-solarized
+  pick: solarized-universal.theme
 curl module mutt-bgedit:
   url: https://gitlab.com/muttmua/mutt/-/raw/master/contrib/bgedit-screen-tmux.sh
   filename: mutt-bgedit
