@@ -103,8 +103,7 @@ right() { # {{{1
     # reset
     printf '#[fg=color252,bg=color233]'
 
-    # TODO: right bar is shifted one space to the left which results in the wrong color there at times
-    # spacing (needed to keep the last character on the screen)
+    # provide some separation from the terminal's edge
     printf ' '
 }
 

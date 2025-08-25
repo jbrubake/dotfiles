@@ -22,9 +22,6 @@ reload-time 60
 # First arg is notification string
 notify-program "~/bin/newsboat_notify"
 
-# TODO: look at viewing articles within newsboat
-# There is a buku bookmark script in /usr/share/doc/newsboat/contrib
-
 # Formats
 #
 # articlelist-title-format "%4i %f %D %6L  %?T?|%-17T|  ?%t"

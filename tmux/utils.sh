@@ -1,7 +1,5 @@
 #!/bin/sh
 #
-# TODO: add plugin documentation
-# TODO: split into it's own project with documentation
 [ -n "$TMUX_PLUGIN_DIR" ] && return
 # Base plugin directory
 export TMUX_PLUGIN_DIR=$(tmux show-option -gqv @plugin_dir)
