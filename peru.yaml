@@ -12,7 +12,7 @@ git module ls_colors:
     LS_COLORS:
       - dircolors
   pick: dircolors
-  rev: e36eebfb3e1b39497c6038cdc70c75109b6434de
+  rev: 810ce8cac886ac50e75d84fb438b549a1f9478ee
 
 git module gdb-dashboard:
   url: https://github.com/cyrus-and/gdb-dashboard
@@ -25,6 +25,8 @@ git module gdb-dashboard:
 git module irssi-colors-solarized:
   url: https://github.com/huyz/irssi-colors-solarized
   pick: solarized-universal.theme
+  rev: 83972b9ca9e5d7194e513024d9fbe9ac2c2a8a62
+
 curl module mutt-bgedit:
   url: https://gitlab.com/muttmua/mutt/-/raw/master/contrib/bgedit-screen-tmux.sh
   filename: mutt-bgedit
@@ -35,6 +37,7 @@ curl module mutt-bgedit:
 curl module nerd-fonts:
   url: https://raw.githubusercontent.com/ryanoasis/nerd-fonts/4b528bf1b5ea638965bc9f634bd7a13301060548/10-nerd-font-symbols.conf
   filename: 10-nerd-font-symbols.conf
+  sha1: 7ff34b980e6416af11d9cda642dfbd3e98e280bf
 
 git module redact_pass:
   url: https://git.zx2c4.com/password-store
@@ -44,5 +47,5 @@ git module redact_pass:
   pick:
     - redact_pass/doc/redact_pass.txt
     - redact_pass/plugin/redact_pass.vim
-  rev: dddca73694d1ecc2381cde6c02a9d1466cf0ab41
+  rev: 3ca13cd8882cae4083c1c478858adbf2e82dd037
 
