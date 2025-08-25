@@ -44,12 +44,17 @@ have navi &&
 # }}}
 # Bash Completion {{{
 
-# Load Bash completion framework
-. /usr/share/bash-completion/bash_completion
+# Bash completion is not automatically loaded on X login
+if [ "${BASH_COMPLETION_VERSINFO-}" = '' ]; then
+    # Load Bash completion framework
+    if shopt -q progcomp && [ -r /usr/share/bash-completion/bash_completion ]; then
+        . /usr/share/bash-completion/bash_completion
+    fi
 
-# Redefine have() because the Bash completion script unsets it
-# Seriously? WTF?
-have() { command -v "$1" >/dev/null; }
+    # Redefine have() because the Bash completion script unsets it
+    # Seriously? WTF?
+    have() { command -v "$1" >/dev/null; }
+fi
 
 # Load local and deprecated completion directories
 #
