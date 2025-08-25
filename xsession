@@ -10,6 +10,7 @@
 # Start gpg and ssh agents
 command -v keychain >/dev/null &&
     eval $(keychain --eval --nogui --agents ssh,gpg)
+# NOTE: actual keys are loaded from ~/.xinitrc, once window manager is running
 
 # Finish setting up {{{1
 . $HOME/.xinitrc
