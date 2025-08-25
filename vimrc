@@ -65,12 +65,12 @@ augroup END
 " Lisp stuff {{{3
 call minpac#add('https://github.com/vlime/vlime') " vlime: A Common Lisp dev environment for Vim
 call minpac#add('https://github.com/kovisoft/paredit') " paredit: Structured Editing of Lisp S-expressions
-let g:vlime_cl_impl = "clisp"
+
+let g:vlime_cl_impl = "sbcl"
 function! VlimeBuildServerCommandFor_clisp(vlime_loader, vlime_eval)
-    return ["clisp", "-i", "~/quicklisp/setup.lisp",
-                   \ "-i", a:vlime_loader,
-                   \ "-x", a:vlime_eval,
-                   \ "-repl"]
+    return ["clisp", "--load", expand($XDG_DATA_HOME) . "/quicklisp/setup.lisp",
+                   \ "--load", a:vlime_loader,
+                   \ "--eval", a:vlime_eval]
 endfunction
 
 call minpac#add('https://github.com/junegunn/vim-easy-align') " vim-easy-align: A Vim alignment plugin {{{3
