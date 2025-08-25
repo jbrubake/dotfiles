@@ -49,7 +49,7 @@ packadd! cfilter    " Filter quickfix or location lists
 " call minpac#status() to get plugin status
 
 packadd minpac
-if !exists('g:loaded_minpac')
+if !exists('g:loaded_minpac') " minpac_loaded
     " No plugins loaded
 else
 
@@ -555,7 +555,7 @@ autocmd load_plugins FileType tex packadd vimtex
 " webapi-vim: Needed for vim-gist {{{3
 call minpac#add('mattn/webapi-vim', {'type': 'opt'})
 
-endif " minpac loaded
+endif " minpac_loaded
 
 " Conditionally load git related plugins {{{3
 silent! !git rev-parse --is-inside-work-tree >/dev/null 2>&1
