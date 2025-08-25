@@ -320,8 +320,10 @@ let g:ansible_ftdetect_filename_regex = '\v(playbook|site|main|local|requirement
 let g:ansible_goto_role_paths = './roles,../_common/roles'
 
 " CCTree: Vim CCTree plugin {{{3
-if has("cscope")
-    call minpac#add('hari-rangarajan/CCTree', {'type': 'opt'})
+call minpac#add('hari-rangarajan/CCTree', {'type': 'opt'})
+
+if has("cscope") && (filereadable($CSCOPE_DB) || filereadable("cscope.out"))
+    packadd CCTree
 
     " See Mappings & Commands -> Cscope for mappings
 
@@ -329,17 +331,16 @@ if has("cscope")
     set cscopetagorder=0                    " search cscope then ctags
     set cscopequickfix=s-,c-,d-,i-,t-,e-,a- " Open all results in quickfix 
 
-    " Automatically load database if it exists in current directory
-    " or if defined in $CSCOPE_DB
+    " Automatically load $CSCOPE_DB or cscope.out if
+    " it exists in current directory
     function! s:load_cscope_db()
-        if filereadable("cscope.out")
-            packadd CCTree
-            CCTreeLoadDB cscope.out
-        elseif $CSCOPE_DB != ""
-            packadd CCTree
+        if filereadable($CSCOPE_DB)
             CCTreeLoadDB $CSCOPE_DB
+        else
+            CCTreeLoadDB cscope.out
         endif
     endfunction
+
     autocmd VimEnter * call s:load_cscope_db()
 endif
 
