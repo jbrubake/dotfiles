@@ -368,8 +368,12 @@ execute 'au Filetype ' . g:colorizer_auto_filetype . ' packadd Colorizer | Color
 " fugitive-gitea: Plugin for :Gbrowse to work with GITea server {{{3
 call minpac#add('borissov/fugitive-gitea', {'type': 'opt'})
 
+" Plugin loaded by LoadGit()
+
 " fugitive-gitlab: A vim extension to fugitive.vim for GitLab support {{{3
 call minpac#add('shumphrey/fugitive-gitlab.vim', {'type': 'opt'})
+
+" Plugin loaded by LoadGit()
 
 " gemini-vim-syntax: Syntax highlighting for text/gemini files {{{3
 call minpac#add('https://tildegit.org/sloum/gemini-vim-syntax', {'type': 'opt'})
@@ -444,13 +448,12 @@ autocmd load_plugins FileType   php packadd vim-closetag
 call minpac#add('tpope/vim-fugitive', {'type': 'opt'})
 "set completopt-=preview " disable issue body preview
 
-" Load plugin on-demand
-" TODO: Add these and the gitlab/gitea plugins to a list/augroup which is all
-" loaded at once
-command -nargs=? Git packadd vim-fugitive | packadd vim-fugitive-blame-ext | packadd vim-rhubarb | :Git <args>
+" Plugin loaded by LoadGit()
 
 " vim-fugitive-blame-ext: extend vim-fugitive to show commit message on statusline in :Gblame {{{3
 call minpac#add('tommcdo/vim-fugitive-blame-ext', {'type': 'opt'})
+
+" Plugin loaded by LoadGit()
 
 " vim-gist: Edit github.com gists with vim {{{3
 call minpac#add('mattn/vim-gist', {'type': 'opt'})
@@ -499,6 +502,8 @@ au BufRead **/pass*/*.txt packadd vim-redact-pass
 
 " vim-rhubarb: GitHub extension for fugitive.vim {{{3
 call minpac#add('tpope/vim-rhubarb', {'type': 'opt'})
+
+" Plugin loaded by LoadGit()
 
 " vim-sxhkdrc: Vim syntax for sxhkd's configuration files {{{3
 call minpac#add('baskerville/vim-sxhkdrc')
@@ -566,10 +571,26 @@ call minpac#add('mattn/webapi-vim', {'type': 'opt'})
 endif " minpac_loaded
 
 " Conditionally load git related plugins {{{3
+
+" Load vim-gitgutter if we are in a git repository
 silent! !git rev-parse --is-inside-work-tree >/dev/null 2>&1
 if v:shell_error == 0
     packadd vim-gitgutter
 endif
+
+" Load git plugins when running :Git (from vim-fugitive)
+function LoadGit()
+    packadd vim-fugitive
+    packadd vim-fugitive-blame-ext
+    packadd vim-rhubarb
+    if !empty(g:fugitive_gitlab_domains) " Set in private config
+        packadd fugitive-gitlab
+    endif
+    if !empty(g:fugitive_gitea_domains) " Set in private config
+        packadd fugitive-gitea
+    endif
+endfunction
+command -nargs=? Git call LoadGit() | :Git <args>
 
 " AUTOMATIC {{{2
 " indentLine: Display the indentation levels with thin vertical lines {{{3
