@@ -538,6 +538,7 @@ autocmd load_plugins FileType tmux packadd vim-tmux
 " vim-tridactyl: Syntax plugin for Tridactyl configuration files {{{3
 call minpac#add('tridactyl/vim-tridactyl')
 
+" For this to work the file will need a modeline. Obviously
 autocmd load_plugins FileType tridactyl packadd vim-tridactyl
 
 " vim-tmux-pilot: Unified navigation of splits and tabs in nvim and tmux {{{3
