@@ -19,8 +19,12 @@
 
 " Initialization {{{1
 " ==============
+" augroup for miscellaneous autocmds in
+" this file and those it directly sources
+augroup vimrc | autocmd! | augroup end
+
 " Source .vimrc when saving changes
-autocmd BufWritePost ~/.vimrc nested source ~/.vimrc
+autocmd vimrc BufWritePost ~/.vimrc nested source ~/.vimrc
 
 set nocompatible " Don't be vi compatible
 
@@ -54,9 +58,7 @@ call minpac#init()
 call minpac#add('k-takata/minpac', {'type': 'opt'})
 
 " augroup for loading optional plugins
-augroup load_plugins
-    autocmd!
-augroup END
+augroup load_plugins | autocmd! | augroup end
 
 " List of plugins to load only in a git repository
 let s:git_plugins = []
@@ -95,7 +97,7 @@ function LoadCCTree()
 endfunction
 
 if has("cscope")
-    autocmd VimEnter,DirChanged * call LoadCCTree()
+    autocmd load_plugins VimEnter,DirChanged * call LoadCCTree()
 endif
 
 " Colorizer: Color hex codes and color names{{{3
@@ -112,7 +114,7 @@ let g:colorizer_disable_bufleave = 0 " Only highlight above files
 " Highlight X11 colornames in Xresources and such
 let g:colorizer_x11_names = 1
 
-execute 'au Filetype ' . g:colorizer_auto_filetype . ' packadd Colorizer | ColorToggle'
+execute 'autocmd load_plugins Filetype ' . g:colorizer_auto_filetype . ' packadd Colorizer | ColorToggle'
 
 " fugitive-gitea: Plugin for :Gbrowse to work with GITea server {{{3
 call minpac#add('borissov/fugitive-gitea', {'type': 'opt'})
@@ -163,7 +165,7 @@ call minpac#add('AndrewRadev/tagalong.vim', {'type': 'opt'})
 
 let g:tagalong_additional_filetypes = ['xml', 'html', 'php']
 
-execute printf('au load_plugins FileType %s packadd tagalong.vim', join(g:tagalong_additional_filetypes, ','))
+execute printf('autocmd load_plugins FileType %s packadd tagalong.vim', join(g:tagalong_additional_filetypes, ','))
 
 " tagbar: Source code browser using ctags {{{3
 call minpac#add('preservim/tagbar', {'type': 'opt'})
@@ -212,7 +214,7 @@ function LoadTagbar()
 endfunction
 
 if executable('etags') || executable('ctags')
-    autocmd VimEnter,DirChanged * call LoadTagbar()
+    autocmd load_plugins VimEnter,DirChanged * call LoadTagbar()
 endif
 " ugbi: UserGettingBored Improved Vim Plugin {{{3
 call minpac#add('mikesmithgh/ugbi', {'type': 'opt'})
@@ -283,7 +285,7 @@ autocmd load_plugins FileType dosini,gitconfig packadd vim-ini-fold | call IniFo
 " vim-redact-pass: Do not write passwords into vim files when using pass(1) {{{3
 call minpac#add('https://dev.sanctum.geek.nz/code/vim-redact-pass.git', {'type': 'opt', 'rev': 'master'})
 
-au BufRead **/pass*/*.txt packadd vim-redact-pass
+autocmd load_plugins BufRead **/pass*/*.txt packadd vim-redact-pass
 
 " vim-rhubarb: GitHub extension for fugitive.vim {{{3
 call minpac#add('tpope/vim-rhubarb', {'type': 'opt'})
@@ -298,11 +300,10 @@ autocmd load_plugins FileType gitcommit setlocal completeopt-=preview
 " vim-textobj-sentence: Improving native sentence text object and motion {{{3
 call minpac#add('preservim/vim-textobj-sentence', {'type': 'opt'})
 
-augroup textobj_sentence
-    autocmd!
+augroup textobj_sentence | autocmd!
     autocmd FileType markdown packadd vim-textobj-user | packadd vim-textobj-sentence | call textobj#sentence#init()
     autocmd FileType text     packadd vim-textobj-user | packadd vim-textobj-sentence | call textobj#sentence#init()
-augroup END
+augroup end
 
 " vim-textobj-user: Create your own text objects {{{3
 " (required by vim-textobj-sentence)
@@ -366,7 +367,7 @@ function LoadGit()
     endif
 endfunction
 
-autocmd VimEnter,DirChanged * call LoadGit()
+autocmd load_plugins VimEnter,DirChanged * call LoadGit()
 
 " AUTOMATIC {{{2
 " ansible-vim: Syntax highlighting Ansible's common filetypes {{{3
@@ -660,7 +661,7 @@ endif
 " them to have dual nature, so to speak)
 "
 " From $VIMRUNTIME/defaults.vim (Vim 9.1.825, Fedora 39)
-autocmd BufReadPost *
+autocmd vimrc BufReadPost *
     \ let line = line("'\"")
     \ | if line >= 1 && line <= line("$") && &filetype !~# 'commit'
     \      && index(['xxd', 'gitrebase'], &filetype) == -1
@@ -669,18 +670,16 @@ autocmd BufReadPost *
 " Absolute & Hybrid line numbers by buffer status {{{2
 "
 " https://jeffkreeftmeijer.com/vim-number/
-augroup numbertoggle
-  autocmd!
+augroup numbertoggle | autocmd!
   autocmd BufEnter,FocusGained,InsertLeave,WinEnter * if &number && mode() != 'i' | set relativenumber   | endif
   autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &number                  | set norelativenumber | endif
-augroup END
+augroup end
 
 " Automatically open quickfix window {{{2
-augroup quickfix
-    autocmd!
+augroup quickfix | autocmd!
     autocmd QuickFixCmdPost [^l]* cwindow
     autocmd QuickFixCmdPost l*    lwindow
-augroup END
+augroup end
 
 " Searching {{{2
 if executable('rg')
@@ -1142,7 +1141,7 @@ endfunction
 " Automatcially source custom colors when a colorscheme is loaded
 " unless we are running vimpager
 if !exists('g:vimpager.enabled')
-    autocmd ColorScheme * call s:colorscheme_local()
+    autocmd vimrc ColorScheme * call s:colorscheme_local()
 endif
 " }}}
 
@@ -1198,7 +1197,7 @@ function! TextEnableCodeSnip(filetype,start,end,textSnipHl) abort
 endfunction
 
 " Enable C syntax higlighting in non-C files
-autocmd BufNewFile,BufRead  * :call TextEnableCodeSnip ('c', '@c', '@c', 'SpecialComment')
+autocmd vimrc BufNewFile,BufRead  * :call TextEnableCodeSnip ('c', '@c', '@c', 'SpecialComment')
 
 " goobook address completion for emails {{{2
 "
@@ -1251,7 +1250,7 @@ fun! MailcompleteF(contacts)
     return ret
 endfun
 
-autocmd Filetype mail setlocal completefunc=MailcompleteC
+autocmd vimrc Filetype mail setlocal completefunc=MailcompleteC
 
 " Local Vimrc {{{1
 " ===========
