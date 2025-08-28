@@ -234,23 +234,30 @@ autocmd bufenter * if (winnr("$") == 1 &&
 " NOTE: See 'Colors and Syntax Settings' for more
 
 " fzf: Fuzzy finder {{{3
-""call minpac#add('junegunn/fzf')
+call minpac#add('junegunn/fzf', {'type': 'opt'})
 
-" fzf plugin is located here
-""set rtp+=/usr/local/share/fzf
+if executable('fzf')
+    silent packadd! fzf
+endif
 
 " fzf-checkout.vim: Manage branches and tags with fzf {{{3
-""call minpac#add('stsewd/fzf-checkout.vim')
+call minpac#add('stsewd/fzf-checkout.vim', {'type': 'opt'})
 
-let s:git_plugins += ['fzf-checkout.vim']
+if executable('fzf')
+    let s:git_plugins += ['fzf-checkout.vim']
+endif
 
 " fzf.vim: fzf vim plugin {{{3
-""call minpac#add('junegunn/fzf.vim')
+call minpac#add('junegunn/fzf.vim', {'type': 'opt'})
+
+if executable('fzf')
+    silent packadd! fzf.vim
+endif
 
 " :Files [PATH]     " Files ($FZF_DEFAULT_COMMAND)
 " :GFiles [OPTS]    " Git files (git ls-files)
 " :GFiles?          " Git files (git status)
-" :Buffers
+" :Buffers          " Vim buffers
 " :Rg [PATTERN]     " Search using ripgrep
 " :Lines [QUERY]    " Lines in all buffers
 " :BLines [QUERY]   " Lines in current buffer
@@ -259,8 +266,6 @@ let s:git_plugins += ['fzf-checkout.vim']
 " :Marks            " Marks
 " :Snippets         " Snippets (UltiSnips)
 " :Commits          " Git commits (vim-fugitive)
-" noremap <C-p> :Files<CR>
-" noremap <Leader>b :Buffers<CR>
 
 " SimplyFold: No-BS Python code folding{{{3
 ""call minpac#add('tmhedberg/SimpylFold')
@@ -1073,10 +1078,12 @@ nnoremap <leader>ghu <Plug>(GitGutterUndoHunk)
 vnoremap <leader>ghs <Plug>(GitGutterStageHunk)
 vnoremap <leader>ghu <Plug>(GitGutterUndoHunk)
 
-" fzf: {{{2
+" fzf.vim, fzf-checkout.vim: {{{2
 "
+noremap  <leader>b  :Buffers<CR>
 nnoremap <leader>gc :Commits<CR>
 nnoremap <leader>gb :GBranches<CR>
+nnoremap <leader>f  :Files<CR>
 
 " Cscope: {{{2
 " Based on https://raw.githubusercontent.com/chazy/cscope_maps/master/plugin/cscope_maps.vim
