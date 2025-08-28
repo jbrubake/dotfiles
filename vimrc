@@ -58,6 +58,9 @@ augroup load_plugins
     autocmd!
 augroup END
 
+" List of plugins to load only in a git repository
+let s:git_plugins = []
+
 " EVALUATING {{{2
 " Lisp stuff {{{3
 call minpac#add('https://github.com/vlime/vlime') " vlime: A Common Lisp dev environment for Vim
@@ -239,6 +242,8 @@ autocmd bufenter * if (winnr("$") == 1 &&
 " fzf-checkout.vim: Manage branches and tags with fzf {{{3
 ""call minpac#add('stsewd/fzf-checkout.vim')
 
+let s:git_plugins += ['fzf-checkout.vim']
+
 " fzf.vim: fzf vim plugin {{{3
 ""call minpac#add('junegunn/fzf.vim')
 
@@ -365,12 +370,12 @@ execute 'au Filetype ' . g:colorizer_auto_filetype . ' packadd Colorizer | Color
 " fugitive-gitea: Plugin for :Gbrowse to work with GITea server {{{3
 call minpac#add('borissov/fugitive-gitea', {'type': 'opt'})
 
-" Plugin loaded by LoadGit()
+" Loaded by LoadGit()
 
 " fugitive-gitlab: A vim extension to fugitive.vim for GitLab support {{{3
 call minpac#add('shumphrey/fugitive-gitlab.vim', {'type': 'opt'})
 
-" Plugin loaded by LoadGit()
+" Loaded by LoadGit()
 
 " gemini-vim-syntax: Syntax highlighting for text/gemini files {{{3
 call minpac#add('https://tildegit.org/sloum/gemini-vim-syntax', {'type': 'opt'})
@@ -445,12 +450,12 @@ autocmd load_plugins FileType   php packadd vim-closetag
 call minpac#add('tpope/vim-fugitive', {'type': 'opt'})
 "set completopt-=preview " disable issue body preview
 
-" Plugin loaded by LoadGit()
+let s:git_plugins += ['vim-fugitive']
 
 " vim-fugitive-blame-ext: extend vim-fugitive to show commit message on statusline in :Gblame {{{3
 call minpac#add('tommcdo/vim-fugitive-blame-ext', {'type': 'opt'})
 
-" Plugin loaded by LoadGit()
+let s:git_plugins += ['vim-fugitive-blame-ext']
 
 " vim-gist: Edit github.com gists with vim {{{3
 call minpac#add('mattn/vim-gist', {'type': 'opt'})
@@ -463,6 +468,8 @@ let g:gist_post_private = 1 " Private gists by default
 
 " vim-gitgutter: Use the sign column to show git chanages {{{3
 call minpac#add('airblade/vim-gitgutter', {'type': 'opt'})
+
+let s:git_plugins += ['vim-gitgutter']
 
 " The default updatetime of 4000ms is not good for async update
 set updatetime=100
@@ -500,7 +507,7 @@ au BufRead **/pass*/*.txt packadd vim-redact-pass
 " vim-rhubarb: GitHub extension for fugitive.vim {{{3
 call minpac#add('tpope/vim-rhubarb', {'type': 'opt'})
 
-" Plugin loaded by LoadGit()
+let s:git_plugins += ['vim-rhubarb']
 
 " vim-sxhkdrc: Vim syntax for sxhkd's configuration files {{{3
 call minpac#add('baskerville/vim-sxhkdrc')
@@ -569,26 +576,25 @@ call minpac#add('mattn/webapi-vim', {'type': 'opt'})
 endif " minpac_loaded
 
 " Conditionally load git related plugins {{{3
-
-" Load vim-gitgutter if we are in a git repository
-silent! !git rev-parse --is-inside-work-tree >/dev/null 2>&1
-if v:shell_error == 0
-    packadd vim-gitgutter
-endif
-
-" Load git plugins when running :Git (from vim-fugitive)
+"
 function LoadGit()
-    packadd vim-fugitive
-    packadd vim-fugitive-blame-ext
-    packadd vim-rhubarb
-    if !empty(g:fugitive_gitlab_domains) " Set in private config
-        packadd fugitive-gitlab
-    endif
-    if !empty(g:fugitive_gitea_domains) " Set in private config
-        packadd fugitive-gitea
+    silent! !git rev-parse --is-inside-work-tree
+    if ! v:shell_error " v:shell_error truth is backwards from vim truth
+        for s:p in s:git_plugins
+            execute 'packadd ' . s:p
+        endfor
+
+        if !empty(g:fugitive_gitlab_domains) " Set in private config
+            packadd fugitive-gitlab
+        endif
+
+        if !empty(g:fugitive_gitea_domains) " Set in private config
+            packadd fugitive-gitea
+        endif
     endif
 endfunction
-command -nargs=? Git call LoadGit() | :Git <args>
+
+autocmd VimEnter,DirChanged * call LoadGit()
 
 " AUTOMATIC {{{2
 " indentLine: Display the indentation levels with thin vertical lines {{{3
