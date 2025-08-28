@@ -607,7 +607,7 @@ call minpac#add('tridactyl/vim-tridactyl', {'type': 'opt'})
 autocmd load_plugins FileType tridactyl packadd vim-tridactyl
 
 " vim-tmux-pilot: Unified navigation of splits and tabs in nvim and tmux {{{3
-call minpac#add('urbainvaes/vim-tmux-pilot')
+call minpac#add('urbainvaes/vim-tmux-pilot', {'type': 'opt'})
 
 " Use Alt+[hjkl] to navigate windows
 if has ('unix') " 'set convert-meta off' in .inputrc makes Alt not the Meta key
@@ -622,6 +622,10 @@ else
     let g:pilot_key_k='<a-k>'
     let g:pilot_key_l='<a-l>'
     let g:pilot_key_p='<a-\>'
+endif
+
+if $TMUX != ""
+    packadd! vim-tmux-pilot
 endif
 
 " vimtex: vim LaTeX plugin {{{3
