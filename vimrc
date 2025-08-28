@@ -404,8 +404,6 @@ call minpac#add('momota/cisco.vim')
 " flex-bison-syntax: Flex & Bison syntax highlighting for vim {{{3
 call minpac#add('calincru/flex-bison-syntax')
 
-autocmd load_plugins FileType bison,flex packadd flex-bison-syntax
-
 " indentLine: Display the indentation levels with thin vertical lines {{{3
 call minpac#add('wickles/indentLine')
 
