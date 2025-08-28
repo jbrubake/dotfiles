@@ -641,6 +641,7 @@ endif
 call minpac#add('lervag/vimtex', {'type': 'opt'})
 
 let g:vimtex_view_method = 'zathura'
+let g:tex_flavor         = 'latex' " See <vim-tex>/ftdetect/tex.vim
 
 autocmd load_plugins FileType tex,bib packadd vimtex | call vimtex#init()
 
