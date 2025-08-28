@@ -487,6 +487,11 @@ call minpac#add('freitass/todo.txt-vim', {'type': 'opt'})
 
 autocmd load_plugins FileType todo packadd todo.txt-vim
 
+" ugbi: UserGettingBored Improved Vim Plugin {{{3
+call minpac#add('mikesmithgh/ugbi', {'type': 'opt'})
+
+command -nargs=0 UgbiEnable packadd ugbi | :UgbiEnable
+
 " vim-closetag: Easily close HTML/XML tags {{{3
 call minpac#add('alvan/vim-closetag', {'type': 'opt'})
 
