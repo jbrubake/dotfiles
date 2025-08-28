@@ -18,6 +18,8 @@ function! FindAnsibleRoleUnderCursor()
     endif
 endfunction
 
-autocmd FileType yaml.ansible nnoremap <leader>gr :call FindAnsibleRoleUnderCursor()<CR>
-autocmd FileType yaml.ansible vnoremap <leader>gr :call FindAnsibleRoleUnderCursor()<CR>
+augroup findAnsibleRoleUnderCursor | autocmd!
+    autocmd FileType yaml.ansible nnoremap <leader>gr :call FindAnsibleRoleUnderCursor()<CR>
+    autocmd FileType yaml.ansible vnoremap <leader>gr :call FindAnsibleRoleUnderCursor()<CR>
+augroup end
 
