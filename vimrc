@@ -71,32 +71,6 @@ call minpac#add('vim-scripts/a.vim', {'type': 'opt'})
 
 autocmd load_plugins FileType c packadd a.vim
 
-" ansible-vim: Syntax highlighting Ansible's common filetypes {{{3
-call minpac#add('pearofducks/ansible-vim')
-
-let g:ansible_attribute_highlight      = 'ab' " highlight all key=value pairs
-let g:ansible_name_highlight           = 'b'  " highlight 'name:'
-let g:ansible_extra_keywords_highlight = 1    " highlight extra keywords
-
-" Highlight groups using specified group (:help E669)
-let g:ansible_normal_keywords_highlight      = 'Statement'
-let g:ansible_loop_keywords_highlight        = 'Statement'
-let g:ansible_extra_keywords_highlight_group = 'Delimiter'
-" See custom color settings below to customize 'name_highlight'
-
-" Properly highlight HCL Jinja templates
-let g:ansible_template_syntaxes = {
-    \ '*.hcl.j2':    'hcl', 
-    \ '*.sh.j2':     'sh',
-    \ '*.tf.j2':     'hcl',
-    \ '*.tfvars.j2': 'hcl',
-    \ '*.yml.j2':    'yaml',
-    \ '*.yaml.j2':   'yaml',
-\ }
-
-" When to use filetype=yaml.ansible
-let g:ansible_ftdetect_filename_regex = '\v(playbook|site|main|local|requirements)\.ya?ml$'
-
 " CCTree: Vim CCTree plugin {{{3
 call minpac#add('hari-rangarajan/CCTree', {'type': 'opt'})
 
@@ -123,11 +97,6 @@ endfunction
 if has("cscope")
     autocmd VimEnter,DirChanged * call LoadCCTree()
 endif
-
-" cisco.vim: Vim syntax for cisco configuration files {{{3
-call minpac#add('momota/cisco.vim')
-
-" No configuration needed
 
 " Colorizer: Color hex codes and color names{{{3
 call minpac#add('chrisbra/Colorizer', {'type': 'opt'})
@@ -189,11 +158,6 @@ endif
 " :Snippets         " Snippets (UltiSnips)
 " :Commits          " Git commits (vim-fugitive)
 
-" scss-syntax: Sassy CSS for vim {{{3
-call minpac#add('cakebaker/scss-syntax.vim')
-
-" No configuration needed
-
 " tagalong: Change an HTML(ish) tag and update the matching one {{{3
 call minpac#add('AndrewRadev/tagalong.vim', {'type': 'opt'})
 
@@ -250,37 +214,6 @@ endfunction
 if executable('etags') || executable('ctags')
     autocmd VimEnter,DirChanged * call LoadTagbar()
 endif
-" todo-txt.vim: Vim plugin for Todo.txt {{{3
-call minpac#add('freitass/todo.txt-vim')
-
-" <LocalLeader>s   : Sort by priority
-" <LocalLeader>s+  : Sort on +Projects
-" <LocalLeader>s@  : Sort on @Contexts
-" <LocalLeader>sd  : Sort on due dates
-" <LocalLeader>sc  : Sort by context, then priority
-" <LocalLeader>scp : Sort by context, project, then priority
-" <LocalLeader>sp  : Sort by project, then priority
-" <LocalLeader>spc : Sort by project, context, then priority
-" <LocalLeader>-sd : Sort by due date. Entries with due date are at the beginning
-
-" <LocalLeader>j : Lower priority
-" <LocalLeader>k : Increase priority
-" <LocalLeader>a : Add priority (A)
-" <LocalLeader>b : Add priority (B)
-" <LocalLeader>c : Add priority (C)
-
-" <LocalLeader>d : Insert current date
-" date<tab> : (Insert mode) insert current date
-" due:      : (Insert mode) insert due: <date>
-" DUE:      : (Insert mode) insert DUE: <date>
-
-" <LocalLeader>x : Toggle done
-" <LocalLeader>C : Toggle cancelled
-" <LocalLeader>X : Mark all completed
-" <LocalLeader>D : Move completed tasks to done file
-
-" No configuration needed
-
 " ugbi: UserGettingBored Improved Vim Plugin {{{3
 call minpac#add('mikesmithgh/ugbi', {'type': 'opt'})
 
@@ -347,16 +280,6 @@ call minpac#add('matze/vim-ini-fold', {'type': 'opt'})
 
 autocmd load_plugins FileType dosini,gitconfig packadd vim-ini-fold | call IniFoldActivate()
 
-" vim-markdown: Markdown vim mode {{{3
-call minpac#add('preservim/vim-markdown')
-
-let g:vim_markdown_frontmatter = 1
-let g:vim_markdown_folding_style_pythonic = 1
-let g:vim_markdown_folding_level = 1
-let g:vim_markdown_override_foldtext = 0
-let g:vim_markdown_follow_anchor = 1
-let g:vim_markdown_conceal_code_blocks = 0
- 
 " vim-redact-pass: Do not write passwords into vim files when using pass(1) {{{3
 call minpac#add('https://dev.sanctum.geek.nz/code/vim-redact-pass.git', {'type': 'opt', 'rev': 'master'})
 
@@ -372,16 +295,6 @@ let s:git_plugins += ['vim-rhubarb']
 " Do not show issue preview window when omni-completing
 autocmd load_plugins FileType gitcommit setlocal completeopt-=preview
 
-" vim-sxhkdrc: Vim syntax for sxhkd's configuration files {{{3
-call minpac#add('baskerville/vim-sxhkdrc')
-
-" No configuration needed
-
-" vim-terraform: basic vim/terraform integration {{{3
-call minpac#add('hashivim/vim-terraform')
-
-" No configuration needed
-
 " vim-textobj-sentence: Improving native sentence text object and motion {{{3
 call minpac#add('preservim/vim-textobj-sentence', {'type': 'opt'})
 
@@ -394,16 +307,6 @@ augroup END
 " vim-textobj-user: Create your own text objects {{{3
 " (required by vim-textobj-sentence)
 call minpac#add('kana/vim-textobj-user', {'type': 'opt'})
-
-" No configuration needed
-
-" vim-tmux: Vim plugin for .tmux.conf {{{3
-call minpac#add('tmux-plugins/vim-tmux')
-
-" No configuration needed
-
-" vim-tridactyl: Syntax plugin for Tridactyl configuration files {{{3
-call minpac#add('tridactyl/vim-tridactyl')
 
 " No configuration needed
 
@@ -466,6 +369,37 @@ endfunction
 autocmd VimEnter,DirChanged * call LoadGit()
 
 " AUTOMATIC {{{2
+" ansible-vim: Syntax highlighting Ansible's common filetypes {{{3
+call minpac#add('pearofducks/ansible-vim')
+
+let g:ansible_attribute_highlight      = 'ab' " highlight all key=value pairs
+let g:ansible_name_highlight           = 'b'  " highlight 'name:'
+let g:ansible_extra_keywords_highlight = 1    " highlight extra keywords
+
+" Highlight groups using specified group (:help E669)
+let g:ansible_normal_keywords_highlight      = 'Statement'
+let g:ansible_loop_keywords_highlight        = 'Statement'
+let g:ansible_extra_keywords_highlight_group = 'Delimiter'
+" See custom color settings below to customize 'name_highlight'
+
+" Properly highlight HCL Jinja templates
+let g:ansible_template_syntaxes = {
+    \ '*.hcl.j2':    'hcl', 
+    \ '*.sh.j2':     'sh',
+    \ '*.tf.j2':     'hcl',
+    \ '*.tfvars.j2': 'hcl',
+    \ '*.yml.j2':    'yaml',
+    \ '*.yaml.j2':   'yaml',
+\ }
+
+" When to use filetype=yaml.ansible
+let g:ansible_ftdetect_filename_regex = '\v(playbook|site|main|local|requirements)\.ya?ml$'
+
+" cisco.vim: Vim syntax for cisco configuration files {{{3
+call minpac#add('momota/cisco.vim')
+
+" No configuration needed
+
 " flex-bison-syntax: Flex & Bison syntax highlighting for vim {{{3
 call minpac#add('calincru/flex-bison-syntax')
 
@@ -484,6 +418,11 @@ let g:indentLine_concealcursor = ''
 
 " paredit: Structured Editing of Lisp S-expressions {{{3
 call minpac#add('https://github.com/kovisoft/paredit')
+
+" scss-syntax: Sassy CSS for vim {{{3
+call minpac#add('cakebaker/scss-syntax.vim')
+
+" No configuration needed
 
 " tabular: Smart alignment of tables {{{3
 call minpac#add('godlygeek/tabular')
@@ -538,6 +477,37 @@ vmap <Leader>t,     :Tabularize /,<cr>
 nmap <Leader>t<Bar> :Tabularize /<Bar><cr>
 vmap <Leader>t<Bar> :Tabularize /<Bar><cr>
 
+" todo-txt.vim: Vim plugin for Todo.txt {{{3
+call minpac#add('freitass/todo.txt-vim')
+
+" <LocalLeader>s   : Sort by priority
+" <LocalLeader>s+  : Sort on +Projects
+" <LocalLeader>s@  : Sort on @Contexts
+" <LocalLeader>sd  : Sort on due dates
+" <LocalLeader>sc  : Sort by context, then priority
+" <LocalLeader>scp : Sort by context, project, then priority
+" <LocalLeader>sp  : Sort by project, then priority
+" <LocalLeader>spc : Sort by project, context, then priority
+" <LocalLeader>-sd : Sort by due date. Entries with due date are at the beginning
+
+" <LocalLeader>j : Lower priority
+" <LocalLeader>k : Increase priority
+" <LocalLeader>a : Add priority (A)
+" <LocalLeader>b : Add priority (B)
+" <LocalLeader>c : Add priority (C)
+
+" <LocalLeader>d : Insert current date
+" date<tab> : (Insert mode) insert current date
+" due:      : (Insert mode) insert due: <date>
+" DUE:      : (Insert mode) insert DUE: <date>
+
+" <LocalLeader>x : Toggle done
+" <LocalLeader>C : Toggle cancelled
+" <LocalLeader>X : Mark all completed
+" <LocalLeader>D : Move completed tasks to done file
+
+" No configuration needed
+
 " vim-commentary: Commenting keymaps {{{3
 call minpac#add('tpope/vim-commentary')
 
@@ -549,6 +519,16 @@ call minpac#add('tpope/vim-commentary')
 " vim-easy-align: A Vim alignment plugin {{{3
 call minpac#add('https://github.com/junegunn/vim-easy-align')
 
+" vim-markdown: Markdown vim mode {{{3
+call minpac#add('preservim/vim-markdown')
+
+let g:vim_markdown_frontmatter = 1
+let g:vim_markdown_folding_style_pythonic = 1
+let g:vim_markdown_folding_level = 1
+let g:vim_markdown_override_foldtext = 0
+let g:vim_markdown_follow_anchor = 1
+let g:vim_markdown_conceal_code_blocks = 0
+ 
 " vim-repeat: Enable repeating supported plugin maps with "." {{{3
 call minpac#add('tpope/vim-repeat')
 
@@ -581,6 +561,16 @@ call minpac#add('tpope/vim-surround')
 
 " No configuration needed
 
+" vim-sxhkdrc: Vim syntax for sxhkd's configuration files {{{3
+call minpac#add('baskerville/vim-sxhkdrc')
+
+" No configuration needed
+
+" vim-terraform: basic vim/terraform integration {{{3
+call minpac#add('hashivim/vim-terraform')
+
+" No configuration needed
+
 " vlime: A Common Lisp dev environment for Vim {{{3
 call minpac#add('https://github.com/vlime/vlime')
 
@@ -590,6 +580,16 @@ function! VlimeBuildServerCommandFor_clisp(vlime_loader, vlime_eval)
                    \ "--load", a:vlime_loader,
                    \ "--eval", a:vlime_eval]
 endfunction
+
+" vim-tmux: Vim plugin for .tmux.conf {{{3
+call minpac#add('tmux-plugins/vim-tmux')
+
+" No configuration needed
+
+" vim-tridactyl: Syntax plugin for Tridactyl configuration files {{{3
+call minpac#add('tridactyl/vim-tridactyl')
+
+" No configuration needed
 
 " YankRing.vim: Maintains a history of previous yanks, changes and deletes  {{{3
 call minpac#add('vim-scripts/YankRing.vim')
