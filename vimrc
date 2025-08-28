@@ -952,12 +952,14 @@ set foldtext=NeatFoldText()
 " ==================
 " See vim-tmux-pilot configuration
 
-" Resize windows with C-[hjkl] {{{3
-nnoremap <C-j> <C-w>-
-nnoremap <C-k> <C-w>+
-nnoremap <C-h> <C-w><
-nnoremap <C-l> <C-w>>
-
+" Resize windows with C-[ARROWS] {{{3
+"
+" C-[Up|Down]:    Grow|Shrink vertically
+" C-[Left|Right]: Grow|Shrink horizontaally
+nnoremap <C-Down>  <C-w>-
+nnoremap <C-Up>    <C-w>+
+nnoremap <C-Left>  <C-w><
+nnoremap <C-Right> <C-w>>
 " Maximize/Minimize window with CTRL-W m  {{{3
 "
 " pmalek (github.com/pmalek/toggle-maximize.vim)
