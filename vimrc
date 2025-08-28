@@ -1117,9 +1117,8 @@ vnoremap <leader>gB :GBrowse<CR>
 " Open git diff split
 nnoremap <leader>gd :Gdiffsplit<CR>
 
-" Mappings to jump between hunks
-nnoremap <Leader>gn <Plug>(GitGutterNextHunk)
-nnoremap <Leader>gp <Plug>(GitGutterPrevHunk)
+" Mappings to jump between hunks (fugitive & gitgutter)
+" [c, ]c: previous, next hunk
 
 " fzf.vim, fzf-checkout.vim: {{{2
 "
