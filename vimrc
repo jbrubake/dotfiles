@@ -308,6 +308,7 @@ autocmd load_plugins FileType c packadd a.vim
 
 " ansible-vim: Syntax highlighting Ansible's common filetypes {{{3
 call minpac#add('pearofducks/ansible-vim')
+
 let g:ansible_attribute_highlight      = 'ab' " highlight all key=value pairs
 let g:ansible_name_highlight           = 'b'  " highlight 'name:'
 let g:ansible_extra_keywords_highlight = 1    " highlight extra keywords
@@ -319,7 +320,14 @@ let g:ansible_extra_keywords_highlight_group = 'Delimiter'
 " See custom color settings below to customize 'name_highlight'
 
 " Properly highlight HCL Jinja templates
-let g:ansible_template_syntaxes = {'*.hcl.j2': 'hcl', '*.tf.j2': 'hcl', '*.sh.j2': 'sh'}
+let g:ansible_template_syntaxes = {
+    \ '*.hcl.j2':    'hcl', 
+    \ '*.sh.j2':     'sh',
+    \ '*.tf.j2':     'hcl',
+    \ '*.tfvars.j2': 'hcl',
+    \ '*.yml.j2':    'yaml',
+    \ '*.yaml.j2':   'yaml',
+\ }
 
 " When to use filetype=yaml.ansible
 let g:ansible_ftdetect_filename_regex = '\v(playbook|site|main|local|requirements)\.ya?ml$'
@@ -554,7 +562,7 @@ autocmd load_plugins FileType tridactyl packadd vim-tridactyl
 call minpac#add('urbainvaes/vim-tmux-pilot')
 
 " Use Alt+[hjkl] to navigate windows
-if has ('unix') " set convert-meta off in .inputrc makes Alt not the Meta key
+if has ('unix') " 'set convert-meta off' in .inputrc makes Alt not the Meta key
     let g:pilot_key_h='h'
     let g:pilot_key_j='j'
     let g:pilot_key_k='k'
@@ -1065,7 +1073,7 @@ nnoremap <leader>gg :Git<CR>
 nnoremap <leader>gB :GBrowse<CR>
 vnoremap <leader>gB :GBrowse<CR>
 
-" Open Diff split
+" Open git diff split
 nnoremap <leader>gd :Gdiffsplit<CR>
 
 " Mappings to jump between hunks
