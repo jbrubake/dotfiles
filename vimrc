@@ -1121,12 +1121,6 @@ nnoremap <leader>gd :Gdiffsplit<CR>
 nnoremap <Leader>gn <Plug>(GitGutterNextHunk)
 nnoremap <Leader>gp <Plug>(GitGutterPrevHunk)
 
-" Stage and unstage hunks
-nnoremap <leader>ghs <Plug>(GitGutterStageHunk)
-nnoremap <leader>ghu <Plug>(GitGutterUndoHunk)
-vnoremap <leader>ghs <Plug>(GitGutterStageHunk)
-vnoremap <leader>ghu <Plug>(GitGutterUndoHunk)
-
 " fzf.vim, fzf-checkout.vim: {{{2
 "
 noremap  <leader>b  :Buffers<CR>
