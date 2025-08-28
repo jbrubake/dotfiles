@@ -19,9 +19,6 @@
 
 " Initialization {{{1
 " ==============
-" Remove all autocommands if sourcing .vimrc again
-autocmd!
-
 " Source .vimrc when saving changes
 autocmd BufWritePost ~/.vimrc nested source ~/.vimrc
 
