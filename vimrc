@@ -211,7 +211,7 @@ function LoadTagbar()
         return 0
     endif
 
-    packadd! tagbar
+    packadd tagbar
 
     " ctags commands
     " --------------
