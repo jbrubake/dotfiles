@@ -338,26 +338,28 @@ let g:ansible_goto_role_paths = 'roles, ~/.ansible/roles'
 " CCTree: Vim CCTree plugin {{{3
 call minpac#add('hari-rangarajan/CCTree', {'type': 'opt'})
 
-if has("cscope") && (filereadable($CSCOPE_DB) || filereadable("cscope.out"))
-    packadd CCTree
+" See Mappings & Commands -> Cscope for mappings
 
-    " See Mappings & Commands -> Cscope for mappings
+function LoadCCTree()
+    if filereadable($CSCOPE_DB)
+        let s:db = $CSCOPE_DB
+    elseif filereadable("cscope.out")
+        let s:db = 'cscope.out'
+    else
+        return 0
+    endif
+
+    packadd! CCTree
 
     set cscopetag                           " use cscope and ctag for 'ctrl-]', ':ta', and 'vim -t'
     set cscopetagorder=0                    " search cscope then ctags
     set cscopequickfix=s-,c-,d-,i-,t-,e-,a- " Open all results in quickfix 
 
-    " Automatically load $CSCOPE_DB or cscope.out if
-    " it exists in current directory
-    function! s:load_cscope_db()
-        if filereadable($CSCOPE_DB)
-            CCTreeLoadDB $CSCOPE_DB
-        else
-            CCTreeLoadDB cscope.out
-        endif
-    endfunction
+    execute 'CCTreeLoadDB ' . s:db
+endfunction
 
-    autocmd VimEnter * call s:load_cscope_db()
+if has("cscope")
+    autocmd VimEnter,DirChanged * call LoadCCTree()
 endif
 
 " cisco.vim: Vim syntax for cisco configuration files {{{3
