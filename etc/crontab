@@ -16,6 +16,6 @@ MAILTO=jbrubake
 
 0 * * * *    nice run-parts "$HOME/etc/cron.hourly"
 */5 * * * *  chronic cloudsync
-*/15 * * * *   chronic checkmail
+#*/15 * * * *   chronic checkmail
 
 
