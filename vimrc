@@ -515,7 +515,6 @@ autocmd load_plugins FileType   php packadd vim-closetag
 
 " vim-fugitive: Git in Vim {{{3
 call minpac#add('tpope/vim-fugitive', {'type': 'opt'})
-"set completopt-=preview " disable issue body preview
 
 let s:git_plugins += ['vim-fugitive']
 
@@ -575,6 +574,11 @@ au BufRead **/pass*/*.txt packadd vim-redact-pass
 call minpac#add('tpope/vim-rhubarb', {'type': 'opt'})
 
 let s:git_plugins += ['vim-rhubarb']
+
+" C-X C-O: omni-complete GitHub issues or project collaborator usernames in commits
+
+" Do not show issue preview window when omni-completing
+autocmd load_plugins FileType gitcommit setlocal completeopt-=preview
 
 " vim-sxhkdrc: Vim syntax for sxhkd's configuration files {{{3
 call minpac#add('baskerville/vim-sxhkdrc', {'type': 'opt'})
