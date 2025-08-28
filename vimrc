@@ -72,7 +72,7 @@ call minpac#add('vim-scripts/a.vim', {'type': 'opt'})
 autocmd load_plugins FileType c packadd a.vim
 
 " ansible-vim: Syntax highlighting Ansible's common filetypes {{{3
-call minpac#add('pearofducks/ansible-vim', {'type': 'opt'})
+call minpac#add('pearofducks/ansible-vim')
 
 let g:ansible_attribute_highlight      = 'ab' " highlight all key=value pairs
 let g:ansible_name_highlight           = 'b'  " highlight 'name:'
@@ -99,8 +99,6 @@ let g:ansible_ftdetect_filename_regex = '\v(playbook|site|main|local|requirement
 
 " Where to find roles when jumping with <leader>gr
 let g:ansible_goto_role_paths = 'roles, ~/.ansible/roles'
-
-autocmd load_plugins FileType *.ansible,*.jinja2,ansible_hosts packadd ansible-vim
 " CCTree: Vim CCTree plugin {{{3
 call minpac#add('hari-rangarajan/CCTree', {'type': 'opt'})
 
@@ -129,9 +127,9 @@ if has("cscope")
 endif
 
 " cisco.vim: Vim syntax for cisco configuration files {{{3
-call minpac#add('momota/cisco.vim', {'type': 'opt'})
+call minpac#add('momota/cisco.vim')
 
-autocmd load_plugins FileType cisco packadd cisco.vim
+" No configuration needed
 
 " Colorizer: Color hex codes and color names{{{3
 call minpac#add('chrisbra/Colorizer', {'type': 'opt'})
@@ -194,9 +192,9 @@ endif
 " :Commits          " Git commits (vim-fugitive)
 
 " scss-syntax: Sassy CSS for vim {{{3
-call minpac#add('cakebaker/scss-syntax.vim', {'type': 'opt'})
+call minpac#add('cakebaker/scss-syntax.vim')
 
-autocmd load_plugins FileType scss packadd scss-syntax-vim
+" No configuration needed
 
 " tagalong: Change an HTML(ish) tag and update the matching one {{{3
 call minpac#add('AndrewRadev/tagalong.vim', {'type': 'opt'})
@@ -255,7 +253,7 @@ if executable('etags') || executable('ctags')
     autocmd VimEnter,DirChanged * call LoadTagbar()
 endif
 " todo-txt.vim: Vim plugin for Todo.txt {{{3
-call minpac#add('freitass/todo.txt-vim', {'type': 'opt'})
+call minpac#add('freitass/todo.txt-vim')
 
 " <LocalLeader>s   : Sort by priority
 " <LocalLeader>s+  : Sort on +Projects
@@ -283,7 +281,7 @@ call minpac#add('freitass/todo.txt-vim', {'type': 'opt'})
 " <LocalLeader>X : Mark all completed
 " <LocalLeader>D : Move completed tasks to done file
 
-autocmd load_plugins FileType todo packadd todo.txt-vim
+" No configuration needed
 
 " ugbi: UserGettingBored Improved Vim Plugin {{{3
 call minpac#add('mikesmithgh/ugbi', {'type': 'opt'})
@@ -352,7 +350,7 @@ call minpac#add('matze/vim-ini-fold', {'type': 'opt'})
 autocmd load_plugins FileType dosini,gitconfig packadd vim-ini-fold | call IniFoldActivate()
 
 " vim-markdown: Markdown vim mode {{{3
-call minpac#add('preservim/vim-markdown', {'type': 'opt'})
+call minpac#add('preservim/vim-markdown')
 
 let g:vim_markdown_frontmatter = 1
 let g:vim_markdown_folding_style_pythonic = 1
@@ -360,8 +358,6 @@ let g:vim_markdown_folding_level = 1
 let g:vim_markdown_override_foldtext = 0
 let g:vim_markdown_follow_anchor = 1
 let g:vim_markdown_conceal_code_blocks = 0
-
-autocmd load_plugins FileType markdown packadd vim-markdown
  
 " vim-redact-pass: Do not write passwords into vim files when using pass(1) {{{3
 call minpac#add('https://dev.sanctum.geek.nz/code/vim-redact-pass.git', {'type': 'opt', 'rev': 'master'})
@@ -379,16 +375,14 @@ let s:git_plugins += ['vim-rhubarb']
 autocmd load_plugins FileType gitcommit setlocal completeopt-=preview
 
 " vim-sxhkdrc: Vim syntax for sxhkd's configuration files {{{3
-call minpac#add('baskerville/vim-sxhkdrc', {'type': 'opt'})
+call minpac#add('baskerville/vim-sxhkdrc')
 
-autocmd load_plugins FileType sxhkdrc packadd vim-sxhkdrc
+" No configuration needed
 
 " vim-terraform: basic vim/terraform integration {{{3
-call minpac#add('hashivim/vim-terraform', {'type': 'opt'})
+call minpac#add('hashivim/vim-terraform')
 
-autocmd load_plugins FileType hcl packadd vim-terraform
-autocmd load_plugins FileType json packadd vim-terraform
-autocmd load_plugins FileType terraform packadd vim-terraform
+" No configuration needed
 
 " vim-textobj-sentence: Improving native sentence text object and motion {{{3
 call minpac#add('preservim/vim-textobj-sentence', {'type': 'opt'})
@@ -403,15 +397,17 @@ augroup END
 " (required by vim-textobj-sentence)
 call minpac#add('kana/vim-textobj-user', {'type': 'opt'})
 
-" vim-tmux: Vim plugin for .tmux.conf {{{3
-call minpac#add('tmux-plugins/vim-tmux', {'type': 'opt'})
+" No configuration needed
 
-autocmd load_plugins FileType tmux packadd vim-tmux
+" vim-tmux: Vim plugin for .tmux.conf {{{3
+call minpac#add('tmux-plugins/vim-tmux')
+
+" No configuration needed
 
 " vim-tridactyl: Syntax plugin for Tridactyl configuration files {{{3
-call minpac#add('tridactyl/vim-tridactyl', {'type': 'opt'})
+call minpac#add('tridactyl/vim-tridactyl')
 
-autocmd load_plugins FileType tridactyl packadd vim-tridactyl
+" No configuration needed
 
 " vim-tmux-pilot: Unified navigation of splits and tabs in nvim and tmux {{{3
 call minpac#add('urbainvaes/vim-tmux-pilot', {'type': 'opt'})
@@ -445,6 +441,8 @@ autocmd load_plugins FileType tex,bib packadd vimtex | call vimtex#init()
 
 " webapi-vim: Needed for vim-gist {{{3
 call minpac#add('mattn/webapi-vim', {'type': 'opt'})
+
+" No configuration needed
 
 endif " minpac_loaded
 
