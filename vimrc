@@ -307,7 +307,7 @@ call minpac#add('vim-scripts/a.vim', {'type': 'opt'})
 autocmd load_plugins FileType c packadd a.vim
 
 " ansible-vim: Syntax highlighting Ansible's common filetypes {{{3
-call minpac#add('pearofducks/ansible-vim')
+call minpac#add('pearofducks/ansible-vim', {'type': 'opt'})
 
 let g:ansible_attribute_highlight      = 'ab' " highlight all key=value pairs
 let g:ansible_name_highlight           = 'b'  " highlight 'name:'
@@ -335,6 +335,7 @@ let g:ansible_ftdetect_filename_regex = '\v(playbook|site|main|local|requirement
 " Where to find roles when jumping with <leader>gr
 let g:ansible_goto_role_paths = 'roles, ~/.ansible/roles'
 
+autocmd load_plugins FileType *.ansible,*.jinja2,ansible_hosts packadd ansible-vim
 " CCTree: Vim CCTree plugin {{{3
 call minpac#add('hari-rangarajan/CCTree', {'type': 'opt'})
 
@@ -399,11 +400,11 @@ call minpac#add('cakebaker/scss-syntax.vim', {'type': 'opt'})
 autocmd load_plugins FileType scss packadd scss-syntax-vim
 
 " tagalong: Change an HTML(ish) tag and update the matching one {{{3
-call minpac#add('AndrewRadev/tagalong.vim')
+call minpac#add('AndrewRadev/tagalong.vim', {'type': 'opt'})
 
 let g:tagalong_additional_filetypes = ['xml', 'html', 'php']
 
-execute 'au Filetype ' . join(g:tagalong_additional_filetypes, ',') . ' packadd tagalong.vim'
+execute printf('au load_plugins FileType %s packadd tagalong.vim', join(g:tagalong_additional_filetypes, ','))
 
 " tagbar: Source code browser using ctags {{{3
 call minpac#add('preservim/tagbar', {'type': 'opt'})
@@ -544,9 +545,9 @@ let g:gitgutter_sign_removed_first_line = ''
 let g:gitgutter_sign_modified_removed = ''
 
 " vim-ini-fold: folding for ini-like files {{{3
-call minpac#add('matze/vim-ini-fold')
+call minpac#add('matze/vim-ini-fold', {'type': 'opt'})
 
-autocmd load_plugins FileType dosini packadd vim-ini-fold
+autocmd load_plugins FileType dosini,gitconfig packadd vim-ini-fold | call IniFoldActivate()
 
 " vim-markdown: Markdown vim mode {{{3
 call minpac#add('preservim/vim-markdown', {'type': 'opt'})
@@ -571,12 +572,12 @@ call minpac#add('tpope/vim-rhubarb', {'type': 'opt'})
 let s:git_plugins += ['vim-rhubarb']
 
 " vim-sxhkdrc: Vim syntax for sxhkd's configuration files {{{3
-call minpac#add('baskerville/vim-sxhkdrc')
+call minpac#add('baskerville/vim-sxhkdrc', {'type': 'opt'})
 
 autocmd load_plugins FileType sxhkdrc packadd vim-sxhkdrc
 
 " vim-terraform: basic vim/terraform integration {{{3
-call minpac#add('hashivim/vim-terraform')
+call minpac#add('hashivim/vim-terraform', {'type': 'opt'})
 
 autocmd load_plugins FileType hcl packadd vim-terraform
 autocmd load_plugins FileType json packadd vim-terraform
@@ -601,9 +602,8 @@ call minpac#add('tmux-plugins/vim-tmux', {'type': 'opt'})
 autocmd load_plugins FileType tmux packadd vim-tmux
 
 " vim-tridactyl: Syntax plugin for Tridactyl configuration files {{{3
-call minpac#add('tridactyl/vim-tridactyl')
+call minpac#add('tridactyl/vim-tridactyl', {'type': 'opt'})
 
-" For this to work the file will need a modeline. Obviously
 autocmd load_plugins FileType tridactyl packadd vim-tridactyl
 
 " vim-tmux-pilot: Unified navigation of splits and tabs in nvim and tmux {{{3
@@ -629,7 +629,7 @@ call minpac#add('lervag/vimtex', {'type': 'opt'})
 
 let g:vimtex_view_method = 'zathura'
 
-autocmd load_plugins FileType tex packadd vimtex
+autocmd load_plugins FileType tex,bib packadd vimtex | call vimtex#init()
 
 " webapi-vim: Needed for vim-gist {{{3
 call minpac#add('mattn/webapi-vim', {'type': 'opt'})
