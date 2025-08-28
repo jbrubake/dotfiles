@@ -332,7 +332,8 @@ let g:ansible_template_syntaxes = {
 " When to use filetype=yaml.ansible
 let g:ansible_ftdetect_filename_regex = '\v(playbook|site|main|local|requirements)\.ya?ml$'
 
-let g:ansible_goto_role_paths = './roles,../_common/roles'
+" Where to find roles when jumping with <leader>gr
+let g:ansible_goto_role_paths = 'roles, ~/.ansible/roles'
 
 " CCTree: Vim CCTree plugin {{{3
 call minpac#add('hari-rangarajan/CCTree', {'type': 'opt'})
