@@ -390,11 +390,6 @@ call minpac#add('shumphrey/fugitive-gitlab.vim', {'type': 'opt'})
 
 " Loaded by LoadGit()
 
-" gemini-vim-syntax: Syntax highlighting for text/gemini files {{{3
-call minpac#add('https://tildegit.org/sloum/gemini-vim-syntax', {'type': 'opt'})
-
-autocmd load_plugins FileType gmi packadd gemini-vim-syntax
-
 " scss-syntax: Sassy CSS for vim {{{3
 call minpac#add('cakebaker/scss-syntax.vim', {'type': 'opt'})
 
