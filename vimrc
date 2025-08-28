@@ -834,6 +834,20 @@ if &term =~ "tmux"
     set ttymouse=sgr
 endif
 
+" When editing a file, always jump to the last known cursor position.
+" Don't do it when the position is invalid, when inside an event handler
+" (happens when dropping a file on gvim), for a commit or rebase message
+" (likely a different one than last time), and when using xxd(1) to filter
+" and edit binary files (it transforms input files back and forth, causing
+" them to have dual nature, so to speak)
+"
+" From $VIMRUNTIME/defaults.vim (Vim 9.1.825, Fedora 39)
+autocmd BufReadPost *
+    \ let line = line("'\"")
+    \ | if line >= 1 && line <= line("$") && &filetype !~# 'commit'
+    \      && index(['xxd', 'gitrebase'], &filetype) == -1
+    \ |   execute "normal! g`\""
+    \ | endif
 " Absolute & Hybrid line numbers by buffer status {{{2
 "
 " https://jeffkreeftmeijer.com/vim-number/
