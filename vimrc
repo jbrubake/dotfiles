@@ -1056,8 +1056,9 @@ nnoremap zl zL
 nnoremap zh zH
 
 " DiffOrig:            diff of buffer and file {{{2
-" command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
-            " \ | wincmd p | diffthis
+" Redo the stock DiffOrig to suppress the '1 line less' message
+command! DiffOrig vert new | set bt=nofile | r ++edit #
+    \ | silent! 0d_ | diffthis | wincmd p | diffthis
 
 " <F2>:                toggle relative/absoute line numbers {{{2
 nnoremap <F2> :set norelativenumber!<CR>
