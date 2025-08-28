@@ -42,4 +42,6 @@ tags
 cscope.out
 # gcc dependency files
 *.d
+# but don't ignore *.d/ directories
+!*.d/
 .gdb_history
