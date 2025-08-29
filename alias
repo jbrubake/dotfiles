@@ -227,6 +227,12 @@ else
     alias ipinfo='myip'
 fi
 
+# Vim {{{1
+#
+alias  minpac_clean='vim +PackCleanAndQuit'  # remove old plugins
+alias minpac_update='vim +PackUpdateAndQuit' # add and update plugins
+alias minpac_status='vim +PackStatus +only'  # show plugin status
+
 # Miscellaneous {{{1
 #
 have reset || alias reset='tput sgr0'  # reset terminal
