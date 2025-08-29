@@ -104,7 +104,7 @@ augroup load_plugins | autocmd! | augroup end
 " List of plugins to load only in a git repository
 let s:git_plugins = []
 
-" plugin: vim-scripts/a.vim type:opt " Swap header and source files {{{3
+" plugin: vim-scripts/a.vim type:opt                                               " Swap header and source files {{{3
 
 " :A : Switch between header and source files
 " :AS: Split and switch
@@ -112,7 +112,7 @@ let s:git_plugins = []
 
 autocmd load_plugins FileType c packadd a.vim
 
-" plugin: hari-rangarajan/CCTree type:opt " Vim CCTree plugin {{{3
+" plugin: hari-rangarajan/CCTree type:opt                                          " Vim CCTree plugin {{{3
 
 " See Mappings & Commands -> Cscope for mappings
 
@@ -138,7 +138,7 @@ if has("cscope")
     autocmd load_plugins VimEnter,DirChanged * call LoadCCTree()
 endif
 
-" plugin: chrisbra/Colorizer type:opt " Color hex codes and color names{{{3
+" plugin: chrisbra/Colorizer type:opt                                              " Color hex codes and color names{{{3
 
 " Turn off color:
 "   :ColorClear
@@ -153,27 +153,27 @@ let g:colorizer_x11_names = 1
 
 execute 'autocmd load_plugins Filetype ' . g:colorizer_auto_filetype . ' packadd Colorizer | ColorToggle'
 
-" plugin: borissov/fugitive-gitea type:opt " Plugin for :Gbrowse to work with GITea server {{{3
+" plugin: borissov/fugitive-gitea type:opt                                         " Plugin for :Gbrowse to work with GITea server {{{3
 
 " Loaded by LoadGit()
 
-" plugin: shumphrey/fugitive-gitlab.vim type:opt " A vim extension to fugitive.vim for GitLab support {{{3
+" plugin: shumphrey/fugitive-gitlab.vim type:opt                                   " A vim extension to fugitive.vim for GitLab support {{{3
 
 " Loaded by LoadGit()
 
-" plugin: junegunn/fzf type:opt " Fuzzy finder {{{3
+" plugin: junegunn/fzf type:opt                                                    " Fuzzy finder {{{3
 
 if executable('fzf')
     silent packadd! fzf
 endif
 
-" plugin: stsewd/fzf-checkout.vim type:opt " Manage branches and tags with fzf {{{3
+" plugin: stsewd/fzf-checkout.vim type:opt                                         " Manage branches and tags with fzf {{{3
 
 if executable('fzf')
     let s:git_plugins += ['fzf-checkout.vim']
 endif
 
-" plugin: junegunn/fzf.vim type:opt " fzf vim plugin {{{3
+" plugin: junegunn/fzf.vim type:opt                                                " fzf vim plugin {{{3
 
 if executable('fzf')
     silent packadd! fzf.vim
@@ -192,13 +192,13 @@ endif
 " :Snippets         " Snippets (UltiSnips)
 " :Commits          " Git commits (vim-fugitive)
 
-" plugin: AndrewRadev/tagalong.vim type:opt " Change an HTML(ish) tag and update the matching one {{{3
+" plugin: AndrewRadev/tagalong.vim type:opt                                        " Change an HTML(ish) tag and update the matching one {{{3
 
 let g:tagalong_additional_filetypes = ['xml', 'html', 'php']
 
 execute printf('autocmd load_plugins FileType %s packadd tagalong.vim', join(g:tagalong_additional_filetypes, ','))
 
-" plugin: preservim/tagbar type:opt " Source code browser using ctags {{{3
+" plugin: preservim/tagbar type:opt                                                " Source code browser using ctags {{{3
 
 function LoadTagbar()
     if ! filereadable('tags')
@@ -247,11 +247,11 @@ if executable('etags') || executable('ctags')
     autocmd load_plugins VimEnter,DirChanged * call LoadTagbar()
 endif
 
-" plugin: mikesmithgh/ugbi type:opt " UserGettingBored Improved Vim Plugin {{{3
+" plugin: mikesmithgh/ugbi type:opt                                                " UserGettingBored Improved Vim Plugin {{{3
 
 command -nargs=0 UgbiEnable packadd ugbi | :UgbiEnable
 
-" plugin: alvan/vim-closetag type:opt " Easily close HTML/XML tags {{{3
+" plugin: alvan/vim-closetag type:opt                                              " Easily close HTML/XML tags {{{3
 
 "   Current content:
 "       <table|
@@ -271,22 +271,22 @@ autocmd load_plugins FileType xhtml packadd vim-closetag
 autocmd load_plugins FileType phtml packadd vim-closetag
 autocmd load_plugins FileType   php packadd vim-closetag
 
-" plugin: tpope/vim-fugitive type:opt " Git in Vim {{{3
+" plugin: tpope/vim-fugitive type:opt                                              " Git in Vim {{{3
 
 let s:git_plugins += ['vim-fugitive']
 
-" plugin: tommcdo/vim-fugitive-blame-ext type:opt " extend vim-fugitive to show commit message on statusline in :Gblame {{{3
+" plugin: tommcdo/vim-fugitive-blame-ext type:opt                                  " extend vim-fugitive to show commit message on statusline in :Gblame {{{3
 
 let s:git_plugins += ['vim-fugitive-blame-ext']
 
-" plugin: mattn/vim-gist type:opt " Edit github.com gists with vim {{{3
+" plugin: mattn/vim-gist type:opt                                                  " Edit github.com gists with vim {{{3
 
 command -nargs=? Gist packadd webapi-vim | packadd vim-gist | :Gist <args>
 
 let g:gist_post_private = 1 " Private gists by default
                             " :Gist -P to create public Gist
 
-" plugin: airblade/vim-gitgutter type:opt " Use the sign column to show git chanages {{{3
+" plugin: airblade/vim-gitgutter type:opt                                          " Use the sign column to show git chanages {{{3
 
 let s:git_plugins += ['vim-gitgutter']
 
@@ -301,7 +301,7 @@ let g:gitgutter_sign_removed = ''
 let g:gitgutter_sign_removed_first_line = ''
 let g:gitgutter_sign_modified_removed = ''
 
-" plugin: matze/vim-ini-fold type:opt " folding for ini-like files {{{3
+" plugin: matze/vim-ini-fold type:opt                                              " folding for ini-like files {{{3
 
 autocmd load_plugins FileType dosini,gitconfig packadd vim-ini-fold | call IniFoldActivate()
 
@@ -309,7 +309,7 @@ autocmd load_plugins FileType dosini,gitconfig packadd vim-ini-fold | call IniFo
 
 autocmd load_plugins BufRead **/pass*/*.txt packadd vim-redact-pass
 
-" plugin: tpope/vim-rhubarb type:opt " GitHub extension for fugitive.vim {{{3
+" plugin: tpope/vim-rhubarb type:opt                                               " GitHub extension for fugitive.vim {{{3
 
 let s:git_plugins += ['vim-rhubarb']
 
@@ -318,18 +318,18 @@ let s:git_plugins += ['vim-rhubarb']
 " Do not show issue preview window when omni-completing
 autocmd load_plugins FileType gitcommit setlocal completeopt-=preview
 
-" plugin: preservim/vim-textobj-sentence type:opt " Improving native sentence text object and motion {{{3
+" plugin: preservim/vim-textobj-sentence type:opt                                  " Improving native sentence text object and motion {{{3
 
 augroup textobj_sentence | autocmd!
     autocmd FileType markdown packadd vim-textobj-user | packadd vim-textobj-sentence | call textobj#sentence#init()
     autocmd FileType text     packadd vim-textobj-user | packadd vim-textobj-sentence | call textobj#sentence#init()
 augroup end
 
-" plugin: kana/vim-textobj-user type:opt (required by vim-textobj-sentence) " Create your own text objects {{{3
+" plugin: kana/vim-textobj-user type:opt (required by vim-textobj-sentence)        " Create your own text objects {{{3
 
 " No configuration needed
 
-" plugin: urbainvaes/vim-tmux-pilot type:opt " Unified navigation of splits and tabs in nvim and tmux {{{3
+" plugin: urbainvaes/vim-tmux-pilot type:opt                                       " Unified navigation of splits and tabs in nvim and tmux {{{3
 
 " Use Alt+[hjkl] to navigate windows
 if has ('unix') " 'set convert-meta off' in .inputrc makes Alt not the Meta key
@@ -350,14 +350,14 @@ if $TMUX != ""
     packadd! vim-tmux-pilot
 endif
 
-" plugin: lervag/vimtex type:opt " vim LaTeX plugin {{{3
+" plugin: lervag/vimtex type:opt                                                   " vim LaTeX plugin {{{3
 
 let g:vimtex_view_method = 'zathura'
 let g:tex_flavor         = 'latex' " See <vim-tex>/ftdetect/tex.vim
 
 autocmd load_plugins FileType tex,bib packadd vimtex | call vimtex#init()
 
-" plugin: mattn/webapi-vim type:opt " Needed for vim-gist {{{3
+" plugin: mattn/webapi-vim type:opt                                                " Needed for vim-gist {{{3
 
 " No configuration needed
 
@@ -384,7 +384,7 @@ autocmd load_plugins VimEnter,DirChanged * call LoadGit()
 
 " AUTOMATIC {{{2
 "
-" plugin: pearofducks/ansible-vim " Syntax highlighting Ansible's common filetypes {{{3
+" plugin: pearofducks/ansible-vim                                                  " Syntax highlighting Ansible's common filetypes {{{3
 
 let g:ansible_attribute_highlight      = 'ab' " highlight all key=value pairs
 let g:ansible_name_highlight           = 'b'  " highlight 'name:'
@@ -409,19 +409,19 @@ let g:ansible_template_syntaxes = {
 " When to use filetype=yaml.ansible
 let g:ansible_ftdetect_filename_regex = '\v(playbook|site|main|local|requirements)\.ya?ml$'
 
-" plugin: momota/cisco.vim " Vim syntax for cisco configuration files {{{3
+" plugin: momota/cisco.vim                                                         " Vim syntax for cisco configuration files {{{3
 
 " No configuration needed
 
-" plugin: jbrubake/embed-syntax " Simplifies applying different syntax highlighting to regions of a file {{{3
+" plugin: jbrubake/embed-syntax                                                    " Simplifies applying different syntax highlighting to regions of a file {{{3
 
 " No configuration needed
 
-" plugin: calincru/flex-bison-syntax " Flex & Bison syntax highlighting for vim {{{3
+" plugin: calincru/flex-bison-syntax                                               " Flex & Bison syntax highlighting for vim {{{3
 
 " No configuration needed
 
-" plugin: wickles/indentLine " Display the indentation levels with thin vertical lines {{{3
+" plugin: wickles/indentLine                                                       " Display the indentation levels with thin vertical lines {{{3
 
 let g:indentLine_char = '│'
 let g:indentLine_bufTypeExclude = ['help', 'terminal', 'markdown']
@@ -431,15 +431,15 @@ let g:indentLine_concealcursor = ''
 " Use this if JSON quotes are hidden
 " let g:vim_json_syntax_conceal = 0
 
-" plugin: kovisoft/paredit " Structured Editing of Lisp S-expressions {{{3
+" plugin: kovisoft/paredit                                                         " Structured Editing of Lisp S-expressions {{{3
 
 " No configuration needed
 
-" plugin: cakebaker/scss-syntax.vim " Sassy CSS for vim {{{3
+" plugin: cakebaker/scss-syntax.vim                                                " Sassy CSS for vim {{{3
 
 " No configuration needed
 
-" plugin: godlygeek/tabular " Smart alignment of tables {{{3
+" plugin: godlygeek/tabular                                                        " Smart alignment of tables {{{3
 
 " :Tabularize /<delimiter>/<format>
 "
@@ -491,7 +491,7 @@ vmap <Leader>t,     :Tabularize /,<cr>
 nmap <Leader>t<Bar> :Tabularize /<Bar><cr>
 vmap <Leader>t<Bar> :Tabularize /<Bar><cr>
 
-" plugin: freitass/todo.txt-vim " Vim plugin for Todo.txt {{{3
+" plugin: freitass/todo.txt-vim                                                    " Vim plugin for Todo.txt {{{3
 "
 " <LocalLeader>s   : Sort by priority
 " <LocalLeader>s+  : Sort on +Projects
@@ -521,7 +521,7 @@ vmap <Leader>t<Bar> :Tabularize /<Bar><cr>
 
 " No configuration needed
 
-" plugin: tpope/vim-commentary " Commenting keymaps {{{3
+" plugin: tpope/vim-commentary                                                     " Commenting keymaps {{{3
 
 " No configuration needed
 
@@ -530,11 +530,11 @@ vmap <Leader>t<Bar> :Tabularize /<Bar><cr>
 " {Visual}gc : Toggle commenting of highlighted lines
 " gcu        : Uncomment current and adjacent lines
 
-" plugin: junegunn/vim-easy-align " A Vim alignment plugin {{{3
+" plugin: junegunn/vim-easy-align                                                  " A Vim alignment plugin {{{3
 
 " No configuration needed
 
-" plugin: preservim/vim-markdown " Markdown vim mode {{{3
+" plugin: preservim/vim-markdown                                                   " Markdown vim mode {{{3
 
 let g:vim_markdown_frontmatter = 1
 let g:vim_markdown_folding_style_pythonic = 1
@@ -543,15 +543,15 @@ let g:vim_markdown_override_foldtext = 0
 let g:vim_markdown_follow_anchor = 1
 let g:vim_markdown_conceal_code_blocks = 0
  
-" plugin: tpope/vim-repeat " Enable repeating supported plugin maps with "." {{{3
+" plugin: tpope/vim-repeat                                                         " Enable repeating supported plugin maps with "." {{{3
 
 " No configuration needed
 
-" plugin: slint-ui/vim-slint " Support for the slint language {{{3
+" plugin: slint-ui/vim-slint                                                       " Support for the slint language {{{3
 
 " No configuration needed
 
-" plugin: tpope/vim-surround " Modify surrounding characters {{{3
+" plugin: tpope/vim-surround                                                       " Modify surrounding characters {{{3
 
 " ds<t>         : delete <t>
 " cs<t><r>      : change <t> to <r>
@@ -576,15 +576,15 @@ let g:vim_markdown_conceal_code_blocks = 0
 
 " No configuration needed
 
-" plugin: baskerville/vim-sxhkdrc " Vim syntax for sxhkd's configuration files {{{3
+" plugin: baskerville/vim-sxhkdrc                                                  " Vim syntax for sxhkd's configuration files {{{3
 
 " No configuration needed
 
-" plugin: hashivim/vim-terraform " basic vim/terraform integration {{{3
+" plugin: hashivim/vim-terraform                                                   " basic vim/terraform integration {{{3
 
 " No configuration needed
 
-" plugin: vlime/vlime " A Common Lisp dev environment for Vim {{{3
+" plugin: vlime/vlime                                                              " A Common Lisp dev environment for Vim {{{3
 
 let g:vlime_cl_impl = "sbcl"
 function! VlimeBuildServerCommandFor_clisp(vlime_loader, vlime_eval)
@@ -593,15 +593,15 @@ function! VlimeBuildServerCommandFor_clisp(vlime_loader, vlime_eval)
                    \ "--eval", a:vlime_eval]
 endfunction
 
-" plugin: tmux-plugins/vim-tmux " Vim plugin for .tmux.conf {{{3
+" plugin: tmux-plugins/vim-tmux                                                    " Vim plugin for .tmux.conf {{{3
 
 " No configuration needed
 
-" plugin: tridactyl/vim-tridactyl " Syntax plugin for Tridactyl configuration files {{{3
+" plugin: tridactyl/vim-tridactyl                                                  " Syntax plugin for Tridactyl configuration files {{{3
 
 " No configuration needed
 
-" plugin: vim-scripts/YankRing.vim " Maintains a history of previous yanks, changes and deletes  {{{3
+" plugin: vim-scripts/YankRing.vim                                                 " Maintains a history of previous yanks, changes and deletes  {{{3
 
 let g:yankring_history_dir = '$HOME/var/cache'
 
