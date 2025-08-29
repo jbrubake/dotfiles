@@ -899,7 +899,7 @@ nnoremap <silent> ]<Space> :<C-u>put =repeat(nr2char(10),v:count)<Bar>execute "'
 nnoremap [e kddp
 nnoremap ]e jddkP
 
-" <Tab>:               % {{{2
+" <Tab>:               Map Tab to % {{{2
 nmap <tab> %
 vmap <tab> %
 
