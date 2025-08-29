@@ -232,6 +232,7 @@ fi
 alias  minpac_clean='vim +PackCleanAndQuit'  # remove old plugins
 alias minpac_update='vim +PackUpdateAndQuit' # add and update plugins
 alias minpac_status='vim +PackStatus +only'  # show plugin status
+alias          gist='vim "+Gist -l"'         # open Gist browser
 
 # Miscellaneous {{{1
 #
@@ -249,7 +250,6 @@ alias ${BASH:+--} -x='chmod -x' # make file non-executable
 
 alias      :q='exit'                                    # exit like it's vim
 alias    bell='printf "\a"'                             # ring the bell
-alias    gist='vim "+Gist -l"'                          # open Gist browser
 alias    grep="grep ${HAS_COLOR:+--color=auto}"         # force color in *grep
 alias     loc='locate -d "$LOCATEDB" "$@"'              # use my personal locate(1) db
 alias      nu="who | cut -d' ' -f1 | uniq | wc -l"      # get number of logged on users
