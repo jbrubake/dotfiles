@@ -530,7 +530,7 @@ vmap <Leader>t<Bar> :Tabularize /<Bar><cr>
 " {Visual}gc : Toggle commenting of highlighted lines
 " gcu        : Uncomment current and adjacent lines
 
-" plugin: https://github.com/junegunn/vim-easy-align " A Vim alignment plugin {{{3
+" plugin: junegunn/vim-easy-align " A Vim alignment plugin {{{3
 
 " No configuration needed
 
@@ -547,7 +547,7 @@ let g:vim_markdown_conceal_code_blocks = 0
 
 " No configuration needed
 
-" plugin: https://github.com/slint-ui/vim-slint " Support for the slint language {{{3
+" plugin: slint-ui/vim-slint " Support for the slint language {{{3
 
 " No configuration needed
 
@@ -584,7 +584,7 @@ let g:vim_markdown_conceal_code_blocks = 0
 
 " No configuration needed
 
-" plugin: https://github.com/vlime/vlime " A Common Lisp dev environment for Vim {{{3
+" plugin: vlime/vlime " A Common Lisp dev environment for Vim {{{3
 
 let g:vlime_cl_impl = "sbcl"
 function! VlimeBuildServerCommandFor_clisp(vlime_loader, vlime_eval)
