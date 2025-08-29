@@ -932,6 +932,11 @@ command! DiffOrig vert new | set bt=nofile | r ++edit #
 
 " <F2>:                toggle relative/absoute line numbers {{{2
 nnoremap <F2> :set norelativenumber!<CR>
+
+" C-u:                 convert current word to uppercase {{{2
+
+inoremap <C-u> <esc>gUiwea
+
 " vim-fugitive & vim-gitgutter: {{{2
 "
 nnoremap <leader>gg :Git<CR>
