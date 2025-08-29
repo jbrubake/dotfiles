@@ -401,6 +401,11 @@ call minpac#add('momota/cisco.vim')
 
 " No configuration needed
 
+" embed-syntax: Simplifies applying different syntax highlighting to regions of a file {{{3
+call minpac#add('jbrubake/embed-syntax')
+
+" No configuration needed
+
 " flex-bison-syntax: Flex & Bison syntax highlighting for vim {{{3
 call minpac#add('calincru/flex-bison-syntax')
 
@@ -1164,38 +1169,6 @@ endif
 let &t_SI = "\<Esc>[6 q" " Insert mode (bar)
 let &t_SR = "\<Esc>[4 q" " Replace mode (underline)
 let &t_EI = "\<Esc>[2 q" " Normal mode (block)
-
-" Highlight code in different filetypes {{{1
-"
-" Ivan Tischenko (vim.wikia.com/wiki/Different_syntax_highlighting_within_regions_of_a_file)
-function! TextEnableCodeSnip(filetype,start,end,textSnipHl) abort
-  let ft=toupper(a:filetype)
-  let group='textGroup'.ft
-  if exists('b:current_syntax')
-    let s:current_syntax=b:current_syntax
-    " Remove current syntax definition, as some syntax files (e.g. cpp.vim)
-    " do nothing if b:current_syntax is defined.
-    unlet b:current_syntax
-  endif
-  execute 'syntax include @'.group.' syntax/'.a:filetype.'.vim'
-  try
-    execute 'syntax include @'.group.' after/syntax/'.a:filetype.'.vim'
-  catch
-  endtry
-  if exists('s:current_syntax')
-    let b:current_syntax=s:current_syntax
-  else
-    unlet b:current_syntax
-  endif
-  execute 'syntax region textSnip'.ft.'
-  \ matchgroup='.a:textSnipHl.'
-  \ keepend
-  \ start="'.a:start.'" end="'.a:end.'"
-  \ contains=@'.group
-endfunction
-
-" Enable C syntax higlighting in non-C files
-autocmd vimrc BufNewFile,BufRead  * :call TextEnableCodeSnip ('c', '@c', '@c', 'SpecialComment')
 
 " goobook address completion for emails {{{2
 "
