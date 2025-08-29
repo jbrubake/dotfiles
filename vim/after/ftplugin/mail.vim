@@ -66,5 +66,6 @@ fun! MailcompleteF(contacts)
     endfor
     return ret
 endfun
+
 setlocal completefunc=MailcompleteC
 
