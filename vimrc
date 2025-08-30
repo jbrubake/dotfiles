@@ -433,6 +433,11 @@ let g:indentLine_concealcursor = ''
 " Use this if JSON quotes are hidden
 " let g:vim_json_syntax_conceal = 0
 
+" plugin: jbrubake/jump-to-ansible-role                                            " Load the main task file for role under the cursor {{{3
+
+autocmd load_plugins FileType yaml.ansible nnoremap <localleader>gr :call JumpToAnsibleRole()<CR>
+autocmd load_plugins FileType yaml.ansible vnoremap <localleader>gr :call JumpToAnsibleRole()<CR>
+
 " plugin: kovisoft/paredit                                                         " Structured Editing of Lisp S-expressions {{{3
 
 " No configuration needed
