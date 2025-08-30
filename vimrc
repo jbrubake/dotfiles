@@ -70,6 +70,8 @@ function PackInit()
     :silent! g!/^"\s*plugin:/d
     " Delete 'plugin:'
     :silent! %s/"\s*plugin:\s*//
+    " Delete comments
+    :silent! %s/".*$//
     " call minpac#add('<plugin repo>', {
     :silent! %s/^\(\S\+\)/call minpac#add('\1', {/
     " Properly quote <key>:<val> pairs
