@@ -652,8 +652,6 @@ set undofile                         " Persistent undo tree
 set undodir=~/.vim/undo              " Put undo files here
 call mkdir(&undodir, "p", 0o700)
 set path^=$DOTFILES                  " Search for files in $DOTFILES
-set path+=~/work/fen-x/fenx-infra
-set path+=~/work/fen-x/fenx-infra/fenx_infra
 
 " ttymouse is not properly set if TERM=tmux*
 " and then I can't use the mouse to resize splits
