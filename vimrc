@@ -101,8 +101,29 @@ command! PackStatus        call PackInit() | call minpac#status()
 " augroup for loading optional plugins
 augroup load_plugins | autocmd! | augroup end
 
-" List of plugins to load only in a git repository
+" Conditionally load git related plugins {{{3
+"
+" List of plugins to load
 let s:git_plugins = []
+
+function LoadGit()
+    silent! !git rev-parse --is-inside-work-tree
+    if ! v:shell_error " v:shell_error truth is backwards from vim truth
+        for s:p in s:git_plugins
+            execute 'packadd ' . s:p
+        endfor
+
+        if !empty(g:fugitive_gitlab_domains) " Set in private config
+            packadd fugitive-gitlab
+        endif
+
+        if !empty(g:fugitive_gitea_domains) " Set in private config
+            packadd fugitive-gitea
+        endif
+    endif
+endfunction
+
+autocmd load_plugins VimEnter,DirChanged * call LoadGit()
 
 " plugin: vim-scripts/a.vim type:opt                                               " Swap header and source files {{{3
 
@@ -360,27 +381,6 @@ autocmd load_plugins FileType tex,bib packadd vimtex | call vimtex#init()
 " plugin: mattn/webapi-vim type:opt                                                " Needed for vim-gist {{{3
 
 " No configuration needed
-
-" Conditionally load git related plugins {{{3
-"
-function LoadGit()
-    silent! !git rev-parse --is-inside-work-tree
-    if ! v:shell_error " v:shell_error truth is backwards from vim truth
-        for s:p in s:git_plugins
-            execute 'packadd ' . s:p
-        endfor
-
-        if !empty(g:fugitive_gitlab_domains) " Set in private config
-            packadd fugitive-gitlab
-        endif
-
-        if !empty(g:fugitive_gitea_domains) " Set in private config
-            packadd fugitive-gitea
-        endif
-    endif
-endfunction
-
-autocmd load_plugins VimEnter,DirChanged * call LoadGit()
 
 " AUTOMATIC {{{2
 "
