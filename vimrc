@@ -348,7 +348,7 @@ augroup textobj_sentence | autocmd!
     autocmd FileType text     packadd vim-textobj-user | packadd vim-textobj-sentence | call textobj#sentence#init()
 augroup end
 
-" plugin: kana/vim-textobj-user type:opt (required by vim-textobj-sentence)        " Create your own text objects {{{3
+" plugin: kana/vim-textobj-user type:opt                                           " (required by vim-textobj-sentence) Create your own text objects {{{3
 
 " No configuration needed
 
