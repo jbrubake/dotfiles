@@ -1,5 +1,7 @@
 #!/bin/sh
 #
+# Enable toucpad tap-to-click
+#
 name=$(xinput --list --name-only | grep Touchpad | head -1)
 prop=$(xinput list-props "$name" |
            grep 'Tapping Enabled (' |
