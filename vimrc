@@ -271,7 +271,7 @@ endif
 
 command -nargs=0 UgbiEnable packadd ugbi | :UgbiEnable
 
-" plugin: alvan/vim-closetag type:opt                                              " Easily close HTML/XML tags {{{3
+" plugin: alvan/vim-closetag                                                       " Easily close HTML/XML tags {{{3
 
 "   Current content:
 "       <table|
@@ -284,12 +284,6 @@ command -nargs=0 UgbiEnable packadd ugbi | :UgbiEnable
 
 " Use closetag in these files
 let g:closetag_filenames = "*.sgml,*.xml,*.html,*.xhtml,*.phtml,*.php"
-autocmd load_plugins FileType  sgml packadd vim-closetag
-autocmd load_plugins FileType   xml packadd vim-closetag
-autocmd load_plugins FileType  html packadd vim-closetag
-autocmd load_plugins FileType xhtml packadd vim-closetag
-autocmd load_plugins FileType phtml packadd vim-closetag
-autocmd load_plugins FileType   php packadd vim-closetag
 
 " plugin: tpope/vim-fugitive type:opt                                              " Git in Vim {{{3
 
