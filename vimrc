@@ -125,13 +125,13 @@ endfunction
 
 autocmd load_plugins VimEnter,DirChanged * call LoadGit()
 
-" plugin: vim-scripts/a.vim type:opt                                               " Swap header and source files {{{3
+" plugin: vim-scripts/a.vim                                                        " Swap header and source files {{{3
 
 " :A : Switch between header and source files
 " :AS: Split and switch
 " :AV: Vertical split and switch
 
-autocmd load_plugins FileType c packadd a.vim
+" ~/.vim/after/plugin/unmap.vim: remove annoying insert-mode mappings
 
 " plugin: hari-rangarajan/CCTree type:opt                                          " Vim CCTree plugin {{{3
 
