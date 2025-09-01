@@ -334,10 +334,7 @@ autocmd load_plugins FileType gitcommit setlocal completeopt-=preview
 
 " plugin: preservim/vim-textobj-sentence                                           " Improving native sentence text object and motion {{{3
 
-augroup textobj_sentence | autocmd!
-    autocmd FileType markdown packadd vim-textobj-user | packadd vim-textobj-sentence | call textobj#sentence#init()
-    autocmd FileType text     packadd vim-textobj-user | packadd vim-textobj-sentence | call textobj#sentence#init()
-augroup end
+" No configuration needed
 
 " plugin: kana/vim-textobj-user                                                    " (required by vim-textobj-sentence) Create your own text objects {{{3
 
