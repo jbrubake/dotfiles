@@ -213,11 +213,10 @@ endif
 " :Snippets         " Snippets (UltiSnips)
 " :Commits          " Git commits (vim-fugitive)
 
-" plugin: AndrewRadev/tagalong.vim type:opt                                        " Change an HTML(ish) tag and update the matching one {{{3
+" plugin: AndrewRadev/tagalong.vim                                                 " Change an HTML(ish) tag and update the matching one {{{3
 
+" Plugin is active for these filetypes
 let g:tagalong_additional_filetypes = ['xml', 'html', 'php']
-
-execute printf('autocmd load_plugins FileType %s packadd tagalong.vim', join(g:tagalong_additional_filetypes, ','))
 
 " plugin: preservim/tagbar type:opt                                                " Source code browser using ctags {{{3
 
