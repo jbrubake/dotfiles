@@ -38,8 +38,8 @@ let maplocalleader = ' '
 " Plugins {{{1
 "============
 " Optional packages {{{2
-packadd! matchit    " Enhanced % matching
-packadd! cfilter    " Filter quickfix or location lists
+packadd! matchit " Enhanced % matching
+packadd! cfilter " Filter quickfix or location lists
 
 " minpac {{{2
 "
@@ -98,7 +98,7 @@ command! PackStatus        call PackInit() | call minpac#status()
 
 " OPTIONAL {{{2
 "
-" augroup for loading optional plugins
+" Plugins should use this augroup
 augroup load_plugins | autocmd! | augroup end
 
 " Conditionally load git related plugins {{{3
