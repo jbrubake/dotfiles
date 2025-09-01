@@ -406,8 +406,8 @@ let g:ansible_template_syntaxes = {
     \ '*.yaml.j2':   'yaml',
 \ }
 
-" When to use filetype=yaml.ansible
-let g:ansible_ftdetect_filename_regex = '\v(playbook|site|main|local|requirements)\.ya?ml$'
+autocmd load_plugins BufRead,BufNewFile playbooks/*.yaml set filetype=yaml.ansible
+autocmd load_plugins BufRead,BufNewFile playbooks/*.yml  set filetype=yaml.ansible
 
 " plugin: momota/cisco.vim                                                         " Vim syntax for cisco configuration files {{{3
 
