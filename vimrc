@@ -953,7 +953,7 @@ vnoremap <leader>gB :GBrowse<CR>
 nnoremap <leader>gd :Gdiffsplit<CR>
 
 " Mappings to jump between hunks (fugitive & gitgutter)
-" [c, ]c: previous, next hunk
+" [c, ]c: previous, next hunk (default binding)
 
 " fzf.vim, fzf-checkout.vim: {{{2
 "
