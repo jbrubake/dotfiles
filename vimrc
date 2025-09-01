@@ -61,6 +61,7 @@ function PackInit()
 
     " Create the plugin list file
     "
+    :enew
     :read $MYVIMRC
     " We definitely want this
     :setlocal noignorecase
