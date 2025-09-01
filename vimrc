@@ -332,14 +332,14 @@ let s:git_plugins += ['vim-rhubarb']
 " Do not show issue preview window when omni-completing
 autocmd load_plugins FileType gitcommit setlocal completeopt-=preview
 
-" plugin: preservim/vim-textobj-sentence type:opt                                  " Improving native sentence text object and motion {{{3
+" plugin: preservim/vim-textobj-sentence                                           " Improving native sentence text object and motion {{{3
 
 augroup textobj_sentence | autocmd!
     autocmd FileType markdown packadd vim-textobj-user | packadd vim-textobj-sentence | call textobj#sentence#init()
     autocmd FileType text     packadd vim-textobj-user | packadd vim-textobj-sentence | call textobj#sentence#init()
 augroup end
 
-" plugin: kana/vim-textobj-user type:opt                                           " (required by vim-textobj-sentence) Create your own text objects {{{3
+" plugin: kana/vim-textobj-user                                                    " (required by vim-textobj-sentence) Create your own text objects {{{3
 
 " No configuration needed
 
