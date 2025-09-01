@@ -19,12 +19,10 @@
 
 " Initialization {{{1
 " ==============
-" augroup for miscellaneous autocmds in
-" this file and those it directly sources
-augroup vimrc | autocmd! | augroup end
-
 " Source .vimrc when saving changes
-autocmd vimrc BufWritePost ~/.vimrc nested source ~/.vimrc
+augroup vimrc | autocmd!
+    autocmd vimrc BufWritePost ~/.vimrc nested source ~/.vimrc
+augroup end
 
 set nocompatible " Don't be vi compatible
 
@@ -674,12 +672,14 @@ endif
 " them to have dual nature, so to speak)
 "
 " From $VIMRUNTIME/defaults.vim (Vim 9.1.825, Fedora 39)
-autocmd vimrc BufReadPost *
-    \ let line = line("'\"")
-    \ | if line >= 1 && line <= line("$") && &filetype !~# 'commit'
-    \      && index(['xxd', 'gitrebase'], &filetype) == -1
-    \ |   execute "normal! g`\""
-    \ | endif
+augroup last_position | autocmd!
+    autocmd BufReadPost *
+        \ let line = line("'\"")
+        \ | if line >= 1 && line <= line("$") && &filetype !~# 'commit'
+        \      && index(['xxd', 'gitrebase'], &filetype) == -1
+        \ |   execute "normal! g`\""
+        \ | endif
+augroup end
 " Absolute & Hybrid line numbers by buffer status {{{2
 "
 " https://jeffkreeftmeijer.com/vim-number/
@@ -1159,7 +1159,9 @@ endfunction
 " Automatcially source custom colors when a colorscheme is loaded
 " unless we are running vimpager
 if !exists('g:vimpager.enabled')
-    autocmd vimrc ColorScheme * call s:colorscheme_local()
+    augroup colors | autocmd!
+        autocmd ColorScheme * call s:colorscheme_local()
+    augroup end
 endif
 " }}}
 
