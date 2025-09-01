@@ -99,7 +99,7 @@ command! PackStatus        call PackInit() | call minpac#status()
 " Plugin Configuration {{{2
 "
 " Plugins should use this augroup
-augroup load_plugins | autocmd! | augroup end
+augroup plugins | autocmd! | augroup end
 
 " Conditionally load git related plugins {{{3
 "
@@ -123,7 +123,7 @@ function LoadGit()
     endif
 endfunction
 
-autocmd load_plugins VimEnter,DirChanged * call LoadGit()
+autocmd plugins VimEnter,DirChanged * call LoadGit()
 
 " a.vim:                  Swap header and source files plugurl:vim-scripts/a.vim " {{{3
 
@@ -155,8 +155,8 @@ let g:ansible_template_syntaxes = {
     \ '*.yaml.j2':   'yaml',
 \ }
 
-autocmd load_plugins BufRead,BufNewFile playbooks/*.yaml set filetype=yaml.ansible
-autocmd load_plugins BufRead,BufNewFile playbooks/*.yml  set filetype=yaml.ansible
+autocmd plugins BufRead,BufNewFile playbooks/*.yaml set filetype=yaml.ansible
+autocmd plugins BufRead,BufNewFile playbooks/*.yml  set filetype=yaml.ansible
 
 " CCTree:                 Vim CCTree plugin plugurl:hari-rangarajan/CCTree type:opt " {{{3
 
@@ -181,7 +181,7 @@ function LoadCCTree()
 endfunction
 
 if has("cscope")
-    autocmd load_plugins VimEnter,DirChanged * call LoadCCTree()
+    autocmd plugins VimEnter,DirChanged * call LoadCCTree()
 endif
 
 " cisco.vim:               Vim syntax for cisco configuration files plugurl:momota/cisco.vim " {{{3
@@ -201,7 +201,7 @@ let g:colorizer_disable_bufleave = 0 " Only highlight above files
 " Highlight X11 colornames in Xresources and such
 let g:colorizer_x11_names = 1
 
-execute 'autocmd load_plugins Filetype ' . g:colorizer_auto_filetype . ' packadd Colorizer | ColorToggle'
+execute 'autocmd plugins Filetype ' . g:colorizer_auto_filetype . ' packadd Colorizer | ColorToggle'
 
 " embed-syntax:            Simplifies applying different syntax highlighting to regions of a file plugurl:jbrubake/embed-syntax " {{{3
 
@@ -262,8 +262,8 @@ let g:indentLine_concealcursor = ''
 
 " jump-to-ansible-role:    Load the main task file for role under the cursor plugurl:jbrubake/jump-to-ansible-role " {{{3
 
-autocmd load_plugins FileType yaml.ansible nnoremap <localleader>gr :call JumpToAnsibleRole()<CR>
-autocmd load_plugins FileType yaml.ansible vnoremap <localleader>gr :call JumpToAnsibleRole()<CR>
+autocmd plugins FileType yaml.ansible nnoremap <localleader>gr :call JumpToAnsibleRole()<CR>
+autocmd plugins FileType yaml.ansible vnoremap <localleader>gr :call JumpToAnsibleRole()<CR>
 
 " paredit:                 Structured Editing of Lisp S-expressions plugurl:kovisoft/paredit " {{{3
 
@@ -376,7 +376,7 @@ function LoadTagbar()
 endfunction
 
 if executable('etags') || executable('ctags')
-    autocmd load_plugins VimEnter,DirChanged * call LoadTagbar()
+    autocmd plugins VimEnter,DirChanged * call LoadTagbar()
 endif
 
 " todo.txt-vim:            Vim plugin for Todo.txt plugurl:freitass/todo.txt-vim " {{{3
@@ -498,7 +498,7 @@ let s:git_plugins += ['vim-rhubarb']
 " C-X C-O: omni-complete GitHub issues or project collaborator usernames in commits
 
 " Do not show issue preview window when omni-completing
-autocmd load_plugins FileType gitcommit setlocal completeopt-=preview
+autocmd plugins FileType gitcommit setlocal completeopt-=preview
 
 " vim-slint:               Support for the slint language plugurl:slint-ui/vim-slint " {{{3
 
@@ -579,7 +579,7 @@ endif
 let g:vimtex_view_method = 'zathura'
 let g:tex_flavor         = 'latex' " See <vim-tex>/ftdetect/tex.vim
 
-autocmd load_plugins FileType tex,bib packadd vimtex | call vimtex#init()
+autocmd plugins FileType tex,bib packadd vimtex | call vimtex#init()
 
 " vlime:                   A Common Lisp dev environment for Vim plugurl:vlime/vlime " {{{3
 
