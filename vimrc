@@ -315,9 +315,9 @@ let g:gitgutter_sign_removed = ''
 let g:gitgutter_sign_removed_first_line = ''
 let g:gitgutter_sign_modified_removed = ''
 
-" plugin: matze/vim-ini-fold type:opt                                              " folding for ini-like files {{{3
+" plugin: matze/vim-ini-fold                                                       " folding for ini-like files {{{3
 
-autocmd load_plugins FileType dosini,gitconfig packadd vim-ini-fold | call IniFoldActivate()
+" No configuration needed
 
 " plugin: https://dev.sanctum.geek.nz/code/vim-redact-pass.git type:opt rev:master " Do not write passwords into vim files when using pass(1) {{{3
 
