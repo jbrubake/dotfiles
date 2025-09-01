@@ -319,9 +319,9 @@ let g:gitgutter_sign_modified_removed = ''
 
 " No configuration needed
 
-" plugin: https://dev.sanctum.geek.nz/code/vim-redact-pass.git type:opt rev:master " Do not write passwords into vim files when using pass(1) {{{3
+" plugin: https://dev.sanctum.geek.nz/code/vim-redact-pass.git rev:master          " Do not write passwords into vim files when using pass(1) {{{3
 
-autocmd load_plugins BufRead **/pass*/*.txt packadd vim-redact-pass
+" No configuration needed
 
 " plugin: tpope/vim-rhubarb type:opt                                               " GitHub extension for fugitive.vim {{{3
 
