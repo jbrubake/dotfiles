@@ -282,8 +282,8 @@ command -nargs=0 UgbiEnable packadd ugbi | :UgbiEnable
 "           |
 "       </table>
 
-" Use closetag in these files
-let g:closetag_filenames = "*.sgml,*.xml,*.html,*.xhtml,*.phtml,*.php"
+" Plugin is active for these filetypes
+let g:closetag_filetypes = 'sgml, xml, html, xhtml, phtml, php'
 
 " plugin: tpope/vim-fugitive type:opt                                              " Git in Vim {{{3
 
