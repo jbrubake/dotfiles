@@ -252,14 +252,6 @@ google () { # Google something
     # it merely opens google.com
     openurl "www.google.com/$url"
 }
-define() { # Define words and phrases with google
-    y="$@"
-    curl -sA"Opera" "http://www.google.com/search?q=define:${y// /+}" |
-        grep -Eo '<li>[^<]+' |
-        sed 's/^<li>//g' |
-        nl |
-        /usr/bin/perl -MHTML::Entities -pe 'decode_entities($_)'
-}
 rtfm() { # Check various forms of documentation
     man "$@" ||
         [ -f "/usr/share/info/$@.info*" ] && info "$@" ||
