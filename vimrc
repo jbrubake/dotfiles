@@ -221,21 +221,15 @@ execute 'autocmd plugins Filetype ' . g:colorizer_auto_filetype . ' packadd Colo
 
 " fzf:                     Fuzzy finder                                                           plugurl:junegunn/fzf type:opt " {{{3
 
-if executable('fzf')
-    silent packadd! fzf
-endif
+if executable('fzf') | silent packadd! fzf | endif
 
 " fzf-checkout.vim:        Manage branches and tags with fzf                                      plugurl:stsewd/fzf-checkout.vim type:opt " {{{3
 
-if executable('fzf')
-    let s:git_plugins += ['fzf-checkout.vim']
-endif
+if executable('fzf') | let s:git_plugins += ['fzf-checkout.vim'] | endif
 
 " fzf.vim:                 fzf vim plugin                                                         plugurl:junegunn/fzf.vim type:opt " {{{3
 
-if executable('fzf')
-    silent packadd! fzf.vim
-endif
+if executable('fzf') | silent packadd! fzf.vim | endif
 
 " :Files [PATH]     " Files ($FZF_DEFAULT_COMMAND)
 " :GFiles [OPTS]    " Git files (git ls-files)
@@ -333,9 +327,7 @@ let g:tagalong_additional_filetypes = ['xml', 'html', 'php']
 " tagbar:                  Source code browser using ctags                                        plugurl:preservim/tagbar type:opt " {{{3
 
 function LoadTagbar()
-    if ! filereadable('tags')
-        return 0
-    endif
+    if ! filereadable('tags') | return 0 | endif
 
     packadd tagbar
 
@@ -566,9 +558,7 @@ else
     let g:pilot_key_p='<a-\>'
 endif
 
-if $TMUX != ""
-    packadd! vim-tmux-pilot
-endif
+if $TMUX != "" | packadd! vim-tmux-pilot | endif
 
 " vim-tridactyl:           Syntax plugin for Tridactyl configuration files                        plugurl:tridactyl/vim-tridactyl " {{{3
 
@@ -648,9 +638,7 @@ set path^=$DOTFILES                  " Search for files in $DOTFILES
 
 " ttymouse is not properly set if TERM=tmux*
 " and then I can't use the mouse to resize splits
-if &term =~ "tmux"
-    set ttymouse=sgr
-endif
+if &term =~ "tmux" | set ttymouse=sgr | endif
 
 " When editing a file, always jump to the last known cursor position.
 " Don't do it when the position is invalid, when inside an event handler
@@ -683,9 +671,7 @@ augroup quickfix | autocmd!
 augroup end
 
 " Searching {{{2
-if executable('rg')
-    set grepprg=rg\ --vimgrep
-endif
+if executable('rg') | set grepprg=rg\ --vimgrep | endif
 
 " grep/lgrep without polluting the terminal or opening the first match
 "
