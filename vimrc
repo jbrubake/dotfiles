@@ -367,7 +367,7 @@ function LoadTagbar()
         \ 'sort'       : 0}
 endfunction
 
-if executable('etags') || executable('ctags')
+if executable('ctags')
     autocmd plugins VimEnter,DirChanged * call LoadTagbar()
 endif
 
