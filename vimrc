@@ -125,7 +125,7 @@ endfunction
 
 autocmd plugins VimEnter,DirChanged * call LoadGit()
 
-" a.vim:                  Swap header and source files plugurl:vim-scripts/a.vim " {{{3
+" a.vim:                   Swap header and source files                                           plugurl:vim-scripts/a.vim " {{{3
 
 " :A : Switch between header and source files
 " :AS: Split and switch
@@ -133,7 +133,7 @@ autocmd plugins VimEnter,DirChanged * call LoadGit()
 
 " ~/.vim/after/plugin/unmap.vim: remove annoying insert-mode mappings
 
-" ansible-vim:             Syntax highlighting Ansible's common filetypes plugurl:pearofducks/ansible-vim " {{{3
+" ansible-vim:             Syntax highlighting Ansible's common filetypes                         plugurl:pearofducks/ansible-vim " {{{3
 
 let g:ansible_attribute_highlight      = 'ab' " highlight all key=value pairs
 let g:ansible_name_highlight           = 'b'  " highlight 'name:'
@@ -158,7 +158,7 @@ let g:ansible_template_syntaxes = {
 autocmd plugins BufRead,BufNewFile playbooks/*.yaml set filetype=yaml.ansible
 autocmd plugins BufRead,BufNewFile playbooks/*.yml  set filetype=yaml.ansible
 
-" CCTree:                 Vim CCTree plugin plugurl:hari-rangarajan/CCTree type:opt " {{{3
+" CCTree:                  Vim CCTree plugin                                                      plugurl:hari-rangarajan/CCTree type:opt " {{{3
 
 " See Mappings & Commands -> Cscope for mappings
 
@@ -184,11 +184,11 @@ if has("cscope")
     autocmd plugins VimEnter,DirChanged * call LoadCCTree()
 endif
 
-" cisco.vim:               Vim syntax for cisco configuration files plugurl:momota/cisco.vim " {{{3
+" cisco.vim:               Vim syntax for cisco configuration files                               plugurl:momota/cisco.vim " {{{3
 
 " No configuration needed
 
-" Colorizer:              Color hex codes and color names plugurl:chrisbra/Colorizer type:opt " {{{3
+" Colorizer:               Color hex codes and color names                                        plugurl:chrisbra/Colorizer type:opt " {{{3
 
 " Turn off color:
 "   :ColorClear
@@ -207,31 +207,31 @@ execute 'autocmd plugins Filetype ' . g:colorizer_auto_filetype . ' packadd Colo
 
 " No configuration needed
 
-" flex-bison-syntax:       Flex & Bison syntax highlighting for vim plugurl:calincru/flex-bison-syntax " {{{3
+" flex-bison-syntax:       Flex & Bison syntax highlighting for vim                               plugurl:calincru/flex-bison-syntax " {{{3
 
 " No configuration needed
 
-" fugitive-gitea:         Plugin for :Gbrowse to work with GITea server plugurl:borissov/fugitive-gitea type:opt " {{{3
+" fugitive-gitea:          Plugin for :Gbrowse to work with GITea server                          plugurl:borissov/fugitive-gitea type:opt " {{{3
 
 " Loaded by LoadGit()
 
-" fugitive-gitlab.vim:    A vim extension to fugitive.vim for GitLab support plugurl:shumphrey/fugitive-gitlab.vim type:opt " {{{3
+" fugitive-gitlab.vim:     A vim extension to fugitive.vim for GitLab support                     plugurl:shumphrey/fugitive-gitlab.vim type:opt " {{{3
 
 " Loaded by LoadGit()
 
-" fzf:                    Fuzzy finder plugurl:junegunn/fzf type:opt " {{{3
+" fzf:                     Fuzzy finder                                                           plugurl:junegunn/fzf type:opt " {{{3
 
 if executable('fzf')
     silent packadd! fzf
 endif
 
-" fzf-checkout.vim:       Manage branches and tags with fzf plugurl:stsewd/fzf-checkout.vim type:opt " {{{3
+" fzf-checkout.vim:        Manage branches and tags with fzf                                      plugurl:stsewd/fzf-checkout.vim type:opt " {{{3
 
 if executable('fzf')
     let s:git_plugins += ['fzf-checkout.vim']
 endif
 
-" fzf.vim:                fzf vim plugin plugurl:junegunn/fzf.vim type:opt " {{{3
+" fzf.vim:                 fzf vim plugin                                                         plugurl:junegunn/fzf.vim type:opt " {{{3
 
 if executable('fzf')
     silent packadd! fzf.vim
@@ -250,7 +250,7 @@ endif
 " :Snippets         " Snippets (UltiSnips)
 " :Commits          " Git commits (vim-fugitive)
 
-" indentLine:              Display the indentation levels with thin vertical lines plugurl:wickles/indentLine " {{{3
+" indentLine:              Display the indentation levels with thin vertical lines                plugurl:wickles/indentLine " {{{3
 
 let g:indentLine_char = '│'
 let g:indentLine_bufTypeExclude = ['help', 'terminal', 'markdown']
@@ -260,20 +260,20 @@ let g:indentLine_concealcursor = ''
 " Use this if JSON quotes are hidden
 " let g:vim_json_syntax_conceal = 0
 
-" jump-to-ansible-role:    Load the main task file for role under the cursor plugurl:jbrubake/jump-to-ansible-role " {{{3
+" jump-to-ansible-role:    Load the main task file for role under the cursor                      plugurl:jbrubake/jump-to-ansible-role " {{{3
 
 autocmd plugins FileType yaml.ansible nnoremap <localleader>gr :call JumpToAnsibleRole()<CR>
 autocmd plugins FileType yaml.ansible vnoremap <localleader>gr :call JumpToAnsibleRole()<CR>
 
-" paredit:                 Structured Editing of Lisp S-expressions plugurl:kovisoft/paredit " {{{3
+" paredit:                 Structured Editing of Lisp S-expressions                               plugurl:kovisoft/paredit " {{{3
 
 " No configuration needed
 
-" scss-syntax.vim:         Sassy CSS for vim plugurl:cakebaker/scss-syntax.vim " {{{3
+" scss-syntax.vim:         Sassy CSS for vim                                                      plugurl:cakebaker/scss-syntax.vim " {{{3
 
 " No configuration needed
 
-" tabular:                 Smart alignment of tables plugurl:godlygeek/tabular " {{{3
+" tabular:                 Smart alignment of tables                                              plugurl:godlygeek/tabular " {{{3
 
 " :Tabularize /<delimiter>/<format>
 "
@@ -325,12 +325,12 @@ vmap <Leader>t,     :Tabularize /,<cr>
 nmap <Leader>t<Bar> :Tabularize /<Bar><cr>
 vmap <Leader>t<Bar> :Tabularize /<Bar><cr>
 
-" tagalong.vim:           Change an HTML(ish) tag and update the matching one plugurl:AndrewRadev/tagalong.vim " {{{3
+" tagalong.vim:            Change an HTML(ish) tag and update the matching one                    plugurl:AndrewRadev/tagalong.vim " {{{3
 
 " Plugin is active for these filetypes
 let g:tagalong_additional_filetypes = ['xml', 'html', 'php']
 
-" tagbar:                 Source code browser using ctags plugurl:preservim/tagbar type:opt " {{{3
+" tagbar:                  Source code browser using ctags                                        plugurl:preservim/tagbar type:opt " {{{3
 
 function LoadTagbar()
     if ! filereadable('tags')
@@ -379,7 +379,7 @@ if executable('etags') || executable('ctags')
     autocmd plugins VimEnter,DirChanged * call LoadTagbar()
 endif
 
-" todo.txt-vim:            Vim plugin for Todo.txt plugurl:freitass/todo.txt-vim " {{{3
+" todo.txt-vim:            Vim plugin for Todo.txt                                                plugurl:freitass/todo.txt-vim " {{{3
 "
 " <LocalLeader>s   : Sort by priority
 " <LocalLeader>s+  : Sort on +Projects
@@ -409,11 +409,11 @@ endif
 
 " No configuration needed
 
-" ugbi:                   UserGettingBored Improved Vim Plugin plugurl:mikesmithgh/ugbi type:opt " {{{3
+" ugbi:                    UserGettingBored Improved Vim Plugin                                   plugurl:mikesmithgh/ugbi type:opt " {{{3
 
 command -nargs=0 UgbiEnable packadd ugbi | :UgbiEnable
 
-" vim-closetag:           Easily close HTML/XML tags plugurl:alvan/vim-closetag " {{{3
+" vim-closetag:            Easily close HTML/XML tags                                             plugurl:alvan/vim-closetag " {{{3
 
 "   Current content:
 "       <table|
@@ -427,7 +427,7 @@ command -nargs=0 UgbiEnable packadd ugbi | :UgbiEnable
 " Plugin is active for these filetypes
 let g:closetag_filetypes = 'sgml, xml, html, xhtml, phtml, php'
 
-" vim-commentary:          Commenting keymaps plugurl:tpope/vim-commentary " {{{3
+" vim-commentary:          Commenting keymaps                                                     plugurl:tpope/vim-commentary " {{{3
 
 " No configuration needed
 
@@ -436,26 +436,26 @@ let g:closetag_filetypes = 'sgml, xml, html, xhtml, phtml, php'
 " {Visual}gc : Toggle commenting of highlighted lines
 " gcu        : Uncomment current and adjacent lines
 
-" vim-easy-align:          A Vim alignment plugin plugurl:junegunn/vim-easy-align " {{{3
+" vim-easy-align:          A Vim alignment plugin                                                 plugurl:junegunn/vim-easy-align " {{{3
 
 " No configuration needed
 
-" vim-fugitive:           Git in Vim plugurl:tpope/vim-fugitive type:opt " {{{3
+" vim-fugitive:            Git in Vim                                                             plugurl:tpope/vim-fugitive type:opt " {{{3
 
 let s:git_plugins += ['vim-fugitive']
 
-" vim-fugitive-blame-ext: extend vim-fugitive to show commit message on statusline in :Gblame plugurl:tommcdo/vim-fugitive-blame-ext type:opt " {{{3
+" vim-fugitive-blame-ext:  extend vim-fugitive to show commit message on statusline in :Gblame    plugurl:tommcdo/vim-fugitive-blame-ext type:opt " {{{3
 
 let s:git_plugins += ['vim-fugitive-blame-ext']
 
-" vim-gist:               Edit github.com gists with vim plugurl:mattn/vim-gist type:opt " {{{3
+" vim-gist:                Edit github.com gists with vim                                         plugurl:mattn/vim-gist type:opt " {{{3
 
 command -nargs=? Gist packadd webapi-vim | packadd vim-gist | :Gist <args>
 
 let g:gist_post_private = 1 " Private gists by default
                             " :Gist -P to create public Gist
 
-" vim-gitgutter:          Use the sign column to show git chanages plugurl:airblade/vim-gitgutter type:opt " {{{3
+" vim-gitgutter:           Use the sign column to show git chanages                               plugurl:airblade/vim-gitgutter type:opt " {{{3
 
 let s:git_plugins += ['vim-gitgutter']
 
@@ -470,11 +470,11 @@ let g:gitgutter_sign_removed = ''
 let g:gitgutter_sign_removed_first_line = ''
 let g:gitgutter_sign_modified_removed = ''
 
-" vim-ini-fold:            folding for ini-like files plugurl:matze/vim-ini-fold " {{{3
+" vim-ini-fold:            folding for ini-like files                                             plugurl:matze/vim-ini-fold " {{{3
 
 " No configuration needed
 
-" vim-markdown:            Markdown vim mode plugurl:preservim/vim-markdown " {{{3
+" vim-markdown:            Markdown vim mode                                                      plugurl:preservim/vim-markdown " {{{3
 
 let g:vim_markdown_frontmatter = 1
 let g:vim_markdown_folding_style_pythonic = 1
@@ -483,15 +483,15 @@ let g:vim_markdown_override_foldtext = 0
 let g:vim_markdown_follow_anchor = 1
 let g:vim_markdown_conceal_code_blocks = 0
  
-" vim-redact-pass.git:     Do not write passwords into vim files when using pass(1) plugurl:https://dev.sanctum.geek.nz/code/vim-redact-pass.git rev:master " {{{3
+" vim-redact-pass.git:     Do not write passwords into vim files when using pass(1)               plugurl:https://dev.sanctum.geek.nz/code/vim-redact-pass.git rev:master " {{{3
 
 " No configuration needed
 
-" vim-repeat:              Enable repeating supported plugin maps with "." plugurl:tpope/vim-repeat " {{{3
+" vim-repeat:              Enable repeating supported plugin maps with "."                        plugurl:tpope/vim-repeat " {{{3
 
 " No configuration needed
 
-" vim-rhubarb:             GitHub extension for fugitive.vim plugurl:tpope/vim-rhubarb type:opt " {{{3
+" vim-rhubarb:             GitHub extension for fugitive.vim                                      plugurl:tpope/vim-rhubarb type:opt " {{{3
 
 let s:git_plugins += ['vim-rhubarb']
 
@@ -500,11 +500,11 @@ let s:git_plugins += ['vim-rhubarb']
 " Do not show issue preview window when omni-completing
 autocmd plugins FileType gitcommit setlocal completeopt-=preview
 
-" vim-slint:               Support for the slint language plugurl:slint-ui/vim-slint " {{{3
+" vim-slint:               Support for the slint language                                         plugurl:slint-ui/vim-slint " {{{3
 
 " No configuration needed
 
-" vim-surround:            Modify surrounding characters plugurl:tpope/vim-surround " {{{3
+" vim-surround:            Modify surrounding characters                                          plugurl:tpope/vim-surround " {{{3
 
 " ds<t>         : delete <t>
 " cs<t><r>      : change <t> to <r>
@@ -529,27 +529,27 @@ autocmd plugins FileType gitcommit setlocal completeopt-=preview
 
 " No configuration needed
 
-" vim-sxhkdrc:             Vim syntax for sxhkd's configuration files plugurl:baskerville/vim-sxhkdrc " {{{3
+" vim-sxhkdrc:             Vim syntax for sxhkd's configuration files                             plugurl:baskerville/vim-sxhkdrc " {{{3
 
 " No configuration needed
 
-" vim-terraform:           basic vim/terraform integration plugurl:hashivim/vim-terraform " {{{3
+" vim-terraform:           basic vim/terraform integration                                        plugurl:hashivim/vim-terraform " {{{3
 
 " No configuration needed
 
-" vim-textobj-sentence:    Improving native sentence text object and motion plugurl:preservim/vim-textobj-sentence " {{{3
+" vim-textobj-sentence:    Improving native sentence text object and motion                       plugurl:preservim/vim-textobj-sentence " {{{3
 
 " No configuration needed
 
-" vim-textobj-user:        Create your own text objects (required by vim-textobj-sentence) plugurl:kana/vim-textobj-user " {{{3
+" vim-textobj-user:        Create your own text objects (required by vim-textobj-sentence)        plugurl:kana/vim-textobj-user " {{{3
 
 " No configuration needed
 
-" vim-tmux:                Vim plugin for .tmux.conf plugurl:tmux-plugins/vim-tmux " {{{3
+" vim-tmux:                Vim plugin for .tmux.conf                                              plugurl:tmux-plugins/vim-tmux " {{{3
 
 " No configuration needed
 
-" vim-tmux-pilot:          Unified navigation of splits and tabs in nvim and tmux plugurl:urbainvaes/vim-tmux-pilot type:opt " {{{3
+" vim-tmux-pilot:          Unified navigation of splits and tabs in nvim and tmux                 plugurl:urbainvaes/vim-tmux-pilot type:opt " {{{3
 
 " Use Alt+[hjkl] to navigate windows
 if has ('unix') " 'set convert-meta off' in .inputrc makes Alt not the Meta key
@@ -570,18 +570,18 @@ if $TMUX != ""
     packadd! vim-tmux-pilot
 endif
 
-" vim-tridactyl:           Syntax plugin for Tridactyl configuration files plugurl:tridactyl/vim-tridactyl " {{{3
+" vim-tridactyl:           Syntax plugin for Tridactyl configuration files                        plugurl:tridactyl/vim-tridactyl " {{{3
 
 " No configuration needed
 
-" vimtex:                  vim LaTeX plugin plugurl:lervag/vimtex type:opt " {{{3
+" vimtex:                  vim LaTeX plugin                                                       plugurl:lervag/vimtex type:opt " {{{3
 
 let g:vimtex_view_method = 'zathura'
 let g:tex_flavor         = 'latex' " See <vim-tex>/ftdetect/tex.vim
 
 autocmd plugins FileType tex,bib packadd vimtex | call vimtex#init()
 
-" vlime:                   A Common Lisp dev environment for Vim plugurl:vlime/vlime " {{{3
+" vlime:                   A Common Lisp dev environment for Vim                                  plugurl:vlime/vlime " {{{3
 
 let g:vlime_cl_impl = "sbcl"
 function! VlimeBuildServerCommandFor_clisp(vlime_loader, vlime_eval)
@@ -590,11 +590,11 @@ function! VlimeBuildServerCommandFor_clisp(vlime_loader, vlime_eval)
                    \ "--eval", a:vlime_eval]
 endfunction
 
-" webapi-vim:              Needed for vim-gist plugurl:mattn/webapi-vim type:opt " {{{3
+" webapi-vim:              Needed for vim-gist                                                    plugurl:mattn/webapi-vim type:opt " {{{3
 
 " No configuration needed
 
-" YankRing.vim:            Maintains a history of previous yanks, changes and deletes plugurl:vim-scripts/YankRing.vim " {{{3
+" YankRing.vim:            Maintains a history of previous yanks, changes and deletes             plugurl:vim-scripts/YankRing.vim " {{{3
 
 let g:yankring_history_dir = '$HOME/var/cache'
 
