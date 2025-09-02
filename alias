@@ -259,8 +259,6 @@ alias    sudo='sudo '                                   # enable aliases to be s
 alias   tree='command tree -CFI ".git" --dirsfirst'     # better looking tree(1)
 alias unexec='find . -type f -exec chmod ogu-x "{}" \;' # chmod -x all FILES in tree (needed when copying from Windows)
 
-alias pickfont='fc-list | sed -e "s/.*: //" -e "s/,.*//" -e "s/:.*//" | sort -u | fzf'
-
 alias rcbb='telnet realitycheckbbs.org -l "Jeremy Brubaker"'
 
 alias md2html='pandoc -f markdown' # convert Markdown to HTML
