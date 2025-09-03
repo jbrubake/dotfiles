@@ -317,13 +317,17 @@ export PACKER_CACHE_DIR=$XDG_CACHE_HOME/packer
 
 # Go {{{2
 #
-[ -d "/opt/go/bin" ] && pathadd "/opt/go/bin"
-export GOPATH=$HOME
-export GOCACHE=$HOME/var/cache/go-build
-export GOMODCACHE=$HOME/var/cache/go-build/mod
-mkdir -p "$GOPATH"
-mkdir -p "$GOCACHE"
-mkdir -p "$GOMODCACHE"
+if [ -d "/opt/go/bin" ]; then
+    pathadd "/opt/go/bin"
+
+    export GOPATH=$HOME
+    export GOCACHE=$HOME/var/cache/go-build
+    export GOMODCACHE=$HOME/var/cache/go-build/mod
+
+    mkdir -p "$GOPATH"
+    mkdir -p "$GOCACHE"
+    mkdir -p "$GOMODCACHE"
+fi
 
 # gcloud {{{2
 #
