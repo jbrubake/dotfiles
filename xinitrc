@@ -79,7 +79,12 @@ if ! ps x | grep [s]tartx; then
         if command -v my >/dev/null; then
             t=$(my -v terminal)
         else
-            t=xterm
+            for term in st gnome-terminal rxvt xterm; do
+                if command -v "$term" >/dev/null; then
+                    t=$term
+                    break
+                fi
+            done
         fi
         # Find all SSH public keys and add the corresponding private key
         #
