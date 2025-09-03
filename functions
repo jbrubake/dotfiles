@@ -170,7 +170,7 @@ lsp () { # Print numerical permissions at the start of ls -l output
 #
     # If ls is supposed to be colored, we have to force it because
     # piping the output with --color=auto strips color codes
-    _opts=$(echo "$LS_OPTS" | sed 's/--color\s*=*\s*auto/--color=always/')
+    _opts=$(echo "$LS_OPTS" | sed 's/--color=auto/--color=always/')
 
     command -v exa >/dev/null && _ls=exa
     command -v eza >/dev/null && _ls=eza
