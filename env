@@ -184,7 +184,7 @@ done
 # Pass $LESS to MANPAGER if it is less
 [ "$MANPAGER" = 'less' ] && MANPAGER="less $LESS"
 
-# Web browser {{{2
+# Web browser and Search Engine {{{2
 #
 browsers='elinks links w3m lynx'
 [ -n "$DISPLAY" ] &&
@@ -192,6 +192,8 @@ browsers='elinks links w3m lynx'
 BROWSER=$(pick browser "$browsers")
 unset browsers
 export BROWSER
+
+WWW_SEARCH=www.duckduckgo.com # used in ~/.functions
 
 # ls {{{2
 #

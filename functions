@@ -238,7 +238,7 @@ EOF
         *) $ip "$@" ;;
     esac
 }
-google () { # Google something
+google () { # Google something (using $WWW_SEARCH as the search engine)
     # Create search string if arguments were passed
     if [ $# != 0 ]; then
         # Google search strings replace spaces with '+'
@@ -250,15 +250,15 @@ google () { # Google something
         url="$url$search_string&btnG=Google+Search"
     fi
 
-    # Open URL in browser. If no arguments were passed
-    # it merely opens google.com
-    openurl "www.google.com/$url"
+    # Open URL in browser
+    # If no arguments were passed it merely opens your search engine
+    openurl "${WWW_SEARCH:-www.google.com}/$url"
 }
 rtfm() { # Check various forms of documentation
     man "$@" ||
         [ -f "/usr/share/info/$@.info*" ] && info "$@" ||
         printf "No info entry for \n" "$@" >&2 &&
-            openurl "http://duckduckgo.com/?q=%21documentation+for+$@" ;
+            openurl "${WWW_SEARCH:-www.google.com}/?q=%21documentation+for+$@"
 }
 #### hb/hr/hbl {
 # Bold, Reverse-Video and Blinking highlighted search
