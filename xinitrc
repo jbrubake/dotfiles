@@ -115,7 +115,12 @@ command -v firefox        >/dev/null && firefox &
 # Cleanup {{{1
 wait $wmpid # wait for WM to exit
 
-# Do any necessary clean up
+# Gracefully shutdown virtual machines {{{2
+#
 command -v virsh >/dev/null &&
     virsh list | awk '/[[:digit:]]/ {print $2}' | xargs virsh shutdown
+command -v vboxmanage >/dev/null &&
+    vboxmanage list runningvms | sed 's/.*{\(.*\)}/\1/' | xargs -I{} vboxmanage controlvm '{}' acpipowerbutton
+command -v vmrun >/dev/null &&
+    vmrun -T ws list | sed 1d | xargs vmrun -T ws stop
 
