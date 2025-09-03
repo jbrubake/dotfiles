@@ -338,7 +338,6 @@ wiki() { # Interact with wiki
             (cd "$WIKI_DIR" && make ${@:2})
             ;;
         view)
-            test -n "$2" && BROWSER="$2"
             openurl "$WIKI_DIR/site/index.html"
             ;;
         help)
@@ -349,8 +348,7 @@ Commands:
     edit             Edit $WIKI_DIR/content/index.md in $EDITOR
     git [args]       Pass [args] to git(1) and execute in $WIKI_DIR
     make [args]      Run make(1) [args] in $WIKI_DIR
-    view [browser]   Use openurl to view the wiki at $WIKI_DIR/site.
-                       Use [browser] to view. Default is $BROWSER
+    view             Use $BROWSER to view the local wiki at $WIKI_DIR/site
     help             View this help
 
     Edit is the default command
