@@ -42,6 +42,12 @@ if have grc; then
     alias  printenv="$grc -c conf.printenv printenv"
     alias      jobs="$jobs${BASH:+ | grcat conf.jobs}" # colorized version
     alias   tcpdump="$grc tcpdump -l"
+
+    # If ping gives **no** response, grc will buffer everything
+    # until ping is killed. This allows the intial line to be displayed
+    # so you know something is actually happening
+    have stdbuf &&
+        alias ping="$grc -c conf.ping stdbuf -oL ping"
 fi
 
 # ls(1) {{{1
