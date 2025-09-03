@@ -230,6 +230,7 @@ Usage: ip get [copy]
 
 Print public IP address to stdout or to the X11 clipboard if [copy] is present
 EOF
+                    return
                 ;;
             esac
             printf "%s\n" "$res"
