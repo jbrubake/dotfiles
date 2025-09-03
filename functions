@@ -308,8 +308,8 @@ manf() { # Open manpage for $1 at the first occurence of flag $2
 #   $2: flag to jump to (omit the first '-')
 #
     case $MANPAGER in
-        vimpager) _pager="vimpager -c 'silent! /^  *-$2/'" ;;
-        *)        _pager="less --pattern '^  *-$2'" ;;
+        vimpager) _pager="vimpager -c 'silent! /^\s\+-.*$2/'" ;;
+        *)        _pager="less --pattern '^\s+-.*$2'" ;;
     esac
     man -P "$_pager" $1
 }
