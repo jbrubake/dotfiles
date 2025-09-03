@@ -19,7 +19,7 @@
 # Based on P. C. SHyamshankar's spectrum script
 # for zsh <github.com/sykora>.
 # Changed to use functions instead of hashes for speed
-# Changed to use tput(1) as much as possible
+# tput(1) is not used in order to avoid a process
 ###################################################
 FX() {
     case "$1" in
@@ -55,7 +55,7 @@ FX() {
     esac
 }
 # FG(), FGt(), BG() and BGt() {
-if test "$( tput colors )" -ge 0; then
+if [ "$( tput colors )" -ge 0 ]; then
     # Expects: color number 0-255
     FG()  { printf "[38;5;$1m"; }
     BG()  { printf "[48;5;$1m"; }
@@ -161,9 +161,11 @@ http_code () { # Get meaning of HTTP error code
 }
 lsp () { # Print numerical permissions at the start of ls -l output
 #
+# Inspired by:
 # https://github.com/blaenk/dots/blob/master/zsh/zsh/functions.zsh
 #
 # Globals:
+#   LS
 #   LS_OPTS
 #
     # If ls is supposed to be colored, we have to force it because
@@ -200,7 +202,7 @@ ip () { # Add 'get' command to ip(8)
 #
 # https://jip.dev/posts/dots/
 #
-# 'ip get' prints current ip address and copies to clipboard
+# 'ip get' prints current ip address and optionally copies to clipboard
 # All other commands are passed to the real 'ip' command
 #
     # Use grc if it is available
@@ -226,8 +228,7 @@ ip () { # Add 'get' command to ip(8)
                     cat <<EOF
 Usage: ip get [copy]
 
-Print public IP address to stdout or to the X11 clipboard if [copy]
-is present
+Print public IP address to stdout or to the X11 clipboard if [copy] is present
 EOF
                 ;;
             esac
@@ -282,7 +283,7 @@ hbl() {
     _hb_hr_hbl "$1" "$fx" "$2"
 }
 _hb_hr_hbl() {
-    test $2 && color="[38;5;$3m"
+    [ $2 ] && color="[38;5;$3m"
     reset="[0m"
     sed "s/\($1\)/$2$color\1$reset/gI"
 }
@@ -320,7 +321,7 @@ wiki() { # Interact with wiki
 #   $1: edit|git|make|view|help
 #   $2: arguments needed by $1
 #
-    if test -z "$WIKI_DIR"; then
+    if [ -z "$WIKI_DIR" ]; then
         printf "%s\n" '$WIKI_DIR is not defined'
         return 1
     fi

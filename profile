@@ -5,12 +5,12 @@
 
 # This file does non-X login stuff so return
 # if some DM decides it should be sourced
-if test -n "$DISPLAY"; then
+if [ -n "$DISPLAY" ]; then
     return 2>/dev/null || exit
 fi
 
 # Setup Environment {{{1
-. "$HOME/.env"      # common environment
+. "$HOME/.env" # common environment
 
 # Start gpg and ssh agents {{{1
 #
@@ -27,7 +27,7 @@ if command -v keychain >/dev/null; then
 fi
 
 # MOTD {{{1
-if test -e /run/motd.dynamic; then
+if [ -e /run/motd.dynamic ]; then
     cat /run/motd.dynamic
 else
     uname -npsr
@@ -48,5 +48,5 @@ case "$(uname -r)" in
 
 esac
 
-#vim: foldlevel=0
+# vim: foldlevel=0
 

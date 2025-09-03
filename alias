@@ -18,9 +18,9 @@ have() { command -v "$1" >/dev/null; }
 
 # Defaults {{{1
 #
-# Defining the eventual alias happens in one of two places
-# because it may end up using grc(1)
+# This will be overriden if grc(1) is available
 jobs='jobs -l' # list PIDs
+alias jobs=$jobs
 
 # grc(1)-only aliases {{{1
 #
@@ -28,8 +28,8 @@ jobs='jobs -l' # list PIDs
 #
 if have grc; then
     GRC_OPTS='-es' # colorize stderr and stdout
-    _grc='grc $GRC_OPTS'
-    alias grc=$_grc
+    grc='grc $GRC_OPTS'
+    alias grc=$grc
 
     # Create alias for all configs found *if* the command exists
     for d in /usr/share/grc ~/.grc; do
@@ -41,33 +41,30 @@ if have grc; then
     done
 
     # Always create these
-    alias configure="$_grc ./configure"
-    alias  printenv="$_grc -c conf.printenv printenv"
+    alias configure="$grc ./configure"
+    alias  printenv="$grc -c conf.printenv printenv"
     alias      jobs="$jobs${BASH:+ | grcat conf.jobs}" # colorized version
-    alias   tcpdump="$_grc tcpdump -l"
-else
-    # fall back if grc(1) not available
-    alias jobs=$jobs
+    alias   tcpdump="$grc tcpdump -l"
 fi
 
 # ls(1) {{{1
 #
-_ls=$LS
+ls=$LS # defined in ~/.env
 case $LS in
-    ls) command ls --version | grep -q GNU && _ls=gnu-ls ;;
-    '') LS=ls; _ls=$LS ;;
+    ls) command ls --version | grep -q GNU && ls=gnu-ls ;;
+    '') ls=ls ;;
 esac
 
-case $_ls in
+case $ls in
     eza | exa)
-        LS_OPTS="$LS_OPTS"
+        LS_OPTS=$LS_OPTS
         ls_opts='';      ll_opts='-lg';
         la_opts='-a';    lla_opts='-lag';
         ld_opts='-d .*'; lld_opts='-lg -d .*';
         lsap_opts=''
         ;;
     gnu-ls) # GNU ls
-        LS_OPTS="$LS_OPTS"
+        LS_OPTS=$LS_OPTS
         ls_opts='';      ll_opts='-l';
         la_opts='-A';    lla_opts='-lA';
         ld_opts='-d .*'; lld_opts='-l -d .*';
@@ -84,21 +81,23 @@ esac
 
 # Force color if using grc with an ls that supports color
 unset grc_col
-if have grc && [ -n "$HAS_COLOR" ] && [ "$_ls" = 'gnu-ls' ]; then
+if have grc && [ -n "$HAS_COLOR" ] && [ "$ls" = 'gnu-ls' ]; then
     grc_col='--color=always'
 fi
 
+# Single-quote $LS_OPTS so it can be changed on the fly
 alias   ls="$LS $ls_opts "'$LS_OPTS'
-alias   ll="${_grc:+"$_grc "}$LS $ll_opts "'$LS_OPTS'" $grc_col"
+alias   ll="${grc:+"$grc "}$LS $ll_opts "'$LS_OPTS'" $grc_col"
 alias   la="$LS $la_opts "'$LS_OPTS'
-alias  lla="${_grc:+"$_grc "} $LS $lla_opts "'$LS_OPTS'" $grc_col"
+alias  lla="${grc:+"$grc "} $LS $lla_opts "'$LS_OPTS'" $grc_col"
 alias   l.="$LS $ld_opts "'$LS_OPTS'
-alias  ll.="${_grc:+"$_grc "} $LS $lld_opts "'$LS_OPTS'" $grc_col"
+alias  ll.="${grc:+"$grc "} $LS $lld_opts "'$LS_OPTS'" $grc_col"
 alias lsap='lsp'"$lsap_opts" # lsp is defined in ~/.functions
 
-unset _ls ls_opts la_opts ll_opts lla_opts ld_opts lld_opts ldap_opts grc_col
+unset ls ls_opts la_opts ll_opts lla_opts ld_opts lld_opts ldap_opts grc_col
 
 # cd {{{1
+#
 alias  ..='cd ..'          # up one directory
 alias ...='cd ../..'       # up two directories
 alias ${BASH:+--} -='cd -' # cd to previous directory
@@ -120,6 +119,7 @@ case $(uname -o) in
 esac
 
 # Alternatives {{{1
+#
 alias     term='( $(my terminal)& )'
 alias     calc='( $(my calculator)& )'
 alias calendar='( $(my calendar)& )'
@@ -144,7 +144,7 @@ case $PAGER in
     vimpager)
         alias  less='vimpager'
         alias zless='vimpager'
-        alias cat='vimcat' ;;
+        alias   cat='vimcat' ;;
     bat)
         alias  less='bat -p -pager less'
         alias zless='bat -p -pager less'
@@ -229,12 +229,11 @@ fi
 
 # Vim & Ex {{{1
 #
-alias  minpac_clean='vim +PackCleanAndQuit'  # remove old plugins
-alias minpac_update='vim +PackUpdateAndQuit' # add and update plugins
-alias minpac_status='vim +PackStatus +only'  # show plugin status
-alias          gist='vim "+Gist -l"'         # open Gist browser
-
-alias trim='ex +"bufdo! %s/\s\+$//e" -scxa'
+alias  minpac_clean='vim +PackCleanAndQuit'          # remove old plugins
+alias minpac_update='vim +PackUpdateAndQuit'         # add and update plugins
+alias minpac_status='vim +PackStatus +only'          # show plugin status
+alias          gist='vim "+Gist -l"'                 # open Gist browser
+alias          trim='ex +"bufdo! %s/\s\+$//e" -scxa' # trim trailing whitespace
 
 # Miscellaneous {{{1
 #
@@ -242,10 +241,13 @@ have reset || alias reset='tput sgr0'  # reset terminal
 have clear || alias clear='tput clear' # emulate clear(1) if I don't have it
               alias   cls='clear'      # windows clear
 
-have todo.sh   && alias    t='todo.sh'        # easier todo.sh
-have rpg-cli   && alias  rpg='rpg-cli'        # easier rpg-cli
-have colormake && alias make='colormake'      # use colormake
-have buku      && alias    b='buku --suggest' # easier buku
+have buku       && alias       b='buku --suggest'             # easier buku
+have colormake  && alias    make='colormake'                  # use colormake
+have locate     && alias     loc='locate -d "$LOCATEDB" "$@"' # use my personal locate(1) db
+have mgitstatus && alias    gits='mgitstatus -e -c'           # get status of git repos
+have pandoc     && alias md2html='pandoc -f markdown'         # convert Markdown to HTML
+have rpg-cli    && alias     rpg='rpg-cli'                    # easier rpg-cli
+have todo.sh    && alias       t='todo.sh'                    # easier todo.sh
 
 alias             +x='chmod +x' # make file executable
 alias ${BASH:+--} -x='chmod -x' # make file non-executable 
@@ -253,7 +255,6 @@ alias ${BASH:+--} -x='chmod -x' # make file non-executable
 alias      :q='exit'                                    # exit like it's vim
 alias    bell='printf "\a"'                             # ring the bell
 alias    grep="grep ${HAS_COLOR:+--color=auto}"         # force color in *grep
-alias     loc='locate -d "$LOCATEDB" "$@"'              # use my personal locate(1) db
 alias      nu="who | cut -d' ' -f1 | uniq | wc -l"      # get number of logged on users
 alias       r='fc -s'                                   # ^old^new but global
 alias    ship='ip --brief address'                      # short IP interface overview
@@ -261,30 +262,26 @@ alias    sudo='sudo '                                   # enable aliases to be s
 alias   tree='command tree -CFI ".git" --dirsfirst'     # better looking tree(1)
 alias unexec='find . -type f -exec chmod ogu-x "{}" \;' # chmod -x all FILES in tree (needed when copying from Windows)
 
+# It would be nice if telnet had something like ssh configs
 alias rcbb='telnet realitycheckbbs.org -l "Jeremy Brubaker"'
-
-alias md2html='pandoc -f markdown' # convert Markdown to HTML
-
-have mgitstatus && alias gits='mgitstatus -e -c' # Get status of git repos
 
 # start / stop a local-only ssh server
 if have sshd; then
-    alias klsshd='kill -TERM $(command cat $(sshd -f "$LOCAL_SSHD_CONFIG" -T | grep pidfile | cut -d" " -f2))'  # Stop user sshd
-    alias lsshd='/usr/sbin/sshd -f "$LOCAL_SSHD_CONFIG"'
+    alias lsshd='/usr/sbin/sshd -f "$LOCAL_SSHD_CONFIG"' # start a local ssh server
+    alias klsshd='kill -TERM $(command cat $(sshd -f "$LOCAL_SSHD_CONFIG" -T | grep pidfile | cut -d" " -f2))'  # stop user sshd
 fi
 
 # Use grc(1) if available {{{2
 #
-alias   df="${_grc:+"$_grc "}df -hT"              # human-readable is better
-alias   du="${_grc:+"$_grc "}du -h"               # human-readable is better
-alias  du1="${_grc:+"$_grc "}du -h --max-depth=1" # top-level summary
-alias free="${_grc:+"$_grc "}free -h"             # human-readable is better
+alias   df="${grc:+"$grc "}df -hT"              # human-readable is better
+alias   du="${grc:+"$grc "}du -h"               # human-readable is better
+alias  du1="${grc:+"$grc "}du -h --max-depth=1" # top-level summary
+alias free="${grc:+"$grc "}free -h"             # human-readable is better
 
 # Cleanup {{{1
 #
-unset color_flag
+unset grc
 unset have
-unset _grc
 unset jobs
 
 # vim: ft=sh foldlevel=0
