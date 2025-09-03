@@ -255,10 +255,13 @@ google () { # Google something (using $WWW_SEARCH as the search engine)
     openurl "${WWW_SEARCH:-www.google.com}/$url"
 }
 rtfm() { # Check various forms of documentation
-    man "$@" ||
-        [ -f "/usr/share/info/$@.info"* ] && info "$@" ||
-        printf "No info entry for \n" "$@" >&2 &&
-            openurl "${WWW_SEARCH:-www.google.com}/?q=%21documentation+for+$@"
+    if whatis "$@" >/dev/null 2>&1; then
+        man "$@"
+    elif [ -f "/usr/share/info/$@.info"* ]; then
+        info "$@"
+    else
+        openurl "${WWW_SEARCH:-www.google.com}/?q=%21documentation+for+$@"
+    fi
 }
 #### hb/hr/hbl {
 # Bold, Reverse-Video and Blinking highlighted search
