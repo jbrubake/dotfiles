@@ -19,18 +19,31 @@ export HOME LOGNAME UNAME TMPDIR TMP
 #
 # pathadd {{{2
 #
-# @description Add an entry to the front of PATH.
-# If the entry is present, it is not added again.
+# Add <path> to the beginning of <var> (Default: PATH)
+# Usage: pathadd <path> [<var>]
 #
-# @arg $1 str Entry to add
-#
-# @set PATH
+# Example: $ pathadd ~/share XDG_DATA_DIRS
 #
 pathadd() {
-    case :$PATH: in
-        *:$1:*) ;;
-        *) PATH=$1:$PATH ;;
-    esac
+    eval "${2:-PATH}='$1:$(eval echo \$${2:-PATH})'"
+}
+
+# pathuniq {{{2
+#
+# Remove duplicate entries from <var> (Default: $PATH)
+# Usage: pathuniq [<var>]
+#
+# Example: $ pathuniq PATH
+#
+pathuniq() {
+    eval "${1:-PATH}='$(eval echo \$${1:-PATH} |
+    tr : "\n" |
+    nl |
+    sort -uk2,2 |
+    sort -n |
+    cut -f2- |
+    tr "\n" : |
+    sed -e "s/:$//" -e "s/^://")'"
 }
 
 # have {{{2
@@ -80,7 +93,8 @@ export XDG_DATA_HOME=$HOME/share      # data files         (/usr/share) # ~/.loc
 export XDG_STATE_HOME=$HOME/var/lib   # state data         (/var/lib)   # ~/.local/state
 
 have flatpak &&
-    export XDG_DATA_DIRS=$XDG_DATA_HOME/flatpak/exports/share:$XDG_DATA_DIRS
+    pathadd "$XDG_DATA_HOME/flatpak/exports/share" XDG_DATA_DIRS
+pathuniq XDG_DATA_DIRS
 
 # Setup PATH {{{1
 #
@@ -433,18 +447,15 @@ fi
 # Finalize PATH {{{1
 #
 # Add personal directories. Listed in order from least- to most-significant
-# NOTE: do not use pathadd as I want to force these entries to be at the front
 for d in \
     "$HOME/games/bin" \
     "$HOME/sbin" \
     "$HOME/bin/.flatpak" \
     "$HOME/bin" \
 ; do
-    [ -d "$d" ] && PATH=$d:$PATH
+    [ -d "$d" ] && pathadd "$d"
 done 
-
-# NOTE: adding a final : simplifies the awk
-PATH=$(printf %s "$PATH:" | awk -vRS=: '!a[$0]++' | paste -s -d: -)
+puniq PATH
 
 # Include local and private settings {{{1
 #
@@ -454,6 +465,7 @@ PATH=$(printf %s "$PATH:" | awk -vRS=: '!a[$0]++' | paste -s -d: -)
 # Cleanup {{{1
 #
 unset pathadd
+unset pathuniq
 unset have
 unset pick
 
