@@ -367,7 +367,10 @@ if have bash; then
 fi
 
 # Miscellaneous {{{1
-export LOCATEDB="$HOME/var/lib/locate/locate.db"
+if have locate; then
+    export LOCATEDB=$HOME/var/lib/locate/locate.db
+    mkdir -p "$(dirname "$LOCATEDB")"
+fi
 
 LESSHISTFILE=$XDG_STATE_HOME/misc/lesshst
 mkdir -p "$(dirname "$LESSHISTFILE")"
