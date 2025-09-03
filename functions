@@ -172,7 +172,12 @@ lsp () { # Print numerical permissions at the start of ls -l output
     # piping the output with --color=auto strips color codes
     _opts=$(echo "$LS_OPTS" | sed 's/--color=auto/--color=always/')
 
-    command "$LS" $_opts -l "$@" | awk '{
+    # If grc(1) is available, use it and force color through the pipe
+    unset _grc
+    command -v grc >/dev/null &&
+        _grc="grc $GRC_OPTS --colour=on"
+
+    $_grc "$LS" $_opts -l "$@" | awk '{
             mode = gensub("\x1b[^m]*m", "", "g", $1)
             k = 0;
             for (i = 0; i <= 8; i++)
@@ -180,7 +185,7 @@ lsp () { # Print numerical permissions at the start of ls -l output
             if(k)
                 printf("%0o %s\n", k, $0);
         }'
-    unset _opts
+    unset _opts _grc
 }
 unalias ip 2>/dev/null
 ip () { # Add 'get' command to ip(8)
