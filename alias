@@ -73,7 +73,7 @@ case $ls in
         ld_opts='-d .*'; lld_opts='-lg -d .*';
         lspa_opts='-A'
         ;;
-    *) printf 'How did we get here?' >&2 ;;
+    *) printf 'How did we get here?\n' >&2 ;;
 esac
 
 # Force color if using grc with an ls that supports color
