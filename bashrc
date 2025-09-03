@@ -94,5 +94,9 @@ fi
 
 # }}}
 
+# Cleanup {{{1
+#
+unset have
+
 # vim: foldlevel=0
 
