@@ -256,7 +256,7 @@ google () { # Google something (using $WWW_SEARCH as the search engine)
 }
 rtfm() { # Check various forms of documentation
     man "$@" ||
-        [ -f "/usr/share/info/$@.info*" ] && info "$@" ||
+        [ -f "/usr/share/info/$@.info"* ] && info "$@" ||
         printf "No info entry for \n" "$@" >&2 &&
             openurl "${WWW_SEARCH:-www.google.com}/?q=%21documentation+for+$@"
 }
