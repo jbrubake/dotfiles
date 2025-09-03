@@ -7,8 +7,8 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
-. "$HOME/.functions"
 . "$HOME/.alias"
+. "$HOME/.functions" # Allow functions to override aliases
 . "$HOME/.prompts"
 
 if command -v zoxide >/dev/null; then
