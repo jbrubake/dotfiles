@@ -219,13 +219,13 @@ ip () { # Add 'get' command to ip(8)
                 c | co | cop | copy)
                     if command -v xclip >/dev/null; then
                         printf "%s" "$res" | xclip -in -selection clipboard
-                        printf "copied %s to clipboard\n" "$res"
+                        printf "copied %s to clipboard\n" "$res" >&2
                     else
                         printf "%s\n" "not copied: xclip is not installed" >&2
                     fi
                     ;;
                 h | he | hel | help)
-                    cat <<EOF
+                    cat >&2 <<EOF
 Usage: ip get [copy]
 
 Print public IP address to stdout or to the X11 clipboard if [copy] is present
