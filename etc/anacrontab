@@ -7,14 +7,14 @@ MAILTO=jbrubake
 RANDOM_DELAY=5
 
 # .---------------- @{daily,weekly,monthly} or N (# of days)
-# |       .------------- Wait N minutes before starting job
-# |       |      .---------- Job name to enter in log
-# |       |      |
-# |       |      |
-# |       |      |
+# |         .------------- Wait N minutes before starting job
+# |         |      .---------- Job name to enter in log
+# |         |      |
+# |         |      |
+# |         |      |
 # period    delay   job-id          command to be executed
-1      0       cron.daily      nice run-parts $HOME/etc/cron.daily
-7      0       cron.weekly     nice run-parts $HOME/etc/cron.weekly
-@monthly 0     cron.monthly    nice run-parts $HOME/etc/cron.monthly
+1           0       cron.daily      nice run-parts $HOME/etc/cron.daily
+7           0       cron.weekly     nice run-parts $HOME/etc/cron.weekly
+@monthly    0       cron.monthly    nice run-parts $HOME/etc/cron.monthly
 
 # vim: filetype=crontab
