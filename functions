@@ -178,13 +178,16 @@ lsp () { # Print numerical permissions at the start of ls -l output
         _grc="grc $GRC_OPTS --colour=on"
 
     $_grc "$LS" $_opts -l "$@" | awk '{
-            mode = gensub("\x1b[^m]*m", "", "g", $1)
-            k = 0;
-            for (i = 0; i <= 8; i++)
-                k += ((substr(mode, i+2, 1) ~ /[rwx]/) * 2^(8-i));
-            if(k)
-                printf("%0o %s\n", k, $0);
-        }'
+        mode = gensub("\x1b[^m]*m", "", "g", $1)
+        k = 0; h = 0;
+        for (i = 0; i <= 8; i++) {
+            c = substr(mode, i+2, 1)
+            k += (c ~ /[rwx]/) * 2^(8-i);
+            h += (c ~ /[Tt]/) * 1;
+            h += (c ~ /[Ss]/) * (i == 2 ? 4 : 2);
+        }
+        printf("%o%03o %s\n", h, k, $0);
+    }'
     unset _opts _grc
 }
 unalias ip 2>/dev/null
