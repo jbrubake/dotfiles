@@ -161,7 +161,7 @@ export FCEDIT=$EDITOR
 # PAGER/MANPAGER {{{2
 #
 export PAGER=$(pick pager 'less most more')
-export MANPAGER=$(pick manpager 'less most more')
+export MANPAGER=$PAGER
 
 if have ack; then
     export ACK_PAGER=$PAGER
@@ -169,31 +169,28 @@ if have ack; then
 fi
 
 # Configure pager {{{3
-for p in "$PAGER" "$MANPAGER"; do
-    case $p in
-        vimpager)
-            export VIMPAGER_RC="$HOME/.vimrc" ;;
-        less)
-            # NOTE: $LESS_TERMCAP_* variables are set in ~/.shinit
-            # because *this* file may be sourced *before* TERM is defined
+case $PAGER in
+    vimpager)
+        export VIMPAGER_RC=$HOME/.vimrc ;;
+    less)
+        # NOTE: $LESS_TERMCAP_* variables are set in ~/.shinit
+        # because *this* file may be sourced *before* TERM is defined
 
-            export LESSCHARSET='utf-8';
-            export LESS='-R --quit-if-one-screen'
+        export LESSCHARSET='utf-8';
+        export LESS='-R --quit-if-one-screen'
 
-            # Colorize things if highlight, bat, or pygmentize is available
-            #
-            # The '||' here is intentional, see rhbz@1254837
-            if have highlight; then
-                export LESSOPEN="||highlight --force -O truecolor --style $HIGHLIGHT_STYLE %s"
-            elif have bat; then
-                export LESSOPEN='||bat %s --decorations never --paging never --color=always'
-            elif have pygmentize; then
-                export LESSOPEN="||pygmentize -O style=$PYGMENTIZE_STYLE -g %s"
-            fi
-            ;;
-    esac
-    unset p
-done
+        # Colorize things if highlight, bat, or pygmentize is available
+        #
+        # The '||' here is intentional, see rhbz@1254837
+        if have highlight; then
+            export LESSOPEN="||highlight --force -O truecolor --style $HIGHLIGHT_STYLE %s"
+        elif have bat; then
+            export LESSOPEN='||bat %s --decorations never --paging never --color=always'
+        elif have pygmentize; then
+            export LESSOPEN="||pygmentize -O style=$PYGMENTIZE_STYLE -g %s"
+        fi
+        ;;
+esac
 
 # Pass $LESS to MANPAGER if it is less
 [ "$MANPAGER" = 'less' ] && MANPAGER="less $LESS"
