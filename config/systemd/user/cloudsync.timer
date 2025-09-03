@@ -1,5 +1,5 @@
 [Unit]
-Description=Sync cloud files
+Description=Run cloudsync service periodically
 RefuseManualStart=no
 RefuseManualStop=no
 

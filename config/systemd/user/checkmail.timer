@@ -1,5 +1,5 @@
 [Unit]
-Description=Get new mail and flush mail queue every fifteen minutes
+Description=Run checkmail service periodically
 RefuseManualStart=no
 RefuseManualStop=no
 
