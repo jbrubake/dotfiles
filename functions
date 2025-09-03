@@ -400,6 +400,7 @@ ping() { # Wrap ping(1) to allow pinging by SSH Host entry
     $ping $(__gethost "$@")
 }
 # navi {1
+if command -v navi >/dev/null; then
 _navi_call() {
     result="$(navi --path ~/share/navi "$@" </dev/tty)"
     if [ -z "${result}" ]; then
@@ -422,6 +423,7 @@ _navi_widget() {
     READLINE_LINE="$output"
     READLINE_POINT=${#READLINE_LINE}
 }
+fi # }
 # Helper Functions {1
 # (prefix names with '__')
 __gethost() { # Call gethost with the last argument passed
