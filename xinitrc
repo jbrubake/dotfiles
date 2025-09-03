@@ -2,24 +2,22 @@
 
 # Basic setup {{{1
 
-# Where my WM init scripts live
-# init_dir="$XDG_CONFIG_HOME/init.d"
-init_dir="$HOME/etc/init.d"
-
 # xset options {{{1
 #
 command -v xset >/dev/null && xset b off # Turn off audible bell
 
 # Run custom X init scripts {{{1
 #
-for f in $init_dir/*; do
-    [ -x "$f" ] && $f
+# for f in "$XDG_CONFIG_HOME/init.d/"*; do
+for f in "$HOME/etc/init.d/"*; do
+    [ -x "$f" ] && "$f"
 done
 
 # Merge XResources {{{1
 command -v xrdb >/dev/null &&
     if [ -r "$HOME/.Xresources" ]; then
-        test -r "$HOME/.Xresources.$COLORSCHEME" &&
+        unset colorscheme
+        [ -r "$HOME/.Xresources.$COLORSCHEME" ] &&
             colorscheme="-DCOLORSCHEME=<$HOME/.Xresources.$COLORSCHEME>"
         xrdb -merge "$HOME/.Xresources" $colorscheme
         unset colorscheme
@@ -33,9 +31,9 @@ command -v xrdb >/dev/null &&
 # app2 && \
 # ) &
 # Use sleep as necessary to sync things up)
-command -v xautolock >/dev/null  && xautolock &
-command -v xbanish >/dev/null    && xbanish &
-command -v mopidy >/dev/null     && mopidy &
+command -v xautolock >/dev/null && xautolock &
+command -v xbanish   >/dev/null && xbanish &
+command -v mopidy    >/dev/null && mopidy &
 
 # Start WM {{{1
 #
@@ -100,9 +98,6 @@ command -v signal-desktop >/dev/null && signal-desktop
 command -v discord        >/dev/null && discord
 command -v firefox        >/dev/null && firefox &
 
-# Start other apps {{{1
-#
-
 # Run this stuff forever {{{1
 #
 # while true; do
@@ -112,8 +107,8 @@ command -v firefox        >/dev/null && firefox &
     # sleep 20s # Reasonable CPU cycles
 # done &
 
-# Wait for WM to exit {{{1
-wait $wmpid
+# Cleanup {{{1
+wait $wmpid # wait for WM to exit
 
 # Do any necessary clean up
 command -v virsh >/dev/null &&

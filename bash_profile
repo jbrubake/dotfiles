@@ -4,7 +4,7 @@
 
 # This file does non-X login stuff so return
 # if some DM decides it should be sourced
-if test -n "$DISPLAY"; then
+if [ -n "$DISPLAY" ]; then
     return 2>/dev/null || exit
 fi
 

@@ -73,11 +73,11 @@ pick() {
 
 # XDG Directores {{{1
 #
-# XDG_*=<path>                          # Purpose            (equivalent) # Default
-export XDG_CONFIG_HOME="$HOME/.config"  # config files       (/etc)       # ~/.config
-export XDG_CACHE_HOME="$HOME/var/cache" # non-essential data (/var/cache) # ~/.cache
-export XDG_DATA_HOME="$HOME/share"      # data files         (/usr/share) # ~/.local/share
-export XDG_STATE_HOME="$HOME/var/lib"   # state data         (/var/lib)   # ~/.local/state
+# XDG_*=<path>                        # Purpose            (equivalent) # Default
+export XDG_CONFIG_HOME=$HOME/.config  # config files       (/etc)       # ~/.config
+export XDG_CACHE_HOME=$HOME/var/cache # non-essential data (/var/cache) # ~/.cache
+export XDG_DATA_HOME=$HOME/share      # data files         (/usr/share) # ~/.local/share
+export XDG_STATE_HOME=$HOME/var/lib   # state data         (/var/lib)   # ~/.local/state
 
 have flatpak &&
     export XDG_DATA_DIRS=$XDG_DATA_HOME/flatpak/exports/share:$XDG_DATA_DIRS
@@ -98,16 +98,16 @@ for d in \
     [ -d "$d" ] && pathadd "$d"
 done
 
-# Locale and timezone {{{1
+# Locale {{{1
 #
 : "${LANG:=en_US.UTF-8}"
 export LANG
 
 # Colors 'n' Stuff {{{1
 #
-have highlight  && export HIGHLIGHT_STYLE=base16/google-dark
+have highlight  && export HIGHLIGHT_STYLE='base16/google-dark'
 have bat        && export BAT_THEME='Solarized (light)'
-have pygmentize && export PYGMENTIZE_STYLE=solarized-light
+have pygmentize && export PYGMENTIZE_STYLE='solarized-light'
 
 unset HAS_COLOR
 [ "$(tput colors)" != 0 ] || [ -n "$DISPLAY" ] && export HAS_COLOR=1
@@ -117,7 +117,8 @@ unset HAS_COLOR
 # Select Window Manager or Desktop Environment
 #
 # Supports:
-#   Any WM/DE that is run as a single command with no arguments
+#   - dwm
+#   - Any WM/DE that is run as a single command with no arguments
 #
 export WINDOWMANAGER=cwm
 
@@ -130,7 +131,7 @@ export COLORSCHEME=gnome-dark
 
 # Give Vim access to the terminal colorscheme. See ~/.vimrc
 export VIM_TERMINAL_COLORS=$(awk '$2 ~ /COLOR/ {print gensub(/COLOR/, "", "1", $2), $3}' \
-    ~/.Xresources."$COLORSCHEME" |
+    "$HOME/.Xresources.$COLORSCHEME" |
         sort -n |
         sed -e '1i[' -e '$a]' -e 's/^/"/' -e 's/$/"/' -e '$!s/$/,/' |
         tr -d '\n')
@@ -289,21 +290,24 @@ fi
 [ -d "$PYTHONPATH/bin" ] && pathadd "$PYTHONPATH/bin"
 
 # Rust {{{2
-[ -d "$HOME/.cargo/bin" ] && pathadd "$HOME/.cargo/bin"
-[ -d "$HOME/opt/rust/bin" ] && pathadd "$HOME/opt/rust/bin"
-[ -d "$HOME/opt/rust" ] && export RUSTUP_HOME="$HOME/opt/rust"
+#
+[ -d "$HOME/.cargo/bin" ]      && pathadd "$HOME/.cargo/bin"
+[ -d "$HOME/opt/rust/bin" ]    && pathadd "$HOME/opt/rust/bin"
+[ -d "$HOME/opt/rust" ]        && export RUSTUP_HOME=$HOME/opt/rust
 [ -d "$XDG_CACHE_HOME/cargo" ] && export CARGO_HOME=$XDG_CACHE_HOME/cargo
 
 # Packer {{{2
+#
 export PACKER_CONFIG_DIR=$XDG_STATE_HOME
 export PACKER_CONFIG=$XDG_CONFIG_HOME/packerconfig
 export PACKER_CACHE_DIR=$XDG_CACHE_HOME/packer
 
 # Go {{{2
+#
 [ -d "/opt/go/bin" ] && pathadd "/opt/go/bin"
-export GOPATH=~
-export GOCACHE=~/var/cache/go-build
-export GOMODCACHE=~/var/cache/go-build/mod
+export GOPATH=$HOME
+export GOCACHE=$HOME/var/cache/go-build
+export GOMODCACHE=$HOME/var/cache/go-build/mod
 mkdir -p "$GOPATH"
 mkdir -p "$GOCACHE"
 mkdir -p "$GOMODCACHE"
@@ -313,6 +317,7 @@ mkdir -p "$GOMODCACHE"
 [ -d '/opt/google-cloud-sdk/bin' ] && pathadd /opt/google-cloud-sdk/bin
 
 # Other {{{2
+#
 [ -r "unix://$XDG_RUNTIME_DIR/podman/podman.sock" ] &&
     export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/podman/podman.sock 
 
@@ -331,11 +336,11 @@ if have bash; then
 
     # History stuff
     #
-    export HISTFILE="$XDG_STATE_HOME/misc/bash_history"
+    export HISTFILE=$XDG_STATE_HOME/misc/bash_history
     export HISTSIZE=100              # Max history entries
     export HISTFILESIZE=200          # Allow average of two lines per entry
-    export HISTCONTROL="erasedups"   # No duplicate history entries
-    export HISTIGNORE="&:[bf]g:exit" # History ignores these matches
+    export HISTCONTROL=erasedups     # No duplicate history entries
+    export HISTIGNORE='&:[bf]g:exit' # History ignores these matches
 
     mkdir -p "$(dirname "$HISTFILE")"
 
@@ -347,28 +352,28 @@ fi
 # Miscellaneous {{{1
 export LOCATEDB="$HOME/var/lib/locate/locate.db"
 
-LESSHISTFILE="$XDG_STATE_HOME/misc/lesshst"
+LESSHISTFILE=$XDG_STATE_HOME/misc/lesshst
 mkdir -p "$(dirname "$LESSHISTFILE")"
 
-if [ -d ~/wiki ]; then
-    export WIKI_DIR=~/wiki
-    export WIKI_SITE=~/wiki/site
+if [ -d "$HOME/wiki" ]; then
+    export WIKI_DIR=$HOME/wiki
+    export WIKI_SITE=$HOME/wiki/site
 fi
 
 # This is used in vimrc and scripts/curlvim
-[ -d ~/src/dotfiles ] &&
-    export DOTFILES=~/src/dotfiles
+[ -d "$HOME/src/dotfiles" ] &&
+    export DOTFILES=$HOME/src/dotfiles
 
 # Always use my .inputrc
 if [ -r "$HOME/.inputrc" ]; then
-    export INPUTRC="$HOME/.inputrc"
+    export INPUTRC=$HOME/.inputrc
 fi
 
 # Set news server
 export NNTPSERVER=snews://news.eternal-september.org
 
 # Set local mail directory
-export MAIL="$HOME/.maildir/local"
+export MAIL=$HOME/.maildir/local
 
 # Enable pass(1) extensions
 have pass &&
@@ -376,10 +381,9 @@ have pass &&
 
 # pinentry stuff
 [ -x "$HOME/bin/pinentry-ssh-askpass" ] &&
-    export SSH_ASKPASS="$HOME/bin/pinentry-ssh-askpass"
-if [ -n "$DISPLAY" ]; then
-    export SUDO_ASKPASS="$SSH_ASKPASS"
-fi
+    export SSH_ASKPASS=$HOME/bin/pinentry-ssh-askpass
+[ -n "$DISPLAY" ] &&
+    export SUDO_ASKPASS=$SSH_ASKPASS
 
 # *grep Colors
 #
@@ -405,7 +409,7 @@ LOCATION='Odenton, MD'
 
 # Hostnames for bash-completion
 if [ -r "$HOME/.ssh/known_hosts" ]; then
-    export HOSTFILE="$HOME/.ssh/known_hosts"
+    export HOSTFILE=$HOME/.ssh/known_hosts
 fi
 
 # Move things into XDG directories {{{2
@@ -429,10 +433,10 @@ fi
 # Add personal directories. Listed in order from least- to most-significant
 # NOTE: do not use pathadd as I want to force these entries to be at the front
 for d in \
-    ~/games/bin \
-    ~/sbin \
-    ~/bin/.flatpak \
-    ~/bin \
+    "$HOME/games/bin" \
+    "$HOME/sbin" \
+    "$HOME/bin/.flatpak" \
+    "$HOME/bin" \
 ; do
     [ -d "$d" ] && PATH=$d:$PATH
 done 
