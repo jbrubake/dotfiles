@@ -357,9 +357,6 @@ Note: $WIKI_DIR must be defined
 END
             ;;
         edit | *)
-            if test -z "$EDITOR"; then
-                EDITOR=vim
-            fi
             $EDITOR "$WIKI_DIR/content/index.md"
             ;;
         esac
