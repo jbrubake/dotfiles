@@ -1,0 +1,57 @@
+session_name: apps
+start_directory: $HOME
+global_options: {}
+
+windows:
+
+- window_name: btop
+  panes:
+    - shell: /usr/bin/btop
+
+- window_name: wtf
+  panes:
+    - shell: /usr/local/bin/wtfutil
+
+- window_name: systemd-logs
+  panes:
+    - shell: /usr/bin/grc -es journalctl -f
+
+- window_name: other-logs
+  panes:
+    - shell: /usr/bin/multitail -cT ansi $HOME/var/log/*.log
+
+- window_name: usenet
+  panes:
+    - shell: /usr/bin/slrn -w0
+
+- window_name: usenet-tilde
+  panes:
+    - shell: /usr/bin/slrn -w0 -f .jnewsrc.tilde -h snews://news.tilde.club
+
+- window_name: irc
+  panes:
+    - shell: weechat
+
+- window_name: mail
+  panes:
+    - shell: mutt
+
+- window_name: rss
+  panes:
+    - shell_command: /usr/bin/newsboat
+
+- window_name: hackernews
+  panes:
+    - shell: /usr/local/bin/hackernews_tui
+
+- window_name: music
+  panes:
+    - shell: ncmpcpp
+
+- window_name: stocks
+  panes:
+    - shell: $HOME/bin/ticker
+
+- window_name: crypto
+  panes:
+    - shell: /usr/bin/cointop --only-table
