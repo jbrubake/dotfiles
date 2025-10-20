@@ -88,10 +88,13 @@ right() { # {{{1
     printf '󰒃 %s' "$(plugin updates "#[fg=color033]%t #[fg=$TMUX_COLOR_RED]( %s)#[fg=color033] updates")"
 
     # weather
-    printf '#[range=user|weather]'
-    printf '#[fg=color252] |' # <-- space intentionally skipped
-    printf '%s' "$(plugin weather '+%c%C+%t+(%f)')"
-    printf '#[norange]'
+    weather=$(plugin weather '+%c%C+%t+(%f)')
+    if [ -n "$weather" ]; then
+        printf '#[range=user|weather]'
+        printf '#[fg=color252] |' # <-- space intentionally skipped
+        printf '%s' "$(plugin weather '+%c%C+%t+(%f)')"
+        printf '#[norange]'
+    fi
 
     # rpg-cli status
     wap=$(nmcli dev wifi show 2>/dev/null | grep SSID | cut -d' ' -f2)
