@@ -76,9 +76,11 @@ if ! ps x | grep [s]tartx; then
     command -v xfortune >/dev/null && xfortune "$HOME/share/games/fortunes"
 
     if command -v keychain >/dev/null; then
-        if command -v my >/dev/null; then
+        unset t
+        command -v my >/dev/null &&
             t=$(my -v terminal)
-        else
+
+        if [ -z "$t" ]; then
             for term in st gnome-terminal rxvt xterm; do
                 if command -v "$term" >/dev/null; then
                     t=$term
