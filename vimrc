@@ -861,6 +861,9 @@ function! BreakHere()
 endfunction
 nnoremap <leader>s :<C-u>call BreakHere()<CR>
 
+" <localleader><F7>    toggle spellcheck {{{2
+nnoremap <localleader><F7> :setlocal spell!<CR>
+
 " <leader><leader>:    clear search highlighting {{{2
 noremap <silent> <leader><leader> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
 
