@@ -14,14 +14,6 @@ Hyper_L
 ctrl + alt + Delete
     dmenu-menu exitrc -c
 
-# Terminal
-mod4 + t
-    my terminal
-
-# Browser
-mod4 + b
-    jumpapp -c Navigator.Firefox firefox
-
 # Add bookmark to buku {{{1
 mod4 + B
     bukuadd
@@ -35,6 +27,10 @@ mod4 + Return
 
 # Various apps {{{1
 #
+mod4 + t
+    my terminal
+mod4 + b
+    jumpapp -c Navigator.Firefox firefox
 mod4 + F10
     jumpapp -i discord discord
 mod4 + F11
