@@ -37,6 +37,16 @@ mod4 + F11
     jumpapp -i signal signal-desktop
 mod4 + F9
     jumpapp -i whalebird whalebird
+# XF86Back
+# XF86Forward
+# Cancel
+# XF86Reload
+# XF86HomePage
+XF86Mail
+    tmux move-window -s $(ftmux -s $(tmux show-option -gv @hidden-session) -p window -1 -- mail)
+# XF86Explorer
+XF86Calculator
+    my calculator
 
 # Screenshots {{{1
 #
@@ -68,4 +78,16 @@ XF86MonBrightnessDown
     change_brightness -5%
 XF86MonBrightnessUp
     change_brightness +5%
+
+# Music controls {{{1
+XF86AudioStop
+    mpc stop
+XF86AudioPrev
+    mpc prev
+XF86AudioNext
+    mpc next
+XF86AudioPlay
+    mpc toggle
+XF86Tools
+    tmux move-window -s $(ftmux -s $(tmux show-option -gv @hidden-session) -p window -1 -- music)
 
