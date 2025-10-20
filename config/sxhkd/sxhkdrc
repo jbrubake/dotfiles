@@ -1,16 +1,16 @@
-# Get a password from pass(1)
+# Get a password from pass(1) {{{1
 mod4 + p 
     passmenu -l 10 -bw 1 -c -p Password?
 
-# Use the window list to raise and focus a particular window
+# Use the window list to raise and focus a particular window {{{1
 mod4 + s
     winsearch -c -p Window:
 
-# Use dmenu to run a command
+# Use dmenu to run a command {{{1
 Hyper_L
     dmenu-run -c -l 10 -p Command:
 
-# 3-finger saulte
+# 3-finger saulte {{{1
 ctrl + alt + Delete
     dmenu-menu exitrc -c
 
@@ -22,18 +22,18 @@ mod4 + t
 mod4 + b
     jumpapp -c Navigator.Firefox firefox
 
-# Add bookmark to buku
+# Add bookmark to buku {{{1
 mod4 + B
     bukuadd
 
-# Main terminal
+# Main terminal {{{1
 #
 # Launch all tmuxp session in detached mode and then connect to 'main'
 mod4 + Return
     for f in "$XDG_CONFIG_HOME/tmuxp/"*; do tmuxp load -d "$(basename "$f" .yaml)"; done; \
     wmctrl -xa main || tabbed -cd -n main -r2 alacritty --embed ID -e ~/src/scripts/launchterm main
 
-# Various apps
+# Various apps {{{1
 #
 mod4 + F10
     jumpapp -i discord discord
@@ -42,7 +42,7 @@ mod4 + F11
 mod4 + F9
     jumpapp -i whalebird whalebird
 
-# Screenshots
+# Screenshots {{{1
 #
 Print
     screenshot area
@@ -57,7 +57,7 @@ ctrl + shift + Print
 ctrl + alt + Print
     screenshot -d 5 screen
 
-# Volume controls
+# Volume controls {{{1
 #
 XF86AudioMute
     change_volume mute
@@ -66,7 +66,7 @@ XF86AudioLowerVolume
 XF86AudioRaiseVolume
     change_volume +1%
 
-# Brightness controls
+# Brightness controls {{{1
 #
 XF86MonBrightnessDown
     change_brightness -5%
