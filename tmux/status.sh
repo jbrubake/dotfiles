@@ -38,6 +38,7 @@ left() { # {{{1
     printf '#[norange]'
 
     # network status and internet POP
+    printf '#[range=user|network]'
     printf '#[fg=color252] | '
     case $(plugin uplink ",#[fg=$TMUX_COLOR_YELLOW]No DNS ,#[fg=$TMUX_COLOR_RED]Down ") in
         'No DNS') color=$TMUX_COLOR_YELLOW ;;
@@ -45,6 +46,7 @@ left() { # {{{1
         *)      color=$TMUX_COLOR_GREEN ;;
     esac
     printf '󰖟 [#[fg=%s]%s#[fg=color252]]' "$color" "$(plugin ip_location '%c, %R')"
+    printf '#[norange]'
 
     # VPN status
     if ip --brief address | grep -q ^jeremy-range; then
@@ -53,8 +55,10 @@ left() { # {{{1
         work_vpn=$(plugin vpn_status tng 172.25.0.1 roka.live)
     fi
     if [ -n "$work_vpn" ]; then
+        printf '#[range=user|vpn]'
         printf '#[fg=color252] | ' 
         printf '󰖂 [%s#[fg=color252]]' "$work_vpn"
+        printf '#[norange]'
     fi
 
     # end
