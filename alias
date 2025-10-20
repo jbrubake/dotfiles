@@ -271,6 +271,9 @@ alias rcbb='telnet realitycheckbbs.org -l "Jeremy Brubaker"'
 # Show my Nerd Test result
 alias nerd='feh https://www.nerdtests.com/images/badge/nt2/$NERDTEST_ID.png'
 
+# Run the latest installed Vassal
+alias vassal=~/opt/vassal/VASSAL.sh
+
 # start / stop a local-only ssh server
 if have sshd; then
     alias lsshd='/usr/sbin/sshd -f "$LOCAL_SSHD_CONFIG"' # start a local ssh server
