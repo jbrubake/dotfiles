@@ -834,6 +834,9 @@ tnoremap <leader><Esc> <C-\><C-n>
 nnoremap / /\v
 vnoremap / /\v
 
+" Search for character under cursor
+nnoremap <leader>* xhp/<C-R>-<Return>
+
 " <leader>c:           toggle colorcolumn {{{2
 "
 " Kevin Kuchta (www.vimbits.com/bits/317)
