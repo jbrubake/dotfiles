@@ -22,8 +22,8 @@ mod4 + B
 #
 # Launch all tmuxp session in detached mode and then connect to 'main'
 mod4 + Return
-    for f in "$XDG_CONFIG_HOME/tmuxp/"*; do tmuxp load -d "$(basename "$f" .yaml)"; done; \
-    wmctrl -xa main || tabbed -cd -n main -r2 alacritty --embed ID -e ~/src/scripts/launchterm main
+    for ws in $(tmuxp ls); do tmuxp load -d "$ws"; done; \
+    wmctrl -xa main || tabbed -cd -n main -r2 alacritty --embed ID -e ~/bin/launchterm main
 
 # Various apps {{{1
 #
