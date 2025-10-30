@@ -4,7 +4,7 @@
 INTERVAL=$(( 20 ))
 
 uplink() {
-    format=${1:-up,no dns, down}
+    format=${1:-up,no dns,down}
 
     if getent ahosts www.google.com >/dev/null; then
         echo "$format" | cut -d, -f1
