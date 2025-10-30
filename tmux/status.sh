@@ -40,10 +40,10 @@ left() { # {{{1
     # network status and internet POP
     printf '#[range=user|network]'
     printf '#[fg=color252] | '
-    case $(plugin uplink ",#[fg=$TMUX_COLOR_YELLOW]No DNS ,#[fg=$TMUX_COLOR_RED]Down ") in
-        'No DNS') color=$TMUX_COLOR_YELLOW ;;
-        'Down')   color=$TMUX_COLOR_RED ;;
-        *)      color=$TMUX_COLOR_GREEN ;;
+    case $(plugin uplink) in
+        'up')     color=$TMUX_COLOR_GREEN ;;
+        'no dns') color=$TMUX_COLOR_YELLOW ;;
+        'down')   color=$TMUX_COLOR_RED ;;
     esac
     printf '󰖟 [#[fg=%s]%s#[fg=color252]]' "$color" "$(plugin ip_location '%c, %R')"
     printf '#[norange]'
