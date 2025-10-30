@@ -74,7 +74,13 @@ state2abbrev () {
 ip_location() {
     format=${1:-%c, %r, %C}
 
+    unset str
     str=$(curl -s ipinfo.io | jq)
+
+    if [ -z "$str" ]; then
+        echo Unknown
+        return
+    fi
 
     city=$(echo "$str" | jq -r .city)
     region=$(echo "$str" | jq -r .region)
