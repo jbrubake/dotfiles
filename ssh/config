@@ -17,7 +17,6 @@ Host *
 # Play tron over SSH
 Host tron
     HostName sshtron.zachlatta.com
-    User green
 
 # Provide a path to my GitHub key because I no longer keep it in the default
 # location
