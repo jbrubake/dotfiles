@@ -274,6 +274,13 @@ alias nerd='feh https://www.nerdtests.com/images/badge/nt2/$NERDTEST_ID.png'
 # Run the latest installed Vassal
 alias vassal=~/opt/vassal/VASSAL.sh
 
+# tmux popups
+alias tcal='tmux-popup -k -w23 -h27 "cal -3"'
+alias ttop='tmux-popup htop'
+alias wttr='tmux-popup -k -w127 -h43 "curl wttr.in/Odenton"'
+alias net='tmux-popup -w80 -h40 nmtui'
+alias wgsh='tmux-popup -k -w80 -h25 "sudo wg show"'
+
 # start / stop a local-only ssh server
 if have sshd; then
     alias lsshd='/usr/sbin/sshd -f "$LOCAL_SSHD_CONFIG"' # start a local ssh server
