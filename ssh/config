@@ -14,6 +14,16 @@ Host *
     # Force IPv4 everywhere
     AddressFamily inet
 
+# Use the following as a template for accessing older SSH servers
+# (such as older Gli-Net and OpenWRT devices). You must also use a custom
+# openssl configuration. (See https://raw.githubusercontent.com/jbrubake/dotfiles/refs/heads/master/openssl-compat.cnf)
+#
+# OPENSSL_CONF=/path/to/openssl-compat.cnf ssh compat
+#
+# Host compat
+#    HostkeyAlgorithms +ssh-rsa
+#    PubkeyAcceptedAlgorithms +ssh-rsa
+
 # Play tron over SSH
 Host tron
     HostName sshtron.zachlatta.com
