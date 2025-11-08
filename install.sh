@@ -273,27 +273,4 @@ for f in git_template $(find . \( ! -path '*/.*' \) -type f -print | sed -e 's#.
     $DRY_RUN ln -s $verbose $force "$linkpath/$(basename $f)" "$DESTDIR/$linkname"
 done
 # }
-# Custom installation {
-if ! test -e ~/.mutt/address_book; then
-    cat <<END > ~/.mutt/address_book
-# vi: filetype=muttrc
-#
-# Address book for mutt
 
-# Add address book aliases like this:
-# alias alias-name "full-name" <email-address>
-
-END
-fi
-if ! test -e ~/.mutt/mailing_lists; then
-    cat <<END > ~/.mutt/mailing_lists
-# vi: filetype=muttrc
-#
-# Mutt mailing lists
-
-# lists       <list@list.com>
-# subscribe   <list@list.com>
-
-END
-fi
-# }
