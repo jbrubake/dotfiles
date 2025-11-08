@@ -228,9 +228,7 @@ done
 # NOTE: Explicity include git_template so the directory itself is linked
 for f in git_template $(find . \( ! -path '*/.*' \) -type f -print | sed -e 's#./##'); do
     # skip ignored files
-    for p in $(cat $IGNOREFILE $HOSTIGNORE 2>/dev/null); do
-        test $f = $p && continue 2 # continue OUTER LOOP
-    done
+    grep -q "^$f$" "$IGNOREFILE" "$HOSTIGNORE" && continue 2 # continue OUTER LOOP
 
     # ignore files in git_template as the directory itself will be linked
     case "$f" in
