@@ -424,10 +424,6 @@ export GREP_COLORS='sl=:cx=:mt=1;31:fn=35:ln=32:bn=33:se=36'
 [ -d "$HOME/etc/sshd/sshd_config" ] &&
     export LOCAL_SSHD_CONFIG=$HOME/etc/sshd/sshd_config
 
-# wttr.in Location
-#
-LOCATION='Odenton, MD'
-
 # Hostnames for bash-completion
 if [ -r "$HOME/.ssh/known_hosts" ]; then
     export HOSTFILE=$HOME/.ssh/known_hosts
