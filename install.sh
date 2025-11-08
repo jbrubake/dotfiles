@@ -195,19 +195,20 @@ fi
 #
 # Find all non-hidden sub-directories and strip the leading "./"
 for d in $(find . -mindepth 1 \( ! -path '*/.*' \) -type d -print | sed -e 's#./##'); do
-    # git_templates need to be the actual files or brokwn symlinks
-    # get copied to the repositories
-    #
-    # etc is not a dot directory
-    # TODO: Fix this hack
     case "$d" in
+        # Skip git_templates as it must contain actual files to
+        # prevent broken symlinks being copied to repositories
         git_template*) continue ;;
+
+        # Create ~/etc not ~/.etc
         etc*)
-        $DRY_RUN mkdir -p $verbose "$DESTDIR/$d"
-        continue
-        ;;
+            $DRY_RUN mkdir -p $verbose "$DESTDIR/$d"
+            continue
+            ;;
+
+        # Duplicate everything else
+        *) $DRY_RUN mkdir -p $verbose "$DESTDIR/.$d" ;;
     esac
-    $DRY_RUN mkdir -p $verbose "$DESTDIR/.$d"
 done
 # }
 # Link files {
@@ -223,15 +224,15 @@ done
 #
 # Find all non-hidden files in current and non-hidden
 # sub-directories and strip the leading "./"
-# TODO: Fix the git_template hack
+#
+# NOTE: Explicity include git_template so the directory itself is linked
 for f in git_template $(find . \( ! -path '*/.*' \) -type f -print | sed -e 's#./##'); do
     # skip ignored files
     for p in $(cat $IGNOREFILE $HOSTIGNORE 2>/dev/null); do
         test $f = $p && continue 2 # continue OUTER LOOP
     done
 
-    # ignore files in git_template as it has already been linked
-    # TODO: Fix this hack
+    # ignore files in git_template as the directory itself will be linked
     case "$f" in
         git_template/*) continue ;;
     esac
@@ -245,16 +246,13 @@ for f in git_template $(find . \( ! -path '*/.*' \) -type f -print | sed -e 's#.
     else
         linkname=".$( dirname $f )/$( basename $f )"
     fi
-    # etc is not a dot directory
-    # TODO: Fix this hack
+
+    # ~/etc is not a dot directory
     case "$f" in
-        etc/*)
-            linkname="$( dirname $f )/$( basename $f )"
-        ;;
+        etc/*) linkname="$( dirname $f )/$( basename $f )" ;;
     esac
 
-    # Test if an already existing link points
-    # to the right file already
+    # Test if an already existing link points to the right file already
     if test -L "$DESTDIR/$linkname"; then
         if test $(realpath $(readlink -f -- "$DESTDIR/$linkname")) = \
                 $(realpath $f); then
