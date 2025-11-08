@@ -277,7 +277,7 @@ alias vassal=~/opt/vassal/VASSAL.sh
 # tmux popups
 alias tcal='tmux-popup -k -w23 -h27 "cal -3"'
 alias ttop='tmux-popup htop'
-alias wttr='tmux-popup -k -w127 -h43 "curl wttr.in/Odenton"'
+alias wttr='tmux-popup -k -w127 -h43 "curl wttr.in"'
 alias net='tmux-popup -w80 -h40 nmtui'
 alias wgsh='tmux-popup -k -w80 -h25 "sudo wg show"'
 
