@@ -6,15 +6,14 @@ INTERVAL=$(( 60 * 3600 )) # 1 hour
 updates() {
     format=${1:-%t (%s security) updates}
 
-    updates=$(dnf --refresh -q updateinfo --list |
+    updates=$(dnf --refresh -q updateinfo list |
         awk '
             BEGIN {
-                total = 0
+                total = -1 # easier than explicitly skipping the header line
                 security = 0
             }
-            NF != 3 { next }
-            /Sec./  { security++ }
-                    { total++ }
+            $2 ~ /security/  { security++ }
+                             { total++ }
             END { print security, total }')
 
     security=$(echo "$updates" | cut -d' ' -f1)
