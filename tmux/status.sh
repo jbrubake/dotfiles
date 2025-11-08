@@ -45,7 +45,9 @@ left() { # {{{1
         'no dns') color=$TMUX_COLOR_YELLOW ;;
         'down')   color=$TMUX_COLOR_RED ;;
     esac
-    printf '󰖟 [#[fg=%s]%s#[fg=color252]]' "$color" "$(plugin ip_location '%c, %R')"
+    ssid=$(plugin wifi)
+    [ -n "$ssid" ] && ssid=" ($ssid)"
+    printf '󰖟 [#[fg=%s]%s#[fg=color252]%s]' "$color" "$(plugin ip_location '%c, %R')" "$ssid"
     printf '#[norange]'
 
     # VPN status
