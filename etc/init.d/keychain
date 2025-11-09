@@ -1,0 +1,32 @@
+#!/bin/sh
+
+command -v keychain >/dev/null || exit 1
+
+eval "$(keychain --eval --nogui --agents ssh,gpg)"
+
+# If X is running, find a terminal to run
+if [ -n "$DISPLAY" ]; then
+    unset t
+    command -v my >/dev/null && t=$(my -v terminal)
+
+    if [ -z "$t" ]; then
+        for term in st gnome-terminal rxvt xterm; do
+            if command -v "$term" >/dev/null; then
+                t=$term
+                break
+            fi
+        done
+    fi
+
+    t="$t -e"
+fi
+
+# Find all SSH public keys and add the corresponding private key
+#
+# Using basename to remove the extension doesn't work because keychain
+# cannot find the key without the entire path
+# The --confhost option to keychain is supposed to use IdentityFile
+# to find the key path but I cannot get that to work
+$t keychain --quiet --nogui --ignore-missing \
+    "$(find "$HOME/.ssh" -name '*.pub' | rev | cut -f 2- -d. | rev)"
+

@@ -6,13 +6,6 @@
 #
 command -v xset >/dev/null && xset b off # Turn off audible bell
 
-# Run custom X init scripts {{{1
-#
-# for f in "$XDG_CONFIG_HOME/init.d/"*; do
-for f in "$HOME/etc/init.d/"*; do
-    [ -x "$f" ] && "$f"
-done
-
 # Merge XResources {{{1
 command -v xrdb >/dev/null &&
     if [ -r "$HOME/.Xresources" ]; then
@@ -66,6 +59,13 @@ dwm)
     ;;
 esac
 
+# Run custom X init scripts {{{1
+#
+# for f in "$XDG_CONFIG_HOME/init.d/"*; do
+for f in "$HOME/etc/init.d/"*; do
+    [ -x "$f" ] && "$f"
+done
+
 # Show login related things {{{1
 #
 # These are tasks that would be run in ~/.xsession except that
@@ -74,29 +74,6 @@ esac
 # Simple test to see if startx was executed
 if ! ps x | grep [s]tartx; then
     command -v xfortune >/dev/null && xfortune "$HOME/share/games/fortunes"
-
-    if command -v keychain >/dev/null; then
-        unset t
-        command -v my >/dev/null &&
-            t=$(my -v terminal)
-
-        if [ -z "$t" ]; then
-            for term in st gnome-terminal rxvt xterm; do
-                if command -v "$term" >/dev/null; then
-                    t=$term
-                    break
-                fi
-            done
-        fi
-        # Find all SSH public keys and add the corresponding private key
-        #
-        # Using basename to remove the extension doesn't work because keychain
-        # cannot find the key without the entire path
-        # The --confhost option to keychain is supposed to use IdentityFile
-        # to find the key path but I cannot get that to work
-        $t -e keychain --quiet --nogui --ignore-missing \
-            $(find "$HOME/.ssh" -name '*.pub' | rev | cut -f 2- -d. | rev)
-    fi
 fi
 
 # Start desktop apps {{{1
