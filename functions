@@ -248,12 +248,12 @@ google () { # Google something (using $WWW_SEARCH as the search engine)
     openurl "${WWW_SEARCH:-www.google.com}/$url"
 }
 rtfm() { # Check various forms of documentation
-    if whatis "$@" >/dev/null 2>&1; then
-        man "$@"
-    elif [ -f "/usr/share/info/$@.info"* ]; then
-        info "$@"
+    if whatis "$1" >/dev/null 2>&1; then
+        man "$1"
+    elif [ -f "/usr/share/info/$1.info" ]; then
+        info "$1"
     else
-        openurl "${WWW_SEARCH:-www.google.com}/?q=%21documentation+for+$@"
+        openurl "${WWW_SEARCH:-www.google.com}/?q=%21documentation+for+$1"
     fi
 }
 #### hb/hr/hbl {
