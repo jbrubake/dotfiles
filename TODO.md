@@ -1,118 +1,21 @@
-" call minpac#update() to update all packages
-"     **or** run `update-vim-plugins` to do that and
-"     create links to optional 'ftdetect' scripts
-" call minpac#clean() to remove unused plugins
-" call minpac#status() to get plugin status
-"
-" TODO: look at http://vimcasts.org/episodes/minpac/ to only load minpac when
-" needed. To keep plugin URL together with their config this will require
-" building a "package.vim" file automatically
+# cron
 
-- vim: hunk jumping comment should go elsewhere
-- vim: last known cursor position thing might not work with fugitive commit window
-- vim: tagbar markdown support won't work with current dynamic loading method
-- vim: ansible_goto_role_paths is not part of the plugin and should be moved
-    (maybe make it the default along with a windows path)
-- vim: move git_plugins to a better spot as well as loadgit
-- vim: clientserver might cause an error
-- slrn: see $SLRNHELP and art_help_line
-- slrn: define macro_directory (% set macro_directory "~/.slrn")
-- add checkmail and checkcal to crontab
-- tmux copy/paste no longer working right
-- is keychain being run from xinitrc or just the one in shell files?
-- put all vim autocmd in an augroup
-- reorganize vim plugins and configuration so things that go together logically
-  are placed together physically (fzf stuff, git stuff, etc)
-- replace tmux-pilot with tmux-navigator?
-- move vim filetype autocmds to .vim/filetype.vim (or the proper file)
-- once XDG_CONFIG_HOME=~/etc, replace ~/etc in all files with $XDG_CONFIG_HOME
-- Look into replicating /etc/profile.d - ansible could create either system or personal scripts
-- put firefox stuff in a standard directory that is easy to link to
-- Save .news/posts
-- What vim plugins could just be submodules or peru modules? Things like
-    colorschemes shouldn't be plugins - why waste time loading something you won't
-    always use (vim/colors/PaperColor.vim is a good start)
+- test that all jobs are running, including the ones anacron should handle
+- Reminder to update vim plugins
+- install at (at daemon)
 
+# rclone
 
-alias:
-- make pickfont more useful
-- # Example ex(1) aliases
-  # TODO: These are *not* currently POSIX-compliant
-  # https://vi.stackexchange.com/a/2692
-  alias trim="ex +'bufdo!%s/\s\+$//e' -scxa"
-  alias retab="ex +'set ts=2' +'bufdo retab' -scxa"
-
-env:
-- is DOTFILES still needed?
-- Use this to disable systemctl auto-pager:
-  export SYSTEMD_PAGER=
-
-init.d/touchpad
-- what does this actually do?
-
-functions:
-- make define() work again (change to duckduckgo is a first start)
-
-muttrc:
-- old settings:
-  unset mark_old    # Unread messages are still "new"
-  set reverse_realname = no # Always use realname
-  old: set query_command = "abook --mutt-query '%s'"
-  source ~/.mutt/headers          # Source header ignores
-  source ~/.mutt/keys             # Key configuration
-  source ~/.mutt/aliases          # Source aliases
-  source ~/.mutt/address_book     # Source address book
-
-mutt/accounts/local:
-- set hostname = "HOSTNAME"
-
-
-- Put all color related stuff in a single file so I can swap colorschemes easily
-- Create GPG keypair and additional keys (password vault, etc)
-- How to get keypair passphrase loaded (checkmail doesn't run without it)
-- Fix the git_template hack
-- Work nerd-fonts icons into various things (with fallback if not available)
-- Properly install packages from newer versions of Ubuntu
-- Setup proper logging and logrotation for systemd timers
-- Script setup of dropbox links
-- Add podboat config to newsboat
-## bootstrap
-- Add ability to run arbitrary code
-- Improve bootstrap.ini syntax
-- Create the corrct XDG directories and delete the original ones
-## dotfiles
-- Add a better custom installation framework
-- Backup files to a directory instead of renaming (easier to delete/recover)
-- Properly use the git repos for the single scripts that don't have an install method
-- Make files robust: only config if command/plugin installed
-- Change structure
-    - symlink: do what i'm doing now
-    - copy: copy folder contents (this will allow putting share/bash-completion.d here)
-    - other: git submodules
-- Make sure the systemd enable symlinks work, otherwise the services just need
-  to be enabled
-## muttrc
-- Filtering
-- Keybindings
-## vimrc
-- Add vimpager specific configuration to vimrc or use a vimpagerrc
-- Figure out how to keep plugins updated
-- Automate plugin helptags
-- Implement calendar-vim hooks using wiki
-- mapping to generate ctags or just start using make from vim
-- wiki mappings don't work right if pwd isn't changed to wiki root
-## rclone
 - Need to run cloudsync.sh with --first-sync the first time it runs
-- Make cloudsync.sh use a config file to determine what to sync where
-- Create symlinks into .sync
-    ln -s .sync/dropbox/etc etc
-    ln -s .sync/dropbox/docs/ docs
-    ln -s .sync/dropbox/password-store/ .password-store
-    ln -s .sync/dropbox/todo/ .todo
-    for d in ../.sync/dropbox/src/*; do ln -s $d $(basename $d); done
-    for d in ../.sync/dropbox/share/*; do ln -s $d $(basename $d); done
 
-Vim plugins to try: {{{
+# Vim
+
+- last known cursor position thing might not work with fugitive commit window
+- tagbar markdown support won't work with current dynamic loading method
+- clientserver might cause an error
+- replace tmux-pilot with tmux-navigator?
+
+## Vim plugins to try: {{{
 
 " auto_mkdir2: Automatically create directory tree for new files {{{3
 ""call minpac#add('arp242/auto_mkdir2.vim')
@@ -293,4 +196,54 @@ autocmd bufenter * if (winnr("$") == 1 &&
 ""call minpac#add('sysid/vimwiki-nirvana') " vimwiki-nirvana: vimwiki custom link handler {{{3
 
 ""call minpac#add('preservim/vim-lexical') " vim-lexical: Build on Vim's spell/thes/dict completion {{{3
+
+}}}
+
+
+# slrn
+
+- see $SLRNHELP and art_help_line
+- define macro_directory (% set macro_directory "~/.slrn")
+
+# dotfiles
+
+- once XDG_CONFIG_HOME=~/etc, replace ~/etc in all files with $XDG_CONFIG_HOME
+- Look into replicating /etc/profile.d - ansible could create either system or personal scripts
+- Put all color related stuff in a single file so I can swap colorschemes easily
+- How to get keypair passphrase loaded (checkmail doesn't run without it)
+- Setup proper logging and logrotation for systemd timers
+- Add podboat config to newsboat
+- Work nerd-fonts icons into various things (with fallback if not available)
+
+# scripts
+
+- Properly use the git repos for the single scripts that don't have an install method
+- should anything be it's own repo?
+
+# Mail
+
+- Filtering
+- Keybindings
+- old settings:
+  unset mark_old    # Unread messages are still "new"
+  set reverse_realname = no # Always use realname
+  old: set query_command = "abook --mutt-query '%s'"
+  source ~/.mutt/headers          # Source header ignores
+  source ~/.mutt/keys             # Key configuration
+  source ~/.mutt/aliases          # Source aliases
+  source ~/.mutt/address_book     # Source address book
+- mutt/accounts/local: set hostname = "HOSTNAME"
+
+# bootstrap
+
+- Add a better custom installation framework
+- Backup files to a directory instead of renaming (easier to delete/recover)
+- Create GPG keypair and additional keys (password vault, etc)
+- Fix the git_template hack
+- Properly install packages from newer versions of Ubuntu
+- Script setup of dropbox links
+- put firefox stuff in a standard directory that is easy to link to
+- Add ability to run arbitrary code
+- Improve bootstrap.ini syntax
+- Create the corrct XDG directories and delete the original ones
 
