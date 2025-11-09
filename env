@@ -204,7 +204,7 @@ BROWSER=$(pick browser "$browsers")
 unset browsers
 export BROWSER
 
-WWW_SEARCH=www.duckduckgo.com # used in ~/.functions
+export WWW_SEARCH=www.duckduckgo.com # used in ~/.functions
 
 # ls {{{2
 #
