@@ -2,7 +2,7 @@
 
 vm=cassowary-win10
 
-if ! command -v virsh 2>&1 >/dev/null; then
+if ! command -v virsh >/dev/null 2>&1; then
     printf "virsh not installed\n" >&2
     exit 1
 fi
