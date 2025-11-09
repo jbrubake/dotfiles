@@ -20,7 +20,7 @@ have() { command -v "$1" >/dev/null; }
 #
 # This will be overriden if grc(1) is available
 jobs='jobs -l' # list PIDs
-alias jobs=$jobs
+alias "jobs=$jobs"
 
 # grc(1)-only aliases {{{1
 #
@@ -29,12 +29,12 @@ alias jobs=$jobs
 if have grc; then
     GRC_OPTS='-es' # colorize stderr and stdout
     grc='grc $GRC_OPTS'
-    alias grc=$grc
+    alias "grc=$grc"
 
     # Create alias for all configs found *if* the command exists
     for c in /usr/share/grc/conf.* ~/.grc/conf.*; do
         c=${c##*/}; c=${c#conf.} # extract command name
-        have $c && alias $c="$grc $c"
+        have "$c" && alias "$c=$grc $c"
     done
 
     # Always create these
@@ -154,8 +154,8 @@ case $PAGER in
         alias cat='bat -p --paging never' ;;
     *)
         if [ "$PAGER" != less ]; then
-            alias  less=$PAGER
-            alias zless=$PAGER
+            alias  less="$PAGER"
+            alias zless="$PAGER"
         else
             # NOTE: $LESS is not being passed to less(1)
             alias  less="less $LESS"
@@ -166,7 +166,7 @@ case $PAGER in
                 # Use cat(1) if no files are given or if redirecting stdout
                 # (avoid colors)
                 if [ $# -eq 0 ] || ! [ -t 1 ]; then
-                    /bin/cat $@
+                    /bin/cat "$@"
                 else
                     # If stdout is the terminal, use highlight but loop through
                     # $@ so it works properly
@@ -185,9 +185,9 @@ case $PAGER in
                 # Use cat(1) if no files are given or if redirecting stdout
                 # (avoid colors)
                 if [ $# -eq 0 ] || ! [ -t 1 ]; then
-                    /bin/cat $@
+                    /bin/cat "$@"
                 else
-                    for _a in $@; do
+                    for _a in "$@"; do
                         # Emulate cat(1) ENOENT error message
                         if ! [ -r "$_a" ]; then
                             printf '/bin/cat: %s: No such file or directory\n' "$_a" >&2
@@ -202,15 +202,15 @@ case $PAGER in
                 # Use cat(1) if no files are given or if redirecting stdout
                 # (avoid colors)
                 if [ $# -eq 0 ] || ! [ -t 1 ]; then
-                    /bin/cat $@
+                    /bin/cat "$@"
                 else
-                    for _a in $@; do
+                    for _a in "$@"; do
                         # Emulate cat(1) ENOENT error message
                         if ! [ -r "$_a" ]; then
                             printf '/bin/cat: %s: No such file or directory\n' "$_a" >&2
                             continue
                         fi
-                        pygmentize -O style=${PYGMENTIZE_STYLE:-solarized-light} -g "$_a"
+                        pygmentize -O style="${PYGMENTIZE_STYLE:-solarized-light}" -g "$_a"
                     done
                 fi
             }

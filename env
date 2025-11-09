@@ -25,7 +25,7 @@ export HOME LOGNAME UNAME TMPDIR TMP
 # Example: $ pathadd ~/share XDG_DATA_DIRS
 #
 pathadd() {
-    eval "${2:-PATH}='$1:$(eval echo \$${2:-PATH})'"
+    eval "${2:-PATH}='$1:$(eval echo "\$${2:-PATH}")'"
 }
 
 # pathuniq {{{2
@@ -36,7 +36,7 @@ pathadd() {
 # Example: $ pathuniq PATH
 #
 pathuniq() {
-    eval "${1:-PATH}='$(eval echo \$${1:-PATH} |
+    eval "${1:-PATH}='$(eval echo "\$${1:-PATH}" |
     tr : "\n" |
     nl |
     sort -uk2,2 |
@@ -229,7 +229,7 @@ if [ -n "$HAS_COLOR" ] && have dircolors; then
         colorfile=/etc/DIR_COLORS
     fi
 
-    eval $(dircolors "$colorfile")
+    eval "$(dircolors "$colorfile")"
 
     unset colorfile localcolorfile
 fi
