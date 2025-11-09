@@ -60,14 +60,12 @@ esac
 
 case $ls in
     eza | exa)
-        LS_OPTS=$LS_OPTS
         ls_opts='';      ll_opts='-lg';
         la_opts='-a';    lla_opts='-lag';
         ld_opts='-d .*'; lld_opts='-lg -d .*';
         lspa_opts=''
         ;;
     gnu-ls) # GNU ls
-        LS_OPTS=$LS_OPTS
         ls_opts='';      ll_opts='-l';
         la_opts='-A';    lla_opts='-lA';
         ld_opts='-d .*'; lld_opts='-l -d .*';
