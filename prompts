@@ -4,9 +4,6 @@
 if test -n "$BASH"; then
 # prompt_detached: Determine number of detached screen/tmux sessions {{{2
 prompt_detached () {
-    pre="$1"
-    post="$2"
-
     if command -v screen >/dev/null; then
         local n_screen=$(screen -ls 2> /dev/null | grep -c '[Dd]etach[^)]*)$')
     fi
@@ -17,7 +14,7 @@ prompt_detached () {
     local detached=$(( n_screen + n_tmux ))
 
     if test $detached -ne 0; then
-        printf "%s%sd%s" "$pre" "${detached}" "$post"
+        printf "%s%sd%s" "$1" "${detached}" "$2"
     fi
 }
 # prompt_running: Get running jobs {{{2
