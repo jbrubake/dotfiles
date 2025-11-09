@@ -324,17 +324,10 @@ wiki() { # Interact with wiki
     fi
 
     case "$1" in
-        git)
-            git -C "$WIKI_DIR" "${@:2}"
-            ;;
-        make)
-            (cd "$WIKI_DIR" && make ${@:2})
-            ;;
-        view)
-            openurl "$WIKI_DIR/site/index.html"
-            ;;
-        help)
-            cat <<'END'
+        git)  shift; git -C "$WIKI_DIR" "$@" ;;
+        make) shift; (cd "$WIKI_DIR" && make "$@") ;;
+        view) openurl "$WIKI_DIR/site/index.html" ;;
+        help) cat <<'END'
 Usage: wiki <command> [args ...]
 
 Commands:
@@ -420,7 +413,7 @@ _navi_widget() {
     else
         find="$last_command"
         replacement="$(_navi_call --print --query "${last_command}")"
-        output="${input//$find/$replacement}"
+        output=$(echo "$input" | sed "s/$find/$replacement/")
     fi
 
     READLINE_LINE="$output"

@@ -64,7 +64,7 @@ prompt_load () {
 
 # prompt_uptime: Get uptime {{{2
 prompt_uptime () {
-    local uptime=$(</proc/uptime)
+    local uptime=$(cat /proc/uptime)
     uptime=${uptime%%.*}
 
     local mins=$(( uptime/60%60 ))
