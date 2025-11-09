@@ -381,8 +381,18 @@ if [ -d "$HOME/wiki" ]; then
 fi
 
 # This is used in vimrc and scripts/curlvim
-[ -d "$HOME/src/dotfiles" ] &&
+#
+# Get realpath to this file
+if command -v readlink >/dev/null; then
+    export DOTFILES=$(dirname "$(readlink -f "$HOME/.env")")
+# Fallback if readlink(1) is not available
+elif [ -d "$HOME/src/dotfiles" ]; then
     export DOTFILES=$HOME/src/dotfiles
+# In the weird case the standard dotfiles path
+# is not found, I can live without it
+else
+    :
+fi
 
 # Always use my .inputrc
 if [ -r "$HOME/.inputrc" ]; then
