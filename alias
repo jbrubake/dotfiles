@@ -242,13 +242,13 @@ have reset || alias reset='tput sgr0'  # reset terminal
 have clear || alias clear='tput clear' # emulate clear(1) if I don't have it
               alias   cls='clear'      # windows clear
 
-have buku       && alias       b='buku --suggest'             # easier buku
-have colormake  && alias    make='colormake'                  # use colormake
-have locate     && alias     loc='locate -d "$LOCATEDB" "$@"' # use my personal locate(1) db
-have mgitstatus && alias    gits='mgitstatus -e -c'           # get status of git repos
-have pandoc     && alias md2html='pandoc -f markdown'         # convert Markdown to HTML
-have rpg-cli    && alias     rpg='rpg-cli'                    # easier rpg-cli
-have todo.sh    && alias       t='todo.sh'                    # easier todo.sh
+have buku       && alias       b='buku --suggest'        # easier buku
+have colormake  && alias    make='colormake'             # use colormake
+have locate     && alias     loc='locate -d "$LOCATEDB"' # use my personal locate(1) db
+have mgitstatus && alias    gits='mgitstatus -e -c'      # get status of git repos
+have pandoc     && alias md2html='pandoc -f markdown'    # convert Markdown to HTML
+have rpg-cli    && alias     rpg='rpg-cli'               # easier rpg-cli
+have todo.sh    && alias       t='todo.sh'               # easier todo.sh
 
 alias             +x='chmod +x' # make file executable
 alias ${BASH:+--} -x='chmod -x' # make file non-executable 
