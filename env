@@ -75,12 +75,12 @@ pick() {
         shift
         for p in $@; do
             if have "$p"; then
-                printf "$p"
+                printf %s "$p"
                 return
             fi
         done
     else
-        printf "$p"
+        printf %s "$p"
     fi
 }
 

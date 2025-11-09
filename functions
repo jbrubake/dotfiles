@@ -57,11 +57,11 @@ FX() {
 # FG(), FGt(), BG() and BGt() {
 if [ "$( tput colors )" -ge 0 ]; then
     # Expects: color number 0-255
-    FG()  { printf "[38;5;$1m"; }
-    BG()  { printf "[48;5;$1m"; }
+    FG()  { printf %s "[38;5;$1m"; }
+    BG()  { printf %s "[48;5;$1m"; }
     # Expects: 3 values (r g b) of 0-255
-    FGt() { printf "[38;2;$1;$2;$3m"; }
-    BGt() { printf "[48;2;$1;$2;$3m"; }
+    FGt() { printf %s "[38;2;$1;$2;$3m"; }
+    BGt() { printf %s "[48;2;$1;$2;$3m"; }
 else
     FG()  { :; }
     BG()  { :; }
