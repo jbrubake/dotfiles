@@ -201,9 +201,8 @@ browsers='elinks links w3m lynx'
 [ -n "$DISPLAY" ] &&
     browsers="firefox google-chrome chromium netsurf $browsers"
 # shellcheck disable=SC2086
-BROWSER=$(pick browser $browsers)
+export BROWSER=$(pick browser $browsers)
 unset browsers
-export BROWSER
 
 export WWW_SEARCH=www.duckduckgo.com # used in ~/.functions
 
