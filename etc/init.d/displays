@@ -11,7 +11,7 @@ right=$hdmi
 screens=$(xrandr -q | grep ' connected' | cut -d' ' -f1)
 
 # How many external monitors are connected?
-num_external=$(echo "$screens" | grep -v "$internal" | wc -l)
+num_external=$(echo "$screens" | grep -cv "$internal")
 screens=$(echo "$screens" | grep -v "$internal")
 
 case $num_external in
