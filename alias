@@ -27,7 +27,7 @@ alias "jobs=$jobs"
 # Put these first so that they can be overriden
 #
 if have grc; then
-    GRC_OPTS='-es' # colorize stderr and stdout
+    export GRC_OPTS='-es' # colorize stderr and stdout
     grc='grc $GRC_OPTS'
     alias "grc=$grc"
 
