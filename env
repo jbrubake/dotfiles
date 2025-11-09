@@ -466,7 +466,7 @@ for d in \
 ; do
     [ -d "$d" ] && pathadd "$d"
 done 
-puniq PATH
+pathuniq PATH
 
 # Include local and private settings {{{1
 #
