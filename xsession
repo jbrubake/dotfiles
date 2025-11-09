@@ -8,5 +8,5 @@
 . "$HOME/.env" # common environment
 
 # Finish setting up {{{1
-. $HOME/.xinitrc
+. "$HOME/.xinitrc"
 

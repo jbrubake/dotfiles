@@ -12,7 +12,7 @@ command -v xrdb >/dev/null &&
         unset colorscheme
         [ -r "$HOME/.Xresources.$COLORSCHEME" ] &&
             colorscheme="-DCOLORSCHEME=<$HOME/.Xresources.$COLORSCHEME>"
-        xrdb -merge "$HOME/.Xresources" $colorscheme
+        xrdb -merge "$HOME/.Xresources" "$colorscheme"
         unset colorscheme
     fi
 
@@ -45,8 +45,8 @@ dwm)
 # If WINDOWMANAGER isn't found, a terminal emulator is run instead
 #
 *)
-    if command -v $WINDOWMANAGER >/dev/null; then
-        $WINDOWMANAGER & wmpid=$!
+    if command -v "$WINDOWMANAGER" >/dev/null; then
+        "$WINDOWMANAGER" & wmpid=$!
     else
         term="st gnome-terminal rxvt xterm"
         for t in $term; do
@@ -92,7 +92,7 @@ command -v firefox        >/dev/null && firefox &
 # done &
 
 # Cleanup {{{1
-wait $wmpid # wait for WM to exit
+wait "$wmpid" # wait for WM to exit
 
 # Gracefully shutdown virtual machines {{{2
 #

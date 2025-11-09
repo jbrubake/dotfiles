@@ -46,7 +46,7 @@ prompt_combine() {
     oldifs=$IFS
     IFS='
 '
-    for i in $@; do
+    for i in "$@"; do
         s=$s$sep$i
     done
     IFS=$oldifs
@@ -256,7 +256,7 @@ PS1="$PS1\n"
 PS1="$PS1$user_clr\u$at_clr@$hostname_clr\h "
 PS1="$PS1$ssh_clr$(prompt_ssh && echo 'ssh ')"
 PS1="$PS1\$(prompt_git '$bracket_clr($git_branch_clr' '$git_status_clr' '$bracket_clr) ')"
-PS1="$PS1$(prompt_combine "$bracket_clr{$jobs_clr" "$bracket_clr} " '|' $(prompt_running) $(prompt_stopped) $(prompt_detached))"
+PS1="$PS1$(prompt_combine "$bracket_clr{$jobs_clr" "$bracket_clr} " '|' "$(prompt_running)" "$(prompt_stopped)" "$(prompt_detached)")"
 PS1="$PS1$bracket_clr!$history_clr\! "
 PS1="$PS1\$(prompt_error '$error_clr')$reset"
 PS1="$PS1\n"

@@ -33,7 +33,7 @@ case "$(uname -r)" in
         [ -x /usr/sbin/crond ] &&
             sudo /usr/sbin/crond -p 2>/dev/null
         command -v anacron >/dev/null &&
-            anacron -s -t $HOME/etc/anacrontab -S $HOME/var/spool/anacron
+            anacron -s -t "$HOME/etc/anacrontab" -S "$HOME/var/spool/anacron"
         ;;
 
 esac

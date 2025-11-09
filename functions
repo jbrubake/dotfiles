@@ -280,7 +280,7 @@ hbl() {
     _hb_hr_hbl "$1" "$fx" "$2"
 }
 _hb_hr_hbl() {
-    [ $2 ] && color="[38;5;$3m"
+    [ "$2" ] && color="[38;5;$3m"
     reset="[0m"
     sed "s/\($1\)/$2$color\1$reset/gI"
 }
@@ -304,7 +304,7 @@ manf() { # Open manpage for $1 at the first occurence of flag $2
         vimpager) _pager="vimpager -c 'silent! /^\s\+-.*$2/'" ;;
         *)        _pager="less --pattern '^\s+-.*$2'" ;;
     esac
-    man -P "$_pager" $1
+    man -P "$_pager" "$1"
 }
 wiki() { # Interact with wiki
 #
@@ -359,7 +359,7 @@ sdfmap() { # Print ASCII map location of SDF user
 # Arguments:
 #   $1: user to print
 #
-    curl http://plewylli.sdf-eu.org/asciimap.cgi?$1
+    curl "http://plewylli.sdf-eu.org/asciimap.cgi?$1"
 }
 elinks() { # Reuse existing elinks instance
 #
@@ -375,7 +375,7 @@ elinks() { # Reuse existing elinks instance
             command elinks -remote "reload()"
         fi
     else
-        command elinks $1
+        command elinks "$1"
     fi
 }
 unalias ping 2>/dev/null
@@ -398,7 +398,7 @@ ping() { # Wrap ping(1) to allow pinging by SSH Host entry
         ping="command ping"
     fi
 
-    $ping $(__gethost "$@")
+    $ping "$(__gethost "$@")"
 
     unset _grc
 }
