@@ -6,6 +6,6 @@ name=$(xinput --list --name-only | grep Touchpad | head -1)
 prop=$(xinput list-props "$name" |
            grep 'Tapping Enabled (' |
            awk '{print $4}' |
-           tr -dc [[:digit:]])
+           tr -dc '[:digit:]')
 xinput set-prop "$name" "$prop" 1
 
