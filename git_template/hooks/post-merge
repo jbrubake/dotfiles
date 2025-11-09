@@ -1,4 +1,4 @@
 #!/bin/sh
-.git/hooks/ctags 2>&1 >/dev/null &
-.git/hooks/cscope 2>&1 >/dev/null &
+.git/hooks/ctags >/dev/null 2>&1 &
+.git/hooks/cscope >/dev/null 2>&1 &
 
