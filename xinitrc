@@ -72,7 +72,7 @@ done
 # they need to run *after* the window manager is launched
 #
 # Simple test to see if startx was executed
-if ! ps x | grep [s]tartx; then
+if ! pgrep startx; then
     command -v xfortune >/dev/null && xfortune "$HOME/share/games/fortunes"
 fi
 
