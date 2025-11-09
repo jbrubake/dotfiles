@@ -73,7 +73,7 @@ pick() {
 
     if [ -z "$p" ]; then
         shift
-        for p in $@; do
+        for p in "$@"; do
             if have "$p"; then
                 printf %s "$p"
                 return
@@ -154,13 +154,13 @@ export VIM_TERMINAL_COLORS=$(awk '$2 ~ /COLOR/ {print gensub(/COLOR/, "", "1", $
 #
 # EDITOR/VISUAL {{{2
 #
-export EDITOR=$(pick editor 'vim vi nano pico ed')
+export EDITOR=$(pick editor vim vi nano pico ed)
 export VISUAL=$EDITOR
 export FCEDIT=$EDITOR
 
 # PAGER/MANPAGER {{{2
 #
-export PAGER=$(pick pager 'less most more')
+export PAGER=$(pick pager less most more)
 export MANPAGER=$PAGER
 
 if have ack; then
@@ -200,7 +200,8 @@ esac
 browsers='elinks links w3m lynx'
 [ -n "$DISPLAY" ] &&
     browsers="firefox google-chrome chromium netsurf $browsers"
-BROWSER=$(pick browser "$browsers")
+# shellcheck disable=SC2086
+BROWSER=$(pick browser $browsers)
 unset browsers
 export BROWSER
 
@@ -208,7 +209,7 @@ export WWW_SEARCH=www.duckduckgo.com # used in ~/.functions
 
 # ls {{{2
 #
-export LS=$(pick ls 'ls eza exa')
+export LS=$(pick ls ls eza exa)
 case $LS in
     eza | exa) export LS_OPTS="--group-directories-first --sort extension -F ${HAS_COLOR:+--color=auto}" ;;
     ls) if command ls --version | grep -q GNU; then
