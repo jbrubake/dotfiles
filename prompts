@@ -1,4 +1,6 @@
 #!/bin/sh
+#
+# shellcheck disable=SC3043
 
 # Prompt functions {{{1
 if test -n "$BASH"; then

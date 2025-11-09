@@ -177,6 +177,7 @@ lsp () { # Print numerical permissions at the start of ls -l output
     command -v grc >/dev/null &&
         _grc="grc $GRC_OPTS --colour=on"
 
+    # shellcheck disable=SC2086
     $_grc "$LS" $_opts -l "$@" | awk '{
         mode = gensub("\x1b[^m]*m", "", "g", $1)
         k = 0; h = 0;

@@ -28,6 +28,7 @@ alias "jobs=$jobs"
 #
 if have grc; then
     export GRC_OPTS='-es' # colorize stderr and stdout
+    # shellcheck disable=SC2016
     grc='grc $GRC_OPTS'
     alias "grc=$grc"
 
@@ -87,6 +88,7 @@ if have grc && [ -n "$HAS_COLOR" ] && [ "$ls" = 'gnu-ls' ]; then
 fi
 
 # Single-quote $LS_OPTS so it can be changed on the fly
+# shellcheck disable=SC2153
 alias   ls="$LS $ls_opts "'$LS_OPTS'
 alias   ll="${grc:+"$grc "}$LS $ll_opts "'$LS_OPTS'" $grc_col"
 alias   la="$LS $la_opts "'$LS_OPTS'
