@@ -80,7 +80,7 @@ cd () { # rpg-cli
     fi
 }
 delve () {
-    current=$(basename $PWD)
+    current=$(basename $(pwd))
     case $current in
         # starting the delve
         *[!0123456789]* ) next=dungeon/1 ;;
