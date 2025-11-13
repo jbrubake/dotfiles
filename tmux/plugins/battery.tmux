@@ -26,6 +26,8 @@ unplugged=󰁺󰁻󰁼󰁽󰁾󰁿󰂀󰂁󰂂󰁹
 charging=󰢜󰂆󰂇󰂈󰢝󰂉󰢞󰂊󰂋󰂅
 # number of icons
 icon_len=10
+# No battery found
+no_battery=
 
 # Colorization threshholds
 RED_THRESH=50
@@ -40,8 +42,15 @@ is_plugged_in() {
 }
 
 battery() {
+    battery=$(get_battery)
+
+    if [ -z "$battery" ]; then
+        printf '#[fg=%s]%s' "$TMUX_COLOR_RED" "$no_battery"
+        return
+    fi
+
     # Get current % charge
-    charge=$(upower -i $(get_battery) | awk '/percentage:/ {print $2}' | sed 's/%//')
+    charge=$(upower -i "$battery" | awk '/percentage:/ {print $2}' | sed 's/%//')
 
     i=$((charge / icon_len + 1))            # convert charge to index into $unplugged / $charging
     [ "$i" -gt "$icon_len" ] && i=$icon_len # max of $icon_len
