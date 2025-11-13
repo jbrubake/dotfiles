@@ -21,9 +21,9 @@
 INTERVAL=60
 
 # 10% to 100%
-unplugged='󰁺󰁻󰁼󰁽󰁾󰁿󰂀󰂁󰂂󰁹'
+unplugged=󰁺󰁻󰁼󰁽󰁾󰁿󰂀󰂁󰂂󰁹
 # 10% to 100%
-charging='󰢜󰂆󰂇󰂈󰢝󰂉󰢞󰂊󰂋󰂅'
+charging=󰢜󰂆󰂇󰂈󰢝󰂉󰢞󰂊󰂋󰂅
 # number of icons
 icon_len=10
 
