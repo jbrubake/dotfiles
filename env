@@ -223,11 +223,15 @@ esac
 if [ -n "$HAS_COLOR" ] && have dircolors; then
     # If colorfile remains blank, dircolors will use defaults
     colorfile=
-    if [ -r "$HOME/.dircolors" ]; then
-        colorfile=$HOME/.dircolors 
-    elif [ -r "/etc/DIR_COLORS" ]; then
-        colorfile=/etc/DIR_COLORS
-    fi
+    for colorfile in "$HOME/.dir_colors.$TERM" \
+                     "$HOME/.dircolors.$TERM" \
+                     "$HOME/.dir_colors" \
+                     "$HOME/.dircolors" \
+                     "/etc/DIR_COLORS.$TERM" \
+                     /etc/DIR_COLORS ; do
+
+        [ -e "$colorfile" ] && break
+    done
 
     eval "$(dircolors "$colorfile")"
 
