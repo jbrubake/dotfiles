@@ -20,7 +20,7 @@ git module gdb-dashboard:
     .gdbinit:
       - gdbinit
   pick: gdbinit
-  rev: 616ed5100d3588bb70e3b86737ac0609ce0635cc
+  rev: c429e144eabf7a2c4c33ffbd617f54f752a7e614
 
 git module irssi-colors-solarized:
   url: https://github.com/huyz/irssi-colors-solarized
