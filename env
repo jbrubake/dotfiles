@@ -231,7 +231,7 @@ if [ -n "$HAS_COLOR" ] && have dircolors; then
 
     eval "$(dircolors "$colorfile")"
 
-    unset colorfile localcolorfile
+    unset colorfile
 fi
 
 # fzf {{{1
