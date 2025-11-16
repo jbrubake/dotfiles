@@ -392,7 +392,8 @@ ping() { # Wrap ping(1) to allow pinging by SSH Host entry
         ping="command ping"
     fi
 
-    $ping "$(__gethost "$@")"
+    # shellcheck disable=SC2046
+    $ping $(__gethost "$@")
 
     unset _grc
 }
