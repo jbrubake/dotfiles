@@ -87,6 +87,7 @@ fi
 command -v signal-desktop >/dev/null && signal-desktop
 command -v discord        >/dev/null && discord
 command -v firefox        >/dev/null && firefox &
+command -v launchterm     >/dev/null && launchterm main
 
 # Run this stuff forever {{{1
 #
