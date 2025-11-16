@@ -257,13 +257,23 @@ alias ${BASH:+--} -x='chmod -x' # make file non-executable
 
 alias      :q='exit'                                    # exit like it's vim
 alias    bell='printf "\a"'                             # ring the bell
-alias    grep="grep ${HAS_COLOR:+--color=auto}"         # force color in *grep
 alias      nu="who | cut -d' ' -f1 | uniq | wc -l"      # get number of logged on users
 alias       r='fc -s'                                   # ^old^new but global (r pat=rep)
 alias    ship='ip --brief address'                      # short IP interface overview
 alias    sudo='sudo '                                   # enable aliases to be sudo’ed
 alias   tree='command tree -CFI ".git" --dirsfirst'     # better looking tree(1)
 alias unexec='find . -type f -exec chmod ogu-x "{}" \;' # chmod -x all FILES in tree (needed when copying from Windows)
+
+# Force color in *grep
+alias   grep="grep     ${HAS_COLOR:+--color=auto}"
+alias   fgrep="grep -F ${HAS_COLOR:+--color=auto}"
+alias   egrep="grep -E ${HAS_COLOR:+--color=auto}"
+alias   zgrep="zgrep   ${HAS_COLOR:+--color=auto}"
+alias  zfgrep="zfgrep  ${HAS_COLOR:+--color=auto}"
+alias  zegrep="zegrep  ${HAS_COLOR:+--color=auto}"
+alias  xzgrep="xzgrep  ${HAS_COLOR:+--color=auto}"
+alias xzfgrep="xzfgrep ${HAS_COLOR:+--color=auto}"
+alias xzegrep="xzegrep ${HAS_COLOR:+--color=auto}"
 
 # It would be nice if telnet had something like ssh configs
 alias rcbb='telnet realitycheckbbs.org -l "Jeremy Brubaker"'
