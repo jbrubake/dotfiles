@@ -20,9 +20,8 @@ mod4 + B
 
 # Main terminal {{{1
 #
-# Launch all tmuxp session in detached mode and then connect to 'main'
+# Connect or load 'main' tmux session
 mod4 + Return
-    for ws in $(tmuxp ls); do tmuxp load -d "$ws"; done; \
     wmctrl -xa main || tabbed -cd -n main -r2 alacritty --embed ID -e ~/bin/launchterm main
 
 # Various apps {{{1

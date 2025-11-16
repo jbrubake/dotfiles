@@ -66,6 +66,12 @@ for f in "$HOME/etc/init.d/"*; do
     [ -x "$f" ] && "$f"
 done
 
+# Load tmuxp sessions
+command -v tmuxp >/dev/null &&
+    for s in $(tmuxp ls); do
+        tmuxp load -d "$s"
+    done
+
 # Show login related things {{{1
 #
 # These are tasks that would be run in ~/.xsession except that
