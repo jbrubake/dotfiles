@@ -22,7 +22,7 @@ mod4 + B
 #
 # Connect or load 'main' tmux session
 mod4 + Return
-    wmctrl -xa main || tabbed -cd -n main -r2 alacritty --embed ID -e ~/bin/launchterm main
+    wmctrl -xa main || launchterm main
 
 # Various apps {{{1
 #
