@@ -259,7 +259,7 @@ alias      :q='exit'                                    # exit like it's vim
 alias    bell='printf "\a"'                             # ring the bell
 alias      nu="who | cut -d' ' -f1 | uniq | wc -l"      # get number of logged on users
 alias       r='fc -s'                                   # ^old^new but global (r pat=rep)
-alias    ship='ip --brief address'                      # short IP interface overview
+alias     ipb='ip --brief address'                      # short IP interface overview
 alias    sudo='sudo '                                   # enable aliases to be sudo’ed
 alias   tree='command tree -CFI ".git" --dirsfirst'     # better looking tree(1)
 alias unexec='find . -type f -exec chmod ogu-x "{}" \;' # chmod -x all FILES in tree (needed when copying from Windows)
