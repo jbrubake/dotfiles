@@ -275,6 +275,9 @@ alias  xzgrep="xzgrep  ${HAS_COLOR:+--color=auto}"
 alias xzfgrep="xzfgrep ${HAS_COLOR:+--color=auto}"
 alias xzegrep="xzegrep ${HAS_COLOR:+--color=auto}"
 
+# Taken from /etc/profile.d/which2.sh
+alias which='(alias; declare -f) | /usr/bin/which --tty-only --read-alias --read-functions --show-tilde --show-dot'
+
 # It would be nice if telnet had something like ssh configs
 alias rcbb='telnet realitycheckbbs.org -l "Jeremy Brubaker"'
 
