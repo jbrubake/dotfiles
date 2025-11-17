@@ -14,7 +14,10 @@ updates() {
             }
             $2 ~ /security/  { security++ }
                              { total++ }
-            END { print security, total }')
+            END {
+                if (total < 0) total = 0
+                print security, total }'
+            )
 
     security=$(echo "$updates" | cut -d' ' -f1)
     total=$(echo "$updates" | cut -d' ' -f2)
