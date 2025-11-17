@@ -374,22 +374,15 @@ elinks() { # Reuse existing elinks instance
 }
 unalias ping 2>/dev/null
 ping() { # Wrap ping(1) to allow pinging by SSH Host entry
-#
-# Use grc if it is available
-#
-    if command -v grc >/dev/null; then
-        _grc="grc $GRC_OPTS"
-
-        # If ping gives **no** response, grc will buffer everything
-        # until ping is killed. This allows the intial line to be displayed
-        # so you know something is actually happening
-        if command -v stdbuf >/dev/null; then
-            ping="$_grc -c conf.ping stdbuf -oL ping"
-        else
-            ping="$_grc ping"
-        fi
+    # Use grc if it is available
+    #
+    # stdbuf is required because if ping gives **no** response, grc will buffer
+    # everything until ping is killed. This allows the intial line to be
+    # displayed so you know something is actually happening
+    if command -v grc >/dev/null && command -v stdbuf >/dev/null; then
+        ping="grc $GRC_OPTS -c conf.ping stdbuf -oL ping"
     else
-        ping="command ping"
+        ping='command ping'
     fi
 
     # shellcheck disable=SC2046
