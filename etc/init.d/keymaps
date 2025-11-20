@@ -48,3 +48,6 @@ if command -v sxhkd >/dev/null; then
     exec sxhkd &
 fi
 
+# Enable NumLock
+command -v xdotool >/dev/null && xdotool key Num_Lock
+
