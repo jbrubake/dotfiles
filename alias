@@ -18,9 +18,11 @@ have() { command -v "$1" >/dev/null; }
 
 # Defaults {{{1
 #
-# This will be overriden if grc(1) is available
+# These will be modified if grc(1) is available
 jobs='jobs -l' # list PIDs
 alias "jobs=$jobs"
+ipa='ip --brief -4 address | grep -v ^lo'
+alias ipa="$ipa"
 
 # grc(1)-only aliases {{{1
 #
@@ -49,6 +51,9 @@ if have grc; then
     # Pipe dnf to grcat(1). Cannot be an alias but it basically is
     unalias dnf 2>/dev/null
     dnf() { command dnf "$@" | grcat conf.dnf; }
+
+    # This one has to be handled differently
+    alias ipa='grc $GRC_OPTS --colour on '"$ipa"
 fi
 
 # ls(1) {{{1
@@ -259,7 +264,6 @@ alias      :q='exit'                                    # exit like it's vim
 alias    bell='printf "\a"'                             # ring the bell
 alias      nu="who | cut -d' ' -f1 | uniq | wc -l"      # get number of logged on users
 alias       r='fc -s'                                   # ^old^new but global (r pat=rep)
-alias     ipb='ip --brief address | grep -v ^lo'        # short IP interface overview
 alias    sudo='sudo '                                   # enable aliases to be sudo’ed
 alias   tree='command tree -CFI ".git" --dirsfirst'     # better looking tree(1)
 alias unexec='find . -type f -exec chmod ogu-x "{}" \;' # chmod -x all FILES in tree (needed when copying from Windows)
