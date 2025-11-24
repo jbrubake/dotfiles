@@ -2,6 +2,9 @@
 #
 # Jeremy Brubaker <jbru362@gmail.com>
 
+# in case atwork is not installed
+command -v atwork >/dev/null || atwork() { true; }
+
 # Color Escape Functions {1
 
 ###################################################
@@ -69,28 +72,59 @@ else
     BGt() { :; }
 fi
 # }
-# Play rpg-cli {1
-if command -v rpg-cli >/dev/null; then
-cd () { # rpg-cli
-    command cd "$@"
-    wap=$(nmcli dev wifi show 2>/dev/null | grep SSID | cut -d' ' -f2)
-    if [ "$wap" != 'classroom' ]; then
-        rpg-cli cd -f .
-        rpg-cli battle
-    fi
-}
-delve () {
-    current=$(basename $(pwd))
-    case $current in
-        # starting the delve
-        *[!0123456789]* ) next=dungeon/1 ;;
-        # now we're delving
-        [!0]*)            next=$((current + 1)) ;;
-    esac
-    command mkdir -p "$next" &&
-        cd "$next" &&
-        rpg-cli ls
-}
+# Overload cd and friends {1
+#
+# devtodo & rpg-cli {
+if [ "$HAVE_DEVTODO" = 1 -o "$HAVE_RPG_CLI" ]; then
+    cd () {
+        if builtin cd "$@"; then
+            if [ "$HAVE_DEVTODO" = 1 -a -f .todo ]; then
+                devtodo $DEVTODO_OPTIONS
+            fi
+
+            if [ "$HAVE_RPG_CLI" = 1 ] && ! atwork; then
+                rpg-cli cd -f .
+                rpg-cli battle
+            fi
+            true # cd succeeded
+        else
+            false # cd failed
+        fi
+    }
+fi # devtodo & rpg-cli }
+# devtodo {
+if [ "$HAVE_DEVTODO" = 1 ]; then
+    pushd () {
+        if builtin pushd "$@"; then
+            [ -r .todo ] && devtodo $DEVTODO_OPTIONS
+            true # cd succeeded
+        else
+            false # cd failed
+        fi
+    }
+    popd () {
+        if builtin popd "$@"; then
+            [ -r .todo ] && devtodo $DEVTODO_OPTIONS
+            true # cd succeeded
+        else
+            false # cd failed
+        fi
+    }
+fi # devtodo }
+# rpg-cli {
+if [ "$HAVE_RPG_CLI" = 1 ]; then
+    delve () {
+        current=$(basename $(pwd))
+        case $current in
+            # starting the delve
+            *[!0123456789]* ) next=dungeon/1 ;;
+            # now we're delving
+            [!0]*)            next=$((current + 1)) ;;
+        esac
+        command mkdir -p "$next" &&
+            cd "$next" &&
+            rpg-cli ls
+    }
 fi # rpg-cli }
 # Miscellaneous {1
 rmh() { # Remove a host from ~/.ssh/known_hosts

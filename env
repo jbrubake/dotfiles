@@ -453,6 +453,18 @@ export GREP_COLORS='sl=:cx=:mt=1;31:fn=35:ln=32:bn=33:se=36' # }}}
 # Hostnames for bash-completion
 [ -r "$HOME/.ssh/known_hosts" ] && export HOSTFILE=$HOME/.ssh/known_hosts
 
+# rpg-cli cd override is not defined if this is not set
+have rpg-cli && export HAVE_RPG_CLI=1
+
+# devtodo {{{2
+#
+if have devtodo; then
+    # devtodo cd override is not defined if this is not set
+    export HAVE_DEVTODO=1
+    # Options used in *cd override functions
+    export DEVTODO_OPTIONS="--timeout --summary"
+fi
+
 # Move things into XDG directories {{{2
 
 have elinks &&
