@@ -41,6 +41,7 @@ pathuniq() {
     nl |
     sort -uk2,2 |
     sort -n |
+    sed '/^[[:space:]]*$/d' |
     cut -f2- |
     tr "\n" : |
     sed -e "s/:$//" -e "s/^://")'"
