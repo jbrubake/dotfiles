@@ -423,8 +423,7 @@ export NNTPSERVER=snews://news.eternal-september.org
 export MAIL=$HOME/.maildir/local
 
 # Enable pass(1) extensions
-have pass &&
-    export PASSWORD_STORE_ENABLE_EXTENSIONS=true
+have pass && export PASSWORD_STORE_ENABLE_EXTENSIONS=true
 
 # pinentry stuff
 [ -x "$HOME/bin/pinentry-ssh-askpass" ] &&
@@ -452,8 +451,7 @@ export GREP_COLORS='sl=:cx=:mt=1;31:fn=35:ln=32:bn=33:se=36'
     export LOCAL_SSHD_CONFIG=$HOME/etc/sshd/sshd_config
 
 # Hostnames for bash-completion
-if [ -r "$HOME/.ssh/known_hosts" ]; then
-    export HOSTFILE=$HOME/.ssh/known_hosts
+[ -r "$HOME/.ssh/known_hosts" ] && export HOSTFILE=$HOME/.ssh/known_hosts
 fi
 
 # Move things into XDG directories {{{2
