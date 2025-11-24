@@ -93,8 +93,18 @@ export XDG_CACHE_HOME=$HOME/var/cache # non-essential data (/var/cache) # ~/.cac
 export XDG_DATA_HOME=$HOME/share      # data files         (/usr/share) # ~/.local/share
 export XDG_STATE_HOME=$HOME/var/lib   # state data         (/var/lib)   # ~/.local/state
 
-have flatpak &&
-    pathadd "$XDG_DATA_HOME/flatpak/exports/share" XDG_DATA_DIRS
+# Add flatpak to XDG_DATA_DIRS
+#
+export XDG_DATA_DIRS=${XDG_DATA_DIRS:-/usr/local/share:/usr/share}
+if have flatpak; then
+    for p in \
+        "$(unset G_MESSAGES_DEBUG; GIO_USE_VFS=local flatpak --installations)" \
+        "$XDG_DATA_HOME/flatpak" \
+    ; do
+        pathadd "$p/exports/share" XDG_DATA_DIRS
+    done
+fi
+
 pathuniq XDG_DATA_DIRS
 
 # Setup PATH {{{1
