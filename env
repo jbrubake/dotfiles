@@ -431,7 +431,7 @@ have pass && export PASSWORD_STORE_ENABLE_EXTENSIONS=true
 [ -n "$DISPLAY" ] &&
     export SUDO_ASKPASS=$SSH_ASKPASS
 
-# *grep Colors
+# *grep Colors {{{
 #
 # sl    matching line (non-matching wwith -v)
 # cx    context line (matching with -v, non-matching without -v)
@@ -444,7 +444,7 @@ have pass && export PASSWORD_STORE_ENABLE_EXTENSIONS=true
 # bn    byte offset
 # se    separators
 #
-export GREP_COLORS='sl=:cx=:mt=1;31:fn=35:ln=32:bn=33:se=36'
+export GREP_COLORS='sl=:cx=:mt=1;31:fn=35:ln=32:bn=33:se=36' # }}}
 
 # local-only SSH server
 [ -r "$HOME/etc/ssh/sshd_config" ] &&
