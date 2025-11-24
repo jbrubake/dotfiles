@@ -99,8 +99,7 @@ right() { # {{{1
     fi
 
     # rpg-cli status
-    wap=$(nmcli dev wifi show 2>/dev/null | grep SSID | cut -d' ' -f2)
-    if [ "$wap" != 'classroom' ]; then
+    if command -v atwork >/dev/null && ! atwork; then
         printf '#[fg=color252] | '
         printf '󱡂 %s' "$(plugin rpg_status '%c-%l: %H hp')"
     fi
