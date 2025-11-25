@@ -308,10 +308,8 @@ fi
 
 # ARM cross-compiler {{{2
 #
-[ -d "$HOME/opt/arm-none-eabi/" ] &&
-    pathadd "$HOME/opt/arm-none-eabi/bin"
-[ -d "$HOME/opt/aarch64-elf/bin/" ] &&
-    pathadd "$HOME/opt/aarch64-elf/bin"
+[ -d "$HOME/opt/arm-none-eabi/" ]   && pathadd "$HOME/opt/arm-none-eabi/bin"
+[ -d "$HOME/opt/aarch64-elf/bin/" ] && pathadd "$HOME/opt/aarch64-elf/bin"
 
 # Python {{{2
 #
@@ -335,8 +333,8 @@ export PACKER_CACHE_DIR=$XDG_CACHE_HOME/packer
 
 # Go {{{2
 #
-if [ -d "/opt/go/bin" ]; then
-    pathadd "/opt/go/bin"
+if [ -d /opt/go ]; then
+    pathadd /opt/go/bin
 
     export GOPATH=$HOME
     export GOCACHE=$HOME/var/cache/go-build
@@ -349,7 +347,7 @@ fi
 
 # gcloud {{{2
 #
-[ -d '/opt/google-cloud-sdk/bin' ] && pathadd /opt/google-cloud-sdk/bin
+[ -d /opt/google-cloud-sdk/bin ] && pathadd /opt/google-cloud-sdk/bin
 
 # Other {{{2
 #
