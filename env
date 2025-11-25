@@ -486,12 +486,12 @@ fi
 #
 # Add personal directories. Listed in order from least- to most-significant
 for d in \
-    "$HOME/games/bin" \
-    "$HOME/sbin" \
-    "$HOME/bin/.flatpak" \
-    "$HOME/bin" \
+    games/bin \
+    sbin \
+    bin/.flatpak \
+    bin \
 ; do
-    [ -d "$d" ] && pathadd "$d"
+    [ -d "$HOME/$d" ] && pathadd "$HOME/$d"
 done 
 pathuniq PATH
 
