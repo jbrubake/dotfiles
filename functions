@@ -127,6 +127,13 @@ if [ "$HAVE_RPG_CLI" = 1 ]; then
     }
 fi # rpg-cli }
 # Miscellaneous {1
+pathshow() { # Split a PATH-style variable into multiple lines
+    # Split <var> into multiple lines (Default: PATH)
+    # Usage: pathshow [<var>]
+    #
+    # Example: $ pathshow XDG_DATA_DIRS
+    eval echo "\$${1:-PATH}" | tr : '\n'
+}
 rmh() { # Remove a host from ~/.ssh/known_hosts
     # Although ssh-keygen -R can be used to remove host entries, that requires
     # both adding the port (which I don't feel like remembering) and enclosing
