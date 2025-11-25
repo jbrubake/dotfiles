@@ -93,7 +93,6 @@ if shopt -q progcomp; then
 fi
 
 # }}}
-
 # Cleanup {{{1
 #
 unset have
