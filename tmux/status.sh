@@ -31,7 +31,7 @@ left() { # {{{1
     # clock
     printf '#[fg=color252] | '
     printf '#[range=user|clock]'
-    printf ' #[fg=color214]%s#[fg=none]' "$(plugin clock '%a, %d-%b %H:%M')"
+    printf ' #[fg=color214]%s#[fg=none]' "$(plugin clock '%a, %d-%b %H:%M:%S')"
     printf '#[norange]'
 
     # network status and internet POP
