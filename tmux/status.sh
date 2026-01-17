@@ -86,6 +86,7 @@ right() { # {{{1
     printf '#[norange]'
 
     # updates
+    printf '#[range=user|updates]'
     printf '#[fg=color252] | '
     printf '󰒃 %s' "$(plugin updates "#[fg=color033]%t #[fg=$TMUX_COLOR_RED]( %s)#[fg=color033] updates")"
 
