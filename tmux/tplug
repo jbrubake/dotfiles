@@ -13,6 +13,8 @@ TPLUG_DIR=$(tmux show-option -gqv @tplug-dir)
 #
 plugin() {
     plugin=$1; shift
+    [ -f $TPLUG_DIR/plugins/$plugin.tmux ] || return
+
     . $TPLUG_DIR/plugins/$plugin.tmux
 
     # # Default interval is 5 minutes
