@@ -40,9 +40,9 @@ format verbose-generated = %2>%i- (added %c, completed %d) %+1T\n
 
 # User-defined formats
 # 
-format full-report = %i%[info]%f%2n.%[priority]%+1T%+1i%[info]Added: %[normal]%c  %[info]Completed: %[normal]%d\n%+1i%[info]Duration: %[normal]%D  %[info]Priority: %[normal]%p\n\n
+format full-report=%i%[info]%f%2n.%[priority]%+1T%+1i%[info]Added: %[normal]%c  %[info]Completed: %[normal]%d\n%+1i%[info]Duration: %[normal]%D  %[info]Priority: %[normal]%p\n\n
 # Override the display format to use "full-report".
-use-format display = full-report
+use-format display=full-report
 
 # Force removal of world and group permissions from database when created
 on create {
