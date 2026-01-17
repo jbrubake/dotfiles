@@ -263,6 +263,8 @@ autocmd plugins FileType yaml.ansible vnoremap <localleader>gr :call JumpToAnsib
 
 " No configuration needed
 
+" pseudo-syntax:           Syntax highlighting for various forms of pseudocode for vim            plugurl:joelbeedle/pseudo-syntax " {{{3
+
 " scss-syntax.vim:         Sassy CSS for vim                                                      plugurl:cakebaker/scss-syntax.vim " {{{3
 
 " No configuration needed
