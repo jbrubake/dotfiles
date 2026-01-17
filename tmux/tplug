@@ -36,8 +36,9 @@ plugin() {
 #
 # Based on the caching function in https://github.com/odedlaz/tmux-status-variables
 
-TMUX_PLUGIN_CACHE=${XDG_CACHE_HOME:-~/.cache}/tmux
-[ ! -d "$TMUX_PLUGIN_CACHE" ] && mkdir -p "$TMUX_PLUGIN_CACHE"
+# Use the tmux socket directory to hold the cache
+TPLUG_CACHE=${TMUX_TMPDIR:-/tmp}/tmux-$(id -u)/tplug
+[ ! -d "$TPLUG_CACHE" ] && mkdir -p "$TPLUG_CACHE"
 
 # get_value {{{2
 #
@@ -97,7 +98,7 @@ set_cache() {
 #
 # @stdout Path to cache
 #
-get_cache_fn() { echo "$TMUX_PLUGIN_CACHE/$1.cache"; }
+get_cache_fn() { echo "$TPLUG_CACHE/$1.cache"; }
 
 # get_cache_time {{{2
 #
