@@ -383,19 +383,26 @@ if have bash; then
 fi
 
 # Miscellaneous {{{1
+#
+# locate(1) {{{2
 if have locate; then
     export LOCATEDB=$HOME/var/lib/locate/locate.db
     mkdir -p "$(dirname "$LOCATEDB")"
 fi
 
+# LESSHISTFILE {{{2
 LESSHISTFILE=$XDG_STATE_HOME/misc/lesshst
 mkdir -p "$(dirname "$LESSHISTFILE")"
 
+# Personal wiki {{{2
+#
 if [ -d "$HOME/wiki" ]; then
     export WIKI_DIR=$HOME/wiki
     export WIKI_SITE=$HOME/wiki/site
 fi
 
+# DOTFILES {{{2
+#
 # This is used in vimrc and scripts/curlvim
 #
 # Get realpath to this file
@@ -410,27 +417,27 @@ else
     :
 fi
 
-# Always use my .inputrc
+# Always use my .inputrc {{{2
 if [ -r "$HOME/.inputrc" ]; then
     export INPUTRC=$HOME/.inputrc
 fi
 
-# Set news server
+# Set news server {{{2
 export NNTPSERVER=snews://news.eternal-september.org
 
-# Set local mail directory
+# Set local mail directory {{{2
 export MAIL=$HOME/.maildir/local
 
-# Enable pass(1) extensions
+# Enable pass(1) extensions {{{2
 have pass && export PASSWORD_STORE_ENABLE_EXTENSIONS=true
 
-# pinentry stuff
+# pinentry stuff {{{2
 [ -x "$HOME/bin/pinentry-ssh-askpass" ] &&
     export SSH_ASKPASS=$HOME/bin/pinentry-ssh-askpass
 [ -n "$DISPLAY" ] &&
     export SUDO_ASKPASS=$SSH_ASKPASS
 
-# *grep Colors {{{
+# *grep Colors {{{2
 #
 # sl    matching line (non-matching wwith -v)
 # cx    context line (matching with -v, non-matching without -v)
@@ -443,16 +450,16 @@ have pass && export PASSWORD_STORE_ENABLE_EXTENSIONS=true
 # bn    byte offset
 # se    separators
 #
-export GREP_COLORS='sl=:cx=:mt=1;31:fn=35:ln=32:bn=33:se=36' # }}}
+export GREP_COLORS='sl=:cx=:mt=1;31:fn=35:ln=32:bn=33:se=36'
 
-# local-only SSH server
+# local-only SSH server {{{2
 [ -r "$HOME/etc/ssh/sshd_config" ] &&
     export LOCAL_SSHD_CONFIG=$HOME/etc/sshd/sshd_config
 
-# Hostnames for bash-completion
+# Hostnames for bash-completion {{{2
 [ -r "$HOME/.ssh/known_hosts" ] && export HOSTFILE=$HOME/.ssh/known_hosts
 
-# rpg-cli cd override is not defined if this is not set
+# rpg-cli cd override is not defined if this is not set {{{2
 have rpg-cli && export HAVE_RPG_CLI=1
 
 # devtodo {{{2
@@ -466,8 +473,7 @@ fi
 
 # Move things into XDG directories {{{2
 
-have elinks &&
-    export ELINKS_CONFDIR=$XDG_CONFIG_HOME/elinks
+have elinks && export ELINKS_CONFDIR=$XDG_CONFIG_HOME/elinks
 
 # Configure tldr-sh client {{{2
 #
