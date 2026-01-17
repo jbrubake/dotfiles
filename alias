@@ -96,6 +96,7 @@ fi
 # shellcheck disable=SC2153
 alias   ls="$LS $ls_opts "'$LS_OPTS'
 alias   ll="${grc:+"$grc "}$LS $ll_opts "'$LS_OPTS'" $grc_col"
+alias   ld="${grc:+"$grc "}$LS $ll_opts -d "'$LS_OPTS'" $grc_col"
 alias   la="$LS $la_opts "'$LS_OPTS'
 alias  lla="${grc:+"$grc "} $LS $lla_opts "'$LS_OPTS'" $grc_col"
 alias   l.="$LS $ld_opts "'$LS_OPTS'
