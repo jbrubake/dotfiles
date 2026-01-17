@@ -63,6 +63,9 @@ battery() {
     fi
 
     # <icon> <charge>%
-    printf '%s%s %s%%' "$(colorize "$charge" "$RED_THRESH" "$YELLOW_THRESH")" "$(echo "$icons" | cut -c"$i")" "$charge"
+    printf '%s%s %s%%' \
+        "$(colorize "$charge" "$RED_THRESH" "$YELLOW_THRESH")" \
+        "$(echo "$icons" | cut -c"$i")" \
+        "$charge"
 }
 
