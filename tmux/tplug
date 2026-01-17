@@ -17,8 +17,17 @@ plugin() {
     plugin=$1; shift
     . $TMUX_PLUGIN_DIR/plugins/$plugin.tmux
 
-    # Default INTERVAL is 5 minutes
-    get_value "$plugin" "${INTERVAL:-300}" "$@"
+    # # Default interval is 5 minutes
+    if [ -z "$INTERVAL" ]; then
+        interval=300
+    # Minimum interval is tmux's status-interval
+    elif [ "$INTERVAL" -lt "$(tmux show-option -gv status-interval)" ]; then
+        interval=$(tmux show-option -gv status-interval)
+    else
+        interval=$INTERVAL
+    fi
+
+    get_value "$plugin" "$interval" "$@"
 }
 
 # Cache functions {{{1
