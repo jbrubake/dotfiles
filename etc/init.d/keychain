@@ -1,25 +1,14 @@
 #!/bin/sh
 
+# Just in case
+command -v my >/dev/null || my() { echo xterm; }
+
 command -v keychain >/dev/null || exit 1
 
 eval "$(keychain --eval --nogui --agents ssh,gpg)"
 
-# If X is running, find a terminal to run
-if [ -n "$DISPLAY" ]; then
-    unset t
-    command -v my >/dev/null && t=$(my -v terminal)
-
-    if [ -z "$t" ]; then
-        for term in st gnome-terminal rxvt xterm; do
-            if command -v "$term" >/dev/null; then
-                t=$term
-                break
-            fi
-        done
-    fi
-
-    t="$t -e"
-fi
+# X requires running a terminal
+[ -n "$DISPLAY" ] && t="$(my -v terminal) -e"
 
 # Find all SSH public keys and add the corresponding private key
 #
