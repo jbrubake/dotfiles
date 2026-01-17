@@ -1,7 +1,7 @@
 #!/usr/bin/sh
 
 # Seconds until script output cache is stale
-INTERVAL=$(( 60 * 3600 )) # 1 hour
+INTERVAL=$(( 60 * 60 )) # 1 hour
 
 updates() {
     format=${1:-%t (%s security) updates}
