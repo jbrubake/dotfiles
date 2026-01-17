@@ -1,8 +1,5 @@
 #!/bin/sh
 
-# Source plugin framework
-. $(tmux show-option -gqv @plugin_dir)/utils.sh
-
 # Global configuration {{{1
 
 # used by colorize()
@@ -159,9 +156,4 @@ window() { # {{{1
 
     printf "#[fg=%s,bg=%s,%s]%s%s%s" "$fg" "$bg" "$other" "$pre" "$format" "$post"
 }
-
-# Main {{{1
-#
-cmd=$1; shift
-"$cmd" "$@"
 

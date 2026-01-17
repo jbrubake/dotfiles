@@ -1,8 +1,6 @@
 #!/bin/sh
 #
-[ -n "$TMUX_PLUGIN_DIR" ] && return
-# Base plugin directory
-export TMUX_PLUGIN_DIR=$(tmux show-option -gqv @plugin_dir)
+TPLUG_DIR=$(tmux show-option -gqv @tplug-dir)
 
 # plugin {{{1
 #
@@ -15,7 +13,7 @@ export TMUX_PLUGIN_DIR=$(tmux show-option -gqv @plugin_dir)
 #
 plugin() {
     plugin=$1; shift
-    . $TMUX_PLUGIN_DIR/plugins/$plugin.tmux
+    . $TPLUG_DIR/plugins/$plugin.tmux
 
     # # Default interval is 5 minutes
     if [ -z "$INTERVAL" ]; then
@@ -169,4 +167,11 @@ colorize() {
 
     printf "#[fg=%s]" "$color"
 }
+
+# Main {{{1
+#
+# Source status and window definitions
+. $TPLUG_DIR/status.sh
+# and run one of the functions defined there
+"$@"
 
