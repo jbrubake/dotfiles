@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Seconds until script output cache is stale
-INTERVAL=60
+INTERVAL=1
 
 clock() {
     if [ -n "$1" ]; then
