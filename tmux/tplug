@@ -126,13 +126,17 @@ clear_cache() { rm -f "$(get_cache_fn)"; }
 #
 # now {{{2
 #
-# @description Print the time in seconds from the epoch (not POSIX-compliant)
+# @description Print the time in seconds from the epoch
 #
 # @noarg
 #
 # @stdout Seconds since the epoch
 #
-now() { date +%s; }
+now() {
+    echo $(( $(TZ=GMT0 date \
+        +"((%Y-1600)*365+(%Y-1600)/4-(%Y-1600)/100+(%Y-1600)/400+1%j-1000-135140) \
+        *86400+(1%H-100)*3600+(1%M-100)*60+(1%S-100)") ))
+}
 
 # colorize {{{2
 #
