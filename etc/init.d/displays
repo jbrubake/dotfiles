@@ -30,8 +30,8 @@ case $num_external in
                        --output "$internal" --auto
                 ;;
             mirror|*)
-                res_ext=$(xrandr | awk "/^$screens/ {f = 1} /\*/ && f == 1 {print $1; exit}")
-                res_int=$(xrandr | awk "/^$internal/ {f = 1} /\+/ && f == 1 {print $1; exit}")
+                res_ext=$(xrandr | awk "/^$screens/  {f = 1} /\*/ && f == 1 {print \$1; exit}")
+                res_int=$(xrandr | awk "/^$internal/ {f = 1} /\*/ && f == 1 {print \$1; exit}")
 
                 x_ext=$(echo "$res_ext" | cut -d x -f1)
                 y_ext=$(echo "$res_ext" | cut -d x -f2)
