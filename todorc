@@ -33,16 +33,10 @@ sort -done,priority,-created,-text
 # Display formats
 #
 format date              = %d/%m/%y, %H:%M
-# format display           = %4>%i%[info]%f%2n.%[priority]%+1T
+format display           = %4>%i%[info]%f%2n.%[priority]%+1T
 format verbose-display   = %4>%i%[info]%f%2n.(added %c) %[priority]%+1T
 format generated         = %2>%i- %+1T\n
 format verbose-generated = %2>%i- (added %c, completed %d) %+1T\n
-
-# User-defined formats
-# 
-format full-report=%i%[info]%f%2n.%[priority]%+1T%+1i%[info]Added: %[normal]%c  %[info]Completed: %[normal]%d\n%+1i%[info]Duration: %[normal]%D  %[info]Priority: %[normal]%p\n\n
-# Override the display format to use "full-report".
-use-format display=full-report
 
 # Force removal of world and group permissions from database when created
 on create {
