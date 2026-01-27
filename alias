@@ -263,6 +263,7 @@ have todo.sh    && alias       t='todo.sh'               # easier todo.sh
 alias             +x='chmod +x' # make file executable
 alias ${BASH:+--} -x='chmod -x' # make file non-executable 
 
+alias     huh='dunstctl history-pop' # Show previous desktop notifications
 alias      :q='exit'                                    # exit like it's vim
 alias    bell='printf "\a"'                             # ring the bell
 alias      nu="who | cut -d' ' -f1 | uniq | wc -l"      # get number of logged on users
