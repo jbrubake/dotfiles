@@ -21,7 +21,9 @@ have() { command -v "$1" >/dev/null; }
 # These will be modified if grc(1) is available
 jobs='jobs -l' # list PIDs
 alias "jobs=$jobs"
-ipa='ip --brief -4 address | grep -v ^lo'
+#    brief listing        no loopback   no IPv6
+ipa='ip --brief address | grep -v ^lo | sed "s@ [^[:space:]]*/64@@g"'
+
 alias ipa="$ipa"
 
 # grc(1)-only aliases {{{1
