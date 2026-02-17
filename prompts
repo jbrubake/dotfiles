@@ -15,9 +15,7 @@ prompt_detached () {
 
     local detached=$(( n_screen + n_tmux ))
 
-    if test $detached -ne 0; then
-        printf "%s%sd%s" "$1" "${detached}" "$2"
-    fi
+    [ "$detached" -ne 0 ] && printf '%sd' "$detached"
 }
 # prompt_running: Get running jobs {{{2
 # Only works under Bash
@@ -255,7 +253,7 @@ PS1="$PS1\n"
 PS1="$PS1$user_clr\u$at_clr@$hostname_clr\h "
 PS1="$PS1$ssh_clr$(prompt_ssh && echo 'ssh ')"
 PS1="$PS1\$(prompt_git '$bracket_clr($git_branch_clr' '$git_status_clr' '$bracket_clr) ')"
-PS1="$PS1$(prompt_combine "$bracket_clr{$jobs_clr" "$bracket_clr} " '|' "$(prompt_running)" "$(prompt_stopped)" "$(prompt_detached '' '')")"
+PS1="$PS1$(prompt_combine "$bracket_clr{$jobs_clr" "$bracket_clr} " '|' "$(prompt_running)" "$(prompt_stopped)" "$(prompt_detached)")"
 PS1="$PS1$bracket_clr!$history_clr\! "
 PS1="$PS1\$(prompt_error '$error_clr')$reset"
 PS1="$PS1\n"
