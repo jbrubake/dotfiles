@@ -292,9 +292,6 @@ alias rcbb='telnet realitycheckbbs.org -l "Jeremy Brubaker"'
 # Show my Nerd Test result
 alias nerd='feh https://www.nerdtests.com/images/badge/nt2/$NERDTEST_ID.png'
 
-# Run the latest installed Vassal
-alias vassal=~/opt/vassal/VASSAL.sh
-
 # tmux popups
 alias tcal='tmux-popup -k -w23 -h27 "cal -3"'
 alias ttop='tmux-popup htop'
@@ -314,6 +311,10 @@ alias   df="${grc:+"$grc "}df -hT"              # human-readable is better
 alias   du="${grc:+"$grc "}du -h"               # human-readable is better
 alias  du1="${grc:+"$grc "}du -h --max-depth=1" # top-level summary
 alias free="${grc:+"$grc "}free -h"             # human-readable is better
+
+# Load aliases for things installed in ~/opt {{{1
+#
+[ -r "$HOME/opt/alias" ]  && . "$HOME/opt/alias"
 
 # Cleanup {{{1
 #
