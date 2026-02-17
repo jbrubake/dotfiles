@@ -43,8 +43,13 @@ prompt_combine() {
     oldifs=$IFS
     IFS='
 '
-    for i in "$@"; do
-        s=$s$sep$i
+    for i in $@; do
+        [ "$i" = '' ] && continue
+        if [ -n "$s" ]; then
+            s=$s$sep$i
+        else
+            s=$i
+        fi
     done
     IFS=$oldifs
     [ -n "$s" ] && printf %s%s%s "$pre" "$s" "$post"
