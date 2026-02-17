@@ -570,6 +570,15 @@ if $TMUX != "" | packadd! vim-tmux-pilot | endif
 
 let g:vimtex_view_method = 'zathura'
 let g:tex_flavor         = 'latex' " See <vim-tex>/ftdetect/tex.vim
+let g:vimtex_compiler_latexmk = {
+    \ 'options' : [
+    \    '-shell-escape',
+    \    '-verbose',
+    \    '-file-line-error',
+    \    '-synctex=1',
+    \    '-interaction=nonstopmode',
+    \ ],
+    \}
 
 autocmd plugins FileType tex,bib packadd vimtex | call vimtex#init()
 
