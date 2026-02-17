@@ -226,9 +226,9 @@ export LS=$(pick ls ls eza exa)
 case $LS in
     eza | exa) export LS_OPTS="--group-directories-first --sort extension -F ${HAS_COLOR:+--color=auto}" ;;
     ls) if command ls --version | grep -q GNU; then
-            export LS_OPTS="--group-directories-first -hXFH ${HAS_COLOR:+--color=auto}"
+            export LS_OPTS="--group-directories-first -hXF ${HAS_COLOR:+--color=auto}"
         else
-            export LS_OPTS='-XFH'
+            export LS_OPTS='-XF'
         fi ;;
 esac
 
