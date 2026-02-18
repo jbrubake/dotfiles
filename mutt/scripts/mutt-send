@@ -13,4 +13,4 @@
 
 account=$1
 shift
-MIMEmbellish | sed -e 's@^<p>– @<p>-- <br>@' | msmtpq -a $account $@
+MIMEmbellish | sed -e 's@^<p>– @<p>-- <br>@' | msmtpq -a "$account" "$@"

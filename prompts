@@ -43,7 +43,7 @@ prompt_combine() {
     oldifs=$IFS
     IFS='
 '
-    for i in $@; do
+    for i in "$@"; do
         [ "$i" = '' ] && continue
         if [ -n "$s" ]; then
             s=$s$sep$i
