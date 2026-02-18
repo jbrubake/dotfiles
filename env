@@ -321,8 +321,12 @@ fi
 # Rust {{{2
 #
 [ -d "$HOME/.cargo/bin" ]      && pathadd "$HOME/.cargo/bin"
-[ -d "$HOME/opt/rust/bin" ]    && pathadd "$HOME/opt/rust/bin"
-[ -d "$HOME/opt/rust" ]        && export RUSTUP_HOME=$HOME/opt/rust
+# Prefer personal rust over system rust
+for d in '' "$HOME"; do
+    [ -d "$d/opt/rust" ]     && export RUSTUP_HOME=$d/opt/rust
+    [ -d "$d/opt/rust/bin" ] && pathadd "$d/opt/rust/bin"
+done
+
 [ -d "$XDG_CACHE_HOME/cargo" ] && export CARGO_HOME=$XDG_CACHE_HOME/cargo
 
 # Packer {{{2
