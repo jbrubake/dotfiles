@@ -18,8 +18,7 @@ git module ls_colors:
 git module gdb-dashboard:
   url: https://github.com/cyrus-and/gdb-dashboard
   move:
-    .gdbinit:
-      - gdbinit
+    .gdbinit: gdbinit
   pick: gdbinit
   rev: c429e144eabf7a2c4c33ffbd617f54f752a7e614
 
