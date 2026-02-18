@@ -466,6 +466,10 @@ ping() {
 # t() # todo.sh wrapper to allow per-directory todo lists {{{2
 #
 if [ "$HAVE_TODOSH" = 1 ]; then
+
+    # Allow todo.sh wrapper to use bash completion
+   complete -F _todo t
+
     t() {
         # Set local defaults
         #

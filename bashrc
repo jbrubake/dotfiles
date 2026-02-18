@@ -79,9 +79,6 @@ if shopt -q progcomp; then
     done
     unset d _backup_glob
 
-    # Allow todo.sh alias to use bash completion
-    have todo.sh && complete -F _todo t
-
     # terraform / tofu
     have terraform && complete -C "$(command -v terraform)" terraform
     have tofu      && complete -C "$(command -v tofu)" tofu
