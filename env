@@ -476,6 +476,16 @@ if have devtodo; then
     export DEVTODO_OPTIONS="--timeout --summary"
 fi
 
+# todo.sh {{{2
+#
+if have todo.sh; then
+    # todo.sh override is not defined if this is not set
+    export HAVE_TODOSH=1
+
+    # Name of per-directory todo files
+    export LOCAL_TODO=todo.txt
+fi
+
 # Move things into XDG directories {{{2
 
 have elinks && export ELINKS_CONFDIR=$XDG_CONFIG_HOME/elinks

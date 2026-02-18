@@ -1,13 +1,12 @@
 # === LOCATIONS ===
 #
-# Your todo.txt directory
-export TODO_DIR="/home/jbrubake/.todo"
-
-# Your todo/done/report.txt locations
-export TODO_FILE="$TODO_DIR/todo.txt"
-export DONE_FILE="$TODO_DIR/done.txt"
-export REPORT_FILE="$TODO_DIR/report.txt"
-export TMP_FILE="$TODO_DIR/todo.tmp"
+# Set locations unless they have been set externally
+#
+: ${TODO_DIR:="$HOME/.todo"};                 export TODO_DIR
+: ${TODO_FILE:="$TODO_DIR/todo.txt"};         export TODO_FILE
+: ${DONE_FILE:="$TODO_DIR/done.txt"};         export DONE_FILE
+: ${REPORT_FILE:="$TODO_DIR/report.txt"};     export REPORT_FILE
+: ${TMP_FILE:="$TODO_DIR/todo.tmp"};          export TMP_FILE
 
 # todo.sh will set this when starting so it must be
 # unconditionally overriden

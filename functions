@@ -457,6 +457,52 @@ ping() {
     unset _grc
 }
 
+# t() # todo.sh wrapper to allow per-directory todo lists {{{2
+#
+if [ "$HAVE_TODOSH" = 1 ]; then
+    t() {
+        # Set local defaults
+        #
+        # Keep TODO_DIR as the default so TODO_ACTIONS_DIR
+        # still points at the global location
+        #
+        # NOTE: Because of how todo.sh is written, $(pwd) is only required if
+        # TODO_FILE is todo.txt. Using any other name does not require it.
+        # Making TODO_FILE hidden will suppress showing the uppercase name of
+        # the TODO_FILE when listing items
+        export TODO_FILE=$(pwd)/$LOCAL_TODO
+        export DONE_FILE=.done.txt
+        export REPORT_FILE=.report.txt
+        export TMP_FILE=.todo.tmp
+
+        case $1 in
+            # Use the local defaults
+            #
+            # This is only required if you want to create a local todo
+            -l|--local) shift ;;
+
+            # Use the global defaults
+            -g|--global)
+                shift
+                # Unset so the global defaults are used
+                unset TODO_FILE DONE_FILE REPORT_FILE TMP_FILE
+                ;;
+
+            # Use the local defaults only if a local todo is found
+            *)
+                [ -f "$TODO_FILE" -a -r "$TODO_FILE" ] ||
+                    unset TODO_FILE DONE_FILE REPORT_FILE TMP_FILE
+                ;;
+        esac
+
+        todo.sh "$@"
+
+        # Unset variables so the next invocation
+        # properly resets everything
+        unset TODO_FILE DONE_FILE REPORT_FILE TMP_FILE
+    }
+fi
+
 # navi {{{1
 if command -v navi >/dev/null; then
     _navi_call() {

@@ -258,7 +258,6 @@ have locate     && alias     loc='locate -d "$LOCATEDB"' # use my personal locat
 have mgitstatus && alias    gits='mgitstatus -e -c'      # get status of git repos
 have pandoc     && alias md2html='pandoc -f markdown'    # convert Markdown to HTML
 have rpg-cli    && alias     rpg='rpg-cli'               # easier rpg-cli
-have todo.sh    && alias       t='todo.sh'               # easier todo.sh
 
 alias             +x='chmod +x' # make file executable
 alias ${BASH:+--} -x='chmod -x' # make file non-executable 
