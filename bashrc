@@ -90,6 +90,12 @@ if shopt -q progcomp; then
     [ -f /opt/google-cloud-sdk/completion.bash.inc ] &&
         . /opt/google-cloud-sdk/completion.bash.inc
 
+    # Prefer personal cargo over system cargo
+    for d in '' "$HOME"; do
+        [ -f "$d/opt/rust/etc/bash_completion.d/cargo" ] &&
+            . "$d/opt/rust/etc/bash_completion.d/cargo"
+    done
+
 fi
 
 # }}}
