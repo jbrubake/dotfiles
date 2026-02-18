@@ -5,6 +5,7 @@ imports:
   mutt-bgedit: ./mutt/scripts
   nerd-fonts: ./config/fontconfig/conf.d
   redact_pass: ./vim/pack/manual/start
+  todo-txt-view: ./todo/actions.d
 
 git module ls_colors:
   url: https://github.com/trapd00r/LS_COLORS
@@ -48,4 +49,13 @@ git module redact_pass:
     - redact_pass/doc/redact_pass.txt
     - redact_pass/plugin/redact_pass.vim
   rev: 3ca13cd8882cae4083c1c478858adbf2e82dd037
+
+git module todo-txt-view:
+  url: https://github.com/todotxt/plugin-view
+  move:
+    README.md: README-view.md
+  executable:
+    - view
+    - v
+  rev: 2dde46101f36e680273bffa8b5394b5ac2494fac
 
