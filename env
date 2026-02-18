@@ -475,6 +475,10 @@ if have todo.sh; then
 
     # Name of per-directory todo files
     export LOCAL_TODO=todo.txt
+
+    # Default action for wrapper
+    # NOTE: TODTXT_DEFAULT_ACTION does not allow arguments
+    export TODOSH_DEFAULT_ACTION='view project'
 fi
 
 # Move things into XDG directories {{{2

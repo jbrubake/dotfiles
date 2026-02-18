@@ -501,6 +501,10 @@ if [ "$HAVE_TODOSH" = 1 ]; then
                 ;;
         esac
 
+        # Use a custom default action if provided
+        [ $# -eq 0 -a -n "$TODOSH_DEFAULT_ACTION" ] &&
+            set -- $TODOSH_DEFAULT_ACTION
+
         todo.sh "$@"
 
         # Unset variables so the next invocation
