@@ -12,7 +12,8 @@ export TMP_FILE="$TODO_DIR/todo.tmp"
 # You can customize your actions directory location
 export TODO_ACTIONS_DIR="$TODO_DIR/actions.d"
 
-# == EDIT FILE LOCATIONS ABOVE ===
+# Default action is to list todo items
+export TODOTXT_DEFAULT_ACTION=ls
 
 # === PRIORITY COLORS ===
 
