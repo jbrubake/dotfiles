@@ -5,7 +5,7 @@
 # in case atwork is not installed
 command -v atwork >/dev/null || atwork() { true; }
 
-# Color Escape Functions {1
+# Color Escape Functions {{{1
 
 ###################################################
 # Functions to set colors and attributes
@@ -24,7 +24,7 @@ command -v atwork >/dev/null || atwork() { true; }
 # Changed to use functions instead of hashes for speed
 # tput(1) is not used in order to avoid a process
 ###################################################
-FX() {
+FX() { # Set terminal attributes (e.g., bold, italic) {{{2
     case "$1" in
         reset)       printf "[0m"   ;;
         bold)        printf "[1m"   ;;
@@ -57,7 +57,8 @@ FX() {
         *)           echo "";
     esac
 }
-# FG(), FGt(), BG() and BGt() {
+
+# FG(), FGt(), BG(), BGt(): Set foreground and background colors { {{{2
 if [ "$( tput colors )" -ge 0 ]; then
     # Expects: color number 0-255
     FG()  { printf %s "[38;5;$1m"; }
@@ -65,16 +66,16 @@ if [ "$( tput colors )" -ge 0 ]; then
     # Expects: 3 values (r g b) of 0-255
     FGt() { printf %s "[38;2;$1;$2;$3m"; }
     BGt() { printf %s "[48;2;$1;$2;$3m"; }
-else
+else # Define as no-op if colors are not available
     FG()  { :; }
     BG()  { :; }
     FGt() { :; }
     BGt() { :; }
 fi
-# }
-# Overload cd and friends {1
+
+# Overload cd and friends {{{1
 #
-# devtodo & rpg-cli {
+# Overload for devtodo & rpg-cli {{{{2
 if [ "$HAVE_DEVTODO" = 1 -o "$HAVE_RPG_CLI" ]; then
     cd () {
         if builtin cd "$@"; then
@@ -91,8 +92,9 @@ if [ "$HAVE_DEVTODO" = 1 -o "$HAVE_RPG_CLI" ]; then
             false # cd failed
         fi
     }
-fi # devtodo & rpg-cli }
-# devtodo {
+fi
+
+# Overload for devtodo {{{2
 if [ "$HAVE_DEVTODO" = 1 ]; then
     pushd () {
         if builtin pushd "$@"; then
@@ -102,6 +104,7 @@ if [ "$HAVE_DEVTODO" = 1 ]; then
             false # cd failed
         fi
     }
+
     popd () {
         if builtin popd "$@"; then
             [ -r .todo ] && devtodo $DEVTODO_OPTIONS
@@ -110,8 +113,9 @@ if [ "$HAVE_DEVTODO" = 1 ]; then
             false # cd failed
         fi
     }
-fi # devtodo }
-# rpg-cli {
+fi
+
+# Overload for rpg-cli {{{2
 if [ "$HAVE_RPG_CLI" = 1 ]; then
     delve () {
         current=$(basename $(pwd))
@@ -125,23 +129,26 @@ if [ "$HAVE_RPG_CLI" = 1 ]; then
             cd "$next" &&
             rpg-cli ls
     }
-fi # rpg-cli }
-# Miscellaneous {1
-pathshow() { # Split a PATH-style variable into multiple lines
+fi
+
+# Miscellaneous {{{1
+pathshow() { # Split a PATH-style variable into multiple lines {{{2
     # Split <var> into multiple lines (Default: PATH)
     # Usage: pathshow [<var>]
     #
     # Example: $ pathshow XDG_DATA_DIRS
     eval echo "\$${1:-PATH}" | tr : '\n'
 }
-rmh() { # Remove a host from ~/.ssh/known_hosts
+
+rmh() { # Remove a host from ~/.ssh/known_hosts {{{2
     # Although ssh-keygen -R can be used to remove host entries, that requires
     # both adding the port (which I don't feel like remembering) and enclosing
     # the host in '[]' (which is too much typing)
     #
     printf 'g/^\[\\?%s/d\nw\nq\n' "$1" | ed ~/.ssh/known_hosts >/dev/null
 }
-http_code () { # Get meaning of HTTP error code
+
+http_code () { # Get meaning of HTTP error code {{{2
 	code=$1
 
 	case $code in
@@ -200,7 +207,8 @@ http_code () { # Get meaning of HTTP error code
 		*)	    echo "$code (unknown)"
 	esac
 }
-lsp () { # Print numerical permissions at the start of ls -l output
+
+lsp () { # Print numerical permissions at the start of ls -l output {{{2
 #
 # Inspired by:
 # https://github.com/blaenk/dots/blob/master/zsh/zsh/functions.zsh
@@ -232,8 +240,13 @@ lsp () { # Print numerical permissions at the start of ls -l output
     }'
     unset _opts _grc
 }
+
+# ip() # Add 'get' command to ip(8) {{{2
+#
+# Remove an ip alias in favor of this function
 unalias ip 2>/dev/null
-ip () { # Add 'get' command to ip(8)
+
+ip () {
 #
 # https://jip.dev/posts/dots/
 #
@@ -273,7 +286,8 @@ EOF
         *) $ip "$@" ;;
     esac
 }
-google () { # Google something (using $WWW_SEARCH as the search engine)
+
+google () { # Google something (using $WWW_SEARCH as the search engine) {{{2
     # Create search string if arguments were passed
     if [ $# != 0 ]; then
         # Google search strings replace spaces with '+'
@@ -289,7 +303,8 @@ google () { # Google something (using $WWW_SEARCH as the search engine)
     # If no arguments were passed it merely opens your search engine
     openurl "${WWW_SEARCH:-www.google.com}/$url"
 }
-rtfm() { # Check various forms of documentation
+
+rtfm() { # Check various forms of documentation {{{2
     if whatis "$1" >/dev/null 2>&1; then
         man "$1"
     elif [ -f "/usr/share/info/$1.info" ]; then
@@ -298,8 +313,8 @@ rtfm() { # Check various forms of documentation
         openurl "${WWW_SEARCH:-www.google.com}/?q=%21documentation+for+$1"
     fi
 }
-#### hb/hr/hbl {
-# Bold, Reverse-Video and Blinking highlighted search
+
+# hb(), hr(), hbl(): Bold, Reverse-Video and Blinking highlighted search {{{2
 #
 # Arguments:
 #   $1: search string
@@ -313,28 +328,32 @@ hb() {
     fx="[1m"
     _hb_hr_hbl "$1" "$fx" "$2"
 }
+
 hr() {
     fx="[7m"
     _hb_hr_hbl "$1" "$fx" "$2"
 }
+
 hbl() {
     fx="[5m"
     _hb_hr_hbl "$1" "$fx" "$2"
 }
+
 _hb_hr_hbl() {
     [ "$2" ] && color="[38;5;$3m"
     reset="[0m"
     sed "s/\($1\)/$2$color\1$reset/gI"
 }
-#}
-lh() { # List last "n" commands in history
+
+lh() { # List last "n" commands in history {{{2
 #
 # Arguments:
 #   $1: number of commands to show
 #
     history | tail -"$1"
 }
-manf() { # Open manpage for $1 at the first occurence of flag $2
+
+manf() { # Open manpage for $1 at the first occurence of flag $2 {{{2
 #
 # https://jip.dev/posts/dots/
 #
@@ -348,7 +367,8 @@ manf() { # Open manpage for $1 at the first occurence of flag $2
     esac
     man -P "$_pager" "$1"
 }
-wiki() { # Interact with wiki
+
+wiki() { # Interact with wiki {{{2
 #
 # Inspired by: https://vimwiki.github.io/vimwikiwiki/Tips%20and%20Snips.html
 #
@@ -389,14 +409,16 @@ END
             ;;
         esac
 }
-sdfmap() { # Print ASCII map location of SDF user
+
+sdfmap() { # Print ASCII map location of SDF user {{{2
 #
 # Arguments:
 #   $1: user to print
 #
     curl "http://plewylli.sdf-eu.org/asciimap.cgi?$1"
 }
-elinks() { # Reuse existing elinks instance
+
+elinks() { # Reuse existing elinks instance {{{2
 #
 # Based on elinks contrib/TIPS-AND-TRICKS
 #
@@ -413,8 +435,13 @@ elinks() { # Reuse existing elinks instance
         command elinks "$1"
     fi
 }
+
+# ping() # Wrap ping(1) to allow pinging by SSH Host entry {{{2
+#
+# Remove a ping alias in favor of this function
 unalias ping 2>/dev/null
-ping() { # Wrap ping(1) to allow pinging by SSH Host entry
+
+ping() {
     # Use grc if it is available
     #
     # stdbuf is required because if ping gives **no** response, grc will buffer
@@ -431,34 +458,38 @@ ping() { # Wrap ping(1) to allow pinging by SSH Host entry
 
     unset _grc
 }
-# navi {1
+
+# navi {{{1
 if command -v navi >/dev/null; then
-_navi_call() {
-    result="$(navi --path ~/share/navi "$@" </dev/tty)"
-    if [ -z "${result}" ]; then
-        result="$(navi --path ~/share/navi --print </dev/tty)"
-    fi
-    printf "%s" "$result"
-}
-_navi_widget() {
-    input="${READLINE_LINE}"
-    last_command="$(echo "${input}" | navi fn widget::last_command)"
+    _navi_call() {
+        result="$(navi --path ~/share/navi "$@" </dev/tty)"
+        if [ -z "${result}" ]; then
+            result="$(navi --path ~/share/navi --print </dev/tty)"
+        fi
+        printf "%s" "$result"
+    }
 
-    if [ -z "${last_command}" ]; then 
-        output="$(_navi_call --print --fzf-overrides '--no-select-1')"
-    else
-        find="$last_command"
-        replacement="$(_navi_call --print --query "${last_command}")"
-        output=$(echo "$input" | sed "s/$find/$replacement/")
-    fi
+    _navi_widget() {
+        input="${READLINE_LINE}"
+        last_command="$(echo "${input}" | navi fn widget::last_command)"
 
-    READLINE_LINE="$output"
-    READLINE_POINT=${#READLINE_LINE}
-}
-fi # }
-# Helper Functions {1
+        if [ -z "${last_command}" ]; then 
+            output="$(_navi_call --print --fzf-overrides '--no-select-1')"
+        else
+            find="$last_command"
+            replacement="$(_navi_call --print --query "${last_command}")"
+            output=$(echo "$input" | sed "s/$find/$replacement/")
+        fi
+
+        READLINE_LINE="$output"
+        READLINE_POINT=${#READLINE_LINE}
+    }
+fi
+
+# Helper Functions {{{1
 # (prefix names with '__')
-__gethost() { # Call gethost with the last argument passed
+#
+__gethost() { # Call gethost with the last argument passed {{{2
 #
 # This allows wrapping commands to use your SSH config to
 # resolve hostname while still being able to pass options
@@ -481,6 +512,4 @@ __gethost() { # Call gethost with the last argument passed
     done
     printf '%s %s\n' "$options" "$host"
 }
-
-# vim: foldlevel=0 foldmarker={,}
 
