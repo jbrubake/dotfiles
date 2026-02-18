@@ -340,6 +340,7 @@ export PACKER_CACHE_DIR=$XDG_CACHE_HOME/packer
 if [ -d /opt/go ]; then
     pathadd /opt/go/bin
 
+    export GOROOT=/opt/go
     export GOPATH=$HOME # Go packages live in $GOPATH/src
     export GOCACHE=$XDG_CACHE_HOME/go-build
     export GOMODCACHE=$XDG_CACHE_HOME/go-build/mod
