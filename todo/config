@@ -1,5 +1,5 @@
-# === EDIT FILE LOCATIONS BELOW ===
-
+# === LOCATIONS ===
+#
 # Your todo.txt directory
 export TODO_DIR="/home/jbrubake/.todo"
 
@@ -9,7 +9,8 @@ export DONE_FILE="$TODO_DIR/done.txt"
 export REPORT_FILE="$TODO_DIR/report.txt"
 export TMP_FILE="$TODO_DIR/todo.tmp"
 
-# You can customize your actions directory location
+# todo.sh will set this when starting so it must be
+# unconditionally overriden
 export TODO_ACTIONS_DIR="$TODO_DIR/actions.d"
 
 # Default action is to list todo items
