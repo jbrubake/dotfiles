@@ -413,7 +413,7 @@ sdfmap() { # Print ASCII map location of SDF user {{{2
 # Arguments:
 #   $1: user to print
 #
-    curl "http://plewylli.sdf-eu.org/asciimap.cgi?$1"
+    curl "http://plewylli.sdf-eu.org/asciimap.cgi?${1:-$(id -un)}"
 }
 
 elinks() { # Reuse existing elinks instance {{{2
