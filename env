@@ -341,8 +341,8 @@ if [ -d /opt/go ]; then
     pathadd /opt/go/bin
 
     export GOPATH=$HOME # Go packages live in $GOPATH/src
-    export GOCACHE=$HOME/var/cache/go-build
-    export GOMODCACHE=$HOME/var/cache/go-build/mod
+    export GOCACHE=$XDG_CACHE_HOME/go-build
+    export GOMODCACHE=$XDG_CACHE_HOME/go-build/mod
 
     mkdir -p "$GOPATH"
     mkdir -p "$GOCACHE"
