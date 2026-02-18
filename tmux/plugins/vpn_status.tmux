@@ -4,7 +4,6 @@
 INTERVAL=$(( 10 ))
 
 vpn_status() {
-    echo $@ >&2
     interface=$1; server=$2; name=$3
 
     if ip --brief address | grep -q "^$interface"; then
