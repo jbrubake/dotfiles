@@ -78,40 +78,38 @@ fi
 # Overload for devtodo & rpg-cli {{{{2
 if [ "$HAVE_DEVTODO" = 1 -o "$HAVE_RPG_CLI" ]; then
     cd () {
-        if builtin cd "$@"; then
-            if [ "$HAVE_DEVTODO" = 1 -a -f .todo ]; then
-                devtodo $DEVTODO_OPTIONS
-            fi
+        builtin cd "$@"
+        r=$?
 
-            if [ "$HAVE_RPG_CLI" = 1 ] && ! atwork; then
-                rpg-cli cd -f .
-                rpg-cli battle
-            fi
-            true # cd succeeded
-        else
-            false # cd failed
+        if [ "$r" = 0 -a "$HAVE_DEVTODO" = 1 -a -f .todo ]; then
+            devtodo $DEVTODO_OPTIONS
         fi
+
+        if [ "$r" = 0 -a "$HAVE_RPG_CLI" = 1 ] && ! atwork; then
+            rpg-cli cd -f .
+            rpg-cli battle
+        fi
+
+        return "$r"
     }
 fi
 
 # Overload for devtodo {{{2
 if [ "$HAVE_DEVTODO" = 1 ]; then
     pushd () {
-        if builtin pushd "$@"; then
-            [ -r .todo ] && devtodo $DEVTODO_OPTIONS
-            true # cd succeeded
-        else
-            false # cd failed
-        fi
+        builtin cd "$@"
+        r=$?
+
+        [ "$r" = 0 -a -r .todo ] && devtodo $DEVTODO_OPTIONS
+
+        return "$r"
     }
 
     popd () {
-        if builtin popd "$@"; then
-            [ -r .todo ] && devtodo $DEVTODO_OPTIONS
-            true # cd succeeded
-        else
-            false # cd failed
-        fi
+        builtin cd "$@"
+        [ "$r" = 0 -a -r .todo ] && devtodo $DEVTODO_OPTIONS
+
+        return "$r"
     }
 fi
 
