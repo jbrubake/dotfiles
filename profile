@@ -17,6 +17,7 @@ fi
 $HOME/etc/init.d/keychain
 
 # MOTD {{{1
+#
 if [ -e /run/motd.dynamic ]; then
     cat /run/motd.dynamic
 else
