@@ -40,3 +40,6 @@ export PRI_X='\\033[38;5;248m' # Color for everything else
 # just before the list output is displayed.
 #
 # export TODOTXT_FINAL_FILTER='cat'
+
+# vim: ft=sh
+
