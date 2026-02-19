@@ -473,9 +473,6 @@ if have todo.sh; then
     # todo.sh cd overrides are not defined if this is not set
     export HAVE_TODOSH=1
 
-    # Name of per-directory todo files
-    export LOCAL_TODO=todo.txt
-
     # Default action for wrapper
     export TODOSH_DEFAULT_ACTION='view project'
 fi
