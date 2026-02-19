@@ -470,14 +470,13 @@ have rpg-cli && export HAVE_RPG_CLI=1
 # todo.sh {{{2
 #
 if have todo.sh; then
-    # todo.sh override is not defined if this is not set
+    # todo.sh cd overrides are not defined if this is not set
     export HAVE_TODOSH=1
 
     # Name of per-directory todo files
     export LOCAL_TODO=todo.txt
 
     # Default action for wrapper
-    # NOTE: TODTXT_DEFAULT_ACTION does not allow arguments
     export TODOSH_DEFAULT_ACTION='view project'
 fi
 
