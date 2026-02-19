@@ -305,6 +305,12 @@ if have sshd && [ -n "$LOCAL_SSHD_CONFIG" ]; then
     alias klsshd='kill -TERM $(command cat $(sshd -f "$LOCAL_SSHD_CONFIG" -T | grep pidfile | cut -d" " -f2))'  # stop user sshd
 fi
 
+if have todo.sh; then
+    todo_alias=t
+    alias "$todo_alias=todo.sh"
+    [ -n "$BASH_VERSION" ] && export todo_alias
+fi
+
 # Use grc(1) if available {{{2
 #
 alias   df="${grc:+"$grc "}df -hT"              # human-readable is better

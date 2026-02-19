@@ -83,6 +83,12 @@ if shopt -q progcomp; then
     have terraform && complete -C "$(command -v terraform)" terraform
     have tofu      && complete -C "$(command -v tofu)" tofu
 
+    # todo.sh
+    if have todo.sh && [ -n "$todo_alias" ]; then
+        complete -F _todo "$todo_alias"
+        unset todo_alias
+    fi
+
     # gcloud
     [ -f /opt/google-cloud-sdk/completion.bash.inc ] &&
         . /opt/google-cloud-sdk/completion.bash.inc
