@@ -27,6 +27,7 @@ command -v xrdb >/dev/null &&
 command -v xautolock >/dev/null && xautolock &
 command -v xbanish   >/dev/null && xbanish &
 command -v mopidy    >/dev/null && mopidy &
+command -v atworkd   >/dev/null && atworkd &
 
 # Start WM {{{1
 #
