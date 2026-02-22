@@ -464,14 +464,18 @@ export GREP_COLORS='sl=:cx=:mt=1;31:fn=35:ln=32:bn=33:se=36'
 # Hostnames for bash-completion {{{2
 [ -r "$HOME/.ssh/known_hosts" ] && export HOSTFILE=$HOME/.ssh/known_hosts
 
-# rpg-cli cd override is not defined if this is not set {{{2
-have rpg-cli && export HAVE_RPG_CLI=1
+# rpg-cli {{{2
+#
+if have rpg-cli; then
+    # Use cd overloads. Temporarily turn them off by setting this to 0
+    export RPG_CLI_CD_OVERLOAD=1
+fi
 
 # todo.sh {{{2
 #
 if have todo.sh; then
-    # todo.sh cd overrides are not defined if this is not set
-    export HAVE_TODOSH=1
+    # Use cd overloads. Temporarily turn them off by setting this to 0
+    export TODOSH_CD_OVERLOAD=1
 
     # Default action for wrapper
     export TODOSH_DEFAULT_ACTION='view project'

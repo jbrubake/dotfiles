@@ -75,59 +75,35 @@ fi
 
 # Overload cd and friends {{{1
 #
-# Overload for todo.sh & rpg-cli {{{{2
-if [ "$HAVE_TODOSH" = 1 -o "$HAVE_RPG_CLI" ]; then
-    cd () {
-        builtin cd "$@"
-        r=$?
+if command -v todo.sh >/dev/null || command -v rpg-cli >/dev/null; then
+    _cd_overload() {
+        cmd=$1; shift
+        oldpwd=$(pwd)
 
-        if [ "$r" = 0 -a "$HAVE_RPG_CLI" = 1 ] && ! atwork; then
-            rpg-cli cd -f .
-            rpg-cli battle
-        fi
-
-        if [ "$r" = 0 -a "$HAVE_TODOSH" = 1 ]; then
-            todo.sh --local ls
-        fi
-
-        return "$r"
-    }
-fi
-
-# Overload for todo.sh {{{2
-if [ "$HAVE_TODOSH" = 1 ]; then
-    pushd () {
-        builtin cd "$@"
-        r=$?
-
-        [ "$r" = 0 -a -f "$LOCAL_TODO" -a -r "$LOCAL_TODO" ] && todo.sh --local ls
-
-        return "$r"
-    }
-
-    popd () {
-        builtin cd "$@"
-
-        [ "$r" = 0 -a -f "$LOCAL_TODO" -a -r "$LOCAL_TODO" ] && todo.sh --local ls
-
-        return "$r"
-    }
-fi
-
-# Overload for rpg-cli {{{2
-if [ "$HAVE_RPG_CLI" = 1 ]; then
-    delve () {
-        current=$(basename $(pwd))
-        case $current in
-            # starting the delve
-            *[!0123456789]* ) next=dungeon/1 ;;
-            # now we're delving
-            [!0]*)            next=$((current + 1)) ;;
+        case $cmd in
+            cd)    builtin cd "$@"; r=$? ;;
+            popd)  builtin popd "$@"; r=$? ;;
+            pushd) builtin pushd "$@"; r=$? ;;
         esac
-        command mkdir -p "$next" &&
-            cd "$next" &&
-            rpg-cli ls
+
+        # Run overloads only if we are in a new directory
+        if [ "$r" = 0 -a "$oldpwd" != "$(pwd)" ]; then
+            if [ "$RPG_CLI_CD_OVERLOAD" = 1 ] && ! atwork; then
+                rpg-cli cd -f .
+                rpg-cli battle
+            fi
+
+            if [ "$TODOSH_CD_OVERLOAD" = 1 ]; then
+                todo.sh --local ls
+            fi
+        fi
+
+        return "$r"
     }
+
+    cd()    { _cd_overload cd    "$@"; }
+    pushd() { _cd_overload pushd "$@"; }
+    popd()  { _cd_overload popd  "$@"; }
 fi
 
 # Miscellaneous {{{1
@@ -457,6 +433,22 @@ ping() {
 
     unset _grc
 }
+
+# delve() # rpg-cli directory crawl {{{2
+if command -v rpg-cli >/dev/null; then
+    delve () {
+        current=$(basename $(pwd))
+        case $current in
+            # starting the delve
+            *[!0123456789]* ) next=dungeon/1 ;;
+            # now we're delving
+            [!0]*)            next=$((current + 1)) ;;
+        esac
+        command mkdir -p "$next" &&
+            cd "$next" &&
+            rpg-cli ls
+    }
+fi
 
 # navi {{{1
 if command -v navi >/dev/null; then
