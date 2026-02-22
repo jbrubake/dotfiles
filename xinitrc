@@ -89,7 +89,7 @@ have tmuxp &&
 #
 # Simple test to see if startx was executed
 if ! pgrep startx; then
-    have xfortune && xfortune "$HOME/share/games/fortunes"
+    have xfortune && xfortune "${XDG_DATA_HOME:-"$HOME/.local/share"}/games/fortunes"
 fi
 
 # Start desktop apps {{{1
