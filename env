@@ -354,6 +354,20 @@ fi
 #
 [ -d /opt/google-cloud-sdk/bin ] && pathadd /opt/google-cloud-sdk/bin
 
+# .NET {{{2
+#
+if have dotnet; then
+    # Set location for AppHost lookup
+    [ -d /usr/lib64/dotnet ] && export DOTNET_ROOT=/usr/lib64/dotnet
+
+    # Add dotnet tools directory to PATH
+    [ -d "$HOME/.dotnet/tools" ] && pathadd "$HOME/.dotnet/tools"
+
+    # Extract self-contained executables under HOME
+    # to avoid multi-user issues from using the default '/var/tmp'.
+    export DOTNET_BUNDLE_EXTRACT_BASE_DIR="${XDG_CACHE_HOME:-"$HOME"/.cache}/dotnet_bundle_extract"
+fi
+
 # Other {{{2
 #
 [ -r "unix://$XDG_RUNTIME_DIR/podman/podman.sock" ] &&
