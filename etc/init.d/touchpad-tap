@@ -1,5 +1,8 @@
 #!/bin/sh
 #
+
+[ -z "$DISPLAY" ] && exit
+
 # Enable toucpad tap-to-click
 #
 name=$(xinput --list --name-only | grep Touchpad | head -1)

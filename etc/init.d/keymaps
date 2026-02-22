@@ -1,5 +1,7 @@
 #!/bin/sh
 
+[ -z "$DISPLAY" ] && exit
+
 # -layout us                          : US keyboard
 # -variant altgr-intl                 : enable 3rd level symbols
 # -option                             : clear options

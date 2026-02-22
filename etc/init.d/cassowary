@@ -1,5 +1,7 @@
 #!/bin/sh
 
+[ -z "$DISPLAY" ] && exit
+
 vm=cassowary-win10
 
 if ! command -v virsh >/dev/null 2>&1; then

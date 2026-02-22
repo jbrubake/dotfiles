@@ -60,12 +60,19 @@ dwm)
     ;;
 esac
 
-# Run custom X init scripts {{{1
+# Setup scripts {{{1
+#
+# Because we need to run X-related scripts this will also
+# pull in non-X scripts that will have already run if we
+# logged in via the console. Any such scripts that should
+# not be run again need to be guarded appropriately
 #
 # for f in "$XDG_CONFIG_HOME/init.d/"*; do
 for f in "$HOME/etc/init.d/"*; do
     [ -x "$f" ] && "$f"
 done
+
+command -v keychain >/dev/null && eval $(keychain --eval --agents gpg,ssh)
 
 # Load tmuxp sessions
 command -v tmuxp >/dev/null &&

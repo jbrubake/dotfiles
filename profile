@@ -12,9 +12,14 @@ fi
 # Setup Environment {{{1
 . "$HOME/.env" # common environment
 
-# Start gpg and ssh agents {{{1
+# Run setup scripts {{{1
 #
-$HOME/etc/init.d/keychain
+# for f in "$XDG_CONFIG_HOME/init.d/"*; do
+for f in "$HOME/etc/init.d/"*; do
+    [ -x "$f" ] && "$f"
+done
+
+command -v keychain >/dev/null && eval $(keychain --eval --agents gpg,ssh)
 
 # MOTD {{{1
 #

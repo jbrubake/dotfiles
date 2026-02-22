@@ -1,5 +1,7 @@
 #!/bin/sh
 
+[ -z "$DISPLAY" ] && exit
+
 command -v xwrits >/dev/null || exit
 
 xwrits typetime=55 after=5 +clock +lock &
