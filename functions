@@ -2,7 +2,7 @@
 #
 # Jeremy Brubaker <jbru362@gmail.com>
 
-# in case atwork is not installed
+# in case atwork is not installed default to being at work
 command -v atwork >/dev/null || atwork() { true; }
 
 # Color Escape Functions {{{1

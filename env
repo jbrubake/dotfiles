@@ -87,11 +87,11 @@ pick() {
 
 # XDG Directores {{{1
 #
-# XDG_*=<path>                        # Purpose            (equivalent) # Default
-export XDG_CONFIG_HOME=$HOME/.config  # config files       (/etc)       # ~/.config
-export XDG_CACHE_HOME=$HOME/var/cache # non-essential data (/var/cache) # ~/.cache
-export XDG_DATA_HOME=$HOME/share      # data files         (/usr/share) # ~/.local/share
-export XDG_STATE_HOME=$HOME/var/lib   # state data         (/var/lib)   # ~/.local/state
+# XDG_*=<path>                        # Purpose            (equivalent) Default
+export XDG_CONFIG_HOME=$HOME/.config  # config files       (/etc)       ~/.config
+export XDG_CACHE_HOME=$HOME/var/cache # non-essential data (/var/cache) ~/.cache
+export XDG_DATA_HOME=$HOME/share      # data files         (/usr/share) ~/.local/share
+export XDG_STATE_HOME=$HOME/var/lib   # state data         (/var/lib)   ~/.local/state
 
 # Add flatpak to XDG_DATA_DIRS
 #
