@@ -10,3 +10,6 @@
 # Finish setting up {{{1
 . "$HOME/.xinitrc"
 
+# Logout {{{1
+. "$HOME/.logout"
+
