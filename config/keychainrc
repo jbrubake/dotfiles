@@ -1,0 +1,11 @@
+# Options to pass to keychain
+KCHOPTS='--quiet --agents gpg,ssh --inherit any'
+
+# SSH keys to load. Default is all keys in ~/.ssh or its subdirectories
+# SSHKEYS=
+
+# GPG keys to laod. Default is all of them
+# GPGKEYS=
+
+# vim: ft=sh
+

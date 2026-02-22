@@ -1,21 +1,26 @@
 #!/bin/sh
 
-# Just in case
-command -v my >/dev/null || my() { echo xterm; }
-
 command -v keychain >/dev/null || exit 1
 
-eval "$(keychain --eval --nogui --agents ssh,gpg)"
+# Don't do anything if we are already done
+[ -f "$HOME/.keychain/$(hostname)-sh" ] && exit
 
-# X requires running a terminal
-[ -n "$DISPLAY" ] && t="$(my -v terminal) -e"
+[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/keychainrc" ] &&
+    . "${XDG_CONFIG_HOME:-$HOME/.config}/keychainrc"
 
-# Find all SSH public keys and add the corresponding private key
+[ -n "$KCHOPTS" ] || KCHOPTS='--quiet --agents gpg,ssh'
+
+# Do not prompt to add keys if stdin is not a TTY
+[ ! -t 1 ] && KCHOPTS="$KCHOPTS --noask"
+
+# The default is to find all SSH private keys that are
+# somewhere under ~/.ssh
 #
-# Using basename to remove the extension doesn't work because keychain
-# cannot find the key without the entire path
-# The --confhost option to keychain is supposed to use IdentityFile
-# to find the key path but I cannot get that to work
-$t keychain --quiet --nogui --ignore-missing \
-    "$(find "$HOME/.ssh" -name '*.pub' | rev | cut -f 2- -d. | rev)"
+: ${SSHKEYS:="$(find "$HOME/.ssh" -type f -exec grep -sle '[DRS]S[AH] PRIVATE KEY' {} +)"}
+
+# Because this file is executed in a subshell, your login shell (or DM) need
+# to run `eval $(keychain --eval --agents gpg,ssh)`
+keychain $KCHOPTS $SSHKEYS $GPGKEYS
+
+unset KCHOPTS SSHKEYS GPGKEYS
 
