@@ -1,13 +1,15 @@
 #!/bin/sh
 
+command -v have >/dev/null || have() { command -v "$1" >/dev/null; }
+
 # Basic setup {{{1
 
 # xset options {{{1
 #
-command -v xset >/dev/null && xset b off # Turn off audible bell
+have xset && xset b off # Turn off audible bell
 
 # Merge XResources {{{1
-command -v xrdb >/dev/null &&
+have xrdb &&
     if [ -r "$HOME/.Xresources" ]; then
         unset colorscheme
         [ -r "$HOME/.Xresources.$COLORSCHEME" ] &&
@@ -24,10 +26,10 @@ command -v xrdb >/dev/null &&
 # app2 && \
 # ) &
 # Use sleep as necessary to sync things up)
-command -v xautolock >/dev/null && xautolock &
-command -v xbanish   >/dev/null && xbanish &
-command -v mopidy    >/dev/null && mopidy &
-command -v atworkd   >/dev/null && atworkd &
+have xautolock && xautolock &
+have xbanish   && xbanish &
+have mopidy    && mopidy &
+have atworkd   && atworkd &
 
 # Start WM {{{1
 #
@@ -46,12 +48,12 @@ dwm)
 # If WINDOWMANAGER isn't found, a terminal emulator is run instead
 #
 *)
-    if command -v "$WINDOWMANAGER" >/dev/null; then
+    if have "$WINDOWMANAGER"; then
         "$WINDOWMANAGER" & wmpid=$!
     else
         term="st gnome-terminal rxvt xterm"
         for t in $term; do
-            if command -v "$t" >/dev/null; then
+            if have "$t"; then
                 $t & wmpid=$!
                 break
             fi
@@ -75,7 +77,7 @@ done
 command -v keychain >/dev/null && eval $(keychain --eval --agents gpg,ssh)
 
 # Load tmuxp sessions
-command -v tmuxp >/dev/null &&
+have tmuxp &&
     for s in $(tmuxp ls); do
         tmuxp load -d "$s"
     done
@@ -87,15 +89,15 @@ command -v tmuxp >/dev/null &&
 #
 # Simple test to see if startx was executed
 if ! pgrep startx; then
-    command -v xfortune >/dev/null && xfortune "$HOME/share/games/fortunes"
+    have xfortune && xfortune "$HOME/share/games/fortunes"
 fi
 
 # Start desktop apps {{{1
 #
-command -v signal-desktop >/dev/null && signal-desktop
-command -v discord        >/dev/null && discord
-command -v firefox        >/dev/null && firefox &
-command -v launchterm     >/dev/null && launchterm main
+have signal-desktop && signal-desktop
+have discord        && discord
+have firefox        && firefox &
+have launchterm     && launchterm main
 
 # Run this stuff forever {{{1
 #
@@ -111,10 +113,10 @@ wait "$wmpid" # wait for WM to exit
 
 # Gracefully shutdown virtual machines {{{2
 #
-command -v virsh >/dev/null &&
+have virsh &&
     virsh list | awk '/[[:digit:]]/ {print $2}' | xargs virsh shutdown
-command -v vboxmanage >/dev/null &&
+have vboxmanage &&
     vboxmanage list runningvms | sed 's/.*{\(.*\)}/\1/' | xargs -I{} vboxmanage controlvm '{}' acpipowerbutton
-command -v vmrun >/dev/null &&
+have vmrun &&
     vmrun -T ws list | sed 1d | xargs vmrun -T ws stop
 
