@@ -44,23 +44,23 @@ have navi &&
 # }}}
 # Bash Completion {{{
 
-# Bash completion is not automatically loaded on X login
-if [ "${BASH_COMPLETION_VERSINFO-}" = '' ]; then
-    # Load Bash completion framework
-    if shopt -q progcomp && [ -r /usr/share/bash-completion/bash_completion ]; then
-        . /usr/share/bash-completion/bash_completion
+if shopt -q progcomp; then
+    # Load bash completion if necessary (it is not loaded when logging into X)
+    if [ -z "${BASH_COMPLETION_VERSINFO}" ]; then
+        # Load Bash completion framework
+        [ -r /usr/share/bash-completion/bash_completion ] &&
+            . /usr/share/bash-completion/bash_completion
+
+        # Redefine have() because the Bash completion script unsets it
+        # Seriously? WTF?
+        type have >/dev/null 2>&1 ||
+            have() { command -v "$1" >/dev/null; }
     fi
 
-    # Redefine have() because the Bash completion script unsets it
-    # Seriously? WTF?
-    have() { command -v "$1" >/dev/null; }
-fi
-
-# Load local and deprecated completion directories
-#
-# Basic structure ripped from /usr/share/bash-completion/bash_completion
-#
-if shopt -q progcomp; then
+    # Load local and deprecated completion directories
+    #
+    # Basic structure ripped from /usr/share/bash-completion/bash_completion
+    #
     _backup_glob='@(#*#|*@(~|.@(bak|orig|rej|swp|dpkg*|rpm@(orig|new|save))))'
     for d in \
         /etc/bash_completion.d \
@@ -68,6 +68,7 @@ if shopt -q progcomp; then
         /usr/local/etc/bash_completion.d \
         /usr/local/share/bash_completion.d \
         /usr/local/share/bash-completion/completions \
+        "${BASH_COMPLETION_USER_DIR:-"$XDG_DATA_HOME/bash-completion"}" \
     ; do
         if [[ -d $d && -r $d && -x $d ]]; then
             for i in "$d"/*; do
@@ -79,11 +80,14 @@ if shopt -q progcomp; then
     done
     unset d _backup_glob
 
+    # Load and configure other completions
+    #
     # terraform / tofu
     have terraform && complete -C "$(command -v terraform)" terraform
     have tofu      && complete -C "$(command -v tofu)" tofu
 
     # todo.sh
+    # (todo_alias is set in ~/.alias)
     if have todo.sh && [ -n "$todo_alias" ]; then
         complete -F _todo "$todo_alias"
         unset todo_alias
@@ -94,11 +98,12 @@ if shopt -q progcomp; then
         . /opt/google-cloud-sdk/completion.bash.inc
 
     # Prefer personal cargo over system cargo
-    for d in '' "$HOME"; do
-        [ -f "$d/opt/rust/etc/bash_completion.d/cargo" ] &&
+    for d in "$HOME" ''; do
+        if [ -f "$d/opt/rust/etc/bash_completion.d/cargo" ]; then
             . "$d/opt/rust/etc/bash_completion.d/cargo"
+            break
+        fi
     done
-
 fi
 
 # }}}
