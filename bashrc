@@ -11,7 +11,8 @@ source "$HOME/.shinit" # common interactive shell configuration
 
 have() { command -v "$1" >/dev/null; }
 
-# Shell options {{{
+# Shell options {{{1
+#
 shopt -s  cdspell      # Fix spelling errors in cd commands
 shopt -s  extglob      # Advanced pathname expansion
 shopt -s  histappend   # Append to HISTFIL on exit - don't clobber it
@@ -21,9 +22,11 @@ shopt -s  cmdhist      # Try to save multiline commands as one history entry
 shopt -s  histverify   # Allow verification of history substitution
 shopt -s  no_empty_cmd_completion # Don't TAB complete a blank line
 shopt -so ignoreeof    # Ctl+D does not exit shell
-# }}}
-# Keybindings {{{
-# fzf {{{
+
+# Keybindings {{{1
+#
+# fzf {{{2
+#
 if have fzf; then
     for f in /usr/share/fzf/shell/*.bash /usr/local/share/fzf/shell/*.bash; do
         [ -f "$f" ] && . "$f"
@@ -36,16 +39,16 @@ if have fzf; then
             echo "fzf-tmux ${FZF_TMUX_OPTS:--d${FZF_TMUX_HEIGHT:-40%}} -- " || echo "fzf"
     }
 fi
-# }}}
+
 have passmenu &&
     bind -x '"\C-]": passmenu --type'
 have navi &&
     bind -x '"\C-g": _navi_widget'
-# }}}
-# Bash Completion {{{
 
+# Bash Completion {{{1
+#
 if shopt -q progcomp; then
-    # Load bash completion if necessary (it is not loaded when logging into X)
+    # Load bash completion if necessary (it is not loaded when logging into X) {{{2
     if [ -z "${BASH_COMPLETION_VERSINFO}" ]; then
         # Load Bash completion framework
         [ -r /usr/share/bash-completion/bash_completion ] &&
@@ -57,7 +60,7 @@ if shopt -q progcomp; then
             have() { command -v "$1" >/dev/null; }
     fi
 
-    # Load local and deprecated completion directories
+    # Load local and deprecated completion directories {{{2
     #
     # Basic structure ripped from /usr/share/bash-completion/bash_completion
     #
@@ -80,7 +83,7 @@ if shopt -q progcomp; then
     done
     unset d _backup_glob
 
-    # Load and configure other completions
+    # Load and configure other completions {{{2
     #
     # terraform / tofu
     have terraform && complete -C "$(command -v terraform)" terraform
@@ -106,7 +109,6 @@ if shopt -q progcomp; then
     done
 fi
 
-# }}}
 # Cleanup {{{1
 #
 unset have
