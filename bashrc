@@ -131,6 +131,11 @@ if shopt -q progcomp; then
             break
         fi
     done
+
+    # sshrc
+    have sshrc && use_same_completion_spec ssh sshrc
+
+    unset use_same_completion_spec
 fi
 
 # Cleanup {{{1
