@@ -907,6 +907,9 @@ vmap <tab> %
 " Y:                   yank to end (consistent with C and D) {{{2
 nnoremap Y y$
 
+" <localleader>Y:      copy to system clipboard {{{2
+vnoremap <localleader>Y "+Y
+
 " :w!!:                write file when I forget to sudo {{{2
 cnoremap w!! w !sudo tee % >/dev/null
 
