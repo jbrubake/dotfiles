@@ -61,11 +61,13 @@ fi
 
 # ls(1) {{{1
 #
-ls=$LS # defined in ~/.env
-case $LS in
-    ls) command ls --version | grep -q GNU && ls=gnu-ls ;;
-    '') ls=ls ;;
-esac
+# In case $LS was not defined in ~/.env
+[ -z "$LS" ] && LS=ls
+
+ls=$LS
+
+# Use GNU options if available
+[ "$ls" = ls ] && command ls --version | grep -q GNU && ls=gnu-ls
 
 case $ls in
     eza | exa)
