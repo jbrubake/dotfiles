@@ -67,7 +67,7 @@ fi
 ls=$LS
 
 # Use GNU options if available
-[ "$ls" = ls ] && command ls --version | grep -q GNU && ls=gnu-ls
+[ "$ls" = ls ] && command ls --version 2>/dev/null | grep -q GNU && ls=gnu-ls
 
 case $ls in
     eza | exa)

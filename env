@@ -17,6 +17,14 @@ export HOME LOGNAME UNAME TMPDIR TMP
 # Helper functions {{{1
 # NOTE: these are unset at the end of the file
 #
+# Basic nl(1) for pathuniq
+command -v nl >/dev/null || nl() {
+    n=1
+    while read -r line; do
+        printf '\t%s\t%s\n' "$n" "$line"
+        n=$((n+1))
+    done
+}
 # pathadd {{{2
 #
 # Add <path> to the beginning of <var> (Default: PATH)
@@ -37,14 +45,14 @@ pathadd() {
 #
 pathuniq() {
     eval "${1:-PATH}='$(eval echo "\$${1:-PATH}" |
-    tr : "\n" |
-    nl |
-    sort -uk2,2 |
-    sort -n |
-    sed '/^[[:space:]]*$/d' |
-    cut -f2- |
-    tr "\n" : |
-    sed -e "s/:$//" -e "s/^://")'"
+        tr : "\n" |
+        nl |
+        sort -uk2,2 |
+        sort -n |
+        awk '{ $1=""; print }' |
+        tr "\n" : |
+        sed -e "s/:$//" -e "s/^://")'" |
+        tr -d ' '
 }
 
 # have {{{2
@@ -136,7 +144,9 @@ have bat        && export BAT_THEME='Solarized (light)'
 have pygmentize && export PYGMENTIZE_STYLE='solarized-light'
 
 unset HAS_COLOR
-[ "$(tput colors)" != 0 ] || [ -n "$DISPLAY" ] && export HAS_COLOR=1
+n=$(tput colors 2>/dev/null)
+[ -n "$n" -a "$n" != 0 -o -n "$DISPLAY" ] && export HAS_COLOR=1
+unset n
 
 # X-specific {{{2
 #
@@ -156,7 +166,7 @@ export WINDOWMANAGER=cwm
 export COLORSCHEME=gnome-dark
 
 # Give Vim access to the terminal colorscheme. See ~/.vimrc
-awk --version | grep -q GNU &&
+awk --version 2>/dev/null | grep -q GNU &&
     export VIM_TERMINAL_COLORS=$(awk '$2 ~ /COLOR/ {print gensub(/COLOR/, "", "1", $2), $3}' \
         "$HOME/.Xresources.$COLORSCHEME" |
             sort -n |
@@ -226,7 +236,7 @@ export WWW_SEARCH=www.duckduckgo.com # used in ~/.functions
 export LS=$(pick ls ls eza exa)
 case $LS in
     eza | exa) export LS_OPTS="--group-directories-first --sort extension -F ${HAS_COLOR:+--color=auto}" ;;
-    ls) if command ls --version | grep -q GNU; then
+    ls) if command ls --version 2>/dev/null | grep -q GNU; then
             export LS_OPTS="--group-directories-first -hXF ${HAS_COLOR:+--color=auto}"
         else
             export LS_OPTS='-XF'

@@ -3,10 +3,12 @@ alias vim='vim -u $SSHRC/vimrc'
 export SHELL
 
 . $SSHRC/.env
-. $SSHRC/.alias
-. $SSHRC/.functions
-. $SSHRC/.prompts
-. $SSHRC/.bashrc
+
+if [ -n "$BASH" ]; then
+    . $SSHRC/.bashrc
+else
+    . $SSHRC/.shinit
+fi
 
 # vim: ft=sh
 

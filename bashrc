@@ -3,9 +3,12 @@
 # Jeremy Brubaker <jbru362@gmail.com>
 #
 # Some stuff ripped from Ryan Tomayko <tomayko.com/about>
-
+#
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
+
+# Don't let other shells source this
+[ -z "$BASH" ] && return
 
 source "${SSHRC:-"$HOME"}/.shinit" # common interactive shell configuration
 

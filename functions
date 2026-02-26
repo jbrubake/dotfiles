@@ -59,7 +59,7 @@ FX() { # Set terminal attributes (e.g., bold, italic) {{{2
 }
 
 # FG(), FGt(), BG(), BGt(): Set foreground and background colors { {{{2
-if [ "$( tput colors )" -ge 0 ]; then
+if [ -n "$HAS_COLOR" ]; then
     # Expects: color number 0-255
     FG()  { printf %s "[38;5;$1m"; }
     BG()  { printf %s "[48;5;$1m"; }
