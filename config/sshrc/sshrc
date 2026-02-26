@@ -1,0 +1,11 @@
+alias vim='vim -u $SSHRC/vimrc'
+
+export SHELL
+
+. $SSHRC/env
+. $SSHRC/alias
+. $SSHRC/functions
+. $SSHRC/prompts
+
+# vim: ft=sh
+
