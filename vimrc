@@ -1181,7 +1181,6 @@ let &t_SI = "\<Esc>[6 q" " Insert mode (bar)
 let &t_SR = "\<Esc>[4 q" " Replace mode (underline)
 let &t_EI = "\<Esc>[2 q" " Normal mode (block)
 
-
 " Local Vimrc {{{1
 " ===========
 if filereadable(expand("~/etc/vimrc.local"))
