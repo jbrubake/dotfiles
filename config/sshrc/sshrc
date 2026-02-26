@@ -1,7 +1,5 @@
 alias vim='vim -u $SSHRC/vimrc'
 
-export SHELL
-
 . $SSHRC/.env
 
 if [ -n "$BASH" ]; then
