@@ -1,0 +1,12 @@
+#!/bin/sh
+#
+# Services that should run in console and X
+
+run_once() {
+    command -v "$1" >/dev/null || return
+    pgrep "$1" || "$1" &
+}
+
+run_once mopidy
+run_once atworkd
+

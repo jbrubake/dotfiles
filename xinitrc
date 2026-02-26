@@ -28,8 +28,6 @@ have xrdb &&
 # Use sleep as necessary to sync things up)
 have xautolock && xautolock &
 have xbanish   && xbanish &
-have mopidy    && mopidy &
-have atworkd   && atworkd &
 
 # Start WM {{{1
 #
