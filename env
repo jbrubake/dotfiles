@@ -156,11 +156,12 @@ export WINDOWMANAGER=cwm
 export COLORSCHEME=gnome-dark
 
 # Give Vim access to the terminal colorscheme. See ~/.vimrc
-export VIM_TERMINAL_COLORS=$(awk '$2 ~ /COLOR/ {print gensub(/COLOR/, "", "1", $2), $3}' \
-    "$HOME/.Xresources.$COLORSCHEME" |
-        sort -n |
-        sed -e '1i[' -e '$a]' -e 's/^/"/' -e 's/$/"/' -e '$!s/$/,/' |
-        tr -d '\n')
+awk --version | grep -q GNU &&
+    export VIM_TERMINAL_COLORS=$(awk '$2 ~ /COLOR/ {print gensub(/COLOR/, "", "1", $2), $3}' \
+        "$HOME/.Xresources.$COLORSCHEME" |
+            sort -n |
+            sed -e '1i[' -e '$a]' -e 's/^/"/' -e 's/$/"/' -e '$!s/$/,/' |
+            tr -d '\n')
 
 # Alternatives {{{1
 #
