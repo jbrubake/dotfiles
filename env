@@ -243,12 +243,17 @@ if [ -n "$HAS_COLOR" ] && have dircolors; then
                      "$HOME/.dir_colors" \
                      "$HOME/.dircolors" \
                      "/etc/DIR_COLORS.$TERM" \
-                     /etc/DIR_COLORS ; do
+                     /etc/DIR_COLORS \
+                     '' ; do
 
-        [ -e "$colorfile" ] && break
+        [ -r "$colorfile" ] && break
     done
 
-    eval "$(dircolors "$colorfile")"
+    if [ -n "$colorfile" ]; then
+        eval "$(dircolors "$colorfile")"
+    else
+        eval "$(dircolors)"
+    fi
 
     unset colorfile
 fi
