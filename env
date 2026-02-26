@@ -479,7 +479,7 @@ export GREP_COLORS='sl=:cx=:mt=1;31:fn=35:ln=32:bn=33:se=36'
 
 # local-only SSH server {{{2
 [ -r "$HOME/etc/ssh/sshd_config" ] &&
-    export LOCAL_SSHD_CONFIG=$HOME/etc/sshd/sshd_config
+    export LOCAL_SSHD_CONFIG=$HOME/etc/ssh/sshd_config
 
 # Hostnames for bash-completion {{{2
 [ -r "$HOME/.ssh/known_hosts" ] && export HOSTFILE=$HOME/.ssh/known_hosts
