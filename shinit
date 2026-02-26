@@ -7,9 +7,9 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
-. "$HOME/.alias"
-. "$HOME/.functions" # Allow functions to override aliases
-. "$HOME/.prompts"
+. "${SSHRC:-"$HOME"}/.alias"
+. "${SSHRC:-"$HOME"}/.functions" # Allow functions to override aliases
+. "${SSHRC:-"$HOME"}/.prompts"
 
 if command -v zoxide >/dev/null; then
     export _ZO_DATA_DIR=$XDG_STATE_HOME

@@ -7,7 +7,7 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
-source "$HOME/.shinit" # common interactive shell configuration
+source "${SSHRC:-"$HOME"}/.shinit" # common interactive shell configuration
 
 have() { command -v "$1" >/dev/null; }
 
