@@ -85,6 +85,30 @@ if shopt -q progcomp; then
 
     # Load and configure other completions {{{2
     #
+    # Use the completion specs defined for $cmd for $my_cmd
+    #
+    # From a Stackoverflow answer by Philippe Carphin
+    #   (https://stackoverflow.com/a/79371508)
+    # License - CC BY-SA 4.0
+    #
+    use_same_completion_spec(){
+        local cmd=$1
+        local my_cmd=$2
+
+        if ! _comp_load "$cmd" ; then
+            printf '_comp_load failed to load completion for "%s"\n' "$cmd" >&2
+            return 1
+        fi
+
+        spec="$(complete -p "$cmd")"
+        if [ -z "$spec" ]; then
+            printf 'Error getting completion specification for "%s"\n' "$cmd" >&2
+            return 1
+        fi
+
+        $spec $my_cmd
+    }
+
     # terraform / tofu
     have terraform && complete -C "$(command -v terraform)" terraform
     have tofu      && complete -C "$(command -v tofu)" tofu
