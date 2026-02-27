@@ -128,7 +128,7 @@ fi
 
 # OS-specific {{{1
 #
-case $(uname -o) in
+case $(uname -o 2>/dev/null || uname -v) in
     *) ;;
 esac
 
