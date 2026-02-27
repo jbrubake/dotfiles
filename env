@@ -144,9 +144,10 @@ have bat        && export BAT_THEME='Solarized (light)'
 have pygmentize && export PYGMENTIZE_STYLE='solarized-light'
 
 unset HAS_COLOR
-n=$(tput colors 2>/dev/null)
-[ -n "$n" -a "$n" != 0 -o -n "$DISPLAY" ] && export HAS_COLOR=1
-unset n
+if ! command -v tput >/dev/null || # If tput doesn't exist we yolo it
+    [ -n "$DISPLAY" ] || [ "$(tput colors)" -ne 0 ]; then
+    export HAS_COLOR=1
+fi
 
 # X-specific {{{2
 #
