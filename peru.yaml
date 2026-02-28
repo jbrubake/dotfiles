@@ -1,4 +1,5 @@
 imports: 
+  cdlog: ./
   ls_colors: ./
   gdb-dashboard: ./
   irssi-colors-solarized: ./irssi
@@ -6,6 +7,11 @@ imports:
   nerd-fonts: ./config/fontconfig/conf.d
   redact_pass: ./vim/pack/manual/start
   todo-txt-view: ./todo/actions.d
+
+git module cdlog: # Better directory changing for Bash
+  url: https://www.kylheku.com/git/cdlog
+  move:
+    README.md: README.cdlog.md
 
 git module ls_colors:
   url: https://github.com/trapd00r/LS_COLORS
