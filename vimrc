@@ -24,8 +24,6 @@ augroup vimrc | autocmd!
     autocmd vimrc BufWritePost ~/.vimrc nested source ~/.vimrc
 augroup end
 
-set nocompatible " Don't be vi compatible
-
 if has ('clientserver') && empty(v:servername) && exists('*remote_startserver')
     call remote_startserver('VIM')
 endif
