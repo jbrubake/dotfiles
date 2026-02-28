@@ -873,8 +873,10 @@ nnoremap <leader>s <Cmd>call BreakHere()<CR>
 " <localleader><F7>    toggle spellcheck {{{2
 nnoremap <localleader><F7> <Cmd>setlocal spell!<CR>
 
-" <leader><leader>:    clear search highlighting {{{2
-noremap <silent> <leader><leader> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
+" <C-L>:               clear search highlighting {{{2
+"
+" This allows n and N to resume the previous search while 'let @/ = ""' does not
+noremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
 
 " fN:                  set foldlevel=N {{{2
 noremap <leader>f0 <Cmd>set foldlevel=0<cr>
