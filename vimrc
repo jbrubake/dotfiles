@@ -254,8 +254,8 @@ let g:indentLine_concealcursor = ''
 
 " jump-to-ansible-role:    Load the main task file for role under the cursor                      plugurl:jbrubake/jump-to-ansible-role " {{{3
 
-autocmd plugins FileType yaml.ansible nnoremap <localleader>gr :call JumpToAnsibleRole()<CR>
-autocmd plugins FileType yaml.ansible vnoremap <localleader>gr :call JumpToAnsibleRole()<CR>
+autocmd plugins FileType yaml.ansible nnoremap <localleader>gr <Cmd>call JumpToAnsibleRole()<CR>
+autocmd plugins FileType yaml.ansible vnoremap <localleader>gr <Cmd>call JumpToAnsibleRole()<CR>
 
 " paredit:                 Structured Editing of Lisp S-expressions                               plugurl:kovisoft/paredit " {{{3
 
@@ -308,16 +308,16 @@ autocmd plugins FileType yaml.ansible vnoremap <localleader>gr :call JumpToAnsib
 " <Leader>t,  : , (with space)
 " <Leader>t|  : | (with space)
 "
-nmap <Leader>t=     :Tabularize /=<cr>
-vmap <Leader>t=     :Tabularize /=<cr>
-nmap <Leader>t:     :Tabularize /:<cr>
-vmap <Leader>t:     :Tabularize /:<cr>
-nmap <Leader>t::    :Tabularize /:\zs<cr>
-vmap <Leader>t::    :Tabularize /:\zs<cr>
-nmap <Leader>t,     :Tabularize /,<cr>
-vmap <Leader>t,     :Tabularize /,<cr>
-nmap <Leader>t<Bar> :Tabularize /<Bar><cr>
-vmap <Leader>t<Bar> :Tabularize /<Bar><cr>
+nmap <Leader>t=     <Cmd>Tabularize /=<cr>
+vmap <Leader>t=     <Cmd>Tabularize /=<cr>
+nmap <Leader>t:     <Cmd>Tabularize /:<cr>
+vmap <Leader>t:     <Cmd>Tabularize /:<cr>
+nmap <Leader>t::    <Cmd>Tabularize /:\zs<cr>
+vmap <Leader>t::    <Cmd>Tabularize /:\zs<cr>
+nmap <Leader>t,     <Cmd>Tabularize /,<cr>
+vmap <Leader>t,     <Cmd>Tabularize /,<cr>
+nmap <Leader>t<Bar> <Cmd>Tabularize /<Bar><cr>
+vmap <Leader>t<Bar> <Cmd>Tabularize /<Bar><cr>
 
 " tagalong.vim:            Change an HTML(ish) tag and update the matching one                    plugurl:AndrewRadev/tagalong.vim " {{{3
 
@@ -347,7 +347,7 @@ function LoadTagbar()
     " let g:tagbar_autoclose = 0
 
     " <F9> : toggle TagBar
-    noremap <silent> <F9> :TagbarToggle<cr>
+    noremap <silent> <F9> <Cmd>TagbarToggle<cr>
 
     " Add support for Makefiles (requires adding
     "     --regex-make=/^([^# \t:]*):/\1/t,target/
@@ -830,7 +830,7 @@ function! ToggleMaximizeCurrentWindow()
         let t:maximizeCurrentWindow = 0
     endif
 endfunction
-nnoremap <silent> <C-W>m :call ToggleMaximizeCurrentWindow() <cr>
+nnoremap <silent> <C-W>m <Cmd>call ToggleMaximizeCurrentWindow() <cr>
 
 " Terminal Mode {{{2
 "
@@ -856,10 +856,10 @@ function! g:ToggleColorColumn()
         setlocal colorcolumn&
     endif
 endfunction
-nnoremap <silent> <leader>c :call g:ToggleColorColumn()<cr>
+nnoremap <silent> <leader>c <Cmd>call g:ToggleColorColumn()<cr>
 
 " <leader>l:           toggle listchars {{{2
-nnoremap <silent> <leader>l :set list!<cr>
+nnoremap <silent> <leader>l <Cmd>set list!<cr>
 
 " <leader>s:           split line {{{2
 "
@@ -868,31 +868,31 @@ function! BreakHere()
     s/^\(\s*\)\(.\{-}\)\(\s*\)\(\%#\)\(\s*\)\(.*\)/\1\2\r\1\4\6
     call histdel("/", -1)
 endfunction
-nnoremap <leader>s :<C-u>call BreakHere()<CR>
+nnoremap <leader>s <Cmd>call BreakHere()<CR>
 
 " <localleader><F7>    toggle spellcheck {{{2
-nnoremap <localleader><F7> :setlocal spell!<CR>
+nnoremap <localleader><F7> <Cmd>setlocal spell!<CR>
 
 " <leader><leader>:    clear search highlighting {{{2
 noremap <silent> <leader><leader> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
 
 " fN:                  set foldlevel=N {{{2
-noremap <leader>f0 :set foldlevel=0<cr>
-noremap <leader>f1 :set foldlevel=1<cr>
-noremap <leader>f2 :set foldlevel=2<cr>
-noremap <leader>f3 :set foldlevel=3<cr>
-noremap <leader>f4 :set foldlevel=4<cr>
-noremap <leader>f5 :set foldlevel=5<cr>
-noremap <leader>f6 :set foldlevel=6<cr>
-noremap <leader>f7 :set foldlevel=7<cr>
-noremap <leader>f8 :set foldlevel=8<cr>
-noremap <leader>f9 :set foldlevel=9<cr>
+noremap <leader>f0 <Cmd>set foldlevel=0<cr>
+noremap <leader>f1 <Cmd>set foldlevel=1<cr>
+noremap <leader>f2 <Cmd>set foldlevel=2<cr>
+noremap <leader>f3 <Cmd>set foldlevel=3<cr>
+noremap <leader>f4 <Cmd>set foldlevel=4<cr>
+noremap <leader>f5 <Cmd>set foldlevel=5<cr>
+noremap <leader>f6 <Cmd>set foldlevel=6<cr>
+noremap <leader>f7 <Cmd>set foldlevel=7<cr>
+noremap <leader>f8 <Cmd>set foldlevel=8<cr>
+noremap <leader>f9 <Cmd>set foldlevel=9<cr>
 
 " [<Space> / ]<Space>: add [n] blank lines before/after line {{{2
 "
 " https://superuser.com/a/607168
-nnoremap <silent> [<Space> :<C-u>put!=repeat(nr2char(10),v:count)<Bar>execute "']+1"<CR>
-nnoremap <silent> ]<Space> :<C-u>put =repeat(nr2char(10),v:count)<Bar>execute "'[-1"<CR>
+nnoremap <silent> [<Space> <Cmd>put!=repeat(nr2char(10),v:count)<Bar>execute "']+1"<CR>
+nnoremap <silent> ]<Space> <Cmd>put =repeat(nr2char(10),v:count)<Bar>execute "'[-1"<CR>
 
 " [e / ]e:             exchange current line with previous/next {{{2
 nnoremap [e kddp
@@ -928,7 +928,7 @@ command! DiffOrig vert new | set bt=nofile | r ++edit #
     \ | silent! 0d_ | diffthis | wincmd p | diffthis
 
 " <F2>:                toggle relative/absoute line numbers {{{2
-nnoremap <F2> :set norelativenumber!<CR>
+nnoremap <F2> <Cmd>set norelativenumber!<CR>
 
 " C-u:                 convert current word to uppercase {{{2
 
@@ -936,23 +936,23 @@ inoremap <C-u> <esc>gUiwea
 
 " vim-fugitive & vim-gitgutter: {{{2
 "
-nnoremap <leader>gg :Git<CR>
+nnoremap <leader>gg <Cmd>Git<CR>
 
-nnoremap <leader>gB :GBrowse<CR>
-vnoremap <leader>gB :GBrowse<CR>
+nnoremap <leader>gB <Cmd>GBrowse<CR>
+vnoremap <leader>gB <Cmd>GBrowse<CR>
 
 " Open git diff split
-nnoremap <leader>gd :Gdiffsplit<CR>
+nnoremap <leader>gd <Cmd>Gdiffsplit<CR>
 
 " Mappings to jump between hunks (fugitive & gitgutter)
 " [c, ]c: previous, next hunk (default binding)
 
 " fzf.vim, fzf-checkout.vim: {{{2
 "
-noremap  <leader>b  :Buffers<CR>
-nnoremap <leader>gc :Commits<CR>
-nnoremap <leader>gb :GBranches<CR>
-nnoremap <leader>f  :Files<CR>
+noremap  <leader>b  <Cmd>Buffers<CR>
+nnoremap <leader>gc <Cmd>Commits<CR>
+nnoremap <leader>gb <Cmd>GBranches<CR>
+nnoremap <leader>f  <Cmd>Files<CR>
 
 " Cscope: {{{2
 " Based on https://raw.githubusercontent.com/chazy/cscope_maps/master/plugin/cscope_maps.vim
@@ -988,32 +988,32 @@ if has("cscope")
     " 'time.h', and not 'sys/time.h', etc. (by default cscope will return all
     " files that contain 'time.h' as part of their name).
 
-    nmap <C-\>s :cscope find s <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-\>g :cscope find g <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-\>c :cscope find c <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-\>t :cscope find t <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-\>e :cscope find e <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-\>f :cscope find f <C-R>=expand("<cfile>")<CR><CR>
-    nmap <C-\>i :cscope find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-    nmap <C-\>d :cscope find d <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-\>s <Cmd>cscope find s <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-\>g <Cmd>cscope find g <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-\>c <Cmd>cscope find c <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-\>t <Cmd>cscope find t <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-\>e <Cmd>cscope find e <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-\>f <Cmd>cscope find f <C-R>=expand("<cfile>")<CR><CR>
+    nmap <C-\>i <Cmd>cscope find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+    nmap <C-\>d <Cmd>cscope find d <C-R>=expand("<cword>")<CR><CR>
 
-    nmap <C-]>s :scscope find s <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-]>g :scscope find g <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-]>c :scscope find c <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-]>t :scscope find t <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-]>e :scscope find e <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-]>f :scscope find f <C-R>=expand("<cfile>")<CR><CR>
-    nmap <C-]>i :scscope find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-    nmap <C-]>d :scscope find d <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-]>s <Cmd>scscope find s <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-]>g <Cmd>scscope find g <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-]>c <Cmd>scscope find c <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-]>t <Cmd>scscope find t <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-]>e <Cmd>scscope find e <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-]>f <Cmd>scscope find f <C-R>=expand("<cfile>")<CR><CR>
+    nmap <C-]>i <Cmd>scscope find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+    nmap <C-]>d <Cmd>scscope find d <C-R>=expand("<cword>")<CR><CR>
 
-    nmap <C-]><C-]>s :vert scscope find s <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-]><C-]>g :vert scscope find g <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-]><C-]>c :vert scscope find c <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-]><C-]>t :vert scscope find t <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-]><C-]>e :vert scscope find e <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-]><C-]>f :vert scscope find f <C-R>=expand("<cfile>")<CR><CR>
-    nmap <C-]><C-]>i :vert scscope find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-    nmap <C-]><C-]>d :vert scscope find d <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-]><C-]>s <Cmd>vert scscope find s <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-]><C-]>g <Cmd>vert scscope find g <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-]><C-]>c <Cmd>vert scscope find c <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-]><C-]>t <Cmd>vert scscope find t <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-]><C-]>e <Cmd>vert scscope find e <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-]><C-]>f <Cmd>vert scscope find f <C-R>=expand("<cfile>")<CR><CR>
+    nmap <C-]><C-]>i <Cmd>vert scscope find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+    nmap <C-]><C-]>d <Cmd>vert scscope find d <C-R>=expand("<cword>")<CR><CR>
 endif
 
 " My wiki {{{1
@@ -1022,7 +1022,7 @@ endif
 set path^=$WIKI_DIR/content
 
 " Open wiki index
-nnoremap <leader>ni :e $WIKI_DIR/content/index.md<CR>
+nnoremap <leader>ni <Cmd>e $WIKI_DIR/content/index.md<CR>
 
 " Search the wiki
 if executable('rg')
@@ -1030,7 +1030,7 @@ if executable('rg')
 else
     command! -nargs=1 Ngrep vimgrep "<args>" $WIKI_DIR/content/**/*.md
 endif
-nnoremap <leader>nn :Ngrep<Space>
+nnoremap <leader>nn <Cmd>Ngrep<Space>
 
 " Colors and Syntax Settings {{{1
 " ==========================
