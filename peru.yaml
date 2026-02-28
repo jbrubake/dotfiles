@@ -10,8 +10,7 @@ imports:
 git module ls_colors:
   url: https://github.com/trapd00r/LS_COLORS
   move:
-    LS_COLORS:
-      - dircolors
+    LS_COLORS: dircolors
   pick: dircolors
   rev: 810ce8cac886ac50e75d84fb438b549a1f9478ee
 
