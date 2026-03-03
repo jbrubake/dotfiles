@@ -1,3 +1,7 @@
 include "%L"
 
-<Multi_key> <g> <a> : "α"
+# <Multi_key> <key_1> <key_2> : "character"
+# As an example, the following maps Compose + g + a to Greek lowercase alpha
+#
+# <Multi_key> <g> <a> : "α"
+

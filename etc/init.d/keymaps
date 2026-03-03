@@ -2,6 +2,14 @@
 
 [ -z "$DISPLAY" ] && exit
 
+alt_gr_map() {
+    xmodmap -e "$(
+        xmodmap -pke |
+        grep  "keycode\s\+$1" |
+        sed -E "s/=((\s\S){4})\s\S+/=\1 $2/"
+    )"
+}
+
 # -layout us                          : US keyboard
 # -variant altgr-intl                 : enable 3rd level symbols
 # -option                             : clear options
@@ -36,6 +44,9 @@ xmodmap -e "add mod1 = Alt_L Meta_L"
 xmodmap -e "add mod2 = Num_Lock"
 xmodmap -e "add mod4 = Super_L Super_R"
 xmodmap -e "keycode 207 = Hyper_L"
+
+# Add AltGr mappings
+alt_gr_map 42 dead_greek # AltGr + g + <key> prints Greek letters
 
 if command -v xcape >/dev/null; then
     # Control_L = Escape by itself
