@@ -7,6 +7,3 @@ run_once() {
     pgrep "$1" || "$1" &
 }
 
-run_once mopidy
-run_once atworkd
-

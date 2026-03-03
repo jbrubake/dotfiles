@@ -1,0 +1,9 @@
+[Unit]
+Description=atworkd
+Wants=network-online.target
+
+[Service]
+ExecStart=%h/bin/atworkd
+
+[Install]
+WantedBy=multi-user.target
