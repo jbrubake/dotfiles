@@ -7,11 +7,11 @@ export ENV=$HOME/.shinit        # equivalent to .bashrc for sh
 
 # Sane defaults {{{1
 #
-: "${HOME:=$(cd; pwd)}"
-: "${LOGNAME:=$(id -un)}"
-: "${UNAME:=$(uname)}"
-: "${TMPDIR:=/tmp}"
-: "${TMP:=$TMPDIR}"
+: ${HOME:=$(cd; pwd)}
+: ${LOGNAME:=$(id -un)}
+: ${UNAME:=$(uname)}
+: ${TMPDIR:=/tmp}
+: ${TMP:=$TMPDIR}
 export HOME LOGNAME UNAME TMPDIR TMP
 
 # Helper functions {{{1
