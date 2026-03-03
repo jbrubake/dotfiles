@@ -172,7 +172,14 @@ case $PAGER in
             alias  less="less $LESS"
             alias zless="less $LESS"
         fi
-        if have highlight; then
+        if have highlight || have bat || have pygmentize; then
+            if have highlight; then
+                _docat() { highlight --force -O truecolor --style "${HIGHLIGHT_STYLE:-solarized-dark}" "$@"; }
+            elif have bat; then
+                _docat() { bat --decorations never --paging never "$@"; }
+            elif have pygmentize; then
+                _docat() { pygmentize -O style="${PYGMENTIZE_STYLE:-solarized-light}" -g "$@"; }
+            fi
             cat() {
                 # Use cat(1) if no files are given or if redirecting stdout
                 # (avoid colors)
@@ -187,41 +194,7 @@ case $PAGER in
                             printf '/bin/cat: %s: No such file or directory\n' "$_a" >&2
                             continue
                         fi
-                        highlight --force -O truecolor --style "${HIGHLIGHT_STYLE:-solarized-dark}" "$_a"
-                    done
-                fi
-            }
-        elif have bat; then
-            cat() {
-                # Use cat(1) if no files are given or if redirecting stdout
-                # (avoid colors)
-                if [ $# -eq 0 ] || ! [ -t 1 ]; then
-                    /bin/cat "$@"
-                else
-                    for _a in "$@"; do
-                        # Emulate cat(1) ENOENT error message
-                        if ! [ -r "$_a" ]; then
-                            printf '/bin/cat: %s: No such file or directory\n' "$_a" >&2
-                            continue
-                        fi
-                        bat --decorations never --paging never "$_a"
-                    done
-                fi
-            }
-        elif have pygmentize; then
-            cat() {
-                # Use cat(1) if no files are given or if redirecting stdout
-                # (avoid colors)
-                if [ $# -eq 0 ] || ! [ -t 1 ]; then
-                    /bin/cat "$@"
-                else
-                    for _a in "$@"; do
-                        # Emulate cat(1) ENOENT error message
-                        if ! [ -r "$_a" ]; then
-                            printf '/bin/cat: %s: No such file or directory\n' "$_a" >&2
-                            continue
-                        fi
-                        pygmentize -O style="${PYGMENTIZE_STYLE:-solarized-light}" -g "$_a"
+                        _docat "$_a"
                     done
                 fi
             }
