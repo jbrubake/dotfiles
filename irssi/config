@@ -29,6 +29,7 @@ chatnets = { oftc = { type = "IRC"; }; libera = { type = "IRC"; }; };
 channels = (
   { name = "##vim";     chatnet = "libera"; autojoin = "yes"; },
   { name = "##cwm";     chatnet = "libera"; autojoin = "yes"; }
+  { name = "#pico.sh";  chatnet = "libera"; autojoin = "yes"; }
   { name = "#suckless"; chatnet = "oftc";   autojoin = "yes"; }
   { name = "#vcs-home"; chatnet = "oftc";   autojoin = "yes"; }
 );
