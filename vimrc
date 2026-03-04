@@ -740,14 +740,14 @@ endfunction
 
 function! Statusline() abort
     let s = ' '
-    "let s .= '%{SL_GitBranch()} '
     let s .= '%F'
     let s .= '%m'
     let s .= '%r'
     let s .= ' '
     let s .= '[%Y]'
     let s .= '%='
-    "let s .= '%{SL_GitHunks()}'
+    let s .= '%{SL_GitBranch()}' " git branch
+    let s .= '%{SL_GitHunks()}'  " gitgutter summary
     let s .= '%l(%L):%c'
     let s .= ' '
     let s .= '[UNICODE 0x%B]'
