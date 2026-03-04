@@ -168,7 +168,8 @@ case $PAGER in
             alias  less="$PAGER"
             alias zless="$PAGER"
         else
-            # NOTE: $LESS is not being passed to less(1)
+            # NOTE: Manually pass $LESS as less is not automatically
+            # using it for some reason
             alias  less='less $LESS'
             alias zless='less $LESS'
         fi
