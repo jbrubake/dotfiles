@@ -169,8 +169,8 @@ case $PAGER in
             alias zless="$PAGER"
         else
             # NOTE: $LESS is not being passed to less(1)
-            alias  less="less $LESS"
-            alias zless="less $LESS"
+            alias  less='less $LESS'
+            alias zless='less $LESS'
         fi
         if have highlight || have bat || have pygmentize; then
             if have highlight; then
