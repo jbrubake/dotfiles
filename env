@@ -275,7 +275,8 @@ if have fzf; then
     # Options for *all* fzf processes
     export FZF_DEFAULT_OPTS='
         --layout=reverse
-        --height=50%'
+        --height=50%
+        --info=inline'
 
     # Options for fzf-tmux
     #     Open in a floating pane
