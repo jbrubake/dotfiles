@@ -739,18 +739,18 @@ function! SL_isactive()
 endfunction
 
 function! Statusline() abort
-    let s = ' '
-    let s .= '%F'
-    let s .= '%m'
-    let s .= '%r'
+    let s  = ' '
+    let s .= '%F'                " Full path to file in buffer
+    let s .= '%m'                " Modified flag
+    let s .= '%r'                " Readonly flag
     let s .= ' '
-    let s .= '[%Y]'
-    let s .= '%='
+    let s .= '[%Y]'              " Filetype
+    let s .= '%='                " Divide left and right halves
     let s .= '%{SL_GitBranch()}' " git branch
     let s .= '%{SL_GitHunks()}'  " gitgutter summary
-    let s .= '%l(%L):%c'
+    let s .= '%l(%L):%c'         " line(total):column
     let s .= ' '
-    let s .= '[UNICODE 0x%B]'
+    let s .= '[UNICODE 0x%B]'    " Unicode codepoint
     return s
 endfunction
 
