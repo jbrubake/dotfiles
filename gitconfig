@@ -51,8 +51,8 @@
 	stripLeadingSymbols = false
 
 [sendemail]
-    smtpserver = smtp.googlemail.com
-    smtpencryption = tls
-    smtpserverport = 587
+    smtpserver = smtp.gmail.com
+    smtpencryption = ssl
+    smtpserverport = 465
     smtpuser = jbru362@gmail.com
 
