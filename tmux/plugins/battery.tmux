@@ -16,13 +16,15 @@ RED_THRESH=50
 YELLOW_THRESH=75
 
 # Get the battery name
-get_battery() { upower -e | grep battery; }
+get_battery() { upower --enumerate | grep battery; }
 
 # Is the AC adapter plugged in?
 is_plugged_in() {
     [ $(upower -i $(upower -e | grep AC) | awk '/online:/ {print $2}') = 'yes' ]
 }
 
+# -t option adds time remaining to full charge
+#
 battery() {
     battery=$(get_battery)
 
@@ -32,7 +34,8 @@ battery() {
     fi
 
     # Get current % charge
-    charge=$(upower -i "$battery" | awk '/percentage:/ {print $2}' | sed 's/%//')
+    charge=$(upower -i "$battery" | awk '
+        /percentage:/ {print $2}' | sed 's/%//')
 
     i=$((charge / icon_len + 1))            # convert charge to index into $unplugged / $charging
     [ "$i" -gt "$icon_len" ] && i=$icon_len # max of $icon_len
@@ -44,10 +47,17 @@ battery() {
         icons=$unplugged
     fi
 
+    # Get time to full charge
+    if [ "$1" = '-t' ]; then
+        time=$(upower -i "$battery" | awk '
+            /time to empty/ {$1 = "" $2 = "" $3 = "" print }'
+        time=" ($time remaining)"
+    fi
+
     # <icon> <charge>%
-    printf '%s%s %s%%' \
+    printf '%s%s %s%%%s' \
         "$(colorize "$charge" "$RED_THRESH" "$YELLOW_THRESH")" \
         "$(echo "$icons" | cut -c"$i")" \
-        "$charge"
+        "$charge" "$time"
 }
 
