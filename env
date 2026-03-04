@@ -542,10 +542,10 @@ for d in \
 done 
 pathuniq PATH
 
-# Include local and private settings {{{1
+# Include private and local settings {{{1
 #
-[ -r "$HOME/.env.local" ]      && . "$HOME/.env.local"
 [ -r "$HOME/etc/environment" ] && . "$HOME/etc/environment"
+[ -r "$HOME/.env.local" ]      && . "$HOME/.env.local"
 
 # Cleanup {{{1
 #

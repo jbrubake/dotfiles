@@ -47,10 +47,10 @@ if [ "$PAGER" = 'less' ] || [ "$MANPAGER" = 'less' ]; then
     fi
 fi
 
-# Include local and private settings
+# Include private and local settings
 #
-[ -r "$HOME/.shinit.local" ] && . "$HOME/.shinit.local"
 [ -r "$HOME/etc/shinit" ]    && . "$HOME/etc/shinit"
+[ -r "$HOME/.shinit.local" ] && . "$HOME/.shinit.plocal"
 
 # vim: foldlevel=0
 
