@@ -926,9 +926,17 @@ vnoremap <localleader>Y "+Y
 " :w!!:                write file when I forget to sudo {{{2
 cnoremap w!! w !sudo tee % >/dev/null
 
-" <C-P> / <C-N>:       command history navigation {{{2
+" Emacs-keys in command mode: {{{2
+"
+cnoremap <C-A> <Home>
+cnoremap <C-B> <Left>
+cnoremap <C-D> <Del>
+cnoremap <C-E> <End>
+cnoremap <C-F> <Right>
 cnoremap <C-P> <Up>
 cnoremap <C-N> <Down>
+cnoremap <C-K> <C-\>estrpart(getcmdline(), 0, getcmdpos() - 1)<CR>
+cnoremap <C-U> <C-\>estrpart(getcmdline(), getcmdpos() - 1)<CR><Home>
 
 " <leader>u[c]:        underline current line with [c] {{{2
 nnoremap <leader>u yypVr
