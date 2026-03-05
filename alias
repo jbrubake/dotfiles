@@ -59,6 +59,12 @@ if have grc; then
     alias ipa='grc $GRC_OPTS --colour on '"$ipa"
 fi
 
+# fzf aliases {{{1
+#
+if have fzf; then
+    alias kill=fkill
+fi
+
 # ls(1) {{{1
 #
 # In case $LS was not defined in ~/.env

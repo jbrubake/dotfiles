@@ -24,6 +24,7 @@
     unstage-all = reset HEAD            ; Unstage everything
     undo-merge = reset --hard ORIG_HEAD ; Undo a merge
     delouse = !git reset HEAD~1 && git commit --allow-empty --no-verify -C "$(git sha HEAD)" ; 'Empty' last commit but keep commit message
+    forgit = !git-forgit
 
 [color]
 	ui = true
