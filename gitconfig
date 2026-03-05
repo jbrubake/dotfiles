@@ -28,8 +28,10 @@
     lg = log         --pretty='%C(auto)%<(7)%h%d %s %C(green)(%cs) %C(cyan)<%aN>'
     lt = log --graph --pretty='%C(auto)%<(7)%h%d %s %C(green)(%cs) %C(cyan)<%aN>'
 
-    whatadded   = log --diff-filter=A -- ; What commit that added a file?
-    whatdeleted = log --diff-filter=D -- ; What commit deleted (possibly by renaming) a file?
+    whatadded   = log --diff-filter=A --  ; What commit that added a file?
+    whatdeleted = log --diff-filter=D --  ; What commit deleted (possibly by renaming) a file?
+
+    logfile     = log --patch --follow -- ; File history
 
     ; Print last commit for tracked files
     ; 
