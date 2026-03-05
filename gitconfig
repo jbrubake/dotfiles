@@ -12,17 +12,24 @@
 [github]
 	user  = "jbrubake"
 [alias]
-    lg  = log               --pretty='%C(auto)%<(7)%h%d %s %C(green)(%cs) %C(cyan)<%aN>'
-    lt  = log --graph       --pretty='%C(auto)%<(7)%h%d %s %C(green)(%cs) %C(cyan)<%aN>'
-    lta = log --graph --all --pretty='%C(auto)%<(7)%h%d %s %C(green)(%cs) %C(cyan)<%aN>'
-	s = status -s                       ; View the current working tree status using the short format.
-	aliases = config --get-regexp alias ; List aliases.
-    whatadded = log --diff-filter=A --  ; Find commit that added a file
-    fixup = commit --amend --no-edit    ; Amend without editing commit message
-    stage-all = add --all               ; Stage everything
-    unstage-all = reset HEAD            ; Unstage everything
-    undo-merge = reset --hard ORIG_HEAD ; Undo a merge
+    aliases     = config --get-regexp alias ; List aliases
+
+    s           = status -s                 ; View short format status
+
+    fixup       = commit --amend --no-edit  ; Amend without editing commit message
+    stage-all   = add --all                 ; Stage everything
+    unstage-all = reset HEAD                ; Unstage everything
+    undo-merge  = reset --hard ORIG_HEAD    ; Undo a merge
     delouse = !git reset HEAD~1 && git commit --allow-empty --no-verify -C "$(git sha HEAD)" ; 'Empty' last commit but keep commit message
+
+    ; git log
+    ;
+    ; lg: Short commit message only
+    ; lt: Short commit message and branch graph
+    lg  = log         --pretty='%C(auto)%<(7)%h%d %s %C(green)(%cs) %C(cyan)<%aN>'
+    lt  = log --graph --pretty='%C(auto)%<(7)%h%d %s %C(green)(%cs) %C(cyan)<%aN>'
+
+    whatadded   = log --diff-filter=A --    ; What commit that added a file?
 
 [color]
 	ui = true
