@@ -31,6 +31,17 @@
     whatadded   = log --diff-filter=A --    ; What commit that added a file?
     whatdeleted = log --diff-filter=D --    ; What commit deleted (possibly by renaming) a file?
 
+    ; Print last commit for files in pwd
+    ; 
+    ; git last: all files
+    ; git last <list>: all files in list (can include globs)
+    ; 
+    ; (Use @ in the format string to represent the filename)
+    last = "!f() { \
+        git ls-files \"$@\" | \
+        xargs -I@ git log -n1 --format='%C(green)@|%C(auto)%s|%C(auto)%h|%C(cyan)%aN' --color=always -- @ | \
+        column -t -s'|'; }; f"
+
 [color]
 	ui = true
 [color "branch"]
