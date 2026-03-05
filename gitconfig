@@ -29,6 +29,7 @@
     lt  = log --graph --pretty='%C(auto)%<(7)%h%d %s %C(green)(%cs) %C(cyan)<%aN>'
 
     whatadded   = log --diff-filter=A --    ; What commit that added a file?
+    whatdeleted = log --diff-filter=D --    ; What commit deleted (possibly by renaming) a file?
 
 [color]
 	ui = true
