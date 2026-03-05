@@ -649,6 +649,19 @@ set path^=$DOTFILES                  " Search for files in $DOTFILES
 " and then I can't use the mouse to resize splits
 if &term =~ "tmux" | set ttymouse=sgr | endif
 
+" Set buffer to use detected tabbing style
+"
+" Ignore buffers that don't work with autotab
+if executable('autotab')
+    let autotab_blacklist = ['fugitive']
+    augroup autotab | autocmd!
+        autocmd BufReadPost *
+            \ if bufname('%:p') != "" && index(autotab_blacklist, &ft) < 0 |
+                \ execute system("autotab -l <" .  bufname('%:p')) |
+            \ endif
+    augroup end
+endif
+
 " When editing a file, always jump to the last known cursor position.
 " Don't do it when the position is invalid, when inside an event handler
 " (happens when dropping a file on gvim), for a commit or rebase message
