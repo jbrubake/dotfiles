@@ -733,12 +733,12 @@ set smartindent          " Automatic indenting is intelligent
 " Statusline {{{1
 " ==========
 function! SL_GitHunks()
-    if system('git rev-parse --is-inside-work-tree 2>/dev/null') !~ 'true'
-        return ''
-    endif
-    let [a,m,r] = GitGutterGetHunkSummary()
-    let s = printf('[+%d %~%d -%d] ', a, m, r)
-    return s
+    try
+        let [a,m,r] = GitGutterGetHunkSummary()
+        return printf('[+%d %~%d -%d] ', a, m, r)
+    catch
+        " Just do nothing
+    endtry
 endfunction
 
 function! SL_GitBranch()
