@@ -743,8 +743,7 @@ endfunction
 
 function! SL_GitBranch()
     let b = substitute(system('git rev-parse --abbrev-ref HEAD 2>/dev/null'), '\n\+$', '', '')
-    let s = strlen(b) ? ' ' . b . ' ' : ''
-    return s
+    return strlen(b) ? ' ' . b : ''
 endfunction
 
 function! SL_isactive()
@@ -760,6 +759,7 @@ function! Statusline() abort
     let s .= '[%Y]'              " Filetype
     let s .= '%='                " Divide left and right halves
     let s .= '%{SL_GitBranch()}' " git branch
+    let s .= ' '
     let s .= '%{SL_GitHunks()}'  " gitgutter summary
     let s .= '%l(%L):%c'         " line(total):column
     let s .= ' '
