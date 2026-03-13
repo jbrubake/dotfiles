@@ -6,4 +6,4 @@ Wants=network-online.target
 ExecStart=/opt/rust/bin/watchexec --workdir %h/.sync/%i --postpone --debounce 5s %h/bin/cloudsync sync %i
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target

@@ -6,4 +6,4 @@ Wants=network-online.target
 ExecStart=%h/bin/atworkd
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target
