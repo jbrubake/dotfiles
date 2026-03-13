@@ -263,6 +263,22 @@ autocmd plugins FileType yaml.ansible vnoremap <localleader>gr <Cmd>call JumpToA
 
 " pseudo-syntax:           Syntax highlighting for various forms of pseudocode for vim            plugurl:joelbeedle/pseudo-syntax " {{{3
 
+" readline.vim:            Readline emulation for command-line mode                               plugurl:ryvnf/readline.vim " {{{3
+
+" NOTE: These bindings are in the readline.vim documentation
+" but not actually created
+"
+" Alt-Ctrl-H    : Cut to start of previous word
+" Ctrl-X Ctrl-H : Cut to beginning of line
+cmap <Esc><C-H> <Esc><BS>
+cmap <C-X><C-H> <C-U>
+
+" Replacements for overridden maps:
+"
+" Alt+= / Alt+? (c_CTRL-D) : Display all names that match pattern in front of cursor
+" Alt+*         (c_CTRL-A) : Insert all names that match pattern in front of cursor
+" Ctrl-X Ctrl-E (c_CTRL-F) : Open command-line window
+
 " scss-syntax.vim:         Sassy CSS for vim                                                      plugurl:cakebaker/scss-syntax.vim " {{{3
 
 " No configuration needed
@@ -925,18 +941,6 @@ vnoremap <localleader>Y "+Y
 
 " :w!!:                write file when I forget to sudo {{{2
 cnoremap w!! w !sudo tee % >/dev/null
-
-" Emacs-keys in command mode: {{{2
-"
-cnoremap <C-A> <Home>
-cnoremap <C-B> <Left>
-cnoremap <C-D> <Del>
-cnoremap <C-E> <End>
-cnoremap <C-F> <Right>
-cnoremap <C-P> <Up>
-cnoremap <C-N> <Down>
-cnoremap <C-K> <C-\>estrpart(getcmdline(), 0, getcmdpos() - 1)<CR>
-cnoremap <C-U> <C-\>estrpart(getcmdline(), getcmdpos() - 1)<CR><Home>
 
 " <leader>u[c]:        underline current line with [c] {{{2
 nnoremap <leader>u yypVr
