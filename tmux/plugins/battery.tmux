@@ -51,7 +51,7 @@ battery() {
     if [ "$1" = '-t' ]; then
         time=$(upower -i "$battery" | awk '
             /time to empty/ {$1 = "" $2 = "" $3 = "" print }'
-        time=" ($time remaining)"
+            time=" ($time remaining)")
     fi
 
     # <icon> <charge>%
