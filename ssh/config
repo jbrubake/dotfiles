@@ -6,7 +6,7 @@ Host *
     HashKnownHosts no
 
     ControlMaster auto
-    ControlPath ~/.ssh/sockets/%r@%k:%p
+    ControlPath ~/.ssh/sockets/%r@%n:%p
     ControlPersist 300
 
     IdentitiesOnly yes

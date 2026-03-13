@@ -120,7 +120,9 @@ rmh() { # Remove a host from ~/.ssh/known_hosts {{{2
     # both adding the port (which I don't feel like remembering) and enclosing
     # the host in '[]' (which is too much typing)
     #
-    printf 'g/^\[\\?%s/d\nw\nq\n' "$1" | ed ~/.ssh/known_hosts >/dev/null
+    # Escape '/' so the g/re/cmd doesn't get screwed up
+    h=$(printf '%s' "$1" | sed 's@/@\\/@g')
+    printf 'g/^\[\\?%s/d\nw\nq\n' "$h" | ed ~/.ssh/known_hosts >/dev/null
 }
 
 http_code () { # Get meaning of HTTP error code {{{2
