@@ -23,6 +23,14 @@ is_plugged_in() {
     [ $(upower -i $(upower -e | grep AC) | awk '/online:/ {print $2}') = 'yes' ]
 }
 
+get_charge() {
+    upower -i "$1" | awk '/percentage:/ {print $2}' | sed 's/%//'
+}
+
+get_time_to_empty() {
+    upower -i "$1" | awk '/time to empty/ {$1 = "" $2 = "" $3 = "" print }'
+}
+
 # -t option adds time remaining to full charge
 #
 battery() {
@@ -34,8 +42,7 @@ battery() {
     fi
 
     # Get current % charge
-    charge=$(upower -i "$battery" | awk '
-        /percentage:/ {print $2}' | sed 's/%//')
+    charge=$(get_charge "$battery")
 
     i=$((charge / icon_len + 1))            # convert charge to index into $unplugged / $charging
     [ "$i" -gt "$icon_len" ] && i=$icon_len # max of $icon_len
@@ -49,9 +56,7 @@ battery() {
 
     # Get time to full charge
     if [ "$1" = '-t' ]; then
-        time=$(upower -i "$battery" | awk '
-            /time to empty/ {$1 = "" $2 = "" $3 = "" print }'
-            time=" ($time remaining)")
+        time=" ($(get_time_to_empty "$battery") remaining)"
     fi
 
     # <icon> <charge>%
