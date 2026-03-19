@@ -11,13 +11,31 @@ TMUX_COLOR_GREEN=color42
 # TMUX_COLOR_YELLOW=color226
 # TMUX_COLOR_GREEN=color40
 
-# used in window status format
-TMUX_WINDOW_FORMAT='#I#F #W,,[],color233' # Format: <window index><window flags> <window name>
-TMUX_BAR_COLOR=color233                     # default status bar background color
+TMUX_STATUS_BAR_FG=color252
+TMUX_STATUS_BAR_BG=color233
+# Format string, active surround, inactive surround, background color
+#   Format string: <window index><window flags> <window name>
+TMUX_WINDOW_FORMAT="#I#F #W,,[],$TMUX_STATUS_BAR_BG"
+
+separator() { 
+    if [ "$1" = nospace ]; then
+        trail=
+    else
+        trail=' '
+    fi
+
+    printf '#[fg=%s,bg=%s] |%s' "$TMUX_STATUS_BAR_FG" "$TMUX_STATUS_BAR_BG" "$trail"
+}
 
 left() { # {{{1
+    fg=$TMUX_STATUS_BAR_FG
+    bg=$TMUX_STATUS_BAR_BG
+
+    # default color
+    printf '#[bg=%s,bold]' "$bg"
+
     # spacing
-    printf ' #[bold]'
+    printf ' '
 
     # host:session
     printf '#[range=user|new]'
@@ -25,18 +43,16 @@ left() { # {{{1
     printf '#[norange]'
 
     # uptime
-    printf '#[fg=color252] | '
+    separator
     printf ' #[fg=color171] up %s' "$(plugin uptime)"
 
     # clock
-    printf '#[fg=color252] | '
+    separator
     printf '#[range=user|clock]'
     printf ' #[fg=color214]%s#[fg=none]' "$(date +'%a, %d-%b %H:%M:%S')"
     printf '#[norange]'
 
     # network status and internet POP
-    printf '#[range=user|network]'
-    printf '#[fg=color252] | '
     case $(plugin uplink) in
         'up')     color=$TMUX_COLOR_GREEN ;;
         'no dns') color=$TMUX_COLOR_YELLOW ;;
@@ -44,7 +60,9 @@ left() { # {{{1
     esac
     ssid=$(plugin wifi)
     [ -n "$ssid" ] && ssid=" ($ssid)"
-    printf '󰖟 [#[fg=%s]%s#[fg=color252]%s]' "$color" "$(plugin ip_location '%c, %R')" "$ssid"
+    separator
+    printf '#[range=user|network]'
+    printf '󰖟 [#[fg=%s]%s#[fg=%s]%s]' "$color" "$(plugin ip_location '%c, %R')" "$fg" "$ssid"
     printf '#[norange]'
 
     # VPN status
@@ -54,22 +72,25 @@ left() { # {{{1
         work_vpn=$(plugin vpn_status tng 172.25.0.1 roka.live)
     fi
     if [ -n "$work_vpn" ]; then
+        separator
         printf '#[range=user|vpn]'
-        printf '#[fg=color252] | ' 
-        printf '󰖂 [%s#[fg=color252]]' "$work_vpn"
+        printf '󰖂 [%s#[fg=%s]]' "$work_vpn" "$fg"
         printf '#[norange]'
     fi
 
     # end
-    printf '#[fg=color252,bg=color233]  '
-
-    # reset
-    printf '#[fg=color252,bg=color233]'
+    printf '#[fg=%s,bg=%s]  ' "$fg" "$bg"
 }
 
 right() { # {{{1
+    fg=$TMUX_STATUS_BAR_FG
+    bg=$TMUX_STATUS_BAR_BG
+
+    # default color
+    printf '#[bg=%s,bold]' "$bg"
+
     # leader
-    printf '#[fg=color252,bg=color233,bold] '
+    printf ' '
 
     # memory usage
     printf '#[range=user|memory]'
@@ -77,17 +98,18 @@ right() { # {{{1
     printf '#[norange]'
 
     # system load
+    separator
     printf '#[range=user|load]'
-    printf '#[fg=color252] | '
     printf '  %s' "$(plugin load '%o%/%f%/%F%')"
     printf '#[norange]'
 
     # updates
+    separator
     printf '#[range=user|updates]'
-    printf '#[fg=color252] | '
     printf '󰒃 %s' "$(plugin updates "#[fg=color033]%t #[fg=$TMUX_COLOR_RED]( %s)#[fg=color033] updates")"
 
     # music
+    separator
     printf '#[fg=color252] | '
     printf '#[range=user|music]'
     # Remove '(.*)' album and song qualifiers
@@ -103,24 +125,24 @@ right() { # {{{1
     # weather
     weather=$(plugin weather '+%c%C+%t+(%f)')
     if [ -n "$weather" ]; then
+        separator nospace
         printf '#[range=user|weather]'
-        printf '#[fg=color252] |' # <-- space intentionally skipped
         printf '%s' "$(plugin weather '+%c%C+%t+(%f)')"
         printf '#[norange]'
     fi
 
     # rpg-cli status
     if command -v atwork >/dev/null && ! atwork; then
-        printf '#[fg=color252] | '
+        separator
         printf '󱡂 %s' "$(plugin rpg_status '%c-%l: %H hp')"
     fi
 
     # battery
-    printf '#[fg=color252] | '
+    separator
     printf '%s' "$(plugin battery)"
 
     # reset
-    printf '#[fg=color252,bg=color233]'
+    printf '#[fg=%s,bg=%s]' "$fg" "$bg"
 
     # provide some separation from the terminal's edge
     printf '  '
