@@ -136,10 +136,10 @@ window() { # {{{1
     bar=$(echo "$TMUX_WINDOW_FORMAT" | cut -d, -f4)
 
     # set defaults
-    format=${format:-#I#F #W}
-    active=${active:-()}
-    inactive=${inactive:-[]}
-    bar=${bar:-color233}
+    format=${format:-'#I#F #W'}
+    active=${active:-'()'}
+    inactive=${inactive:-'[]'}
+    bar=${bar:-'color233'}
 
     # split character pairs
     preactive=$(echo $active | cut -c1)
