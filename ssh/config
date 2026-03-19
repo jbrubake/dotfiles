@@ -1,5 +1,3 @@
-Include ~/.ssh/config.d/*.conf
-
 Host *
     # Ubuntu likes to hash known hosts which prevents
     # bash hostname completion from working
@@ -33,4 +31,6 @@ Host tron
 Host github.com
     HostName github.com
     IdentityFile ~/.ssh/keys/github
+
+Include ~/.ssh/config.d/*.conf
 
