@@ -6,21 +6,8 @@ INTERVAL=$(( 60 * 60 )) # 1 hour
 updates() {
     format=${1:-%t (%s security) updates}
 
-    updates=$(dnf --refresh -q updateinfo list |
-        awk '
-            BEGIN {
-                total = -1 # easier than explicitly skipping the header line
-                security = 0
-            }
-            $2 ~ /security/  { security++ }
-                             { total++ }
-            END {
-                if (total < 0) total = 0
-                print security, total }'
-            )
-
-    security=$(echo "$updates" | cut -d' ' -f1)
-    total=$(echo "$updates" | cut -d' ' -f2)
+    security=$(dnf --refresh --quiet check-update --security | grep -v '^No security updates needed' | wc -l)
+    total=$(dnf --refresh --quiet check-update | wc -l)
 
     printf %s "$(printf %s "$format" | sed -e "s/%t/$total/" -e "s/%s/$security/")"
 }
