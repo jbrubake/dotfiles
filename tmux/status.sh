@@ -123,7 +123,7 @@ right() { # {{{1
     printf '#[fg=color252,bg=color233]'
 
     # provide some separation from the terminal's edge
-    printf ' '
+    printf '  '
 }
 
 window() { # {{{1
