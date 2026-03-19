@@ -87,6 +87,19 @@ right() { # {{{1
     printf '#[fg=color252] | '
     printf '󰒃 %s' "$(plugin updates "#[fg=color033]%t #[fg=$TMUX_COLOR_RED]( %s)#[fg=color033] updates")"
 
+    # music
+    printf '#[fg=color252] | '
+    printf '#[range=user|music]'
+    # Remove '(.*)' album and song qualifiers
+    track=$(plugin music '%s%F' | sed 's/([^)]*)[[:space:]]*//')
+    # If player is stopped, music.tmux just outputs a single "stopped" emoji and
+    # the sed command above adds another character
+    if [ "$(echo "$track" | wc -m)" -gt 2 ]; then
+        printf '%s' "$track"
+    else
+        printf '%s  No track' "$track"
+    fi
+
     # weather
     weather=$(plugin weather '+%c%C+%t+(%f)')
     if [ -n "$weather" ]; then
