@@ -132,7 +132,7 @@ get_cache_time() {
 #
 # @arg $1 str Name of cache to clear
 #
-clear_cache() { rm -f "$(get_cache_fn)"; }
+clear_cache() { rm -f "$(get_cache_fn "$1")"; }
 
 # Other functions {{{1
 #
