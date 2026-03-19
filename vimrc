@@ -748,24 +748,6 @@ set smartindent          " Automatic indenting is intelligent
 
 " Statusline {{{1
 " ==========
-function! SL_GitHunks()
-    try
-        let [a,m,r] = GitGutterGetHunkSummary()
-        return printf('[+%d %~%d -%d] ', a, m, r)
-    catch
-        " Just do nothing
-    endtry
-endfunction
-
-function! SL_GitBranch()
-    let b = substitute(system('git rev-parse --abbrev-ref HEAD 2>/dev/null'), '\n\+$', '', '')
-    return strlen(b) ? ' ' . b : ''
-endfunction
-
-function! SL_isactive()
-    return g:statusline_winid == win_getid(winnr())
-endfunction
-
 function! Statusline() abort
     let s  = ' '
     let s .= '%F'                " Full path to file in buffer
@@ -774,9 +756,6 @@ function! Statusline() abort
     let s .= ' '
     let s .= '[%Y]'              " Filetype
     let s .= '%='                " Divide left and right halves
-    let s .= '%{SL_GitBranch()}' " git branch
-    let s .= ' '
-    let s .= '%{SL_GitHunks()}'  " gitgutter summary
     let s .= '%l(%L):%c'         " line(total):column
     let s .= ' '
     let s .= '[UNICODE 0x%B]'    " Unicode codepoint
