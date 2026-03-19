@@ -34,7 +34,8 @@ weather() {
     # M metric (wind speed in m/s)
     units=${2:-u}
 
-    r=$(curl --connect-timeout 5 --max-time 5 "http://wttr.in/?$units&format=$format" 2>/dev/null | tr -s ' ')
+    r=$(curl --silent --compressed --connect-timeout 5 --max-time 5 \
+        "http://wttr.in/?$units&format=$format" | tr -s ' ')
     case $r in
         *Sorry*) printf %s "-"  ;;
         *) printf '%s' "$r" ;;
