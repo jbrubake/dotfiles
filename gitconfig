@@ -30,8 +30,8 @@
 
     whatadded   = log --diff-filter=A --  ; What commit that added a file?
     whatdeleted = log --diff-filter=D --  ; What commit deleted (possibly by renaming) a file?
-
     logfile     = log --patch --follow -- ; File history
+    histgrep    = log --source --all -S   ; Search history for strings
 
     ; Print last commit for tracked files
     ; 
