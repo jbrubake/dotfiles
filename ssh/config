@@ -1,16 +1,4 @@
-Host *
-    # Ubuntu likes to hash known hosts which prevents
-    # bash hostname completion from working
-    HashKnownHosts no
-
-    ControlMaster auto
-    ControlPath ~/.ssh/sockets/%r@%n:%p
-    ControlPersist 300
-
-    IdentitiesOnly yes
-
-    # Force IPv4 everywhere
-    AddressFamily inet
+Include config.d/*.conf
 
 # Use the following as a template for accessing older SSH servers
 # (such as older Gli-Net and OpenWRT devices). You must also use a custom
@@ -32,5 +20,18 @@ Host github.com
     HostName github.com
     IdentityFile ~/.ssh/keys/github
 
-Include ~/.ssh/config.d/*.conf
+# SSH defaults need to be last because of "first-win"
+Host *
+    # Ubuntu likes to hash known hosts which prevents
+    # bash hostname completion from working
+    HashKnownHosts no
+
+    ControlMaster auto
+    ControlPath ~/.ssh/sockets/%r@%n:%p
+    ControlPersist 300
+
+    IdentitiesOnly yes
+
+    # Force IPv4 everywhere
+    AddressFamily inet
 
