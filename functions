@@ -88,7 +88,7 @@ if command -v todo.sh >/dev/null || command -v rpg-cli >/dev/null; then
 
         # Run overloads only if we are in a new directory
         if [ "$r" = 0 -a "$oldpwd" != "$(pwd)" ]; then
-            if [ "$RPG_CLI_CD_OVERLOAD" = 1 ] && ! atwork; then
+            if [ "$RPG_CLI_CD_OVERLOAD" = 1 ] && ! atwork 2>/dev/null; then
                 rpg-cli cd -f .
                 rpg-cli battle
             fi
