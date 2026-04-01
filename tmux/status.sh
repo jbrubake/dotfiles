@@ -27,6 +27,14 @@ separator() {
     printf '#[fg=%s,bg=%s] |%s' "$TMUX_STATUS_BAR_FG" "$TMUX_STATUS_BAR_BG" "$trail"
 }
 
+start_range() {
+    [ -n "$1" ] && printf '#[range=user|%s]' "$1"
+}
+
+end_range() {
+    printf '#[norange]'
+}
+
 left() { # {{{1
     fg=$TMUX_STATUS_BAR_FG
     bg=$TMUX_STATUS_BAR_BG
@@ -38,9 +46,9 @@ left() { # {{{1
     printf ' '
 
     # host:session
-    printf '#[range=user|new]'
+    start_range new
     printf '  #[fg=color44]#{client_user}@#[fg=color171]#h'
-    printf '#[norange]'
+    end_range
 
     # uptime
     separator
@@ -48,9 +56,9 @@ left() { # {{{1
 
     # clock
     separator
-    printf '#[range=user|clock]'
+    start_range clock
     printf ' #[fg=color214]%s#[fg=none]' "$(date +'%a, %d-%b %H:%M:%S')"
-    printf '#[norange]'
+    end_range
 
     # network status and internet POP
     case $(plugin uplink) in
@@ -61,9 +69,9 @@ left() { # {{{1
     ssid=$(plugin wifi)
     [ -n "$ssid" ] && ssid=" ($ssid)"
     separator
-    printf '#[range=user|network]'
+    start_range network
     printf '󰖟 [#[fg=%s]%s#[fg=%s]%s]' "$color" "$(plugin ip_location '%c, %R')" "$fg" "$ssid"
-    printf '#[norange]'
+    end_range
 
     # VPN status
     if ip --brief address | grep -q ^jeremy-range; then
@@ -73,9 +81,9 @@ left() { # {{{1
     fi
     if [ -n "$work_vpn" ]; then
         separator
-        printf '#[range=user|vpn]'
+        start_range vpn
         printf '󰖂 [%s#[fg=%s]]' "$work_vpn" "$fg"
-        printf '#[norange]'
+        end_range
     fi
 
     # end
@@ -93,25 +101,24 @@ right() { # {{{1
     printf ' '
 
     # memory usage
-    printf '#[range=user|memory]'
+    start_range memory
     printf '  %s' "$(plugin mem_usage '%u/%t')"
-    printf '#[norange]'
+    end_range
 
     # system load
     separator
-    printf '#[range=user|load]'
+    start_range load
     printf '  %s' "$(plugin load '%o%/%f%/%F%')"
-    printf '#[norange]'
+    end_range
 
     # updates
     separator
-    printf '#[range=user|updates]'
+    start_range updates
     printf '󰒃 %s' "$(plugin updates "#[fg=color033]%t #[fg=$TMUX_COLOR_RED]( %s)#[fg=color033] updates")"
 
     # music
     separator
-    printf '#[fg=color252] | '
-    printf '#[range=user|music]'
+    start_range music
     # Remove '(.*)' album and song qualifiers
     track=$(plugin music '%s%F' | sed 's/([^)]*)[[:space:]]*//')
     # If player is stopped, music.tmux just outputs a single "stopped" emoji and
@@ -126,9 +133,9 @@ right() { # {{{1
     weather=$(plugin weather '+%c%C+%t+(%f)')
     if [ -n "$weather" ]; then
         separator nospace
-        printf '#[range=user|weather]'
+        start_range weather
         printf '%s' "$(plugin weather '+%c%C+%t+(%f)')"
-        printf '#[norange]'
+        end_range
     fi
 
     # rpg-cli status
