@@ -149,6 +149,7 @@ let g:ansible_template_syntaxes = {
     \ '*.sh.j2':     'sh',
     \ '*.tf.j2':     'hcl',
     \ '*.tfvars.j2': 'hcl',
+    \ '*.xml.j2':    'xml',
     \ '*.yml.j2':    'yaml',
     \ '*.yaml.j2':   'yaml',
 \ }
