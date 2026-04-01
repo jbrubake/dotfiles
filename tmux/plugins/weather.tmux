@@ -37,7 +37,7 @@ weather() {
     r=$(curl --silent --compressed --connect-timeout 5 --max-time 5 \
         "http://wttr.in/?$units&format=$format" | tr -s ' ')
     case $r in
-        *Sorry*) printf %s "-"  ;;
+        *Sorry*) printf %s ''  ;;
         *) printf '%s' "$r" ;;
     esac
 }
