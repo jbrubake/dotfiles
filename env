@@ -95,11 +95,24 @@ pick() {
 
 # XDG Directores {{{1
 #
-# XDG_*=<path>                        # Purpose            (equivalent) Default
-export XDG_CONFIG_HOME=$HOME/.config  # config files       (/etc)       ~/.config
-export XDG_CACHE_HOME=$HOME/var/cache # non-essential data (/var/cache) ~/.cache
-export XDG_DATA_HOME=$HOME/share      # data files         (/usr/share) ~/.local/share
-export XDG_STATE_HOME=$HOME/var/lib   # state data         (/var/lib)   ~/.local/state
+# Variable        | Purpose            | Equivalent | Default
+# --------        | -------            | ---------- | -------
+# XDG_CONFIG_HOME | config files       | /etc       | ~/.config
+# XDG_CACHE_HOME  | non-essential data | /var/cache | ~/.cache
+# XDG_DATA_HOME   | data files         | /usr/share | ~/.local/share
+# XDG_STATE_HOME  | state data         | /var/lib   | ~/.local/state
+
+# The ansible baseline playbooks will generate the proper settings
+# based on their configuration, but we allow setting the variables
+# here in case that file isn't found
+if [ -r "$HOME/.env.xdg" ]; then
+    . "$HOME/.env.xdg"
+else
+    export XDG_CONFIG_HOME=$HOME/.config
+    export XDG_CACHE_HOME=$HOME/var/cache
+    export XDG_DATA_HOME=$HOME/share
+    export XDG_STATE_HOME=$HOME/var/lib
+fi
 
 # Add flatpak to XDG_DATA_DIRS
 #
