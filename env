@@ -113,6 +113,8 @@ else
     export XDG_DATA_HOME=$HOME/share
     export XDG_STATE_HOME=$HOME/var/lib
 fi
+[ -r "$XDG_CONFIG_HOME/user-dirs.dirs" ] &&
+    . "$XDG_CONFIG_HOME/user-dirs.dirs"
 
 # Add flatpak to XDG_DATA_DIRS
 #
