@@ -242,6 +242,8 @@ have mgitstatus && alias    gits='mgitstatus -e -c'      # get status of git rep
 have pandoc     && alias md2html='pandoc -f markdown'    # convert Markdown to HTML
 have rpg-cli    && alias     rpg='rpg-cli'               # easier rpg-cli
 
+have dict && alias thesaurus='dict -d "moby-thesaurus"' # A...thesaurus
+
 alias             +x='chmod +x' # make file executable
 alias ${BASH:+--} -x='chmod -x' # make file non-executable 
 
