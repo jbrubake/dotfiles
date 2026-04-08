@@ -73,6 +73,7 @@ set fcc_attach   = yes # Save attachments with sent messages
 # set attribution = # Reply string
 set reply_to     = yes # Automatically use Reply-To:
 set reverse_name = yes # Reply as whomever message was to
+set reverse_realname = no  # Always reply using the value of 'realname'
 set include      = yes # Include original message when replying
 set text_flowed  = yes # Generate format=flowed emails (editor needs configured for this)
 
