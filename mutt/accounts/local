@@ -8,6 +8,7 @@ source ~/.mutt/accounts/account.generic
 # Override defaults
 set from     = "$USER"
 set record   = +$my_account/Sent
+set hostname = "$HOSTNAME"
 
 # Do not need to mbsync this mailbox
 bind index o noop
