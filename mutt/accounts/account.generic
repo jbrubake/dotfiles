@@ -14,7 +14,7 @@ set postponed = +$my_account/Drafts
 set record    = "" # Gmail handles Sent folder automatically)
 
 # Configure the From: header
-set realname         = "Jeremy Brubaker" # My name
+set realname = "Jeremy Brubaker" # My name
 
 # Send mail from this account
 set sendmail = "$my_bin/mutt-send $my_account"

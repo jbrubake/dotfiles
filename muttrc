@@ -61,21 +61,21 @@ set sendmail_wait = 1 # do not block when sending emails
 
 set mark_old = no # Old unread messages are still "new"
 
-set edit_headers = yes # May edit headers along with body
-set fast_reply   = yes # Don't ask for useless headers when replying/forwarding
-set askcc        = yes # Prompt for Cc before editing
-set askbcc       = yes # Prompt for Bcc before editing
-set fcc_attach   = yes # Save attachments with sent messages
-# set forward_format = # Fwd: format
-# set forward_decode = yes # decode when forwarding
-# set forward_decrypt = yes # decrypt PGP message, when mime_forward and !mime_fw_d
-# set forward_quote = yes # include message in forwards
-# set attribution = # Reply string
-set reply_to     = yes # Automatically use Reply-To:
-set reverse_name = yes # Reply as whomever message was to
+set edit_headers     = yes # May edit headers along with body
+set fast_reply       = yes # Don't ask for useless headers when replying/forwarding
+set askcc            = yes # Prompt for Cc before editing
+set askbcc           = yes # Prompt for Bcc before editing
+set fcc_attach       = yes # Save attachments with sent messages
+# set forward_format   = # Fwd: format
+# set forward_decode   = yes # decode when forwarding
+# set forward_decrypt  = yes # decrypt PGP message, when mime_forward and !mime_fw_d
+# set forward_quote    = yes # include message in forwards
+# set attribution      = # Reply string
+set reply_to         = yes # Automatically use Reply-To:
+set reverse_name     = yes # Reply as whomever message was to
 set reverse_realname = no  # Always reply using the value of 'realname'
-set include      = yes # Include original message when replying
-set text_flowed  = yes # Generate format=flowed emails (editor needs configured for this)
+set include          = yes # Include original message when replying
+set text_flowed      = yes # Generate format=flowed emails (editor needs configured for this)
 
 # Edit emails in a new tmux/screen window
 set background_edit = yes

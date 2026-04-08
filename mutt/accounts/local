@@ -6,8 +6,8 @@ set my_account = "local"
 source ~/.mutt/accounts/account.generic
 
 # Override defaults
-set from   = "$USER"
-set record = +$my_account/Sent
+set from     = "$USER"
+set record   = +$my_account/Sent
 
 # Do not need to mbsync this mailbox
 bind index o noop
