@@ -40,9 +40,9 @@ curl module mutt-bgedit:
 
 # NOTE: The git repo is huge so using curl is faster
 curl module nerd-fonts:
-  url: https://raw.githubusercontent.com/ryanoasis/nerd-fonts/4b528bf1b5ea638965bc9f634bd7a13301060548/10-nerd-font-symbols.conf
+  url: https://raw.githubusercontent.com/ryanoasis/nerd-fonts/refs/heads/master/10-nerd-font-symbols.conf
   filename: 10-nerd-font-symbols.conf
-  sha1: 7ff34b980e6416af11d9cda642dfbd3e98e280bf
+  sha1: cd970c45564e67d56014c6d18a8bdcf140a4e497
 
 git module redact_pass:
   url: https://git.zx2c4.com/password-store
