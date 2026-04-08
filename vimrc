@@ -344,7 +344,9 @@ let g:tagalong_additional_filetypes = ['xml', 'html', 'php']
 " tagbar:                  Source code browser using ctags                                        plugurl:preservim/tagbar type:opt " {{{3
 
 function LoadTagbar()
-    if ! filereadable('tags') | return 0 | endif
+    if ! filereadable('tags') && empty(glob('*.md')) == 1
+        return 0
+    endif
 
     packadd tagbar
 
