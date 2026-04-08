@@ -59,7 +59,7 @@ set mail_check_stats_interval = 60  # Calculate stats once a minute
 
 set sendmail_wait = 1 # do not block when sending emails
 
-set mark_old = yes # Mark old unread messages with an "O"
+set mark_old = no # Old unread messages are still "new"
 
 set edit_headers = yes # May edit headers along with body
 set fast_reply   = yes # Don't ask for useless headers when replying/forwarding
