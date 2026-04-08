@@ -413,6 +413,22 @@ elinks() { # Reuse existing elinks instance {{{2
     fi
 }
 
+rpmlist() { # List the contents of an RPM {{{2
+#
+# Arguments:
+#   $1: RPM to list
+#
+    rpm2cpio "$1" | cpio -t
+}
+
+rpmextract() { # Extract the contents of an RPM without installing {{{2
+#
+# Arguments:
+#   $1: RPM to extract
+#
+    rpm2cpio "$1" | cpio -idmv
+}
+
 # ping() # Wrap ping(1) to allow pinging by SSH Host entry {{{2
 #
 # Remove a ping alias in favor of this function
