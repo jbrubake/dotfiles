@@ -12,6 +12,7 @@ git module cdlog: # Better directory changing for Bash
   url: https://www.kylheku.com/git/cdlog
   move:
     README.md: README.cdlog.md
+  rev: 38e65cfbec05fc4baabed8a24d6692dfad78ba5c
 
 git module ls_colors:
   url: https://github.com/trapd00r/LS_COLORS
@@ -36,7 +37,7 @@ curl module mutt-bgedit:
   url: https://gitlab.com/muttmua/mutt/-/raw/master/contrib/bgedit-screen-tmux.sh
   filename: mutt-bgedit
   executable: mutt-bgedit
-  sha1: a41d6fbcfc7ea498679cf43e22b6d7c8f05e877f
+  sha1: 9320ae9acaff3ce99f530d3a99f5daaacda39edb
 
 # NOTE: The git repo is huge so using curl is faster
 curl module nerd-fonts:
