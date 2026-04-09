@@ -225,6 +225,9 @@ done
 # Find all non-hidden files in current and non-hidden
 # sub-directories and strip the leading "./"
 #
+# Ignore HOSTIGNORE if it doesn't exist
+[ ! -r "$HOSTIGNORE" ] && unset HOSTIGNORE
+
 # NOTE: Explicity include git templates so the directory itself is linked
 for f in config/git/templates $(find . \( ! -path '*/.*' \) -type f -print | sed -e 's#./##'); do
     # skip ignored files
