@@ -190,6 +190,9 @@ if ! test -d "$DESTDIR" && ! mkdir -p "$DESTDIR"; then
     logerror "FATAL: Could not create $DESTDIR. Exiting!"
     exit
 fi
+
+# Git templates must be handled differently
+GIT_TEMPLATE_DIR=config/git/templates
 # }
 # Replicate directory tree {
 #
@@ -198,7 +201,7 @@ for d in $(find . -mindepth 1 \( ! -path '*/.*' \) -type d -print | sed -e 's#./
     case "$d" in
         # Skip git templates as it must contain actual files to
         # prevent broken symlinks being copied to repositories
-        config/git/templates*) continue ;;
+        $GIT_TEMPLATE_DIR/*) continue ;;
 
         # Create ~/etc not ~/.etc
         etc*)
@@ -229,13 +232,13 @@ done
 [ ! -r "$HOSTIGNORE" ] && unset HOSTIGNORE
 
 # NOTE: Explicity include git templates so the directory itself is linked
-for f in config/git/templates $(find . \( ! -path '*/.*' \) -type f -print | sed -e 's#./##'); do
+for f in $GIT_TEMPLATE_DIR $(find . \( ! -path '*/.*' \) -type f -print | sed -e 's#./##'); do
     # skip ignored files
     grep -q "^$f$" $IGNOREFILE $HOSTIGNORE && continue 2 # continue OUTER LOOP
 
     # ignore files in git templates as the directory itself will be linked
     case "$f" in
-        config/git/templates/*) continue ;;
+        $GIT_TEMPLATE_DIR/*) continue ;;
     esac
 
     # get relative path to the file from its new location in DESTDIR
