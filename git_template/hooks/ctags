@@ -3,7 +3,6 @@ set -e
 
 
 command -v ctags >/dev/null || exit
-PATH="usr/local/bin:$PATH"
 trap 'rm -f "$$.tags"' EXIT
 git ls-files | \
     ctags -R -L - -f"$$.tags" --languages=-javascript,sql

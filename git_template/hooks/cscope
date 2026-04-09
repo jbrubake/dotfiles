@@ -3,7 +3,6 @@ set -e
 
 command -v cscope >/dev/null || exit
 
-PATH="usr/local/bin:$PATH"
 trap 'rm -f "$$.cscope.out"' EXIT
 git ls-files | \
     cscope -b -R -f"$$.cscope.out"
