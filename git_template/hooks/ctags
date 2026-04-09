@@ -1,5 +1,8 @@
 #!/bin/sh
 set -e
+
+
+command -v ctags >/dev/null || exit
 PATH="usr/local/bin:$PATH"
 trap 'rm -f "$$.tags"' EXIT
 git ls-files | \
