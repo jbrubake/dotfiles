@@ -4,7 +4,7 @@
 	excludesfile = ~/.cvsignore
     pager = git-pager
 [init]
-	templatedir = /home/jbrubake/.git_template
+	templatedir = /home/jbrubake/.config/git/templates
 	defaultBranch = master
 [user]
 	name  = "Jeremy Brubaker"

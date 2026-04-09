@@ -196,9 +196,9 @@ fi
 # Find all non-hidden sub-directories and strip the leading "./"
 for d in $(find . -mindepth 1 \( ! -path '*/.*' \) -type d -print | sed -e 's#./##'); do
     case "$d" in
-        # Skip git_templates as it must contain actual files to
+        # Skip git templates as it must contain actual files to
         # prevent broken symlinks being copied to repositories
-        git_template*) continue ;;
+        config/git/templates*) continue ;;
 
         # Create ~/etc not ~/.etc
         etc*)
@@ -225,14 +225,14 @@ done
 # Find all non-hidden files in current and non-hidden
 # sub-directories and strip the leading "./"
 #
-# NOTE: Explicity include git_template so the directory itself is linked
-for f in git_template $(find . \( ! -path '*/.*' \) -type f -print | sed -e 's#./##'); do
+# NOTE: Explicity include git templates so the directory itself is linked
+for f in config/git/templates $(find . \( ! -path '*/.*' \) -type f -print | sed -e 's#./##'); do
     # skip ignored files
-    grep -q "^$f$" "$IGNOREFILE" "$HOSTIGNORE" && continue 2 # continue OUTER LOOP
+    grep -q "^$f$" $IGNOREFILE $HOSTIGNORE && continue 2 # continue OUTER LOOP
 
-    # ignore files in git_template as the directory itself will be linked
+    # ignore files in git templates as the directory itself will be linked
     case "$f" in
-        git_template/*) continue ;;
+        config/git/templates/*) continue ;;
     esac
 
     # get relative path to the file from its new location in DESTDIR
