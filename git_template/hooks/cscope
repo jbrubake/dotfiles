@@ -1,9 +1,11 @@
 #!/bin/sh
+
 set -e
 
 command -v cscope >/dev/null || exit
 
 trap 'rm -f "$$.cscope.out"' EXIT
+
 git ls-files | \
     cscope -b -R -f"$$.cscope.out"
 mv "$$.cscope.out" "cscope.out"

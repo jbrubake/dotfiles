@@ -1,9 +1,11 @@
 #!/bin/sh
+
 set -e
 
-
 command -v ctags >/dev/null || exit
+
 trap 'rm -f "$$.tags"' EXIT
+
 git ls-files | \
     ctags -R -L - -f"$$.tags" --languages=-javascript,sql
 mv "$$.tags" "tags"

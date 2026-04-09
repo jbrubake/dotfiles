@@ -5,4 +5,3 @@
 "$GIT_DIR/hooks/ctags" 2>&1 >/dev/null &
 "$GIT_DIR/hooks/cscope" 2>&1 >/dev/null &
 
-
