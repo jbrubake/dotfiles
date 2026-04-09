@@ -1,4 +1,8 @@
 #!/bin/sh
-.git/hooks/ctags >/dev/null 2>&1 &
-.git/hooks/cscope >/dev/null 2>&1 &
+
+. "$(git --exec-path)/git-sh-setup"
+
+"$GIT_DIR/hooks/ctags" 2>&1 >/dev/null &
+"$GIT_DIR/hooks/cscope" 2>&1 >/dev/null &
+
 

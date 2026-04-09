@@ -1,5 +1,8 @@
 #!/bin/sh
+
+. "$(git --exec-path)/git-sh-setup"
+
 case "$1" in
-    rebase) exec .git/hooks/post-merge ;;
+    rebase) exec "$GIT_DIR/hooks/post-merge" ;;
 esac
 
