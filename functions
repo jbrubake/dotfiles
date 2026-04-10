@@ -536,3 +536,38 @@ __gethost() { # Call gethost with the last argument passed {{{2
     printf '%s %s\n' "$options" "$host"
 }
 
+# Bash only functions {{{1
+#
+if [ -n "$BASH_VERSION" ]; then
+
+    # rename_fn {{{2
+    #
+    # Rename a function so it can be wrapped by a function with the same name.
+    # The old name is no longer available after calling this function.
+    #
+    # Usage: rename_fn OLD_NAME NEW_NAME
+    #
+    # Example:
+    #
+    #     $ hello() { echo Hello world; }
+    #     $ rename_fn hello hello_orig
+    #     $ hello
+    #     foo: command not found
+    #     $ hello_orig
+    #     Hello world
+    #     $ hello() { echo Hi; hello_orig; }
+    #     $ hello
+    #     Hi
+    #     Hello world
+    #
+    # Taken from https://stackoverflow.com/a/34177402
+    #
+    rename_fn()
+    {
+        local a="$(declare -f "$1")" &&
+            eval "function $2 ${a#*"()"}" &&
+            unset -f "$1"
+    }
+
+fi
+
