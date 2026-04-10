@@ -283,7 +283,7 @@ JUST_LINK_REGEX=$(list2regex "$JUST_LINK")
 # Replicate directory tree {{{1
 #
 # Find all non-hidden sub-directories and strip the leading "./"
-for d in $(find . -mindepth 1 \( ! -path '*/.*' \) -type d -print | sed -e 's#./##'); do
+for d in $(find . -mindepth 1 ! -path './.*' -type d | cut -c3-); do
     # Do not create directories that must be directly linked
     isjustlinkdir "$d" && continue
 
@@ -308,7 +308,7 @@ done
 # sub-directories and strip the leading "./"
 #
 # NOTE: Explicity include $JUST_LINK so those directories are also linked
-for f in $JUST_LINK $(find . \( ! -path '*/.*' \) -type f -print | sed -e 's#./##'); do
+for f in $JUST_LINK $(find . -mindepth 1 ! -path './.*' -type f | cut -c3-); do
     # skip ignored files
     isignored "$f" && continue
 
