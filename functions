@@ -86,19 +86,24 @@ if command -v todo.sh >/dev/null || command -v rpg-cli >/dev/null; then
             pushd) builtin pushd "$@"; r=$? ;;
         esac
 
-        # Run overloads only if we are in a new directory
-        if [ "$r" = 0 -a "$oldpwd" != "$(pwd)" ]; then
-            if [ "$RPG_CLI_CD_OVERLOAD" = 1 ] && ! atwork 2>/dev/null; then
-                rpg-cli cd -f .
-                rpg-cli battle
-            fi
+        # If the command was successful we may be in a new directory
+        if [ "$r" = 0 ]; then
+            # Run overloads only if we are in a new directory
+            if [ "$r" = 0 -a "$oldpwd" != "$(pwd)" ]; then
+                if [ "$RPG_CLI_CD_OVERLOAD" = 1 ] && ! atwork 2>/dev/null; then
+                    rpg-cli cd -f .
+                    rpg-cli battle
+                fi
 
-            if [ "$TODOSH_CD_OVERLOAD" = 1 ]; then
-                todo.sh --local ls
+                if [ "$TODOSH_CD_OVERLOAD" = 1 ]; then
+                    todo.sh --local ls
+                fi
             fi
+        else
+            # The command failed so return its exit value
+            # (which is only guaranteed to != 0)
+            return "$r"
         fi
-
-        return "$r"
     }
 
     cd()    { _cd_overload cd    "$@"; }
