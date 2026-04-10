@@ -75,16 +75,15 @@ fi
 
 # Overload cd and friends {{{1
 #
+[ -n "$BASH_VERSION" -a -r "$cdlog_path" ] && . "$cdlog_path"
+
 if command -v todo.sh >/dev/null || command -v rpg-cli >/dev/null; then
     _cd_overload() {
         cmd=$1; shift
         oldpwd=$(pwd)
 
-        case $cmd in
-            cd)    builtin cd "$@"; r=$? ;;
-            popd)  builtin popd "$@"; r=$? ;;
-            pushd) builtin pushd "$@"; r=$? ;;
-        esac
+        # Run the actual command, saving $?
+        $cmd "$@"; r=$?
 
         # If the command was successful we may be in a new directory
         if [ "$r" = 0 ]; then
@@ -106,9 +105,19 @@ if command -v todo.sh >/dev/null || command -v rpg-cli >/dev/null; then
         fi
     }
 
-    cd()    { _cd_overload cd    "$@"; }
-    pushd() { _cd_overload pushd "$@"; }
-    popd()  { _cd_overload popd  "$@"; }
+    # Create aliases to use the overload function
+       alias cd='_cd_overload "builtin cd"'
+    alias pushd='_cd_overload "builtin pushd"'
+     alias popd='_cd_overload "builtin popd"'
+
+    # Create additional aliases if cdlog.sh is availabled
+    if command -v cdlog.chdir >/dev/null; then
+         alias cd='_cd_overload "cdlog.chdir -P"'
+         alias pd='_cd_overload "cdlog.pop"'
+         alias cs='_cd_overload "cdlog.rot"'
+        alias mcd='_cd_overload "cdlog.mcd"'
+        alias mcs='_cd_overload "cdlog.mcd -s"'
+    fi
 fi
 
 # Miscellaneous {{{1
