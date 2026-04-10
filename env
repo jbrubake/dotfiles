@@ -535,6 +535,12 @@ if have todo.sh; then
     export TODOSH_DEFAULT_ACTION='view project'
 fi
 
+# cdlog.sh {{{2
+#
+export cdlog_path=$SHELL_LIBDIR/cdlog.sh
+export cdlog_autorecover=n # Do not restore cdlog session on login (default)
+export cdlog_sess_dir=$XDG_CACHE_HOME/cdlog # Where to store cdlog sessions
+
 # Move things into XDG directories {{{2
 
 have elinks && export ELINKS_CONFDIR=$XDG_CONFIG_HOME/elinks
