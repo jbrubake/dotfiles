@@ -176,6 +176,29 @@ list2regex() {
     '
 }
 
+# isignored: Return true if path should be ignored {{{2
+#
+# Return true if $1 ends in $TMPL_EXT or is found in $IGNOREFILE or $HOSTIGNORE
+#
+isignored() {
+    case $1 in
+        *.$TMPL_EXT) return 0 ;;
+    esac
+
+    local f
+    for f in "$IGNOREFILE" "$HOSTIGNORE"; do
+        [ -r "$f" ] || continue
+
+        while read -r regex; do
+            case $regex in
+                \#*) continue ;;
+            esac
+            printf '%s' "$1" | grep -qE "^$regex$" && return 0
+        done <"$f"
+    done
+    return 1
+}
+
 # adddot: Prepend a '.' unless ignored by NO_DOT {{{2
 #
 # Adds a leading '.' to the path in $1 unless the first element of that path is
@@ -266,13 +289,10 @@ done
 # Find all non-hidden files in current and non-hidden
 # sub-directories and strip the leading "./"
 #
-# Ignore HOSTIGNORE if it doesn't exist
-[ ! -r "$HOSTIGNORE" ] && unset HOSTIGNORE
-
 # NOTE: Explicity include git templates so the directory itself is linked
 for f in $GIT_TEMPLATE_DIR $(find . \( ! -path '*/.*' \) -type f -print | sed -e 's#./##'); do
     # skip ignored files
-    grep -q "^$f$" $IGNOREFILE $HOSTIGNORE && continue 2 # continue OUTER LOOP
+    isignored "$f" && continue
 
     # ignore files in git templates as the directory itself will be linked
     case "$f" in
