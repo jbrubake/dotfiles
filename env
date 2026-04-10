@@ -448,7 +448,7 @@ fi
 #
 # locate(1) {{{2
 if have locate; then
-    export LOCATEDB=$HOME/var/lib/locate/locate.db
+    export LOCATEDB=$XDG_STATE_HOME/locate/locate.db
     mkdir -p "$(dirname "$LOCATEDB")"
 fi
 
