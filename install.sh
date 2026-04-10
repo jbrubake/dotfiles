@@ -1,5 +1,4 @@
 #!/bin/sh
-# vim: foldmethod=marker foldmarker={,}
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,9 +15,9 @@
 #
 # Copyright 2014 Jeremy Brubaker <jbru362@gmail.com>
 #
-# Documentation {
+# Documentation {{{1
 #
-# Manpage {
+# Manpage {{{2
 # NAME:
 #      install.sh
 #
@@ -40,8 +39,8 @@
 #
 # BUGS:
 #     - None so far
-#}
-print_help() {
+
+print_help() { # {{{2
     cat <<EOF
 Usage: install.sh [OPTION]
 Install symlinks into DEST (default is $HOME).  
@@ -53,21 +52,23 @@ Install symlinks into DEST (default is $HOME).
  -h            display this help and exit
 EOF
 }
-#}
-logmsg () {
-    # Output messages
-    #
-    # Depends on $VERBOSE
 
-    test $VERBOSE = 'yes' && echo "$*"
+# Functions {{{1
+#
+# logmsg: Output messages {{{2
+#
+# Depends on $VERBOSE
+logmsg () {
+    [ $VERBOSE = yes ] && echo "$*"
 }
+# logerror: Output error messages {{{2
+#
 logerror () {
-    # Output error messages
 
     echo "$*" >&2
 }
-CT_FindRelativePath() {
-# Returns relative path to $2 from $1
+
+# CT_FindRelativePath: Returns relative path to $2 from $1 {{{2
 #
 # This function was taken from a Stack Overflow answer
 #
@@ -82,14 +83,15 @@ CT_FindRelativePath() {
 # as absolute paths
 #
 # Jeremy Brubaker, November 2018
+CT_FindRelativePath() {
 
-    if test -e $1; then
+    if [ -e $1 ]; then
         local insource=$( cd $1; echo `pwd` )
     else
         local insource=$1
     fi
 
-    if test -e $2; then
+    if [ -e $2 ]; then
         local intarget=$( cd $2; echo `pwd` )
     else
         local intarget=$2
@@ -149,12 +151,13 @@ CT_FindRelativePath() {
 
     return 0
 }
-# Process options {
+
+# Process options {{{1
 #
 # Flag Variables
 #
-FORCE='no'
-VERBOSE='no'
+FORCE=no
+VERBOSE=no
 DESTDIR="$HOME"
 HOST=$( hostname )
 IGNOREFILE=.ignore  # list of files that shouldn't be linked
@@ -164,37 +167,37 @@ DRY_RUN=
 while getopts "n:fd:Vth" opt; do
     case $opt in
         n) HOST=$OPTARG; HOSTIGNORE="$IGNOREFILE.$h" ;;
-        f) FORCE='yes' ;;
+        f) FORCE=yes ;;
         d) DESTDIR=$OPTARG ;;
-        V) VERBOSE='yes' ;;
-        t) DRY_RUN='echo' ;;
+        V) VERBOSE=yes ;;
+        t) DRY_RUN=echo ;;
         h) print_help; exit ;;
         *) print_help; exit ;;
     esac
 done
 
 # Convert flag variables to ln(1) and mkdir options
-if test $VERBOSE = 'yes'; then
-    verbose='-v' # ln(1) verbose flag
+if [ $VERBOSE = yes ]; then
+    verbose=-v # mkdir(1) and ln(1) verbose flag
 else
     verbose=
 fi
 
-if test $FORCE = 'yes'; then
-    force='-f'
+if [ $FORCE = yes ]; then
+    force=-f # ln(1) force flag
 else
-    force='-b' # ln(1) backup
+    force=-b # ln(1) backup flag
 fi
 
-if ! test -d "$DESTDIR" && ! mkdir -p "$DESTDIR"; then
+if ! [ -d "$DESTDIR" ] && ! mkdir -p "$DESTDIR"; then
     logerror "FATAL: Could not create $DESTDIR. Exiting!"
     exit
 fi
 
 # Git templates must be handled differently
 GIT_TEMPLATE_DIR=config/git/templates
-# }
-# Replicate directory tree {
+
+# Replicate directory tree {{{1
 #
 # Find all non-hidden sub-directories and strip the leading "./"
 for d in $(find . -mindepth 1 \( ! -path '*/.*' \) -type d -print | sed -e 's#./##'); do
@@ -213,8 +216,8 @@ for d in $(find . -mindepth 1 \( ! -path '*/.*' \) -type d -print | sed -e 's#./
         *) $DRY_RUN mkdir -p $verbose "$DESTDIR/.$d" ;;
     esac
 done
-# }
-# Link files {
+
+# Link files {{{1
 #  following these rules:
 #
 # - skip files in .ignore and .ignore.<host>
@@ -245,7 +248,7 @@ for f in $GIT_TEMPLATE_DIR $(find . \( ! -path '*/.*' \) -type f -print | sed -e
     linkpath=$( CT_FindRelativePath $DESTDIR/$( dirname $f) $( dirname $f ) )
 
     # create the link name and make it hidden
-    if test $( dirname $f ) = '.'; then
+    if [ $( dirname $f ) = '.' ]; then
         linkname=".$( basename $f )"
     else
         linkname=".$( dirname $f )/$( basename $f )"
@@ -257,15 +260,15 @@ for f in $GIT_TEMPLATE_DIR $(find . \( ! -path '*/.*' \) -type f -print | sed -e
     esac
 
     # Test if an already existing link points to the right file already
-    if test -L "$DESTDIR/$linkname"; then
-        if test $(realpath $(readlink -f -- "$DESTDIR/$linkname")) = \
-                $(realpath $f); then
+    if [ -L "$DESTDIR/$linkname" ]; then
+        if [ $(realpath $(readlink -f -- "$DESTDIR/$linkname")) = \
+                $(realpath $f) ]; then
             logmsg "${linkname} is already linked. Skipping"
             continue
         fi
     fi
 
-    if test $FORCE = 'no' && test -e "$DESTDIR/$linkname~"; then
+    if [ $FORCE = no -a -e "$DESTDIR/$linkname~" ]; then
         # skip if -f not specified and backup exists
         logmsg "Backup ${linkname}~ already exists. Skipping"
         continue
@@ -274,5 +277,4 @@ for f in $GIT_TEMPLATE_DIR $(find . \( ! -path '*/.*' \) -type f -print | sed -e
     # make links
     $DRY_RUN ln -s $verbose $force "$linkpath/$(basename $f)" "$DESTDIR/$linkname"
 done
-# }
 
