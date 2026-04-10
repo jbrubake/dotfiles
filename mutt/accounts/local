@@ -1,6 +1,6 @@
 # vim: filetype=muttrc
 #
-# Configure jbru362@gmail.com account
+# Configure local account
 
 set my_account = "local"
 source ~/.mutt/accounts/account.generic
