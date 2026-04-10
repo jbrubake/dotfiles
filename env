@@ -116,6 +116,9 @@ fi
 [ -r "$XDG_CONFIG_HOME/user-dirs.dirs" ] &&
     . "$XDG_CONFIG_HOME/user-dirs.dirs"
 
+# This is not a real XDG variable but it keeps things consistent
+export XDG_LIB_HOME=$HOME/lib
+
 # Add flatpak to XDG_DATA_DIRS
 #
 export XDG_DATA_DIRS=${XDG_DATA_DIRS:-/usr/local/share:/usr/share}
@@ -325,7 +328,7 @@ fi
 # Development {{{1
 # Perl {{{2
 #
-perl_dir=$HOME/lib/perl5
+perl_dir=$XDG_LIB_HOME/perl5
 if [ -d "$perl_dir" ]; then
     pathadd "$perl_dir/bin"
     export PERL5LIB=$perl_dir/${PERL5LIB:+:${PERL5LIB}}
@@ -349,7 +352,7 @@ fi
 #
 # Sigh. Python can't find user site-packages because I refuse to use
 # .local or whatever other silly crap it expects
- export PYTHONPATH=$HOME/lib/python3/site-packages
+ export PYTHONPATH=$XDG_LIB_HOME/python3/site-packages
 [ -d "$PYTHONPATH/bin" ] && pathadd "$PYTHONPATH/bin"
 
 # Rust {{{2
