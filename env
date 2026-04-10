@@ -119,6 +119,9 @@ fi
 # This is not a real XDG variable but it keeps things consistent
 export XDG_LIB_HOME=$HOME/lib
 
+# Root directory for any of my shell libraries
+export SHELL_LIBDIR=$XDG_LIB_HOME/shell
+
 # Add flatpak to XDG_DATA_DIRS
 #
 export XDG_DATA_DIRS=${XDG_DATA_DIRS:-/usr/local/share:/usr/share}
