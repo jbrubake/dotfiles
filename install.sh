@@ -166,7 +166,7 @@ DRY_RUN=
 
 while getopts "n:fd:Vth" opt; do
     case $opt in
-        n) HOST=$OPTARG; HOSTIGNORE="$IGNOREFILE.$h" ;;
+        n) HOSTIGNORE=$IGNOREFILE.$OPTARG ;;
         f) FORCE=yes ;;
         d) DESTDIR=$OPTARG ;;
         V) VERBOSE=yes ;;
