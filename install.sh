@@ -15,6 +15,12 @@
 #
 # Copyright 2014 Jeremy Brubaker <jbru362@gmail.com>
 #
+# Files and directories that are not dotfiles
+#
+NO_DOT='
+    etc
+    '
+
 # Documentation {{{1
 #
 # Manpage {{{2
@@ -152,6 +158,37 @@ CT_FindRelativePath() {
     return 0
 }
 
+# list2regex: Convert lists into grep ERE # {{{2
+#
+# Converts the list in $1 into an alternation regex
+#
+# LIST='foo bar baz'
+# list2regex "$LIST" => ^\<foo\>|\<bar\>|\<baz\>
+#
+list2regex() {
+    printf '%s' "$1" | tr -s '\n' ' ' | sed '
+        s/^[[:blank:]]*//
+        s/[[:blank:]]*$//
+        s/[[:blank:]][[:blank:]]*/|/g
+        s/^/^\\</
+        s/$/\\>/
+        s/|/\\>|\\</g
+    '
+}
+
+# adddot: Prepend a '.' unless ignored by NO_DOT {{{2
+#
+# Adds a leading '.' to the path in $1 unless the first element of that path is
+# found in $NO_DOT
+#
+adddot() {
+    if ! printf '%s' "$1" | grep -qE "$NO_DOT_REGEX"; then
+        printf '.%s' "$1"
+    else
+        printf '%s' "$1"
+    fi
+}
+
 # Process options {{{1
 #
 # Flag Variables
@@ -194,6 +231,9 @@ if ! [ -d "$DESTDIR" ] && ! mkdir -p "$DESTDIR"; then
     exit
 fi
 
+# Convert lists to regex
+NO_DOT_REGEX=$(list2regex "$NO_DOT")
+
 # Git templates must be handled differently
 GIT_TEMPLATE_DIR=config/git/templates
 
@@ -201,20 +241,15 @@ GIT_TEMPLATE_DIR=config/git/templates
 #
 # Find all non-hidden sub-directories and strip the leading "./"
 for d in $(find . -mindepth 1 \( ! -path '*/.*' \) -type d -print | sed -e 's#./##'); do
+    # Skip git templates as it must contain actual files to
+    # prevent broken symlinks being copied to repositories
     case "$d" in
-        # Skip git templates as it must contain actual files to
-        # prevent broken symlinks being copied to repositories
         $GIT_TEMPLATE_DIR/*) continue ;;
-
-        # Create ~/etc not ~/.etc
-        etc*)
-            $DRY_RUN mkdir -p $verbose "$DESTDIR/$d"
-            continue
-            ;;
-
-        # Duplicate everything else
-        *) $DRY_RUN mkdir -p $verbose "$DESTDIR/.$d" ;;
     esac
+
+    # Make dot directory unless listed in NO_DOT
+    d=$(adddot "$d")
+    $DRY_RUN mkdir -p $verbose "$DESTDIR/.$d" ;;
 done
 
 # Link files {{{1
@@ -247,17 +282,7 @@ for f in $GIT_TEMPLATE_DIR $(find . \( ! -path '*/.*' \) -type f -print | sed -e
     # get relative path to the file from its new location in DESTDIR
     linkpath=$( CT_FindRelativePath $DESTDIR/$( dirname $f) $( dirname $f ) )
 
-    # create the link name and make it hidden
-    if [ $( dirname $f ) = '.' ]; then
-        linkname=".$( basename $f )"
-    else
-        linkname=".$( dirname $f )/$( basename $f )"
-    fi
-
-    # ~/etc is not a dot directory
-    case "$f" in
-        etc/*) linkname="$( dirname $f )/$( basename $f )" ;;
-    esac
+    linkname=$(adddot "$f")
 
     # Test if an already existing link points to the right file already
     if [ -L "$DESTDIR/$linkname" ]; then
