@@ -1,0 +1,16 @@
+#!/bin/bash
+#
+# Source - https://stackoverflow.com/a/3464399
+# Posted by Cascabel, modified by community. See post 'Timeline' for change history
+# Retrieved 2026-04-09, License - CC BY-SA 4.0
+#
+# Run local hooks first
+if [ -x "$0.local" ]; then
+    "$0.local" "$@" || exit $?
+fi
+
+# Then run tracked hooks
+if [ -x ".tracked-hooks/$(basename "$0")" ]; then
+    ".tracked-hooks/$(basename "$0")" "$@" || exit $?
+fi
+
