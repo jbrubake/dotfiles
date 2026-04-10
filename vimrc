@@ -111,11 +111,11 @@ function LoadGit()
             execute 'packadd ' . s:p
         endfor
 
-        if !empty(g:fugitive_gitlab_domains) " Set in private config
+        if !empty(get(g:, 'fugitive_gitlab_domains', "")) " Set in private config
             packadd fugitive-gitlab
         endif
 
-        if !empty(g:fugitive_gitea_domains) " Set in private config
+        if !empty(get(g:, 'fugitive_gitea_domains', "")) " Set in private config
             packadd fugitive-gitea
         endif
     endif
