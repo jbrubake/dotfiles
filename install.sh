@@ -62,6 +62,12 @@ PRIVATE_VARS=private.yaml
 #
 #     Expand and install the listed template files
 #
+#     ./install.sh expand [FILE.template...]
+#
+#     Successively open each listed template and its expanded version in
+#     vimdiff. The intent is to facilitate changes made in the expanded file
+#     back into VCS
+#
 # BUGS:
 #     - None so far
 
@@ -84,6 +90,11 @@ installation. Supported SUBCOMMANDS are:
     ./install.sh expand [FILE.template...]
 
     Expand and install the listed template files
+
+    ./install.sh expand [FILE.template...]
+
+    Successively open each listed template and its expanded version in vimdiff.
+    The intent is to facilitate changes made in the expanded file back into VCS
 EOF
 }
 
@@ -281,6 +292,27 @@ expand_template() {
     fi
 }
 
+# diff_template: Use vimdiff to merge template and destination {{{2
+#
+# Opens the template in $1 and its expanded version in vimdiff
+#
+# The purpose is to allow a user to merge changes made in the expanded version
+# back into VCS
+#
+diff_template() {
+    src=$1
+
+    if ! [ -r "$src" ]; then
+        logerror "Cannot find template: $src: Skipping"
+        return 1
+    fi
+
+    # Convert src to dest by removing TMPL_EXT and converting to dotfile
+    dest=$(printf '%s' "$(adddot "$src")" | sed "s/.$TMPL_EXT$//")
+
+    vimdiff "$src" "$DESTDIR/$dest"
+}
+
 # Process options {{{1
 #
 # Flag Variables
@@ -334,6 +366,13 @@ case $1 in
         shift
         for f in "$@"; do
             expand_template "$f"
+        done
+        exit
+        ;;
+    diff)
+        shift
+        for f in "$@"; do
+            diff_template "$f"
         done
         exit
         ;;
