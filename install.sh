@@ -21,6 +21,12 @@ NO_DOT='
     etc
     '
 
+# Directories that should be linked directly
+#
+JUST_LINK='
+    config/git/templates
+    '
+
 # Documentation {{{1
 #
 # Manpage {{{2
@@ -212,6 +218,22 @@ adddot() {
     fi
 }
 
+# isjustlinkdir: {{{2
+#
+# Return true if $1 exactly matches a path in $JUST_LINK
+#
+isjustlinkdir() {
+    printf '%s' "$1" | grep -qE "$JUST_LINK_REGEX"
+}
+
+# isjustlinkfile: {{{2
+#
+# Return true if $1 is a child of a directory in $JUST_LINK
+#
+isjustlinkfile() {
+    printf '%s' "$1" | grep -qE "$JUST_LINK_REGEX/.*"
+}
+
 # Process options {{{1
 #
 # Flag Variables
@@ -256,19 +278,14 @@ fi
 
 # Convert lists to regex
 NO_DOT_REGEX=$(list2regex "$NO_DOT")
-
-# Git templates must be handled differently
-GIT_TEMPLATE_DIR=config/git/templates
+JUST_LINK_REGEX=$(list2regex "$JUST_LINK")
 
 # Replicate directory tree {{{1
 #
 # Find all non-hidden sub-directories and strip the leading "./"
 for d in $(find . -mindepth 1 \( ! -path '*/.*' \) -type d -print | sed -e 's#./##'); do
-    # Skip git templates as it must contain actual files to
-    # prevent broken symlinks being copied to repositories
-    case "$d" in
-        $GIT_TEMPLATE_DIR/*) continue ;;
-    esac
+    # Do not create directories that must be directly linked
+    isjustlinkdir "$d" && continue
 
     # Make dot directory unless listed in NO_DOT
     d=$(adddot "$d")
@@ -289,15 +306,13 @@ done
 # Find all non-hidden files in current and non-hidden
 # sub-directories and strip the leading "./"
 #
-# NOTE: Explicity include git templates so the directory itself is linked
-for f in $GIT_TEMPLATE_DIR $(find . \( ! -path '*/.*' \) -type f -print | sed -e 's#./##'); do
+# NOTE: Explicity include $JUST_LINK so those directories are also linked
+for f in $JUST_LINK $(find . \( ! -path '*/.*' \) -type f -print | sed -e 's#./##'); do
     # skip ignored files
     isignored "$f" && continue
 
-    # ignore files in git templates as the directory itself will be linked
-    case "$f" in
-        $GIT_TEMPLATE_DIR/*) continue ;;
-    esac
+    # ignore files in directories that will be directly linked
+    isjustlinkfile "$f" && continue
 
     # get relative path to the file from its new location in DESTDIR
     linkpath=$( CT_FindRelativePath $DESTDIR/$( dirname $f) $( dirname $f ) )

@@ -10,7 +10,6 @@
 
 - Improve the installation script
 - Backup files to a directory instead of renaming them (easier to delete/recover)
-- Make the `git_template` and `etc` hacks generic
 - put Firefox configuration in a standard directory that the user can manually
     link to
 
