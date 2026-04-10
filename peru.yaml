@@ -1,5 +1,5 @@
 imports: 
-  cdlog: ./
+  cdlog: lib/shell
   ls_colors: ./
   gdb-dashboard: ./
   irssi-colors-solarized: ./irssi

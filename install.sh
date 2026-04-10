@@ -19,6 +19,7 @@
 #
 NO_DOT='
     etc
+    lib
     '
 
 # Directories that should be linked directly
