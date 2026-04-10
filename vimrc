@@ -1188,9 +1188,11 @@ let &t_SI = "\<Esc>[6 q" " Insert mode (bar)
 let &t_SR = "\<Esc>[4 q" " Replace mode (underline)
 let &t_EI = "\<Esc>[2 q" " Normal mode (block)
 
-" Local Vimrc {{{1
+" Private and Local Vimrc {{{1
 " ===========
-if filereadable(expand("~/etc/vimrc.local"))
-    source ~/etc/vimrc.local
-endif
+for f in ["~/etc/vimrc", "~/.vimrc.local"]
+    if filereadable(expand(f))
+        execute 'source ' . f
+    endif
+endfor
 
