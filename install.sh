@@ -313,6 +313,7 @@ JUST_LINK_REGEX=$(list2regex "$JUST_LINK")
 # Replicate directory tree {{{1
 #
 # Find all non-hidden sub-directories and strip the leading "./"
+logmsg 'Creating destination directory tree...'
 for d in $(find . -mindepth 1 ! -path './.*' -type d | cut -c3-); do
     # Do not create directories that must be directly linked
     isjustlinkdir "$d" && continue
@@ -336,7 +337,7 @@ done
 #
 # Find all non-hidden files in current and non-hidden
 # sub-directories and strip the leading "./"
-#
+logmsg 'Creating links...'
 # NOTE: Explicity include $JUST_LINK so those directories are also linked
 for f in $JUST_LINK $(find . -mindepth 1 ! -path './.*' -type f | cut -c3-); do
     # skip ignored files
@@ -371,6 +372,7 @@ done
 
 # Expand templates {{{1
 #
+logmsg 'Expanding template files...'
 if ! [ -r "$PRIVATE_VARS" ]; then
     logerror "Cannot find variables file: $PRIVATE_VARS: Aborting template expansion!"
     exit 1
