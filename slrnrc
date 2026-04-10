@@ -1,6 +1,7 @@
 % vim: filetype=slang
 
 % Get authentication data
+% (formatted as: nnrpaccess snews://URL USERNAME PASSWORD)
 include .slrn/auth.txt
 
 % Configure t-prot
