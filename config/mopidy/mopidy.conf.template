@@ -1,25 +1,28 @@
+# TODO: Figure out how to pull the secrets out and then do git magic to
+# TODO: either remove the file from history or just remove the secrets
+# TODO: Also remove the commit that added this comment
+#
 # For further information about options in this file see:
 #   https://docs.mopidy.com/
 #
 # run `mopidy config` to see the current effective config and
-
+#
+# NOTE: mopidy uses XDG_{CACHE,CONFIG,DATA}_DIR in lieu of XDG_{CACHE,CONFIG,DATA}_HOME
+#
 [core]
 cache_dir = $XDG_CACHE_DIR/mopidy
 config_dir = $XDG_CONFIG_DIR/mopidy
 data_dir = $XDG_DATA_DIR/mopidy
 restore_state = true
 
-[logging]
-format = %(levelname)-8s %(asctime)s [%(process)d:%(threadName)s] %(name)s\n  %(message)s
-color = true
-
 [audio]
 output = tee name=t ! queue ! autoaudiosink t. ! queue ! audio/x-raw,rate=44100,channels=2,format=S16LE ! udpsink host=localhost port=5555
 
 [file]
 enabled = true
+# Directory      | Display name
 media_dirs = 
-  $XDG_MUSIC_DIR|Music
+  $XDG_DATA_DIR/music | Music
 excluded_file_extensions = 
   .directory
   .html
@@ -31,16 +34,23 @@ excluded_file_extensions =
   .png
   .txt
   .zip
-follow_symlinks = false
+follow_symlinks = true
 
 [http]
-enabled = false
+enabled = true
+# hostname = localhost
+# port = 6680
+# ZeroConf service name
+zeroconf = Mopidy on $hostname
+# mopidy: menu of installed apps
+# youtube: control Mopidy-YouTube
+default_app = mopidy
 
 [m3u]
 enabled = true
-base_dir = $XDG_MUSIC_DIR
+playlists_dir = $XDG_DATA_DIR/music/playlists
+base_dir = $XDG_DATA_DIR/music
 default_extension = .m3u8
-playlists_dir =
 
 [softwaremixer]
 enabled = true
@@ -55,24 +65,68 @@ protocols =
   rtmps
   rtsp
 
-[mpd]
+[mpd] # install: Mopidy-MPD | https://github.com/mopidy/mopidy-mpd
 enabled = true
+# hostname = localhost
+# port = 6600
 
-[pandora]
+[pandora] # install: Mopidy-Pandora | https://github.com/mopidy/mopidy-pandora
 enabled = true
 api_host = tuner.pandora.com/services/json/
+# These values are documented at
+#   https://6xq.net/pandora-apidoc/json/partners/#partners
 partner_encryption_key = 6#26FRL$ZWD
 partner_decryption_key = R=U!LH$O2B#
 partner_username = android
 partner_password = AC7IBG09A3DTSYM4R41UJWL07VLN8JI7
 partner_device = android-generic
-username = PANDORA_USERNAME
-password = PANDORA_PASSWORD
+username = {{mopidy.pandora_username|default('USERNAME')}}
+password = {{mopidy.pandora_password|default('PASSWORD')}}
 
-[tunein]
+[tunein] # install: Mopidy-TuneIn | https://github.com/kingosticks/mopidy-tunein
 enabled = true
 
-[ytmusic]
+[ytmusic] # install: Mopidy-YTMusic | https://github.com/OzymandiasTheGreat/mopidy-ytmusic
+enabled = false
+auth_json = $XDG_CONFIG_DIR/mopidy/ytmusic_auth.json
+
+[youtube] # install: Mopidy-YouTube | https://github.com/natumbri/mopidy-youtube
+# Requires yt-dlp or compatible package
 enabled = true
-auth_json = /home/jbrubake/.config/mopidy/ytmusic_auth.json
+allow_cache = true
+youtube_dl_package = yt_dlp
+youtube_api_key = $XDG_CONFIG_DIR/mopidy/ytmusic_auth.json
+autoplay_enabled = true
+strict_autoplay = false
+# no limit
+max_autoplay_length =
+
+[local] # install: Mopidy-Local | https://github.com/mopidy/mopidy-local
+# Run `mopidy local scan` to update the library
+enabled = false
+media_dir = $XDG_DATA_DIR/music
+scan_follow_symlinks = true
+excluded_file_extensions = 
+  .directory
+  .html
+  .jpeg
+  .jpg
+  .log
+  .nfo
+  .pdf
+  .png
+  .txt
+  .zip
+
+[soundcloud] # install: Mopidy-SoundCloud | https://github.com/mopidy/mopidy-soundcloud
+enabled = false
+auth_token = {{mopidy.soundcloud_token|default('TOKEN')}}
+
+[podcast] # install: Mopidy-Podcast | https://github.com/tkem/mopidy-podcast
+enabled = true
+# NOTE: Mopidy-Podcast hardcodes browse_root to start in <mopidy-config-dir>/podcast
+browse_root = $XDG_DATA_DIR/music/podcasts.opml
+# browser_root = ../../../share/music/podcasts.opml
+browse_order = desc
+lookup_order = desc
 
