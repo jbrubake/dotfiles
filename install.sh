@@ -39,7 +39,7 @@ PRIVATE_VARS=private.yaml
 #      install.sh
 #
 # SYNOPSIS:
-#     install.sh [OPTION] 
+#     install.sh [OPTION] [SUBCOMMAND]
 #         (see print_help() below for more)
 #
 # DESCRIPTION:
@@ -54,19 +54,36 @@ PRIVATE_VARS=private.yaml
 #     All top-level directories and files have a '.' prepended to
 #     their name.
 #
+# SUBCOMMANDS:
+#     The optional SUBCOMMAND can be used to execute tasks short of a full
+#     installation. Supported SUBCOMMANDS are:
+#
+#     ./install.sh expand [FILE.template...]
+#
+#     Expand and install the listed template files
+#
 # BUGS:
 #     - None so far
 
 print_help() { # {{{2
     cat <<EOF
-Usage: install.sh [OPTION]
+Usage: install.sh [OPTION] [SUBCOMMAND]
+
 Install symlinks into DEST (default is $HOME).  
+
  -n HOST       use HOST as the hostname
  -f            overwrite existing files and links
  -d DEST       install to DEST instead of $HOME
  -V            explain what is being done
  -t            print what would be done
  -h            display this help and exit
+
+The optional SUBCOMMAND can be used to execute tasks short of a full
+installation. Supported SUBCOMMANDS are:
+
+    ./install.sh expand [FILE.template...]
+
+    Expand and install the listed template files
 EOF
 }
 
@@ -287,6 +304,8 @@ while getopts "n:fd:Vth" opt; do
         *) print_help; exit ;;
     esac
 done
+shift $((OPTIND-1))
+OPTIND=1
 
 # Convert flag variables to ln(1) and mkdir options
 if [ $VERBOSE = yes ]; then
@@ -309,6 +328,16 @@ fi
 # Convert lists to regex
 NO_DOT_REGEX=$(list2regex "$NO_DOT")
 JUST_LINK_REGEX=$(list2regex "$JUST_LINK")
+
+case $1 in
+    expand)
+        shift
+        for f in "$@"; do
+            expand_template "$f"
+        done
+        exit
+        ;;
+esac
 
 # Replicate directory tree {{{1
 #
