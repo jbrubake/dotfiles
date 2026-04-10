@@ -1,8 +1,13 @@
+# This file supports grep(1) ERE. Files not in the root directory
+# must have their path specified (e.g., config/foo/skip_me)
+#
 README.*
 COPYING.md
 TODO.md
 install.sh
 Makefile
-tags
-ctags
 peru.yaml
+
+# This file is not in the repo but might be copied here
+# prior to installation
+private.yaml
