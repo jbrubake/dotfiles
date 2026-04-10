@@ -289,7 +289,8 @@ for d in $(find . -mindepth 1 \( ! -path '*/.*' \) -type d -print | sed -e 's#./
 
     # Make dot directory unless listed in NO_DOT
     d=$(adddot "$d")
-    $DRY_RUN mkdir -p $verbose "$DESTDIR/.$d" ;;
+
+    [ -d "$DESTDIR/$d" ] || $DRY_RUN mkdir -p $verbose "$DESTDIR/$d"
 done
 
 # Link files {{{1
