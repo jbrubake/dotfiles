@@ -27,6 +27,11 @@ JUST_LINK='
     config/git/templates
     '
 
+# Template file extension
+TMPL_EXT=template
+
+PRIVATE_VARS=private.yaml
+
 # Documentation {{{1
 #
 # Manpage {{{2
@@ -234,6 +239,31 @@ isjustlinkfile() {
     printf '%s' "$1" | grep -qE "$JUST_LINK_REGEX/.*"
 }
 
+# expand_template: Expand a jinja template {{{2
+#
+# Uses the variables in $PRIVATE_VARS to expand the template in $1 to the proper
+# destination in $DESTDIR
+#
+expand_template() {
+    src=$1
+
+    if ! [ -r "$src" ]; then
+        logerror "Cannot find template: $src: Skipping"
+        return 1
+    fi
+
+    # Convert src to dest by removing TMPL_EXT and converting to dotfile
+    dest=$(printf '%s' "$(adddot "$src")" | sed "s/.$TMPL_EXT$//")
+
+    if [ $FORCE = no -a -f "$DESTDIR/$dest" ]; then
+        logmsg "$dest already exists. Skipping"
+    else
+        # Expand the template
+        [ -z "$DRY_RUN" ] && logmsg "jinja2 --outfile '$DESTDIR/$dest' '$src' '$PRIVATE_VARS'"                        
+        $DRY_RUN jinja2 --outfile "$DESTDIR/$dest" "$src" "$PRIVATE_VARS"
+    fi
+}
+
 # Process options {{{1
 #
 # Flag Variables
@@ -337,5 +367,16 @@ for f in $JUST_LINK $(find . -mindepth 1 ! -path './.*' -type f | cut -c3-); do
 
     # make links
     $DRY_RUN ln -s $verbose $force "$linkpath/$(basename $f)" "$DESTDIR/$linkname"
+done
+
+# Expand templates {{{1
+#
+if ! [ -r "$PRIVATE_VARS" ]; then
+    logerror "Cannot find variables file: $PRIVATE_VARS: Aborting template expansion!"
+    exit 1
+fi
+
+for src in $(find . -type f -name "*.$TMPL_EXT" | cut -c3-); do
+    expand_template "$src"
 done
 
