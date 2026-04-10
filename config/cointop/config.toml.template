@@ -93,7 +93,7 @@ cache_dir = "/tmp"
 
 [portfolio]
   columns = ["rank", "name", "symbol", "price", "holdings", "balance", "1h_change", "24h_change", "7d_change", "percent_holdings", "last_updated"]
-  holdings = [["Bitcoin", "0"], ["Ethereum", "0.00108917"]]
+  holdings = [["Bitcoin", "{{cointop.bitcoin|default(0)}}"], ["Ethereum", "{{cointop.ethereum|default(0)}}"]]
 
 [price_alerts]
   alerts = []
