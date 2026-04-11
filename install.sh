@@ -33,6 +33,8 @@ TMPL_EXT=template
 
 PRIVATE_VARS=private.yaml
 
+FIREFOX_PROFILE=$HOME/etc/firefox
+
 # Documentation {{{1
 #
 # Manpage {{{2
@@ -314,6 +316,33 @@ diff_template() {
     vimdiff "$src" "$DESTDIR/$dest"
 }
 
+# get_firefox_profile_path {{{2
+#
+# Get path to the default Firefox profile (creating if necessary)
+#
+get_firefox_profile_path() {
+    local firefox
+    local d
+
+    for d in ~/.mozilla "${XDG_CONFIG_HOME:-"$HOME/.config"}/mozilla"; do
+        if [ -f "$d/firefox/profiles.ini" ]; then
+            firefox=$d/firefox
+            break
+        fi
+    done
+
+    if [ -z "$firefox" ]; then
+        firefox -no-remote -CreateProfile default --headless 2>&2 >/dev/null
+        for d in "$DESTDIR/.mozilla" "$DESTDIR/$xdg_config/mozilla"; do
+            if [ -f "$d/firefox/profiles.ini" ]; then
+                firefox=$d/firefox
+            fi
+        done
+    fi
+
+    printf '%s/%s\n' "$firefox" "$(< "$firefox/profiles.ini" sed -n '/\[Profile0\]/,/^$/!d; /Path/s/Path=//p')"
+}
+
 # Process options {{{1
 #
 # Flag Variables
@@ -449,5 +478,23 @@ fi
 
 for src in $(find . -type f -name "*.$TMPL_EXT" | cut -c3-); do
     expand_template "$src"
+done
+
+# Install Firefox Profile {{{1
+#
+firefox_profile_path=$(get_firefox_profile_path)
+
+logmsg 'Installing Firefox profile files...'
+for d in $(find "$FIREFOX_PROFILE" -mindepth 1 -type d); do
+    d=$(printf '%s' $d | sed "s@^$FIREFOX_PROFILE/@@")
+
+    [ -d "$firefox_profile_path/$d" ] || $DRY_RUN mkdir -p $verbose "$firefox_profile_path/$d"
+done
+
+for target in $(find "$FIREFOX_PROFILE" -mindepth 1 -type l); do
+    linkname=$firefox_profile_path/$(printf '%s' "$target" | sed "s@^$FIREFOX_PROFILE/@@")
+    linkpath=$(CT_FindRelativePath "$(dirname "$linkname")" "$(dirname "$target")")
+
+    $DRY_RUN ln -s $verbose $force "$linkpath/$(basename "$linkname")" "$linkname"
 done
 

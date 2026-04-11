@@ -9,8 +9,6 @@
 ## Installation
 
 - Backup files to a directory instead of renaming them (easier to delete/recover)
-- put Firefox configuration in a standard directory that the user can manually
-    link to
 
 ## Colors
 
