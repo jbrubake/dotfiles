@@ -254,6 +254,38 @@ adddot() {
     fi
 }
 
+# getdest: Convert $1 into a destination path {{{2
+#
+# - Expand directories named XDG_* into the value of the corresponding variable
+# (or appropriate default)
+# - Adds a leading '.' to the path in $1 unless the first element of that path
+# is found in $NO_DOT
+#
+getdest() {
+    case $1 in
+        XDG_*)
+            case $(printf '%s' "$1" | sed s@/.*@@) in
+                XDG_CONFIG_HOME) XDG=${XDG_CONFIG_HOME:-"$HOME/.config"} ;;
+                XDG_DATA_HOME)   XDG=${XDG_DATA_HOME:-"$HOME/.local/share"} ;;
+                XDG_CACHE_HOME)  XDG=${XDG_CACHE_HOME:-"$HOME/.cache"} ;;
+                XDG_STATE_HOME)  XDG=${XDG_STATE_HOME:-"$HOME/.local/state"} ;;
+                XDG_LOCAL_HOME)  XDG=${XDG_LOCAL_HOME:-"$HOME/.local"} ;;
+                XDG_BIN_HOME)    XDG=${XDG_BIN_HOME:-"$HOME/.local/bin"} ;;
+                XDG_LIB_HOME)    XDG=${XDG_LIB_HOME:-"$HOME/.local/lib"} ;;
+                XDG_GAMES_HOME)  XDG=${XDG_GAMES_HOME:-"$HOME/games"} ;;
+                XDG_OPT_HOME)    XDG=${XDG_OPT_HOME:-"$HOME/.local/opt"} ;;
+                XDG_SRC_HOME)    XDG=${XDG_SRC_HOME:-"$HOME/src"} ;;
+            esac
+            XDG=$(printf '%s' "$XDG" | sed "s@$HOME/@@")
+            printf '%s' "$1" | sed  "s@[^/]*@$XDG@"
+            ;;
+        *)
+            # Make dot directory unless listed in NO_DOT
+            adddot "$1"
+            ;;
+    esac
+}
+
 # isjustlinkdir: {{{2
 #
 # Return true if $1 exactly matches a path in $JUST_LINK
@@ -416,8 +448,7 @@ for d in $(find . -mindepth 1 ! -path './.*' -type d | cut -c3-); do
     # Do not create directories that must be directly linked
     isjustlinkdir "$d" && continue
 
-    # Make dot directory unless listed in NO_DOT
-    d=$(adddot "$d")
+    d=$(getdest "$d")
 
     [ -d "$DESTDIR/$d" ] || $DRY_RUN mkdir -p $verbose "$DESTDIR/$d"
 done
@@ -447,7 +478,7 @@ for f in $JUST_LINK $(find . -mindepth 1 ! -path './.*' -type f | cut -c3-); do
     # get relative path to the file from its new location in DESTDIR
     linkpath=$( CT_FindRelativePath $DESTDIR/$( dirname $f) $( dirname $f ) )
 
-    linkname=$(adddot "$f")
+    linkname=$(getdest "$f")
 
     # Test if an already existing link points to the right file already
     if [ -L "$DESTDIR/$linkname" ]; then
