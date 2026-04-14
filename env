@@ -17,7 +17,8 @@ export HOME LOGNAME UNAME TMPDIR TMP
 # Helper functions {{{1
 # NOTE: these are unset at the end of the file
 #
-# Basic nl(1) for pathuniq
+# Basic nl(1) for pathuniq {{{2
+#
 command -v nl >/dev/null || nl() {
     n=1
     while read -r line; do
@@ -105,6 +106,7 @@ pick() {
 # The ansible baseline playbooks will generate the proper settings
 # based on their configuration, but we allow setting the variables
 # here in case that file isn't found
+#
 if [ -r "$HOME/.env.xdg" ]; then
     . "$HOME/.env.xdg"
 else
@@ -116,14 +118,16 @@ else
     export XDG_STATE_HOME=$HOME/var/lib
     export XDG_LOCAL_HOME=$(dirname "$XDG_STATE_HOME")
 fi
-[ -r "$XDG_CONFIG_HOME/user-dirs.dirs" ] &&
-    . "$XDG_CONFIG_HOME/user-dirs.dirs"
 
 # This is not a real XDG variable but it keeps things consistent
 export XDG_LIB_HOME=$HOME/lib
 
 # Root directory for any of my shell libraries
 export SHELL_LIBDIR=$XDG_LIB_HOME/shell
+
+# Set variables for XDG user directories
+#
+[ -r "$XDG_CONFIG_HOME/user-dirs.dirs" ] && . "$XDG_CONFIG_HOME/user-dirs.dirs"
 
 # Add flatpak to XDG_DATA_DIRS
 #
