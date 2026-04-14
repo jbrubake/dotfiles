@@ -1190,9 +1190,12 @@ let &t_EI = "\<Esc>[2 q" " Normal mode (block)
 
 " Private and Local Vimrc {{{1
 " ===========
-for f in ["~/etc/vimrc", "~/.vimrc.local"]
+let private = 
+    \ (($XDG_CONFIG_HOME != '') ? $XDG_CONFIG_HOME : '~/.config') .. '/vimrc'
+for f in [ private, '~/.vimrc.local' ]
     if filereadable(expand(f))
         execute 'source ' . f
     endif
 endfor
+unlet private
 
