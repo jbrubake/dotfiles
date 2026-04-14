@@ -96,12 +96,18 @@ pick() {
 
 # XDG Directores {{{1
 #
-# Variable        | Purpose            | Equivalent | Default
-# --------        | -------            | ---------- | -------
-# XDG_CONFIG_HOME | config files       | /etc       | ~/.config
-# XDG_CACHE_HOME  | non-essential data | /var/cache | ~/.cache
-# XDG_DATA_HOME   | data files         | /usr/share | ~/.local/share
-# XDG_STATE_HOME  | state data         | /var/lib   | ~/.local/state
+# Variable        | Purpose                    | Equivalent | Default
+# --------        | -------                    | ---------- | -------
+# XDG_CONFIG_HOME | config files               | /etc       | ~/.config
+# XDG_CACHE_HOME  | non-essential data         | /var/cache | ~/.cache
+# XDG_DATA_HOME   | data files                 | /usr/share | ~/.local/share
+# XDG_STATE_HOME  | state data                 | /var/lib   | ~/.local/state
+# XDG_LOCAL_HOME  | root for other directories | /var       | ~/.local
+# XDG_LIB_HOME    | library files              | /usr/lib   | ~/.local/lib
+# XDG_BIN_HOME    | binaries                   | /usr/bin   | ~/.local/bin
+# XDG_GAMES_HOME  | games                      | /usr/games | ~/games
+# XDG_OPT_HOME    | optional packages          | /opt       | ~/.local/opt
+# XDG_SRC_HOME    | source code                | /usr/src   | ~/src
 
 # The ansible baseline playbooks will generate the proper settings
 # based on their configuration, but we allow setting the variables
@@ -114,11 +120,15 @@ else
     export XDG_DATA_HOME=$HOME/.local/share
     export XDG_CACHE_HOME=$HOME/.cache
     export XDG_STATE_HOME=$HOME/.local/state
-    export XDG_LOCAL_HOME=$HOME/.local
-fi
 
-# This is not a real XDG variable but it keeps things consistent
-export XDG_LIB_HOME=$HOME/lib
+    # These are not real XDG directories
+    export XDG_LOCAL_HOME=$HOME/.local
+    export XDG_BIN_HOME=$HOME/.local/bin
+    export XDG_LIB_HOME=$HOME/.local/lib
+    export XDG_GAMES_HOME=$HOME/games
+    export XDG_OPT_HOME=$HOME/.local/opt
+    export XDG_SRC_HOME=$HOME/src
+fi
 
 # Root directory for sh libraries
 #
