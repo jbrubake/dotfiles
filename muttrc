@@ -229,6 +229,8 @@ source ~/.mutt/colors.local # Source local colors
 source ~/.mutt/mailing_lists    # Mailing lists I'm subscribed to
 source ~/.mutt/score
 source ~/.mutt/keys             # Key configuration
+source ~/.mutt/aliases          # Source aliases
+source ~/.mutt/address_book     # Source address book
 
 # t-prot {{{1
 # ======
