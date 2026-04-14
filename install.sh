@@ -31,6 +31,7 @@ JUST_LINK='
 # Template file extension
 TMPL_EXT=template
 
+# Path to variables file for jinja templates
 PRIVATE_VARS=private.yaml
 
 # Repo directory containing files that should be linked from the user's Firefox
