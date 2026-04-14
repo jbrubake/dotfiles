@@ -122,8 +122,9 @@ fi
 # This is not a real XDG variable but it keeps things consistent
 export XDG_LIB_HOME=$HOME/lib
 
-# Root directory for any of my shell libraries
-export SHELL_LIBDIR=$XDG_LIB_HOME/shell
+# Root directory for sh libraries
+#
+export SH_LIBDIR=$XDG_LIB_HOME/sh
 
 # Set variables for XDG user directories
 #
@@ -544,7 +545,7 @@ fi
 
 # cdlog.sh {{{2
 #
-export cdlog_path=$SHELL_LIBDIR/cdlog.sh
+export cdlog_path=$SH_LIBDIR/cdlog.sh
 export cdlog_autorecover=n # Do not restore cdlog session on login (default)
 export cdlog_sess_dir=$XDG_CACHE_HOME/cdlog # Where to store cdlog sessions
 
