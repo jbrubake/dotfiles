@@ -91,7 +91,7 @@ set mailcap_path = "~/.mailcap"
 #  an entry with copiousoutput exists in the mailcap)
 #
 auto_view text/html # Automatically view HTML email (bastards)
-# auto_view text/* application/* image/* audio/* # For lesspipe.sh
+auto_view text/* application/* image/* audio/* # For lesspipe.sh
 #
 # MIME Lookup: Don't use mailcap directly for these MIME types but
 # look into mime-types first to find a better MIME-Type:
