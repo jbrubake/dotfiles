@@ -111,12 +111,10 @@ if [ -r "$HOME/.env.xdg" ]; then
     . "$HOME/.env.xdg"
 else
     export XDG_CONFIG_HOME=$HOME/.config
-    export XDG_DATA_HOME=$HOME/share
-    # These two must have a common parent (just like the XDG default of
-    # ~/.local)
-    export XDG_CACHE_HOME=$HOME/var/cache
-    export XDG_STATE_HOME=$HOME/var/lib
-    export XDG_LOCAL_HOME=$(dirname "$XDG_STATE_HOME")
+    export XDG_DATA_HOME=$HOME/.local/share
+    export XDG_CACHE_HOME=$HOME/.cache
+    export XDG_STATE_HOME=$HOME/.local/state
+    export XDG_LOCAL_HOME=$HOME/.local
 fi
 
 # This is not a real XDG variable but it keeps things consistent
