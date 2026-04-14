@@ -318,13 +318,21 @@ expand_template() {
     # Convert src to dest by removing TMPL_EXT and converting to dotfile
     dest=$(printf '%s' "$(adddot "$src")" | sed "s/.$TMPL_EXT$//")
 
-    if [ $FORCE = no -a -f "$DESTDIR/$dest" ]; then
-        logmsg "$dest already exists. Skipping"
-    else
-        # Expand the template
-        [ -z "$DRY_RUN" ] && logmsg "jinja2 --outfile '$DESTDIR/$dest' '$src' '$PRIVATE_VARS'"                        
-        $DRY_RUN jinja2 --outfile "$DESTDIR/$dest" "$src" "$PRIVATE_VARS"
+    if [ -f "$DESTDIR/$dest" ]; then
+        if [ $FORCE = no ]; then
+            logmsg "Template destination $DESTDIR/$dest already exists. Skipping"
+            return
+        elif [ -f "$DESTDIR/$dest~" ]; then
+            logmsg "Failed to create backup $DESTDIR/$dest~: File exists"
+            return 1
+        else
+            $DRY_RUN cp $force "$DESTDIR/$dest" "$DESTDIR/$dest~"
+        fi
     fi
+
+    # Expand the template
+    [ -z "$DRY_RUN" ] && logmsg "jinja2 --outfile '$DESTDIR/$dest' '$src' '$PRIVATE_VARS'"                        
+    $DRY_RUN jinja2 --outfile "$DESTDIR/$dest" "$src" "$PRIVATE_VARS"
 }
 
 # diff_template: Use vimdiff to merge template and destination {{{2
