@@ -364,7 +364,11 @@ get_firefox_profile_path() {
     local firefox
     local d
 
-    for d in ~/.mozilla "${XDG_CONFIG_HOME:-"$HOME/.config"}/mozilla"; do
+    # Remove $HOME from $XDG_CONFIG_HOME and then prepend $DESTDIR so you could
+    # install to a Firefox profile in /weird/path/.config/mozilla
+    #
+    xdg_cfg=$(printf '%s' "${XDG_CONFIG_HOME:-.config}" | sed "s@$HOME/@@")
+    for d in "$DESTDIR/.mozilla" "$DESTDIR/$xdg_cfg/mozilla"; do
         if [ -f "$d/firefox/profiles.ini" ]; then
             firefox=$d/firefox
             break
