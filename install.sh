@@ -33,7 +33,9 @@ TMPL_EXT=template
 
 PRIVATE_VARS=private.yaml
 
-FIREFOX_PROFILE=$HOME/etc/firefox
+# Repo directory containing files that should be linked from the user's Firefox
+# profile
+FIREFOX_PROFILE=etc/firefox
 
 # Documentation {{{1
 #
@@ -302,6 +304,38 @@ isjustlinkfile() {
     printf '%s' "$1" | grep -qE "$JUST_LINK_REGEX/.*"
 }
 
+# mklink: Create a symlink {{{2
+#
+# Create a symlink from $2 to $DESTDIR/$1
+#
+# $1 Path to link relative to $DESTDIR
+# $2 Relative path to directory of link target from $1
+# $3 Full path to link target
+#
+mklink() {
+    local link_name=$1
+    local target_path=$2
+    local target_name=$3
+
+    # Test if an already existing link points to the right file already
+    if [ -L "$DESTDIR/$link_name" ]; then
+        if [ "$(realpath "$(readlink -f -- "$DESTDIR/$link_name")")" = \
+                "$(realpath "$target_name")" ]; then
+            logmsg "Symbolic link '$DESTDIR/$link_name' already points to '$target_name'. Skipping"
+            return
+        fi
+    fi
+
+    if [ $FORCE = no -a -e "$DESTDIR/$link_name~" ]; then
+        # skip if -f not specified and backup exists
+        logmsg "Failed to create backup $DESTDIR/$link_name~: File exists"
+        return 1
+    fi
+
+    # make links
+    $DRY_RUN ln -s $verbose $force "$target_path/$(basename $target_name)" "$DESTDIR/$link_name"
+}
+
 # expand_template: Expand a jinja template {{{2
 #
 # Uses the variables in $PRIVATE_VARS to expand the template in $1 to the proper
@@ -480,35 +514,19 @@ done
 # sub-directories and strip the leading "./"
 logmsg 'Creating links...'
 # NOTE: Explicity include $JUST_LINK so those directories are also linked
-for f in $JUST_LINK $(find . -mindepth 1 ! -path './.*' -type f | cut -c3-); do
+for target in $JUST_LINK $(find . -mindepth 1 ! -path './.*' -type f | cut -c3-); do
     # skip ignored files
-    isignored "$f" && continue
+    isignored "$target" && continue
 
     # ignore files in directories that will be directly linked
-    isjustlinkfile "$f" && continue
+    isjustlinkfile "$target" && continue
 
     # get relative path to the file from its new location in DESTDIR
-    linkpath=$( CT_FindRelativePath $DESTDIR/$( dirname $f) $( dirname $f ) )
+    linkpath=$(CT_FindRelativePath "$DESTDIR/$(dirname "$target")" "$(dirname "$target" )")
 
-    linkname=$(getdest "$f")
+    linkname=$(getdest "$target")
 
-    # Test if an already existing link points to the right file already
-    if [ -L "$DESTDIR/$linkname" ]; then
-        if [ $(realpath $(readlink -f -- "$DESTDIR/$linkname")) = \
-                $(realpath $f) ]; then
-            logmsg "${linkname} is already linked. Skipping"
-            continue
-        fi
-    fi
-
-    if [ $FORCE = no -a -e "$DESTDIR/$linkname~" ]; then
-        # skip if -f not specified and backup exists
-        logmsg "Backup ${linkname}~ already exists. Skipping"
-        continue
-    fi
-
-    # make links
-    $DRY_RUN ln -s $verbose $force "$linkpath/$(basename $f)" "$DESTDIR/$linkname"
+    mklink "$linkname" "$linkpath" "$target"
 done
 
 # Expand templates {{{1
@@ -534,10 +552,28 @@ for d in $(find "$FIREFOX_PROFILE" -mindepth 1 -type d); do
     [ -d "$firefox_profile_path/$d" ] || $DRY_RUN mkdir -p $verbose "$firefox_profile_path/$d"
 done
 
-for target in $(find "$FIREFOX_PROFILE" -mindepth 1 -type l); do
-    linkname=$firefox_profile_path/$(printf '%s' "$target" | sed "s@^$FIREFOX_PROFILE/@@")
-    linkpath=$(CT_FindRelativePath "$(dirname "$linkname")" "$(dirname "$target")")
+# These links are a bit different so there is some annoying path manipulation
+# that goes on here:
+#
+# Loop through all files in $FIREFOX_PROFILE and
+#   1. Strip $FIREFOX_PROFILE from the file path:
+#       FIREFOX_PROFILE/foo/bar.css => foo/bar.css
+#   2. Get relative path from the where that file would be in the user's firefox
+#      profile to the target file:
+#       $firefox_profile_path/foo => ./$FIREFOX_PROFILE/foo/bar.css
+#   3. Set DESTDIR to where that file would be in the user's profile:
+#       DESTDIR=$firefox_profile_path/foo
+#   4. Set the linkname to just the target file:
+#       linkname=bar.css
+#   5. Make the link
+for target in $(find "$FIREFOX_PROFILE" -mindepth 1 -type f); do
+    linkname=$(printf '%s' "$target" | sed "s@^$FIREFOX_PROFILE/@@")
+    linkpath=$(CT_FindRelativePath "$firefox_profile_path/$(dirname "$linkname")" "$(dirname "$target")")
 
-    $DRY_RUN ln -s $verbose $force "$linkpath/$(basename "$linkname")" "$linkname"
+    # $firefox_profile_path already has $DESTDIR prepended
+    DESTDIR=$firefox_profile_path/$(dirname "$linkname")
+    linkname=$(basename "$linkname")
+
+    mklink "$linkname" "$linkpath" "$target"
 done
 
