@@ -287,7 +287,7 @@ alias wgsh='tmux-popup -k -w80 -h25 "sudo wg show"'
 # start / stop a local-only ssh server
 if have sshd && [ -n "$LOCAL_SSHD_CONFIG" ]; then
     alias lsshd='/usr/sbin/sshd -f "$LOCAL_SSHD_CONFIG"' # start a local ssh server
-    alias klsshd='kill -TERM $(command cat $(sshd -f "$LOCAL_SSHD_CONFIG" -T | grep pidfile | cut -d" " -f2))'  # stop user sshd
+    alias klsshd='/bin/kill -TERM $(command cat $(sshd -f "$LOCAL_SSHD_CONFIG" -T | grep pidfile | cut -d" " -f2))'  # stop user sshd
 fi
 
 if have todo.sh; then
