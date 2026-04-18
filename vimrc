@@ -614,7 +614,8 @@ endfunction
 
 " YankRing.vim:            Maintains a history of previous yanks, changes and deletes             plugurl:vim-scripts/YankRing.vim " {{{3
 
-let g:yankring_history_dir = '$HOME/var/cache'
+let g:yankring_history_dir = 
+    \ ($XDG_CACHE_HOME != '') ? $XDG_CACHE_HOME : '~/.cache'
 
 " Basics {{{1
 " ======

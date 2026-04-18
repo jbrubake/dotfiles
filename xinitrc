@@ -67,8 +67,7 @@ esac
 # logged in via the console. Any such scripts that should
 # not be run again need to be guarded appropriately
 #
-# for f in "$XDG_CONFIG_HOME/init.d/"*; do
-for f in "$HOME/etc/init.d/"*; do
+for f in "$XDG_CONFIG_HOME/init.d/"*; do
     [ -x "$f" ] && "$f"
 done
 

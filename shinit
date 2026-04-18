@@ -49,7 +49,7 @@ fi
 
 # Include private and local settings
 #
-[ -r "$HOME/etc/shinit" ]    && . "$HOME/etc/shinit"
+[ -r "$XDG_CONFIG_HOME/shinit" ]    && . "$XDG_CONFIG_HOME/shinit"
 [ -r "$HOME/.shinit.local" ] && . "$HOME/.shinit.plocal"
 
 # vim: foldlevel=0

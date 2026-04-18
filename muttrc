@@ -21,8 +21,8 @@
 # =============
 set my_bin      = "~/.mutt/scripts"
 set my_accounts = "~/.mutt/accounts"
-set my_varcache = "~/var/cache/mutt"
-set my_varrun   = "~/var/run/mutt"
+set my_varcache = "$XDG_CACHE_HOME/mutt"
+set my_varrun   = "$XDG_RUNTIME_DIR/mutt"
 
 # Configure accounts {{{1
 # ==================

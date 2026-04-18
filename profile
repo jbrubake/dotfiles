@@ -14,8 +14,7 @@ fi
 
 # Run setup scripts {{{1
 #
-# for f in "$XDG_CONFIG_HOME/init.d/"*; do
-for f in "$HOME/etc/init.d/"*; do
+for f in "$XDG_CONFIG_HOME/init.d/"*; do
     [ -x "$f" ] && "$f"
 done
 
@@ -39,7 +38,7 @@ case "$(uname -r)" in
         [ -x /usr/sbin/crond ] &&
             sudo /usr/sbin/crond -p 2>/dev/null
         command -v anacron >/dev/null &&
-            anacron -s -t "$HOME/etc/anacrontab" -S "$HOME/var/spool/anacron"
+            anacron -s -t "$XDG_CONFIG_HOME/anacrontab" -S "$XDG_LOCAL_HOME/spool/anacron"
         ;;
 
 esac

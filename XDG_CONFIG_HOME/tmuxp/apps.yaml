@@ -18,7 +18,7 @@ windows:
 
 - window_name: other-logs
   panes:
-    - shell: /usr/bin/multitail -cT ansi $HOME/var/log/*.log
+    - shell: /usr/bin/multitail -cT ansi $XDG_LOCAL_HOME/log/*.log
 
 - window_name: usenet
   panes:

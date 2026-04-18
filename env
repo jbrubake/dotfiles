@@ -369,9 +369,8 @@ fi
 
 # Python {{{2
 #
-# Sigh. Python can't find user site-packages because I refuse to use
-# .local or whatever other silly crap it expects
- export PYTHONPATH=$XDG_LIB_HOME/python3/site-packages
+: ${PYTHONPATH:=$XDG_LIB_HOME/python3/site-packages}
+export PYTHONPATH
 [ -d "$PYTHONPATH/bin" ] && pathadd "$PYTHONPATH/bin"
 
 # Rust {{{2
@@ -421,7 +420,7 @@ if have dotnet; then
 
     # Extract self-contained executables under HOME
     # to avoid multi-user issues from using the default '/var/tmp'.
-    export DOTNET_BUNDLE_EXTRACT_BASE_DIR="${XDG_CACHE_HOME:-"$HOME"/.cache}/dotnet_bundle_extract"
+    export DOTNET_BUNDLE_EXTRACT_BASE_DIR="$XDG_CACHE_HOME/dotnet_bundle_extract"
 fi
 
 # Other {{{2
@@ -453,8 +452,8 @@ if have bash; then
     mkdir -p "$(dirname "$HISTFILE")"
 
     # Create nerd-font variables
-    [ -f "$HOME/share/nerd-font/scripts/i_all.sh" ] &&
-        . "$HOME/share/nerd-font/scripts/i_all.sh"
+    [ -f "$XDG_DATA_HOME/nerd-font/scripts/i_all.sh" ] &&
+        . "$XDG_DATA_HOME/nerd-font/scripts/i_all.sh"
 fi
 
 # Miscellaneous {{{1
@@ -528,8 +527,8 @@ have pass && export PASSWORD_STORE_ENABLE_EXTENSIONS=true
 export GREP_COLORS='sl=:cx=:mt=1;31:fn=35:ln=32:bn=33:se=36'
 
 # local-only SSH server {{{2
-[ -r "$HOME/etc/ssh/sshd_config" ] &&
-    export LOCAL_SSHD_CONFIG=$HOME/etc/ssh/sshd_config
+[ -r "$XDG_CONFIG_HOME/ssh/sshd_config" ] &&
+    export LOCAL_SSHD_CONFIG=$XDG_CONFIG_HOME/ssh/sshd_config
 
 # Hostnames for bash-completion {{{2
 [ -r "$HOME/.ssh/known_hosts" ] && export HOSTFILE=$HOME/.ssh/known_hosts
@@ -587,7 +586,8 @@ pathuniq PATH
 
 # Include private and local settings {{{1
 #
-[ -r "$HOME/etc/environment" ] && . "$HOME/etc/environment"
+[ -r "$XDG_CONFIG_HOME/environment" ] &&
+    . "$XDG_CONFIG_HOME/environment"
 [ -r "$HOME/.env.local" ]      && . "$HOME/.env.local"
 
 # Cleanup {{{1

@@ -128,9 +128,9 @@ if shopt -q progcomp; then
         . /opt/google-cloud-sdk/completion.bash.inc
 
     # Prefer personal cargo over system cargo
-    for d in "$HOME" ''; do
-        if [ -f "$d/opt/rust/etc/bash_completion.d/cargo" ]; then
-            . "$d/opt/rust/etc/bash_completion.d/cargo"
+    for d in "$XDG_OPT_HOME" /opt; do
+        if [ -f "$d/rust/etc/bash_completion.d/cargo" ]; then
+            . "$d/rust/etc/bash_completion.d/cargo"
             break
         fi
     done
