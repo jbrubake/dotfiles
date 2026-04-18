@@ -18,14 +18,13 @@
 # Files and directories that are not dotfiles
 #
 NO_DOT='
-    etc
     lib
     '
 
 # Directories that should be linked directly
 #
 JUST_LINK='
-    config/git/templates
+    XDG_CONFIG_HOME/git/templates
     '
 
 # Template file extension
@@ -36,7 +35,7 @@ PRIVATE_VARS=private.yaml
 
 # Repo directory containing files that should be linked from the user's Firefox
 # profile
-FIREFOX_PROFILE=etc/firefox
+FIREFOX_PROFILE=XDG_CONFIG_HOME/firefox
 
 # Documentation {{{1
 #
@@ -351,8 +350,7 @@ expand_template() {
     fi
 
     # Convert src to dest by removing TMPL_EXT and converting to dotfile
-    dest=$(printf '%s' "$(adddot "$src")" | sed "s/.$TMPL_EXT$//")
-
+    dest=$(getdest "$src" | sed "s/.$TMPL_EXT$//")
     if [ -f "$DESTDIR/$dest" ]; then
         if [ $FORCE = no ]; then
             logmsg "Template destination $DESTDIR/$dest already exists. Skipping"
