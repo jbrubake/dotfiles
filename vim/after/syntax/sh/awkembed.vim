@@ -2,15 +2,17 @@
 "
 " Adapted from :help sh-embed
 
-if exists("b:current_syntax")
-    unlet b:current_syntax
-endif
+let s:save_syntax = b:current_syntax
+unlet b:current_syntax
 
 syntax include @AWKScript syntax/awk.vim
 try
     syntax include @AWKScript after/syntax/awk.vim
 catch
 endtry
+
+let b:current_syntax = s:save_syntax
+unlet s:save_syntax
 
 syntax region AWKScriptCode
     \ matchgroup= AWKCommand
