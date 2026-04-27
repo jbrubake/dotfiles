@@ -45,15 +45,15 @@ pathadd() {
 # Example: $ pathuniq PATH
 #
 pathuniq() {
-    eval "${1:-PATH}='$(eval echo "\$${1:-PATH}" |
+    eval "${1:-PATH}=$(eval echo "\$${1:-PATH}" |
         tr : "\n" |
         nl |
         sort -uk2,2 |
         sort -n |
-        awk '{ $1=""; print }' |
-        tr "\n" : |
-        sed -e "s/:$//" -e "s/^://")'" |
-        tr -d ' '
+        sed -e 's/^[[:blank:]]*[[:digit:]]*[[:blank:]]*//' \
+            -e '/^$/d' \
+            -e 's/^[[:blank:]]*//' |
+        paste -sd ":" -)"
 }
 
 # have {{{2
