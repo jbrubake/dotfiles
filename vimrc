@@ -238,6 +238,10 @@ cmap <C-X><C-H> <C-U>
 
 " No configuration needed
 
+" SyntaxAttr.vim:          Show syntax highlighting attributes of character under cursor          plugurl:inkarkat/SyntaxAttr.vim " {{{3
+
+nnoremap -a :call SyntaxAttr#SyntaxAttr()<CR>
+
 " tabular:                 Smart alignment of tables                                              plugurl:godlygeek/tabular " {{{3
 
 " :Tabularize /<delimiter>/<format>
