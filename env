@@ -116,6 +116,9 @@ pick() {
 xdg_env=$HOME/.env.xdg
 if [ -r "$xdg_env" ]; then
     . "$xdg_env"
+
+    # Because $xdg_env is also used by systemd, it cannot export anything
+    export $(<"$xdg_env" awk -F= '/^#/ { next } /^$/ { next } { print $1 }')
 else
     export XDG_CONFIG_HOME=$HOME/.config
     export XDG_DATA_HOME=$HOME/.local/share
