@@ -128,6 +128,8 @@ else
     export XDG_GAMES_HOME=$HOME/games
     export XDG_OPT_HOME=$HOME/.local/opt
     export XDG_SRC_HOME=$HOME/src
+
+    export PYTHONUSERBASE=$HOME
 fi
 
 # Root directory for sh libraries
@@ -366,12 +368,6 @@ fi
 #
 [ -d "$HOME/opt/arm-none-eabi/" ]   && pathadd "$HOME/opt/arm-none-eabi/bin"
 [ -d "$HOME/opt/aarch64-elf/bin/" ] && pathadd "$HOME/opt/aarch64-elf/bin"
-
-# Python {{{2
-#
-: ${PYTHONPATH:=$XDG_LIB_HOME/python3/site-packages}
-export PYTHONPATH
-[ -d "$PYTHONPATH/bin" ] && pathadd "$PYTHONPATH/bin"
 
 # Rust {{{2
 #
