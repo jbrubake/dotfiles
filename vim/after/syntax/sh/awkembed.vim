@@ -34,5 +34,5 @@ syntax region AWKScriptEmbedded
 
 syntax cluster shCommandSubList add=AWKScriptEmbedded
 
-highlight default link AWKCommand Type
+highlight default link AWKCommand shStatement
 
