@@ -113,8 +113,9 @@ pick() {
 # based on their configuration, but we allow setting the variables
 # here in case that file isn't found
 #
-if [ -r "$HOME/.env.xdg" ]; then
-    . "$HOME/.env.xdg"
+xdg_env=$HOME/.env.xdg
+if [ -r "$xdg_env" ]; then
+    . "$xdg_env"
 else
     export XDG_CONFIG_HOME=$HOME/.config
     export XDG_DATA_HOME=$HOME/.local/share
@@ -131,6 +132,7 @@ else
 
     export PYTHONUSERBASE=$HOME
 fi
+unset xdg_env
 
 # Root directory for sh libraries
 #
