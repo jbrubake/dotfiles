@@ -359,7 +359,7 @@ eval "$(perl -Mlocal::lib=$XDG_LIB_HOME/perl5)"
 
 if have cpanm; then
     export PERL_CPANM_HOME=$XDG_CACHE_HOME/cpanm
-    mkdir -p "$PERL_CPANM_HOME"
+    [ -d "$PERL_CPANM_HOME" ] || mkdir -p "$PERL_CPANM_HOME" >/dev/null
 fi
 
 # ARM cross-compiler {{{2
