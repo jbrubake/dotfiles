@@ -21,6 +21,8 @@ syntax region AWKScriptCode
     \ end=        +'+
     \ contains=   @AWKScript
     \ contained
+    \ skipwhite
+    \ skipempty
 
 syntax region AWKScriptEmbedded
     \ matchgroup= AWKCommand
