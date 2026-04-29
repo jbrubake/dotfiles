@@ -296,6 +296,9 @@ if have todo.sh; then
     [ -n "$BASH_VERSION" ] && export todo_alias
 fi
 
+[ -d "$XDG_DATA_HOME/make/make-tools" ] && \
+    alias mkvenv="make -f $XDG_DATA_HOME/make/make-tools/venv.mk"
+
 # Use grc(1) if available {{{2
 #
 alias   df="${grc:+"$grc "}df -hT"              # human-readable is better
