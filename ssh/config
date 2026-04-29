@@ -14,11 +14,14 @@ Include config.d/*.conf
 Host tron
     HostName sshtron.zachlatta.com
 
-# Provide a path to my GitHub key because I no longer keep it in the default
-# location
+# git cannot find my keys as they are not in the default location
+#
 Host github.com
     HostName github.com
     IdentityFile ~/.ssh/keys/github
+Host codeberg.org
+    HostName codeberg.org
+    IdentityFile ~/.ssh/keys/codeberg
 
 # SSH defaults need to be last because of "first-win"
 Host *
