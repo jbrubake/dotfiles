@@ -104,8 +104,13 @@ prompt_uptime () {
     printf "%s:%s" "${hours}" "${mins}"
 }
 
-# prompt_ssh: Determine if running under ssh {{{2
-prompt_ssh () { [ -n "$SSH_CLIENT$SSH2_CLIENT$SSH_TTY" ]; }
+# is_ssh: Determine if running under ssh {{{2
+#
+# Returns:
+#   true if running over SSH
+#   false otherwise
+#
+is_ssh () { [ -n "$SSH_CLIENT$SSH2_CLIENT$SSH_TTY" ]; }
 
 # prompt_tty: Get tty {{{2
 prompt_tty () {
