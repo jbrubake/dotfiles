@@ -721,7 +721,7 @@ set smartindent          " Automatic indenting is intelligent
 " ==========
 function! Statusline() abort
     let s  = ' '
-    let s .= '%F'                " Full path to file in buffer
+    let s .= '%f'                " Relative path to file in buffer
     let s .= '%m'                " Modified flag
     let s .= '%r'                " Readonly flag
     let s .= ' '
