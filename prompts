@@ -124,12 +124,13 @@ prompt_tty () {
 # Arguments:
 #   $1 : directory color
 #   $2 : slash color
+#
+# Ouput: pwd colored with $1, $HOME replaced by ~ and / colored with $2
+#
 prompt_pwd () {
-    local dir_clr="$1"
-    local slash_clr="$2"
-    local pwd="$PWD"
-    pwd="${pwd/#$HOME/\~}"
-    echo "$dir_clr${pwd//\//$slash_clr\/$dir_clr}"
+    local pwd="${PWD/#$HOME/\~}"
+    pwd=${pwd//\//$2\/$1}
+    printf '%s%s' "$1" "$pwd"
 }
 
 # prompt_error: Print exit value of last command if it is non-zero {{{2
