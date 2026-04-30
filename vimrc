@@ -620,6 +620,7 @@ set tags^=./tags;                    "  up the tree for the tags file
 set complete-=i                      " *Do not* search included files when completing
 set history=1000                     " Save more command history
 set fillchars=vert:\|,fold:―
+set updatecount=10                   " Write swapfile every 10 keystrokes
 set undofile                         " Persistent undo tree
 set undodir=~/.vim/undo              " Put undo files here
 call mkdir(&undodir, "p", 0o700)
