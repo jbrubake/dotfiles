@@ -815,6 +815,11 @@ function! ToggleMaximizeCurrentWindow()
 endfunction
 nnoremap <silent> <C-W>m <Cmd>call ToggleMaximizeCurrentWindow() <cr>
 
+" Buffer Management {{{2
+"
+nnoremap <silent> <Up>   :bprevious<CR>
+nnoremap <silent> <Down> :bnext<CR>
+
 " Terminal Mode {{{2
 "
 " <leader><Esc>: Enter normal mode
