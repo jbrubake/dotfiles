@@ -721,13 +721,15 @@ set smartindent          " Automatic indenting is intelligent
 " ==========
 function! Statusline() abort
     let s  = ' '
+    let s .= '%-2c'              " Column
+    let s .= ' '
     let s .= '%f'                " Relative path to file in buffer
     let s .= '%m'                " Modified flag
     let s .= '%r'                " Readonly flag
     let s .= ' '
     let s .= '[%Y]'              " Filetype
     let s .= '%='                " Divide left and right halves
-    let s .= '%l(%L):%c'         " line(total):column
+    let s .= '%l:%L'             " Line:Lines
     let s .= ' '
     let s .= '[UNICODE 0x%B]'    " Unicode codepoint
     return s
