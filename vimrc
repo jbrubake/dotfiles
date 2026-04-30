@@ -19,6 +19,9 @@
 
 " Initialization {{{1
 " ==============
+" Open .vimrc
+nmap <silent> ev :next $MYVIMRC<CR>
+
 " Source .vimrc when saving changes
 augroup vimrc | autocmd!
     autocmd vimrc BufWritePost $MYVIMRC nested source $MYVIMRC
