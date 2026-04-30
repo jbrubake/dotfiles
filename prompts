@@ -5,6 +5,12 @@
 # Prompt functions {{{1
 if test -n "$BASH"; then
 # prompt_detached: Determine number of detached screen/tmux sessions {{{2
+#
+# Arguments:
+#   $1: string to append to output
+#
+# Output: number of detached sessions with $1 appended
+#
 prompt_detached () {
     if command -v screen >/dev/null; then
         local n_screen=$(screen -ls 2> /dev/null | grep -c '[Dd]etach[^)]*)$')
@@ -15,20 +21,34 @@ prompt_detached () {
 
     local detached=$(( n_screen + n_tmux ))
 
-    [ "$detached" -ne 0 ] && printf '%sd' "$detached"
+    [ "$detached" -ne 0 ] && printf '%s%s' "$detached" "$1"
 }
 # prompt_running: Get running jobs {{{2
-# Only works under Bash
+#
+# (Only works under Bash)
+#
+# Arguments:
+#   $1: string to append to output
+#
+# Output: number of background jobs with $1 appended
+#
 prompt_running() {
     j="$( \jobs -r | wc -l | tr -d " " )"
-    [ "$j" -ne 0 ] && printf '%s&' "$j"
+    [ "$j" -ne 0 ] && printf '%s%s' "$j" "$1"
 }
 
 # prompt_stopped: Get stopped jobs {{{2
-# Only works under Bash
+#
+# (Only works under Bash)
+#
+# Arguments:
+#   $1: string to append to output
+#
+# Output: number of stopped jobs with $1 appended
+#
 prompt_stopped() {
     j="$( \jobs -s | wc -l | tr -d " " )"
-    [ "$j" -ne 0 ] && printf '%sz' "$j"
+    [ "$j" -ne 0 ] && printf '%s%s' "$j" "$1"
 }
 
 # prompt_combine: Combine strings {{{2
@@ -255,9 +275,9 @@ PS1="$PS1\$(prompt_combine \
     \"$bracket_clr{$jobs_clr\" \
     \"$bracket_clr} \" \
     '|' \
-    \"\$(prompt_running)\" \
-    \"\$(prompt_stopped)\" \
-    \"\$(prompt_detached)\")"
+    \$(prompt_running '\&') \
+    \$(prompt_stopped 'z') \
+    \$(prompt_detached 'd'))"
 PS1="$PS1$bracket_clr!$history_clr\! "
 PS1="$PS1\$(prompt_error '$error_clr')$reset"
 PS1="$PS1\n"
