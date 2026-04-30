@@ -1166,10 +1166,41 @@ if exists('g:vimpager.enabled')
     highlight Normal ctermbg=250 guibg=#002b36
 endif
 
-" Mode aware cursors
-let &t_SI = "\<Esc>[6 q" " Insert mode (bar)
-let &t_SR = "\<Esc>[4 q" " Replace mode (underline)
-let &t_EI = "\<Esc>[2 q" " Normal mode (block)
+" Mode aware cursors {{{
+"
+" t_SI : insert mode
+" t_SR : replace mode
+" t_EI : normal mode
+"
+" Cursor shape: [X q where X is
+"
+"   0 : blinking block
+"   1 : blinking block
+"   2 : steady block
+"   3 : blinking underline
+"   4 : steady underline
+"   5 : blinking bar
+"   6 : steady bar
+"
+" Cursor color: ]12;COLOR\ where COLOR is an X11 color name
+"
+" (See https://invisible-island.net/xterm/ctlseqs/ctlseqs.pdf)
+"
+" Shapes
+let &t_SI = "[6 q"
+let &t_SR = "[4 q"
+let &t_EI = "[2 q"
+
+" Colors
+let &t_SI .= ""
+let &t_SR .= ""
+let &t_EI .= ""
+
+" Reset cursor on exit
+augroup cursor | autocmd!
+    autocmd VimLeave * silent !printf ']112\\'
+augroup end
+" }}}
 
 " Private and Local Vimrc {{{1
 " ===========
