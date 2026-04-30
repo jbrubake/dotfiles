@@ -54,25 +54,29 @@ prompt_stopped() {
 # prompt_combine: Combine strings {{{2
 #
 # If the resulting string is empty then nothing is printed
+#
+# Arguments:
+#   $1: beginning string
+#   $2: ending string
+#   $3: item separator
+#   ...: strings to join
+#
+# Example:
+#   $ prompt_combine '<' '>' '|' foo bar baz
+#   <foo|bar|baz>
+#
 prompt_combine() {
-    pre=$1; shift
-    post=$1; shift
+    fmt=$1; shift
     sep=$1; shift
 
+    [ $# -eq 0 ] && return
+
     s=$1; shift
-    oldifs=$IFS
-    IFS='
-'
-    for i in "$@"; do
-        [ "$i" = '' ] && continue
-        if [ -n "$s" ]; then
-            s=$s$sep$i
-        else
-            s=$i
-        fi
+    for a in "$@"; do
+        [ -z "$a" ] && continue
+        s=$s$sep$a
     done
-    IFS=$oldifs
-    [ -n "$s" ] && printf %s%s%s "$pre" "$s" "$post"
+    printf %s "$fmt" | sed "s/%s/$s/"
 }
 
 # prompt_load: Get system load {{{2
@@ -271,13 +275,7 @@ PS1="$PS1\n"
 PS1="$PS1$user_clr\u$at_clr@$hostname_clr\h "
 PS1="$PS1$ssh_clr\$(prompt_ssh && echo 'ssh ')"
 PS1="$PS1\$(prompt_git '$bracket_clr($git_branch_clr %b $git_status_clr%f$bracket_clr) ')"
-PS1="$PS1\$(prompt_combine \
-    \"$bracket_clr{$jobs_clr\" \
-    \"$bracket_clr} \" \
-    '|' \
-    \$(prompt_running '\&') \
-    \$(prompt_stopped 'z') \
-    \$(prompt_detached 'd'))"
+PS1="$PS1\$(prompt_combine '$bracket_clr{$jobs_clr%s$bracket_clr} ' '|' \$(prompt_running '\&') \$(prompt_stopped 'z') \$(prompt_detached 'd'))"
 PS1="$PS1$bracket_clr!$history_clr\! "
 PS1="$PS1\$(prompt_error '$error_clr')$reset"
 PS1="$PS1\n"
