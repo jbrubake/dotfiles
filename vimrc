@@ -825,7 +825,7 @@ nnoremap <silent> <Down> :bnext<CR>
 " <leader><Esc>: Enter normal mode
 tnoremap <leader><Esc> <C-\><C-n>
 
-" Searching {{{2
+" Searching & Search/Replace {{{2
 "
 " Metacharacters do not need escaped (very magic, :help \v)
 nnoremap / /\v
@@ -833,6 +833,12 @@ vnoremap / /\v
 
 " Search for character under cursor
 nnoremap <leader>* xhp/<C-R>-<Return>
+
+" Start a global search & replace
+nnoremap S :%s//g<Left><Left>
+
+" Populate a global search & replace with previous search
+nnoremap <expr> M ':%s/' . @/ . '//g<Left><Left>'
 
 " <leader>c:           toggle colorcolumn {{{2
 "
