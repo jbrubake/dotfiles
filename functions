@@ -443,6 +443,40 @@ rpmextract() { # Extract the contents of an RPM without installing {{{2
     rpm2cpio "$1" | cpio -idmv
 }
 
+# weather() {{{2
+#
+# Get weather from graph.no {{{2
+#
+if command -v finger >/dev/null; then
+    weather() {
+    #
+    # Arguments:
+    #   $1: Query. Empty to print help
+    #
+        unset lead width
+        while getopts ':ibw:f1h' c; do
+            case $c in
+                i) lead=^ ;;
+                b) lead=£ ;;
+                w) width=~$OPTARG ;;
+                f) lead=¤ ;;
+                1) lead=o: ;;
+                h) echo help; return 0 ;;
+                ?) echo "Invalid option: -$OPTARG";  return 1 ;;
+            esac
+        done
+        shift $((OPTIND-1))
+        OPTIND=1
+
+        if [ -z "$1" ]; then
+            unset lead
+            unset width
+        fi
+
+        finger "$lead$1$width@graph.no"
+    }
+fi
+
 # ping() # Wrap ping(1) to allow pinging by SSH Host entry {{{2
 #
 # Remove a ping alias in favor of this function
