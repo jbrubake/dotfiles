@@ -227,7 +227,6 @@ user_clr="\[$(FX reset; FG 6)\]"
 root_user_clr="\[$(FX reset; FG 9)\]"
 at_clr="\[$(FX reset; FG 12)\]"
 hostname_clr="\[$(FX reset; FG 13)\]"
-ssh_clr="\[$(FX reset; FX italic; FG 169)\]"
 jobs_clr="\[$(FX reset; FG 8)\]"
 history_clr="\[$(FX reset; FG 2)\]"
 error_clr="\[$(FX reset; FG 7; BG 1)\]"
@@ -248,7 +247,6 @@ if test -z "$BASH"; then
     root_user_clr=${root_user_clr#\\[}
     at_clr=${at_clr#\\[}
     hostname_clr=${hostname_clr#\\[}
-    ssh_clr=${ssh_clr#\\[}
     jobs_clr=${jobs_clr#\\[}
     history_clr=${history_clr#\\[}
     error_clr=${error_clr#\\[}
@@ -263,7 +261,6 @@ if test -z "$BASH"; then
     root_user_clr=${root_user_clr%\\]}
     at_clr=${at_clr%\\]}
     hostname_clr=${hostname_clr%\\]}
-    ssh_clr=${ssh_clr%\\]}
     jobs_clr=${jobs_clr%\\]}
     history_clr=${history_clr%\\]}
     error_clr=${error_clr%\\]}
@@ -286,7 +283,7 @@ PS1="$reset"
 PS1="$PS1\$(prompt_error '$error_clr[%s]$reset ')"
 PS1="$PS1\$(prompt_combine '$bracket_clr{$jobs_clr%s$bracket_clr} ' '|' \$(prompt_running '\&') \$(prompt_stopped 'z'))"
 PS1="$PS1\$(prompt_git '$bracket_clr($git_branch_clr %b $git_status_clr%f$bracket_clr) ')"
-PS1="$PS1\$(is_ssh && printf '%s\h:' '$ssh_clr')"
+PS1="$PS1\$(is_ssh && printf '%s\h:' '$hostname_clr')"
 PS1="$PS1\$(prompt_pwd '$dir_clr' '$slash_clr')"
 PS1="$PS1$reset\n"
 
@@ -318,7 +315,7 @@ fi # End sh-specific section
 unset dir_clr slash_clr hostname_clr at_clr bracket_clr
 unset git_branch_clr git_status_clr
 unset history_clr error_clr prompt_clr user_clr root_user_clr
-unset ssh_clr jobs_clr
+unset jobs_clr
 unset reset
 
 # vim: foldlevel=0
