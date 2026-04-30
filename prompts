@@ -278,21 +278,17 @@ if test -n "$BASH"; then
 #############################################
 # This prompt looks roughly like this:
 #
-# pwd
-# user@host ssh (git branch git status) {background|suspended|detached} !history [$?]
-# $_
+# [$?] {background|suspended} (git branch git status) [remote hostname:]pwd
+# _
 #############################################
 
 PS1="$reset"
-PS1="$PS1\$(prompt_pwd '$dir_clr' '$slash_clr')"
-PS1="$PS1\n"
-PS1="$PS1$user_clr\u$at_clr@$hostname_clr\h "
-PS1="$PS1$ssh_clr\$(prompt_ssh && echo 'ssh ')"
-PS1="$PS1\$(prompt_git '$bracket_clr($git_branch_clr %b $git_status_clr%f$bracket_clr) ')"
+PS1="$PS1\$(prompt_error '$error_clr[%s]$reset ')"
 PS1="$PS1\$(prompt_combine '$bracket_clr{$jobs_clr%s$bracket_clr} ' '|' \$(prompt_running '\&') \$(prompt_stopped 'z'))"
-PS1="$PS1\$(prompt_error '$error_clr[%s]$reset')"
-PS1="$PS1\n"
-PS1="$PS1$prompt_clr$ $reset"
+PS1="$PS1\$(prompt_git '$bracket_clr($git_branch_clr %b $git_status_clr%f$bracket_clr) ')"
+PS1="$PS1\$(is_ssh && printf '%s\h:' '$ssh_clr')"
+PS1="$PS1\$(prompt_pwd '$dir_clr' '$slash_clr')"
+PS1="$PS1$reset\n"
 
 # Need to save $? here so that ps1_error can occur anywhere in the prompt
 # Otherwise, new_pwd will clobber the value of $? that we want
