@@ -80,11 +80,16 @@ prompt_combine() {
 }
 
 # prompt_load: Get system load {{{2
+#
+# Arguments:
+#   $1: separator
+#
+# Output: <1 min load><separator><5 min load>
+#
 prompt_load () {
     local one=
     local five=
-    local rest=
-    read -r one five rest < /proc/loadavg
+    read -r one five _ < /proc/loadavg
     printf "%s:%s" "$one" "$five"
 }
 
