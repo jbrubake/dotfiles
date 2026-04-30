@@ -603,7 +603,6 @@ set listchars+=tab:»\                " Show real tabs
 set listchars+=trail:.               " Show trailing spaces and higlight them
 set listchars+=eol:¬                 " Show end of line
 set listchars+=nbsp:+                " Show non-breaking space
-set cursorline                       " Highlight current line
 set visualbell                       " Blink instead of beep
 set relativenumber                   " Show relative line number
 set number                           " Show line number of current line
@@ -625,6 +624,13 @@ set undofile                         " Persistent undo tree
 set undodir=~/.vim/undo              " Put undo files here
 call mkdir(&undodir, "p", 0o700)
 set path^=$DOTFILES                  " Search for files in $DOTFILES
+
+" Use cursorline only in active window
+" TODO: cursorline is off when vim is first opened
+augroup cursorline | autocmd!
+    autocmd WinEnter,FocusGained * setlocal cursorline
+    autocmd WinLeave,FocusLost   * setlocal nocursorline
+augroup end
 
 " ttymouse is not properly set if TERM=tmux*
 " and then I can't use the mouse to resize splits
