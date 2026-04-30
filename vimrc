@@ -21,7 +21,7 @@
 " ==============
 " Source .vimrc when saving changes
 augroup vimrc | autocmd!
-    autocmd vimrc BufWritePost ~/.vimrc nested source ~/.vimrc
+    autocmd vimrc BufWritePost $MYVIMRC nested source $MYVIMRC
 augroup end
 
 if has ('clientserver') && empty(v:servername) && exists('*remote_startserver')
