@@ -129,9 +129,15 @@ prompt_error () {
 #
 #
 # Arguments:
-#   $1: String to print immediately before branch name
-#   $2: String to print immediately after branch name
-#   $3: String to print immediately after repo status
+#   $1: Format string. %b is replaced with the branch name. %f is replaced with
+#       the status flags. If $1 == -h or --help, the status flag meanings are
+#       printed
+#
+# Example:
+#   # In a repo with uncommitted changes and stashed files:
+#   $ prompt_git '(%b: %s)'
+#   (branch: +$)
+#
 prompt_git() {
     case $1 in
         '-h' | '--help')
@@ -155,7 +161,7 @@ END
 	# Get the short symbolic ref. If HEAD isn’t a symbolic ref, get a
 	# tracking remote branch or tag. Otherwise, get the
 	# short SHA for the latest commit, or give up.
-	branchName=" $(git symbolic-ref --quiet --short HEAD 2> /dev/null || \
+	branchName="$(git symbolic-ref --quiet --short HEAD 2> /dev/null || \
 		git describe --all --exact-match HEAD 2> /dev/null || \
 		git rev-parse --short HEAD 2> /dev/null || \
 		printf '%s' '(unknown)')"
@@ -177,9 +183,7 @@ END
         s+='$';
     fi;
 
-	[ -n "${s}" ] && s=" ${s}";
-
-	printf "%s%s%s%s%s" "$1" "$branchName" "$2" "$s" "$3"
+    printf '%s' "$1" | sed -e "s/%b/$branch/" -e "s/%f/$s/"
 }
 
 fi # End bash-specific section
@@ -257,7 +261,7 @@ PS1="$PS1\$(prompt_pwd '$dir_clr' '$slash_clr')"
 PS1="$PS1\n"
 PS1="$PS1$user_clr\u$at_clr@$hostname_clr\h "
 PS1="$PS1$ssh_clr\$(prompt_ssh && echo 'ssh ')"
-PS1="$PS1\$(prompt_git '$bracket_clr($git_branch_clr' '$git_status_clr' '$bracket_clr) ')"
+PS1="$PS1\$(prompt_git '$bracket_clr($git_branch_clr %b $git_status_clr%f$bracket_clr) ')"
 PS1="$PS1\$(prompt_combine \
     \"$bracket_clr{$jobs_clr\" \
     \"$bracket_clr} \" \
