@@ -94,19 +94,22 @@ prompt_load () {
 }
 
 # prompt_uptime: Get uptime {{{2
+#
+# Output: N days HH:mm
+#
 prompt_uptime () {
     local uptime=$(cat /proc/uptime)
     uptime=${uptime%%.*}
 
-    local mins=$(( uptime/60%60 ))
-    local hours=$(( uptime/60/60%24 ))
     local days=$(( uptime/60/60/24 ))
 
-    if [ "$days" -ne "0" ]
-    then
-        printf "%sd " "${days}"
+    if [ "$days" -eq "0" ]; then
+        unset days
+    else
+        days="$days days "
     fi
-    printf "%s:%s" "${hours}" "${mins}"
+
+    printf '%s%s:%s' "$days" "$(( uptime/60/60%24 ))" "$(( uptime/60%60 ))"
 }
 
 # is_ssh: Determine if running under ssh {{{2
