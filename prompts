@@ -135,19 +135,27 @@ prompt_pwd () {
 
 # prompt_error: Print exit value of last command if it is non-zero {{{2
 #
-# prompt_error modified from Yu-Jie Lin's example <libb.wordpress.com>
+# Modified from Yu-Jie Lin's example <libb.wordpress.com>
+#
+# Prior to calling prompt_error() RETVAL must be set to the exit value to
+# display. Simply add RETVAL=$? to the beginning of $PROMPT_COMMAND
 #
 # Arguments:
-#   $1: output color
+#   $1: format string. %s will be replaced with $RETVAL, centered and padded to
+#       3 characters
+#
+# Example:
+#   $ RETVAL=1; prompt_error '[%s]'
+#   [ 1 ]
+#   $ RETVAL=10; prompt_error '[%s]'
+#   [ 10]
+#   $ RETVAL=100; prompt_error '[%s]'
+#   [100]
+#
 prompt_error () {
-    local error_clr="$1"
-
-    if [ "$RETVAL" -gt 0 ]; then (( i = 3 - ${#RETVAL} ));
-        printf "%s[" "$error_clr";
-        [ "$i" -gt 0 ] && printf "%s" " ";
-        printf "%s" "$RETVAL";
-        [ "$i" -eq 2 ] && printf "%s" " ";
-        printf "]" ;
+    if [ "$RETVAL" -gt 0 ]; then
+        [ ${#RETVAL} = 1 ] && RETVAL="$RETVAL "
+        printf %s "$1" | sed "s/%s/$( printf '%3s' "$RETVAL" )/"
     fi
 }
 
@@ -283,7 +291,7 @@ PS1="$PS1$ssh_clr\$(prompt_ssh && echo 'ssh ')"
 PS1="$PS1\$(prompt_git '$bracket_clr($git_branch_clr %b $git_status_clr%f$bracket_clr) ')"
 PS1="$PS1\$(prompt_combine '$bracket_clr{$jobs_clr%s$bracket_clr} ' '|' \$(prompt_running '\&') \$(prompt_stopped 'z'))"
 PS1="$PS1$bracket_clr!$history_clr\! "
-PS1="$PS1\$(prompt_error '$error_clr')$reset"
+PS1="$PS1\$(prompt_error '$error_clr[%s]$reset')"
 PS1="$PS1\n"
 PS1="$PS1$prompt_clr$ $reset"
 
