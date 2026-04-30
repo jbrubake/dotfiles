@@ -253,6 +253,7 @@ if test -z "$BASH"; then
     prompt_clr=${prompt_clr#\\[}
     bracket_clr=${bracket_clr#\\[}
     reset=${reset#\\[}
+
     dir_clr=${dir_clr%\\]}
     slash_clr=${slash_clr%\\]}
     git_branch_clr=${git_branch_clr%\\]}
@@ -307,8 +308,6 @@ PS1="$reset\
 $dir_clr\$(pwd)
 $bracket_clr$user_clr$(whoami)$at_clr@$hostname_clr$(hostname)$bracket_clr
 $reset"
-# PS1="\$(pwd)
-# <$(whoami)@$(hostname)>\$ "
 fi # End sh-specific section
 # }}}
 # Clean up {{{1
