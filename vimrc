@@ -427,6 +427,16 @@ autocmd plugins FileType gitcommit setlocal completeopt-=preview
 
 " No configuration needed
 
+" vim-table-mode           VIM Table Mode for instant table creation                              plugurl:dhruvasagar/vim-table-mode " {{{3
+
+" No configuration needed
+"
+" TODO: Open an issue that allows tables like
+"
+" foo | bar      | baz
+" --- | ---      | ---
+" asd | asdfasdf | asdf
+
 " vim-terraform:           basic vim/terraform integration                                        plugurl:hashivim/vim-terraform " {{{3
 
 " No configuration needed
