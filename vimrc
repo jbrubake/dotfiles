@@ -381,6 +381,10 @@ let g:vim_markdown_conceal_code_blocks = 0
 
 " No configuration needed
 
+" vim-redir:               Redirect the output of a Vim or external command into a scratch buffer plugurl:romainl/vim-redir type:opt " {{{3
+
+command! -nargs=? Redir packadd vim-redir | :Redir <args>
+
 " vim-repeat:              Enable repeating supported plugin maps with "."                        plugurl:tpope/vim-repeat " {{{3
 
 " No configuration needed
