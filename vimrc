@@ -445,10 +445,6 @@ autocmd plugins FileType gitcommit setlocal completeopt-=preview
 
 " No configuration needed
 
-" vim-textobj-user:        Create your own text objects (required by vim-textobj-sentence)        plugurl:kana/vim-textobj-user " {{{3
-
-" No configuration needed
-
 " vim-tmux:                Vim plugin for .tmux.conf                                              plugurl:tmux-plugins/vim-tmux " {{{3
 
 " No configuration needed
