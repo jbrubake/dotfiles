@@ -20,7 +20,6 @@ function! plugins#PackInit()
     " Delete everything but plugin lines
     :normal zR
     :silent! g!/^".*plugurl:/d
-    :silent! 1d " delete the example above
     " Delete 'plugin name, description and 'plugurl:'
     :silent! %s/^".*plugurl://
     " Delete comments
