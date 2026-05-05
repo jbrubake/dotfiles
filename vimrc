@@ -1134,9 +1134,10 @@ function! s:colorscheme_local() abort
     highlight! link User1 StatusLine
     " }}}
     " Column and row highlighting {{{
-    highlight ColorColumn  cterm=NONE            ctermbg=23                          guibg=#003644
-    highlight CursorLine   cterm=NONE            ctermbg=23                          guibg=#003644
-    highlight CursorLineNr cterm=NONE ctermfg=15 ctermbg=NONE gui=NONE guifg=#ffffff guibg=NONE
+    highlight  ColorColumn  cterm=NONE            ctermbg=23                          guibg=#003644
+    highlight  CursorLineNr cterm=NONE ctermfg=15 ctermbg=NONE gui=NONE guifg=#ffffff guibg=NONE
+    highlight  CursorLine   cterm=NONE            ctermbg=23                          guibg=#003644
+    highlight! link CursorColumn CursorLine
     " }}}
     " Spelling colors {{{
     highlight SpellBad   cterm=undercurl ctermul=160 ctermbg=NONE gui=undercurl guisp=#d70000 guibg=NONE
