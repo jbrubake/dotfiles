@@ -798,6 +798,10 @@ cnoremap <expr> <CR> ccr#CCR()
 "
 nnoremap <silent> <leader>c <Cmd>call wbtmgmt#ToggleColorColumn()<cr>
 
+" <leader>C:           toggle cursorcolumn {{{2
+"
+map <leader>C :set cursorcolumn!<cr>
+
 " <leader>l:           toggle listchars {{{2
 nnoremap <silent> <leader>l <Cmd>set list!<cr>
 
