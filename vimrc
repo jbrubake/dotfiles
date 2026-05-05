@@ -18,13 +18,14 @@
 
 " Initialization {{{1
 " ==============
+" Miscellaneous autocmds
+augroup misc | autocmd! | augroup end
+
 " Use a "file" mark to open .vimrc
 nmap <silent> 'V <Cmd>next $MYVIMRC<CR>
 
 " Source .vimrc when saving changes
-augroup vimrc | autocmd!
-    autocmd vimrc BufWritePost $MYVIMRC nested source $MYVIMRC
-augroup end
+autocmd misc BufWritePost $MYVIMRC nested source $MYVIMRC 
 
 if has ('clientserver') && empty(v:servername) && exists('*remote_startserver')
     call remote_startserver('VIM')
@@ -627,10 +628,8 @@ set path^=$DOTFILES                  " Search for files in $DOTFILES
 
 " Use cursorline only in active window
 " TODO: cursorline is off when vim is first opened
-augroup cursorline | autocmd!
-    autocmd WinEnter,FocusGained * setlocal cursorline
-    autocmd WinLeave,FocusLost   * setlocal nocursorline
-augroup end
+autocmd misc WinEnter,FocusGained * setlocal cursorline
+autocmd misc WinLeave,FocusLost   * setlocal nocursorline
 
 " ttymouse is not properly set if TERM=tmux*
 " and then I can't use the mouse to resize splits
@@ -641,12 +640,10 @@ if &term =~ "tmux" | set ttymouse=sgr | endif
 " Ignore buffers that don't work with autotab
 if executable('autotab')
     let autotab_blacklist = ['fugitive']
-    augroup autotab | autocmd!
-        autocmd BufReadPost *
-            \ if bufname('%:p') != "" && index(autotab_blacklist, &ft) < 0 |
-                \ execute system("autotab -l <" .  bufname('%:p')) |
-            \ endif
-    augroup end
+    autocmd misc BufReadPost *
+        \ if bufname('%:p') != "" && index(autotab_blacklist, &ft) < 0 |
+            \ execute system("autotab -l <" .  bufname('%:p')) |
+        \ endif
 endif
 
 " When editing a file, always jump to the last known cursor position.
@@ -657,27 +654,21 @@ endif
 " them to have dual nature, so to speak)
 "
 " From $VIMRUNTIME/defaults.vim (Vim 9.1.825, Fedora 39)
-augroup last_position | autocmd!
-    autocmd BufReadPost *
-        \ let line = line("'\"")
-        \ | if line >= 1 && line <= line("$") && &filetype !~# 'commit'
-        \      && index(['xxd', 'gitrebase'], &filetype) == -1
-        \ |   execute "normal! g`\""
-        \ | endif
-augroup end
+autocmd misc BufReadPost *
+    \ let line = line("'\"")
+    \ | if line >= 1 && line <= line("$") && &filetype !~# 'commit'
+    \      && index(['xxd', 'gitrebase'], &filetype) == -1
+    \ |   execute "normal! g`\""
+    \ | endif
 " Absolute & Hybrid line numbers by buffer status {{{2
 "
 " https://jeffkreeftmeijer.com/vim-number/
-augroup numbertoggle | autocmd!
-  autocmd BufEnter,FocusGained,InsertLeave,WinEnter * if &number && mode() != 'i' | set relativenumber   | endif
-  autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &number                  | set norelativenumber | endif
-augroup end
+autocmd misc BufEnter,FocusGained,InsertLeave,WinEnter * if &number && mode() != 'i' | set relativenumber   | endif
+autocmd misc BufLeave,FocusLost,InsertEnter,WinLeave   * if &number                  | set norelativenumber | endif
 
 " Automatically open quickfix window {{{2
-augroup quickfix | autocmd!
-    autocmd QuickFixCmdPost [^l]* cwindow
-    autocmd QuickFixCmdPost l*    lwindow
-augroup end
+autocmd misc QuickFixCmdPost [^l]* cwindow
+autocmd misc QuickFixCmdPost l*    lwindow
 
 " Searching {{{2
 if executable('rg') | set grepprg=rg\ --vimgrep | endif
@@ -741,9 +732,7 @@ set laststatus=2 " Always show status line
 set statusline=%!Statusline()
 
 " Terminal window status line
-augroup termwindow | autocmd!
-    autocmd TerminalWinOpen * setlocal statusline=%t
-augroup end
+autocmd misc TerminalWinOpen * setlocal statusline=%t
 
 " Folding {{{1
 "============
@@ -1142,9 +1131,7 @@ endfunction
 " Automatcially source custom colors when a colorscheme is loaded
 " unless we are running vimpager
 if !exists('g:vimpager.enabled')
-    augroup colors | autocmd!
-        autocmd ColorScheme * call s:colorscheme_local()
-    augroup end
+    autocmd misc ColorScheme * call s:colorscheme_local()
 endif
 " }}}
 
@@ -1196,9 +1183,7 @@ let &t_SR .= ""
 let &t_EI .= ""
 
 " Reset cursor on exit
-augroup cursor | autocmd!
-    autocmd VimLeave * silent !printf ']112\\'
-augroup end
+autocmd misc VimLeave * silent !printf ']112\\'
 " }}}
 
 " Private and Local Vimrc {{{1
