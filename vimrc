@@ -596,6 +596,87 @@ autocmd misc BufReadPost *
     \      && index(['xxd', 'gitrebase'], &filetype) == -1
     \ |   execute "normal! g`\""
     \ | endif
+
+" netrw {{{1
+" =====
+"
+" Based on ideas from https://vonheikemen.github.io/devlog/tools/using-netrw-vim-builtin-file-explorer/
+"
+let g:netrw_keepdir = 0 " Keep browsing directory separate from current directory
+let g:netrw_banner = 0  " Hide banner (I to toggle)
+let g:netrw_list_hide = '\(^\|\s\s\)\zs\.\S\+' " Hide dotfiles (gh to show)
+let g:netrw_localcopydircmd = 'cp -r'          " Allow copying directories
+
+" Open netrw in buffer directory
+nnoremap <leader>eb <Cmd>Lexplore %:p:h<CR>
+
+" Open netrw in current directory
+nnoremap <Leader>ee <Cmd>Lexplore<CR>
+
+" Configure netrw mappings
+"
+function! NetrwMapping()
+    " <localleader>ee : close netrw
+    " . : toggle hidden files
+    " H : go back in history
+    " H : go forward in history
+    " h : go up a directory
+    nmap <buffer> <Leader>ee <Cmd>Lexplore<CR>
+    nmap <buffer> . gh
+    nmap <buffer> H u
+    nmap <buffer> L U
+    nmap <buffer> h -
+
+    " l : open a file and close netrw
+    " L : open directory or file
+    " P : close preview window
+    nmap <buffer> l <CR><Cmd>Lexplore<CR>
+    nmap <buffer> L <CR>
+    nmap <buffer> P <C-w>z
+
+    " TAB : (un)mark a file
+    " Shift+TAB : unmark files in buffer
+    " <localleader>TAB : unmark all files
+    nmap <buffer> <TAB> mf
+    nmap <buffer> <S-TAB> mF
+    nmap <buffer> <localleader><TAB> mu
+
+    " ff : touch a file
+    " fe : rename a file
+    " fc : copy marked files
+    " fC : copy marked files to highlighted directory
+    " fx : move marked files
+    " fX : move marked files to highlighted directory
+    " f; : run external command on marked files
+    " FF : rm -rf WHAT???
+    nmap <buffer> ff %<Cmd>w<CR><Cmd>buffer #<CR>
+    nmap <buffer> fe R
+    nmap <buffer> fc mc
+    nmap <buffer> fC mtmc
+    nmap <buffer> fx mm
+    nmap <buffer> fX mtmm
+    nmap <buffer> f; mx
+    nmap <buffer> FF <Cmd>call netrw#RemoveRecursive()<CR>
+
+    " Convience mappings if banner is hidden
+    "
+    " fl : show marked files
+    " fq : show target directory
+    " fd : set target ???
+    nmap <buffer> fl <Cmd>echo join(netrw#Expose("netrwmarkfilelist"), "\n")<CR>
+    nmap <buffer> fq <Cmd>echo 'Target:' . netrw#Expose("netrwmftgt")<CR>
+    nmap <buffer> fd mtfq
+
+    " bb : create bookmark
+    " bd : remove last bookmark
+    " bl : jump to last bookmark
+    nmap <buffer> bb mb
+    nmap <buffer> bd mB
+    nmap <buffer> bl gb
+endfunction
+
+autocmd misc filetype netrw call NetrwMapping()
+
 " Absolute & Hybrid line numbers by buffer status {{{2
 "
 " https://jeffkreeftmeijer.com/vim-number/
