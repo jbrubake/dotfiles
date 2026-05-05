@@ -229,6 +229,102 @@ alias minpac_status='vim +PackStatus +only'          # show plugin status
 alias          gist='vim "+Gist -l"'                 # open Gist browser
 alias          trim='ex +"bufdo! %s/\s\+$//e" -scxa' # trim trailing whitespace
 
+# Trash can {{{1
+#
+# Aliases {{{2
+#
+# tm     : move to trash
+# tl     : list trash contents
+# tu     : restore file
+# trm    : delete from trash
+# tempty : empty trash
+# tinfo  : summary of trash can contents
+# tui    : restore files using TUI (gtrash only)
+# tuig   : restore groups of files using TUI (gtrash only)
+#
+  if have gtrash; then # {{{3
+        alias tm='gtrash put'
+        alias tl='gtrash find'
+        alias tu='gtrash find --restore'
+       alias trm='gtrash find --rm'
+    alias tempty='gtrash find --rm'
+     alias tinfo='gtrash summary'
+
+    # gtrash doesn't need this
+    unset _tinfo
+
+       alias tui='gtrash restore'
+      alias tuig='gtrash restore-group'
+
+elif have trash-d; then # {{{3
+        alias tm='trash-d --recursive --force'
+        alias tl='trash-d --list'
+        alias tu='trash-d --recursive --restore'
+       alias trm='trash-d --recursive --delete'
+    alias tempty='trash-d --empty'
+     alias tinfo=_tinfo
+
+elif have trash-put; then # {{{3
+        alias tm='trash-put -f'
+        alias tl=trash-list
+        alias tu=trash-restore
+       alias trm=trash-rm
+    alias tempty=trash-empty
+     alias tinfo=_tinfo
+
+elif have gio; then # {{{3
+        alias tm='gio trash -f'
+        alias tl='gio trash --list'
+        alias tu='_tu'
+       alias trm='echo "'\''trm'\'' not implemented" >&2; false'
+    alias tempty='gio trash --empty'
+     alias tinfo=_tinfo
+
+    _tu() { gio trash --restore "trash:///$1"; }
+fi
+
+# Disable rm {{{3
+alias tm >/dev/null && \
+    alias rm='printf "'\''rm'\'' disabled. Use '\''tm'\'' or '\''\\\rm'\''.\n" >&2; false'
+
+# Emulate 'gtrash summary' if gtrash is not installed {{{2
+#
+# Requires bc and numfmt
+_tinfo() {
+    # User trash can
+    cans=$XDG_DATA_HOME/Trash/files
+
+    # Look for user trash cans on other mountpoints, skipping places where
+    # one really should not exist
+    for topdir in $(command df --output=target |
+        sed -r '1d; /^\/$/d; /^\/\<(dev|sys|run|boot|home)\>/d'); do
+
+        can="$topdir/.Trash-$(id -u)"
+        [ -d "$can" ] && cans="$cans $can/files"
+    done
+
+    # Print summary for each trash can
+    count_total=0
+    size_total=0
+    for can in $cans; do
+        count=$(find "$can" -type f | wc -l)
+        # Use find to print file sizes with + appended (echo 0 finishes off
+        # the equation) and then add them
+        size=$( (find "$can" -type f -printf '%s+'; echo 0) | bc)
+
+        count_total=$((count_total + count))
+        size_total=$((size_total + size))
+
+        printf '[%s]\n' "$(printf %s "$can" | sed 's@/files$@@')"
+        printf 'item: %s\n' "$count"
+        printf 'size: %s\n' "$(numfmt --to=iec "$size" | sed 's/K/ kB/; s/M/ MB/')"
+        echo
+    done
+
+    printf '[total]\n'
+    printf 'item: %s\n' "$count_total"
+    printf 'size: %s\n' "$(numfmt --to=iec "$size_total" | sed 's/K/ kB/; s/M/ MB/')"
+}
 # Miscellaneous {{{1
 #
 have reset || alias reset='tput sgr0'  # reset terminal
