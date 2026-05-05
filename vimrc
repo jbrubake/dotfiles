@@ -199,7 +199,7 @@ cmap <C-X><C-H> <C-U>
 
 " SyntaxAttr.vim:          Show syntax highlighting attributes of character under cursor          plugurl:inkarkat/SyntaxAttr.vim " {{{3
 
-nnoremap -a :call SyntaxAttr#SyntaxAttr()<CR>
+nnoremap -a <Cmd>call SyntaxAttr#SyntaxAttr()<CR>
 
 " tagalong.vim:            Change an HTML(ish) tag and update the matching one                    plugurl:AndrewRadev/tagalong.vim " {{{3
 
@@ -244,7 +244,7 @@ endif
 
 " ugbi:                    UserGettingBored Improved Vim Plugin                                   plugurl:mikesmithgh/ugbi type:opt " {{{3
 
-command! -nargs=0 UgbiEnable packadd ugbi | :UgbiEnable
+command! -nargs=0 UgbiEnable packadd ugbi | UgbiEnable
 
 " vim-characterize         Unicode character metadta                                              plugurl:tpope/vim-characterize " {{{3
 
