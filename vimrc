@@ -18,8 +18,8 @@
 
 " Initialization {{{1
 " ==============
-" Open .vimrc
-nmap <silent> ev :next $MYVIMRC<CR>
+" Use a "file" mark to open .vimrc
+nmap <silent> 'V <Cmd>next $MYVIMRC<CR>
 
 " Source .vimrc when saving changes
 augroup vimrc | autocmd!
