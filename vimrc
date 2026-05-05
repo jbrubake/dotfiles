@@ -174,31 +174,6 @@ execute 'autocmd plugins Filetype ' . g:colorizer_auto_filetype . ' packadd Colo
 
 " Loaded by LoadGit()
 
-" fzf:                     Fuzzy finder                                                           plugurl:junegunn/fzf type:opt " {{{3
-
-if executable('fzf') | silent packadd! fzf | endif
-
-" fzf-checkout.vim:        Manage branches and tags with fzf                                      plugurl:stsewd/fzf-checkout.vim type:opt " {{{3
-
-if executable('fzf') | let s:git_plugins += ['fzf-checkout.vim'] | endif
-
-" fzf.vim:                 fzf vim plugin                                                         plugurl:junegunn/fzf.vim type:opt " {{{3
-
-if executable('fzf') | silent packadd! fzf.vim | endif
-
-" :Files [PATH]     " Files ($FZF_DEFAULT_COMMAND)
-" :GFiles [OPTS]    " Git files (git ls-files)
-" :GFiles?          " Git files (git status)
-" :Buffers          " Vim buffers
-" :Rg [PATTERN]     " Search using ripgrep
-" :Lines [QUERY]    " Lines in all buffers
-" :BLines [QUERY]   " Lines in current buffer
-" :Tags [QUERY]     " Tags in current project (ctags -R)
-" :BTags [QUERY]    " Tags in current buffer
-" :Marks            " Marks
-" :Snippets         " Snippets (UltiSnips)
-" :Commits          " Git commits (vim-fugitive)
-
 " indentLine:              Display the indentation levels with thin vertical lines                plugurl:wickles/indentLine " {{{3
 
 let g:indentLine_char = '│'
