@@ -865,6 +865,9 @@ vmap <localleader>y "+y
 nmap <localleader>y "+y
 nmap <localleader>Y "+Y
 
+" v_p:                 do not yank replaced text {{{2
+"
+xnoremap p P
 
 " :w!!:                write file when I forget to sudo {{{2
 cnoremap w!! w !sudo tee % >/dev/null
