@@ -891,6 +891,10 @@ nnoremap <F2> <Cmd>set norelativenumber!<CR>
 
 inoremap <C-u> <esc>gUiwea
 
+"                      Add count to dot {{{2
+
+nnoremap . :<C-u>execute "normal! " . repeat(".", v:count1)<CR>
+
 " vim-fugitive & vim-gitgutter: {{{2
 "
 nnoremap <leader>gg <Cmd>Git<CR>
