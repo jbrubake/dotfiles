@@ -441,10 +441,6 @@ autocmd plugins FileType gitcommit setlocal completeopt-=preview
 
 " No configuration needed
 
-" vim-textobj-sentence:    Improving native sentence text object and motion                       plugurl:preservim/vim-textobj-sentence " {{{3
-
-" No configuration needed
-
 " vim-tmux:                Vim plugin for .tmux.conf                                              plugurl:tmux-plugins/vim-tmux " {{{3
 
 " No configuration needed
