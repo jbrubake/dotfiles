@@ -87,14 +87,6 @@ endfunction
 
 autocmd plugins VimEnter,DirChanged * call LoadGit()
 
-" a.vim:                   Swap header and source files                                           plugurl:vim-scripts/a.vim " {{{3
-
-" :A : Switch between header and source files
-" :AS: Split and switch
-" :AV: Vertical split and switch
-
-" ~/.vim/after/plugin/unmap.vim: remove annoying insert-mode mappings
-
 " ansible-vim:             Syntax highlighting Ansible's common filetypes                         plugurl:pearofducks/ansible-vim " {{{3
 
 let g:ansible_attribute_highlight      = 'ab' " highlight all key=value pairs
