@@ -807,12 +807,7 @@ nnoremap <silent> <leader>l <Cmd>set list!<cr>
 
 " <leader>s:           split line {{{2
 "
-" https://gist.github.com/romainl/3b8cdc6c3748a363da07b1a625cfc666
-function! BreakHere()
-    s/^\(\s*\)\(.\{-}\)\(\s*\)\(\%#\)\(\s*\)\(.*\)/\1\2\r\1\4\6
-    call histdel("/", -1)
-endfunction
-nnoremap <leader>s <Cmd>call BreakHere()<CR>
+nnoremap <leader>s <Cmd>call split_line#BreakHere()<CR>
 
 " <localleader><F7>    toggle spellcheck {{{2
 nnoremap <localleader><F7> <Cmd>setlocal spell!<CR>
