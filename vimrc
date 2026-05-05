@@ -307,6 +307,10 @@ endif
 
 command! -nargs=0 UgbiEnable packadd ugbi | :UgbiEnable
 
+" vim-characterize         Unicode character metadta                                              plugurl:tpope/vim-characterize " {{{3
+
+" No configuration needed
+
 " vim-closetag:            Easily close HTML/XML tags                                             plugurl:alvan/vim-closetag " {{{3
 
 "   Current content:
