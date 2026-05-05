@@ -18,7 +18,6 @@ function! plugins#PackInit()
     " We definitely want this
     :setlocal noignorecase
     " Delete everything but plugin lines
-    :normal zR
     :silent! g!/^".*plugurl:/d
     " Delete 'plugin name, description and 'plugurl:'
     :silent! %s/^".*plugurl://
