@@ -794,6 +794,17 @@ nnoremap <expr> M ':%s/' . @/ . '//g<Left><Left>'
 "
 cnoremap <expr> <CR> ccr#CCR()
 
+" Quickfix Window {{{2
+"
+" nnoremap <silent> <LEFT>          :cprev<CR>
+" nnoremap <silent> <RIGHT>         :cnext<CR>
+" nnoremap <silent> <LEFT><LEFT>    :cpfile<CR><C-G>
+" nnoremap <silent> <RIGHT><RIGHT>  :cnfile<CR><C-G>
+
+" Toggle quickfix and location list
+nnoremap <silent> <F3> <Cmd>call qfhistory#ToggleQuickFix(1)<cr>
+nnoremap <silent> <F4> <Cmd>call qfhistory#ToggleQuickFix(0)<cr>
+
 " <leader>c:           toggle colorcolumn {{{2
 "
 nnoremap <silent> <leader>c <Cmd>call wbtmgmt#ToggleColorColumn()<cr>

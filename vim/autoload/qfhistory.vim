@@ -1,3 +1,13 @@
+function! qfhistory#ToggleQuickFix(global)
+    let which = a:global ? 'c' : 'l'
+
+    if empty(filter(getwininfo(), 'v:val.quickfix'))
+        execute which . 'open'
+    else
+        execute which . 'close'
+    endif
+endfunction
+
 " Cycle through quickfix and location history
 " https://vimways.org/2018/colder-quickfix-lists/
 "
