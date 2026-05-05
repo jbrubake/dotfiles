@@ -78,6 +78,11 @@ function! LoadGit()
     if !empty(get(g:, 'fugitive_gitea_domains', "")) " Set in private config
         packadd fugitive-gitea
     endif
+
+    " TODO: I would rather make subcommands to :Git
+    command! -bar -nargs=* JumpDiff  cexpr system('git jump --stdout diff'  . expand(<q-args>))
+    command! -bar -nargs=* JumpMerge cexpr system('git jump --stdout merge' . expand(<q-args>))
+    command! -bar -nargs=* JumpGrep  cexpr system('git jump --stdout grep'  . expand(<q-args>))
 endfunction
 
 autocmd plugins VimEnter,DirChanged * call LoadGit()
