@@ -13,8 +13,8 @@ function! plugins#PackInit()
 
     " Create the plugin list file
     "
-    :enew
-    :read $MYVIMRC
+    " Read vimrc into a new buffer
+    :enew | read $MYVIMRC
     " We definitely want this
     :setlocal noignorecase
     " Delete everything but plugin lines
@@ -31,7 +31,7 @@ function! plugins#PackInit()
     :silent! %s/$/})/
 
     " Note that the file should not be edited
-    :norm ggI"" Generated file. Do not edit"
+    :normal ggI"" Generated file. Do not edit"
 
     " Write and source the package list
     let pkgfile = '~/.vim/plugins.vim'
