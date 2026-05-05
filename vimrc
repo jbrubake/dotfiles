@@ -450,6 +450,8 @@ endfunction
 
 " YankRing.vim:            Maintains a history of previous yanks, changes and deletes             plugurl:vim-scripts/YankRing.vim " {{{3
 
+nnoremap <silent> <F5> :YRShow<CR>
+
 let g:yankring_history_dir = 
     \ ($XDG_CACHE_HOME != '') ? $XDG_CACHE_HOME : '~/.cache'
 
