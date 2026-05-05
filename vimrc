@@ -774,7 +774,14 @@ set foldtext=NeatFoldText()
 
 " Mappings & Commands {{{1
 "========================
-" Help {{{2
+" Mapping Help {{{2
+"
+" :map <key>         : see what is mapped to <key>
+" :verbose map <key> : also see where it was last mapped
+" :help key-notation : how to express special keys
+"
+" Modes (:help map-commands)
+" --------------------------
 " map:  normal, visual, select, operator-pending
 " nmap: normal
 " vmap: visual and select
@@ -786,11 +793,20 @@ set foldtext=NeatFoldText()
 " cmap: command line
 " lmap: insert, command line, language-arg
 "
-" *nore*: non-recursive mapping
+" ?nore*: non-recursive mapping
 "
+" Options
+" -------
 " <silent> : don't echo mapping on command line
 " <expr>   : mapping inserts result of {rhs}
 " <buffer> : buffer local mapping
+"
+" Other
+" -----
+" <bar> : use in {rhs} to chain commands
+"
+" Command Help {{{2
+"
 
 " Window Management: {{{2
 " ==================
