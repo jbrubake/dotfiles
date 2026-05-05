@@ -380,7 +380,11 @@ let g:vim_markdown_folding_level = 1
 let g:vim_markdown_override_foldtext = 0
 let g:vim_markdown_follow_anchor = 1
 let g:vim_markdown_conceal_code_blocks = 0
- 
+
+" vim-qlist:               Send results of :ilist and related commands to the quickfix list       plugurl:romainl/vim-qlist " {{{3
+
+" No configuration needed
+
 " vim-redact-pass.git:     Do not write passwords into vim files when using pass(1)               plugurl:https://dev.sanctum.geek.nz/code/vim-redact-pass.git rev:master " {{{3
 
 " No configuration needed
