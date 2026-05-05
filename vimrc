@@ -790,6 +790,10 @@ nnoremap S :%s//g<Left><Left>
 " Populate a global search & replace with previous search
 nnoremap <expr> M ':%s/' . @/ . '//g<Left><Left>'
 
+" Simplify jumping to results of a "list" command
+"
+cnoremap <expr> <CR> ccr#CCR()
+
 " <leader>c:           toggle colorcolumn {{{2
 "
 nnoremap <silent> <leader>c <Cmd>call wbtmgmt#ToggleColorColumn()<cr>
