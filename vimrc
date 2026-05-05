@@ -763,19 +763,7 @@ nnoremap <C-Left>  <C-w><
 nnoremap <C-Right> <C-w>>
 " Maximize/Minimize window with CTRL-W m  {{{3
 "
-" pmalek (github.com/pmalek/toggle-maximize.vim)
-let t:maximizeCurrentWindow = 0
-function! ToggleMaximizeCurrentWindow()
-    if t:maximizeCurrentWindow == 0
-        :vertical resize
-        :resize
-        let t:maximizeCurrentWindow = 1
-    else
-        :exe "normal \<C-W>="
-        let t:maximizeCurrentWindow = 0
-    endif
-endfunction
-nnoremap <silent> <C-W>m <Cmd>call ToggleMaximizeCurrentWindow() <cr>
+nnoremap <silent> <C-W>m <Cmd>call wbtmgmt#ToggleMaximizeCurrentWindow() <cr>
 
 " Buffer Management {{{2
 "
@@ -804,15 +792,7 @@ nnoremap <expr> M ':%s/' . @/ . '//g<Left><Left>'
 
 " <leader>c:           toggle colorcolumn {{{2
 "
-" Kevin Kuchta (www.vimbits.com/bits/317)
-function! g:ToggleColorColumn()
-    if &colorcolumn == ''
-        setlocal colorcolumn=80
-    else
-        setlocal colorcolumn&
-    endif
-endfunction
-nnoremap <silent> <leader>c <Cmd>call g:ToggleColorColumn()<cr>
+nnoremap <silent> <leader>c <Cmd>call wbtmgmt#ToggleColorColumn()<cr>
 
 " <leader>l:           toggle listchars {{{2
 nnoremap <silent> <leader>l <Cmd>set list!<cr>
