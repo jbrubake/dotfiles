@@ -63,18 +63,20 @@ let s:git_plugins = []
 
 function! LoadGit()
     silent! !git rev-parse --is-inside-work-tree
-    if ! v:shell_error " v:shell_error truth is backwards from vim truth
-        for s:p in s:git_plugins
-            execute 'packadd ' . s:p
-        endfor
+    if v:shell_error
+        return
+    endif
 
-        if !empty(get(g:, 'fugitive_gitlab_domains', "")) " Set in private config
-            packadd fugitive-gitlab
-        endif
+    for s:p in s:git_plugins
+        execute 'packadd ' . s:p
+    endfor
 
-        if !empty(get(g:, 'fugitive_gitea_domains', "")) " Set in private config
-            packadd fugitive-gitea
-        endif
+    if !empty(get(g:, 'fugitive_gitlab_domains', "")) " Set in private config
+        packadd fugitive-gitlab
+    endif
+
+    if !empty(get(g:, 'fugitive_gitea_domains', "")) " Set in private config
+        packadd fugitive-gitea
     endif
 endfunction
 
