@@ -3,7 +3,7 @@
 " Each package should be on a commented line that looks like:
 " <name>: <description> plugurl:<repo> [type:<type>] [rev:<rev>] [" comment...]
 "
-function plugins#PackInit()
+function! plugins#PackInit()
     " Load and initialize minpac
     packadd minpac
     call minpac#init()

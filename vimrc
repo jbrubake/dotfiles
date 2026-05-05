@@ -61,7 +61,7 @@ augroup plugins | autocmd! | augroup end
 " List of plugins to load
 let s:git_plugins = []
 
-function LoadGit()
+function! LoadGit()
     silent! !git rev-parse --is-inside-work-tree
     if ! v:shell_error " v:shell_error truth is backwards from vim truth
         for s:p in s:git_plugins
@@ -118,7 +118,7 @@ autocmd plugins BufRead,BufNewFile playbooks/*.yml  set filetype=yaml.ansible
 
 " See Mappings & Commands -> Cscope for mappings
 
-function LoadCCTree()
+function! LoadCCTree()
     if filereadable($CSCOPE_DB)
         let s:db = $CSCOPE_DB
     elseif filereadable("cscope.out")
@@ -304,7 +304,7 @@ let g:tagalong_additional_filetypes = ['xml', 'html', 'php']
 
 " tagbar:                  Source code browser using ctags                                        plugurl:preservim/tagbar type:opt " {{{3
 
-function LoadTagbar()
+function! LoadTagbar()
     if ! filereadable('tags') && empty(glob('*.md')) == 1
         return 0
     endif
@@ -383,7 +383,7 @@ endif
 
 " ugbi:                    UserGettingBored Improved Vim Plugin                                   plugurl:mikesmithgh/ugbi type:opt " {{{3
 
-command -nargs=0 UgbiEnable packadd ugbi | :UgbiEnable
+command! -nargs=0 UgbiEnable packadd ugbi | :UgbiEnable
 
 " vim-closetag:            Easily close HTML/XML tags                                             plugurl:alvan/vim-closetag " {{{3
 
@@ -422,7 +422,7 @@ let s:git_plugins += ['vim-fugitive-blame-ext']
 
 " vim-gist:                Edit github.com gists with vim                                         plugurl:mattn/vim-gist type:opt " {{{3
 
-command -nargs=? Gist packadd webapi-vim | packadd vim-gist | :Gist <args>
+command! -nargs=? Gist packadd webapi-vim | packadd vim-gist | :Gist <args>
 
 let g:gist_post_private = 1 " Private gists by default
                             " :Gist -P to create public Gist
