@@ -219,58 +219,6 @@ cmap <C-X><C-H> <C-U>
 
 nnoremap -a :call SyntaxAttr#SyntaxAttr()<CR>
 
-" tabular:                 Smart alignment of tables                                              plugurl:godlygeek/tabular " {{{3
-
-" :Tabularize /<delimiter>/<format>
-"
-" <format> : (l)eft, (r)ight, (center)
-"     Each can be followed by a number indicating padding
-"
-" Example:
-"     x = 12;
-"     num = 13;
-"     var2 = 1;
-"
-"     :Tabularize /=/l0r1
-"
-"     x   = 12;
-"     num = 13;
-"     var2= 1;
-"
-" Example:
-"     osh/Sh6: V6 sh ports (http://v6shell.org)
-"     sent: Console "powerpoint" (http://tools.suckless.org/sent)
-"     pixie: Color picker (http://nattyware.com/pixie.php)
-"
-"     Align on *first* character only:
-"     :Tabularize /^[^:]*\zs:
-"
-"     osh/Sh6 : V6 sh ports (http://v6shell.org)
-"     sent    : Console "powerpoint" (http://tools.suckless.org/sent)
-"     pixie   : Color picker (http://nattyware.com/pixie.php)
-"
-" :AddTabularPattern <name> <pattern> allows you to save patterns
-"
-"
-" Custom mappings:
-" ----------------
-" <Leader>t=  : = (with space)
-" <Leader>t:  : : (with space)
-" <Leader>t:: : : (no space before)
-" <Leader>t,  : , (with space)
-" <Leader>t|  : | (with space)
-"
-nmap <Leader>t=     <Cmd>Tabularize /=<cr>
-vmap <Leader>t=     <Cmd>Tabularize /=<cr>
-nmap <Leader>t:     <Cmd>Tabularize /:<cr>
-vmap <Leader>t:     <Cmd>Tabularize /:<cr>
-nmap <Leader>t::    <Cmd>Tabularize /:\zs<cr>
-vmap <Leader>t::    <Cmd>Tabularize /:\zs<cr>
-nmap <Leader>t,     <Cmd>Tabularize /,<cr>
-vmap <Leader>t,     <Cmd>Tabularize /,<cr>
-nmap <Leader>t<Bar> <Cmd>Tabularize /<Bar><cr>
-vmap <Leader>t<Bar> <Cmd>Tabularize /<Bar><cr>
-
 " tagalong.vim:            Change an HTML(ish) tag and update the matching one                    plugurl:AndrewRadev/tagalong.vim " {{{3
 
 " Plugin is active for these filetypes
