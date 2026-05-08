@@ -248,7 +248,7 @@ command! -nargs=0 UgbiEnable packadd ugbi | UgbiEnable
 
 " vim-characterize         Unicode character metadta                                              plugurl:tpope/vim-characterize " {{{3
 
-" No configuration needed
+nmap gA <Plug>(characterize)
 
 " vim-closetag:            Easily close HTML/XML tags                                             plugurl:alvan/vim-closetag " {{{3
 
@@ -275,7 +275,8 @@ let g:closetag_filetypes = 'sgml, xml, html, xhtml, phtml, php'
 
 " vim-easy-align:          A Vim alignment plugin                                                 plugurl:junegunn/vim-easy-align " {{{3
 
-" No configuration needed
+vmap <Enter> <Plug>(EasyAlign)
+nmap ga      <Plug>(EasyAlign)
 
 " vim-fugitive:            Git in Vim                                                             plugurl:tpope/vim-fugitive type:opt " {{{3
 
