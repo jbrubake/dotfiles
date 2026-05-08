@@ -257,8 +257,9 @@ case $PAGER in
             export LESSOPEN='||bat %s --decorations never --paging never --color=always'
         elif have pygmentize; then
             export LESSOPEN="||pygmentize -O style=$PYGMENTIZE_STYLE -g %s"
-        elif [ -x /usr/bin/lesspipe.sh ]; then
-            export LESSOPEN="||/usr/bin/lesspipe.sh %s"
+        elif [ -x "${lesspipe:=$(command -pv lesspipe.sh)}" ]; then
+            export LESSOPEN="||$lesspipe %s"
+            unset lesspipe
         fi
         ;;
 esac
