@@ -75,3 +75,5 @@
     smtpserverport = 465
     smtpuser = jbru362@gmail.com
 
+[diff]
+    mnemonicPrefix = true ; Use helpful file prefixes instead of a and b
