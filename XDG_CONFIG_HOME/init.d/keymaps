@@ -27,7 +27,7 @@ setxkbmap -layout us -variant altgr-intl \
 # Keep xmodmap stuff here so all the keyboard
 # configuration is in a single file
 
-# 37 (Left Ctrl) = ISO_level3_Shift
+# 37 (Left Ctrl) = ISO_level3_Shift (AltGr)
 # 108 (Right Alt) = Left Alt
 #
 xmodmap -e "clear lock"

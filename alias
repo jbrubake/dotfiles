@@ -1,7 +1,4 @@
 #!/bin/sh
-#
-# Jeremy Brubaker <jbru362@gmail.com>
-
 # Helper functions {{{1
 # NOTE: these are unset at the end of the file
 #
@@ -28,7 +25,6 @@ ipa='ip --brief --color address | grep -v ^lo | sed "s@ [^[:space:]]*/64@@g"'
 alias ipa="$ipa"
 
 # grc(1)-only aliases {{{1
-#
 # Put these first so that they can be overriden
 #
 if have grc; then
