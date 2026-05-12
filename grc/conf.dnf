@@ -9,3 +9,18 @@ colour=bold yellow
 # Main
 regexp=^Removing:
 colour=bold red
+-
+# Package info
+regexp=^Name\s+:.*
+colour=bold green
+-
+# Packges to be installed
+regexp=^ [^:\s]+\s
+colour=green
+-
+# Packages to be replaced
+# TODO: Make sure this works with dnf upgrade and doesn't show up in other places
+regexp=^\s\s\S.*
+colour=bright_black
+# TODO: How to case-insensitive highlight search terms in 'dnf search'?
+

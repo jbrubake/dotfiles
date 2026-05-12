@@ -1,25 +1,5 @@
+## Default configuration for iproute(1)
 #
-regexp=^[^ ]*
-colours=cyan
--
-
-regexp=DOWN
-colours=red
--
-regexp=UP
-colours=green
--
-
-# IP4
-regexp=\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}
-colours=magenta
--
-
-# IP6
-regexp=[0-9a-fA-F]{0,4}(\:\:?[0-9a-fA-F]{0,4})+?(\/\d{1,3})
-colours=blue
--
-
 # IP4
 regexp=\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}
 colours=bold yellow
@@ -42,7 +22,7 @@ colours=yellow
 
 # dev wlan0 etc
 regexp=dev \w+
-colours=yellow
+colours=green
 -
 
 # "default"

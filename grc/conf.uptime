@@ -13,4 +13,17 @@ colours=default,bright_cyan,cyan,dark cyan
 # W Command section
 # Title
 regexp=^USER.*$
-colours=bold
+colours=bold bright_blue
+-
+# pts
+regexp=\s(pts[\S]+)
+colours=default,green
+-
+# tty
+regexp=\s(tty\d)
+colours=default,blue
+-
+# X11 seatN
+regexp=\s(seat\d)
+colours=default,bright_green
+-

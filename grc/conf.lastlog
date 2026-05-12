@@ -1,0 +1,31 @@
+# Highlight users
+#
+# This needs to be first so it can be overriden by the next part
+regexp=^(\S+)\s+\S*\s*(\S*.*)$
+colours=default,bright_green,default
+=====
+# Highlight users that never logged in
+regexp=^(\S+).*(\*\*Never logged in\*\*)
+colours=default
+=====
+# Root login
+regexp=^root.*
+colours=bold bright_red
+=====
+
+# Header
+regexp=^Username.*
+colours=bold bright_blue
+=====
+# pts
+regexp=\s(pts[\S]+)
+colours=default,green
+=====
+# tty
+regexp=\s(tty\d)
+colours=default,blue
+=====
+# X11 seatN
+regexp=\s(seat\d)
+colours=default,bright_green
+=====

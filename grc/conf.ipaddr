@@ -1,59 +1,43 @@
-# IP4
-regexp=inet\s([^\/]+)\/(\d+)
-colours=default,bold yellow,bold magenta
-=====
-# broadcast
-regexp=brd\s(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})
-colours=default,yellow
-=====
-# dynamic
-regexp=\bdynamic\b
-colours=bold blue
-=====
-# IP6
-# regexp=inet6\s([^\/]+)\/(\d+)
-# colours=default,yellow,magenta
-# =====
+# TODO: Make this work for all ip tools or at least make the colors consistent
+#
+## Configuration for ip address
+#
+
+# Interface name and state
+#
+regexp=(\d+:\s)?([^\s:]+).*(UP)
+colours=default,default,bold green,bold green
+-
+regexp=(\d+:\s)?([^\s:]+).*(DOWN)
+colours=default,default,bold red,bold red
+-
+regexp=(\d+:\s)?([^\s:]+).*(UNKNOWN)
+colours=default,default,bold cyan,cyan
+-
+regexp=(\d+:\s)?([^\s:]+).*(DORMANT)
+colours=default,default,bold cyan,cyan
+-
+
+# Interface <.*> details
+regexp=\s<([^>]+)>
+colours=default,cyan
+-
+regexp=NO-CARRIER
+colours=red
+-
+
+# IP Addresses
+# IPv4
+regexp=(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})(/(\d{1,3}))?
+colours=default,magenta,default,default
+-
+# IPv6
+regexp=([0-9a-fA-F]{0,4})(\:\:?[0-9a-fA-F]{0,4})+?(/)(\d{1,3})
+colours=blue,blue,blue,default,default
+-
+
 # MAC
-regexp=link\/ether\s(\S+)\s
-colours=default,magenta
-=====
-# State UP
-regexp=(\d+):\s(\S+):.+state (UP)
-colours=default,bright_white,bold green,bold green
-=====
-# State DOWN
-regexp=(\d+):\s(\S+):.+state (DOWN)
-colours=default,bright_white,bold red,bold red
-=====
-# State UNKNOWN
-regexp=(\d+):\s(\S+):.+state (UNKNOWN)
-colours=default,bright_white,bold cyan,cyan
-=====
-# State DORMANT
-regexp=(\d+):\s(\S+):.+state (DORMANT)
-colours=default,bright_white,bold cyan,cyan
-=====
-# < >
-# regexp=\s<([^>]+)>
-# colours=default,cyan
-# =====
-# NO-CARRIER
-# regexp=NO-CARRIER
-# colours=bold red
-# =====
-# Master dev
-regexp=\smaster\s(\S+)\s
-colours=default,on_blue white
-=====
-# on
-regexp=\son\s
-colours=green
-=====
-# off
-regexp=\soff\s
-colours=dark red
-=====
-# link/none
-regexp=link\/(none)
-colours=unchanged,red
+regexp=(\d|[a-f]){2}(\:(\d|[a-f]){2}){5}
+colours=yellow
+-
+

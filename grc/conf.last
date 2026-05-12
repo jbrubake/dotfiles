@@ -34,6 +34,10 @@ colours=default,green
 regexp=\s(tty\d)
 colours=default,blue
 =====
+# X11 seatN
+regexp=\s(seat\d)
+colours=default,bright_green
+=====
 # reboot
 regexp=^reboot\s+system boot
 colours=red
@@ -45,3 +49,4 @@ colours=default,bold red
 # Third column local
 regexp=(?:\s|\()(\:0)(?:\s|\))
 colours=default,dark cyan
+=====
