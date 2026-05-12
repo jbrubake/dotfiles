@@ -5,6 +5,52 @@
 # in case atwork is not installed default to being at work
 command -v atwork >/dev/null || atwork() { true; }
 
+# Helper Functions {{{1
+# (prefix names with '__')
+#
+# __get_alias() # Print the value of an alias or a default {{{2
+#
+# Arguments:
+#   $1 : alias to print
+#   $2 : default to print if alias is not defined
+#
+# NOTE: `unalias $1` must be run **outside** this function so it affects the
+# current shell and not the function shell
+#
+__get_alias() {
+    if alias $1 >/dev/null 2>&1; then
+        alias $1 | sed '
+            s/alias '$1'=.//
+            s/.$//'
+    else
+        printf %s "$2"
+    fi
+}
+
+__gethost() { # Call gethost with the last argument passed {{{2
+#
+# This allows wrapping commands to use your SSH config to
+# resolve hostname while still being able to pass options
+# to them
+#
+# Example: ping -c10 <host> will call gethost <host> but
+# still see the -c10 option
+#
+    options=
+    host=
+    i=0
+    for arg; do
+        i=$((i+1))
+        # Passthru all but the last arg
+        if [ "$i" -lt "$#" ]; then
+            options="$options $arg"
+        else
+            host=$(gethost "$arg")
+        fi
+    done
+    printf '%s %s\n' "$options" "$host"
+}
+
 # Color Escape Functions {{{1
 
 ###################################################
@@ -234,8 +280,8 @@ lsp () { # Print numerical permissions at the start of ls -l output {{{2
 
 # ip() # Add 'get' command to ip(8) {{{2
 #
-# Remove an ip alias in favor of this function
-unalias ip 2>/dev/null
+__ip=$(__get_alias ip /usr/bin/ip)
+unalias ip
 
 ip () {
 #
@@ -244,13 +290,6 @@ ip () {
 # 'ip get' prints current ip address and optionally copies to clipboard
 # All other commands are passed to the real 'ip' command
 #
-    # Use grc if it is available
-    if command -v grc >/dev/null; then
-        ip="grc ip"
-    else
-        ip="command ip"
-    fi
-
     case "$1" in
         g | ge | get)
             res=$(curl -s ipv4.icanhazip.com)
@@ -274,7 +313,7 @@ EOF
             esac
             printf "%s\n" "$res"
             ;;
-        *) $ip "$@" ;;
+        *) $__ip "$@" ;;
     esac
 }
 
@@ -479,25 +518,12 @@ fi
 
 # ping() # Wrap ping(1) to allow pinging by SSH Host entry {{{2
 #
-# Remove a ping alias in favor of this function
-unalias ping 2>/dev/null
+__ping=$(__get_alias ping /usr/bin/ping)
+unalias ping
 
 ping() {
-    # Use grc if it is available
-    #
-    # stdbuf is required because if ping gives **no** response, grc will buffer
-    # everything until ping is killed. This allows the intial line to be
-    # displayed so you know something is actually happening
-    if command -v grc >/dev/null && command -v stdbuf >/dev/null; then
-        ping="grc $GRC_OPTS -c conf.ping stdbuf -oL ping"
-    else
-        ping='command ping'
-    fi
-
     # shellcheck disable=SC2046
-    $ping $(__gethost "$@")
-
-    unset _grc
+    $__ping $(__gethost "$@")
 }
 
 # delve() # rpg-cli directory crawl {{{2
@@ -542,33 +568,6 @@ if command -v navi >/dev/null; then
         READLINE_POINT=${#READLINE_LINE}
     }
 fi
-
-# Helper Functions {{{1
-# (prefix names with '__')
-#
-__gethost() { # Call gethost with the last argument passed {{{2
-#
-# This allows wrapping commands to use your SSH config to
-# resolve hostname while still being able to pass options
-# to them
-#
-# Example: ping -c10 <host> will call gethost <host> but
-# still see the -c10 option
-#
-    options=
-    host=
-    i=0
-    for arg; do
-        i=$((i+1))
-        # Passthru all but the last arg
-        if [ "$i" -lt "$#" ]; then
-            options="$options $arg"
-        else
-            host=$(gethost "$arg")
-        fi
-    done
-    printf '%s %s\n' "$options" "$host"
-}
 
 # Bash only functions {{{1
 #
