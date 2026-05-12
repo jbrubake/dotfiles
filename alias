@@ -51,9 +51,8 @@ if have grc; then
     alias      jobs="$jobs${BASH:+ | grcat conf.jobs}" # colorized version
     alias   tcpdump="grc tcpdump -l"
 
-    # Pipe dnf to grcat(1). Cannot be an alias but it basically is
-    unalias dnf 2>/dev/null
-    dnf() { command dnf "$@" | grcat conf.dnf; }
+    # `dnf install|upgrade` does not work properly with grc
+    unalias dnf
 
     # Force line buffering so ping doesn't appear to hang
     alias ping="grc --config conf.ping stdbuf -oL ping"
