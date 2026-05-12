@@ -880,16 +880,23 @@ nnoremap ]e jddkP
 nmap <tab> %
 vmap <tab> %
 
-" Y:                   yank to end (consistent with C and D) {{{2
+" Yank and put         various maps to adjust yank and put operations {{{2
+"
+" Yank from cursor to end of line (consistent with C and D)
 nnoremap Y y$
 
-" <localleader>Y:      yank to system clipboard {{{2
-"
-" Allow these to remap to include any subsequent yank maps
-"
-vmap <localleader>y "+y
-nmap <localleader>y "+y
-nmap <localleader>Y "+Y
+" Yank to system clipboard. Ommission of 'noremap' is intentional
+vmap cy "+y
+nmap cy "+y
+nmap cY "+Y
+vmap cY "+Y
+
+" Put line from system clipboard
+nnoremap cp <Cmd>put +<CR>
+vnoremap cp <Cmd>put +<CR>
+nnoremap cP <Cmd>put! +<CR>
+vnoremap cP <Cmd>put! +<CR>
+" Insert mode: C-R+
 
 " v_p:                 do not yank replaced text {{{2
 "
