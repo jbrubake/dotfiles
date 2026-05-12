@@ -44,12 +44,15 @@ if have grc; then
         have "$c" && alias "$c=grc $c"
     done
 
+    # Line buffer stdout so it won't appear to hang
+    # Force my grc config so running with sudo still works
+    alias tcpdump="grc --config $HOME/.grc/conf.tcpdump tcpdump -l"
+
 
     # Always create these
     alias configure="grc ./configure"
     alias  printenv="grc -c conf.printenv printenv"
     alias      jobs="$jobs${BASH:+ | grcat conf.jobs}" # colorized version
-    alias   tcpdump="grc tcpdump -l"
 
     # `dnf install|upgrade` does not work properly with grc
     unalias dnf
