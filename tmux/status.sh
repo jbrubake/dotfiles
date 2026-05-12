@@ -6,13 +6,15 @@
 TMUX_COLOR_RED=color203
 TMUX_COLOR_YELLOW=color214
 TMUX_COLOR_GREEN=color42
+TMUX_FG_NONE=color252
+TMUX_BG_NONE=color233
 # Brighter colors
 # TMUX_COLOR_RED=color196
 # TMUX_COLOR_YELLOW=color226
 # TMUX_COLOR_GREEN=color40
 
-TMUX_STATUS_BAR_FG=color252
-TMUX_STATUS_BAR_BG=color233
+TMUX_STATUS_BAR_FG=$TMUX_FG_NONE
+TMUX_STATUS_BAR_BG=$TMUX_BG_NONE
 # Format string, active surround, inactive surround, background color
 #   Format string: <window index><window flags> <window name>
 TMUX_WINDOW_FORMAT="#I#F #W,,[],$TMUX_STATUS_BAR_BG"
@@ -57,7 +59,7 @@ left() { # {{{1
     # clock
     separator
     start_range clock
-    printf ' #[fg=color214]%s#[fg=none]' "$(date +'%a, %d-%b %H:%M:%S')"
+    printf ' #[fg=%s]%s#[fg=%s]' "$TMUX_COLOR_YELLOW""$(date +'%a, %d-%b %H:%M:%S')" "$TMUX_FG_NONE"
     end_range
 
     # network status and internet POP
