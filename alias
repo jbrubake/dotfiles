@@ -206,16 +206,19 @@ esac
 
 # Get public IP & ipinfo.io{{{1
 #
+ipurl=ipv4.icanhazip.com
+infourl=ipinfo.io
 if have curl; then
-    alias   myip='curl http://ipecho.net/plain; echo'
-    alias ipinfo='curl http://ipinfo.io; echo'
+    alias   myip="curl $ipurl"
+    alias ipinfo="curl $infourl; echo"
 elif have wget; then
-    alias   myip='wget http://ipecho.net/plain -O - -q; echo'
-    alias ipinfo='wget http://ipinfo.io -O - -q; echo'
+    alias   myip="wget $ipurl -O - -q"
+    alias ipinfo="wget $infourl -O - -q; echo"
 else
     alias   myip='printf "wget or curl not available\n"'
     alias ipinfo='myip'
 fi
+unset ipurl infourl
 
 # Vim & Ex {{{1
 #

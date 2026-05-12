@@ -253,7 +253,7 @@ ip () {
 
     case "$1" in
         g | ge | get)
-            res=$(curl -s ipinfo.io/ip)
+            res=$(curl -s ipv4.icanhazip.com)
             case $2 in
                 c | co | cop | copy)
                     if command -v xclip >/dev/null; then
