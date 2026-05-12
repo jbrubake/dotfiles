@@ -29,30 +29,32 @@ alias ipa="$ipa"
 #
 if have grc; then
     export GRC_OPTS='-es' # colorize stderr and stdout
+    # grc must be defined because later aliases use grc(1) only if this variable
+    # is defined
     # shellcheck disable=SC2016
     grc='grc $GRC_OPTS'
-    alias "grc=$grc"
+    alias grc="$grc"
 
     # Create alias for all configs found *if* the command exists
     for c in /usr/share/grc/conf.* ~/.grc/conf.*; do
         c=${c##*/}; c=${c#conf.} # extract command name
-        have "$c" && alias "$c=$grc $c"
+        have "$c" && alias "$c=grc $c"
     done
 
     # NOTE: ping is handled in ~/.functions
 
     # Always create these
-    alias configure="$grc ./configure"
-    alias  printenv="$grc -c conf.printenv printenv"
+    alias configure="grc ./configure"
+    alias  printenv="grc -c conf.printenv printenv"
     alias      jobs="$jobs${BASH:+ | grcat conf.jobs}" # colorized version
-    alias   tcpdump="$grc tcpdump -l"
+    alias   tcpdump="grc tcpdump -l"
 
     # Pipe dnf to grcat(1). Cannot be an alias but it basically is
     unalias dnf 2>/dev/null
     dnf() { command dnf "$@" | grcat conf.dnf; }
 
     # This one has to be handled differently
-    alias ipa='grc $GRC_OPTS --colour on '"$ipa"
+    alias ipa='grc --colour on '"$ipa"
 fi
 
 # fzf aliases {{{1
@@ -102,12 +104,12 @@ fi
 # Single-quote $LS_OPTS so it can be changed on the fly
 # shellcheck disable=SC2153
 alias   ls="$LS $ls_opts "'$LS_OPTS'
-alias   ll="${grc:+"$grc "}$LS $ll_opts "'$LS_OPTS'" $grc_col"
-alias   ld="${grc:+"$grc "}$LS $ll_opts -d "'$LS_OPTS'" $grc_col"
+alias   ll="${grc:+grc }$LS $ll_opts "'$LS_OPTS'" $grc_col"
+alias   ld="${grc:+grc }$LS $ll_opts -d "'$LS_OPTS'" $grc_col"
 alias   la="$LS $la_opts "'$LS_OPTS'
-alias  lla="${grc:+"$grc "} $LS $lla_opts "'$LS_OPTS'" $grc_col"
+alias  lla="${grc:+grc } $LS $lla_opts "'$LS_OPTS'" $grc_col"
 alias   l.="$LS $ld_opts "'$LS_OPTS'
-alias  ll.="${grc:+"$grc "} $LS $lld_opts "'$LS_OPTS'" $grc_col"
+alias  ll.="${grc:+grc } $LS $lld_opts "'$LS_OPTS'" $grc_col"
 alias lspa="lsp $lspa_opts" # lsp is defined in ~/.functions
 
 unset ls ls_opts la_opts ll_opts lla_opts ld_opts lld_opts ldap_opts grc_col
@@ -396,11 +398,11 @@ fi
 
 # Use grc(1) if available {{{2
 #
-alias   df="${grc:+"$grc "}df -hT"              # human-readable is better
-alias   du="${grc:+"$grc "}du -h"               # human-readable is better
-alias  du0="${grc:+"$grc "}du -h --summarize"   # top-level summary
-alias  du1="${grc:+"$grc "}du -h --max-depth=1" # one-level summary
-alias free="${grc:+"$grc "}free -h"             # human-readable is better
+alias   df="${grc:+grc }df -hT"              # human-readable is better
+alias   du="${grc:+grc }du -h"               # human-readable is better
+alias  du0="${grc:+grc }du -h --summarize"   # top-level summary
+alias  du1="${grc:+grc }du -h --max-depth=1" # one-level summary
+alias free="${grc:+grc }free -h"             # human-readable is better
 
 # Load aliases for things installed in ~/opt {{{1
 #
