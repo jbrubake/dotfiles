@@ -397,10 +397,13 @@ autocmd plugins FileType gitcommit setlocal completeopt-=preview
 
 " No configuration needed
 
-" vim-tmux-navigator       Seamless navigation between tmux panes and vim splits                  plugurl:christoomey/vim-tmux-navigator type:opt " {{{3
+" vim-tmux-navigator       Seamless navigation between tmux panes and vim splits                  plugurl:jbrubake/vim-tmux-navigator type:opt " {{{3
 
 " Do not unzoom if trying to move away from zoomed vim pane
 let g:tmux_navigator_disable_when_zoomed = 1
+
+" Do not wrap around
+let g:tmux_navigator_no_wrap = 1
 
 " Use Alt+[hjkl] to navigate windows
 if has ('unix') " 'set convert-meta off' in .inputrc makes Alt not the Meta key
