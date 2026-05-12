@@ -59,7 +59,9 @@ left() { # {{{1
     # clock
     separator
     start_range clock
-    printf ' #[fg=%s]%s#[fg=%s]' "$TMUX_COLOR_YELLOW""$(date +'%a, %d-%b %H:%M:%S')" "$TMUX_FG_NONE"
+    printf ''
+    printf '#[fg=%s] %s#[fg=%s]'              "$TMUX_COLOR_YELLOW" "$(date +'%a, %d-%b %H:%M:%S')" "$TMUX_FG_NONE"
+    printf '#[fg=%s] UTC:#[nobold] %s#[bold]' "$TMUX_FG_NONE"      "$(TZ=UTC date '+%H:%M')"
     end_range
 
     # network status and internet POP
