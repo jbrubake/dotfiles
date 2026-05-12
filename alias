@@ -16,15 +16,15 @@ have() { command -v "$1" >/dev/null; }
 # Defaults {{{1
 #
 # These will be modified if grc(1) is available
+
 jobs='jobs -l' # list PIDs
-alias "jobs=$jobs"
+alias jobs="$jobs"
 
 # grep removes loopback
 # sed removes IPv6 addresses
 ipa='ip --color=always --brief address \
     | grep -v "\blo\b" \
     | sed "s@[0-9a-f]*:[0-9a-f]*.[0-9]*@@g; s/[[:space:]]*$//"'
-
 alias ipa="$ipa"
 
 # Add a blank line after uptime
@@ -90,7 +90,7 @@ if have grc; then
     alias ipa="grc --config conf.ipaddr --colour on $ipa"
 
     # Clear defaults
-    unset ipa
+    unset ipa jobs w
 fi
 
 # fzf aliases {{{1
