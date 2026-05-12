@@ -16,6 +16,8 @@
 
     s           = status -s                 ; View short format status
 
+    d           = diff --color-words        ; Highlight changed words
+
     fixup       = commit --amend --no-edit  ; Amend without editing commit message
     stage-all   = add --all                 ; Stage everything
     unstage-all = reset HEAD                ; Unstage everything
