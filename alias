@@ -27,6 +27,11 @@ ipa='ip --color=always --brief address \
 
 alias ipa="$ipa"
 
+# Add a blank line after uptime
+# Truncate at $COLUMNS (roughly because of color escapes)
+w='w | sed 1G | colrm $COLUMNS'
+alias w="$w"
+
 # grc(1)-only aliases {{{1
 # Put these first so that they can be overriden
 #
@@ -47,6 +52,7 @@ if have grc; then
     # Other aliases
     alias configure='grc ./configure'
          alias make='grc make'
+            alias w="grc --colour on $w"
           alias who='grc who'
 
     # Override /etc/grc.conf setting
