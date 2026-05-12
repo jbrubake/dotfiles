@@ -397,24 +397,31 @@ autocmd plugins FileType gitcommit setlocal completeopt-=preview
 
 " No configuration needed
 
-" vim-tmux-pilot:          Unified navigation of splits and tabs in nvim and tmux                 plugurl:urbainvaes/vim-tmux-pilot type:opt " {{{3
+" vim-tmux-navigator       Seamless navigation between tmux panes and vim splits                  plugurl:christoomey/vim-tmux-navigator type:opt " {{{3
 
 " Use Alt+[hjkl] to navigate windows
 if has ('unix') " 'set convert-meta off' in .inputrc makes Alt not the Meta key
-    let g:pilot_key_h='h'
-    let g:pilot_key_j='j'
-    let g:pilot_key_k='k'
-    let g:pilot_key_l='l'
-    let g:pilot_key_p='\'
+    let g:navigator_key_h='h'
+    let g:navigator_key_j='j'
+    let g:navigator_key_k='k'
+    let g:navigator_key_l='l'
+    let g:navigator_key_p='\'
 else
-    let g:pilot_key_h='<a-h>'
-    let g:pilot_key_j='<a-j>'
-    let g:pilot_key_k='<a-k>'
-    let g:pilot_key_l='<a-l>'
-    let g:pilot_key_p='<a-\>'
+    let g:navigator_key_h='<a-h>'
+    let g:navigator_key_j='<a-j>'
+    let g:navigator_key_k='<a-k>'
+    let g:navigator_key_l='<a-l>'
+    let g:navigator_key_p='<a-\>'
 endif
 
-if $TMUX != "" | packadd! vim-tmux-pilot | endif
+let g:tmux_navigator_no_mappings = 1
+execute "nnoremap <silent> " . g:navigator_key_h . " :<C-U>TmuxNavigateLeft<cr>"
+execute "nnoremap <silent> " . g:navigator_key_j . " :<C-U>TmuxNavigateDown<cr>"
+execute "nnoremap <silent> " . g:navigator_key_k . " :<C-U>TmuxNavigateUp<cr>"
+execute "nnoremap <silent> " . g:navigator_key_l . " :<C-U>TmuxNavigateRight<cr>"
+execute "nnoremap <silent> " . g:navigator_key_p . " :<C-U>TmuxNavigatePrevious<cr>"
+
+if $TMUX != "" | packadd! vim-tmux-navigator | endif
 
 " vim-tridactyl:           Syntax plugin for Tridactyl configuration files                        plugurl:tridactyl/vim-tridactyl " {{{3
 
