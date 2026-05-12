@@ -26,7 +26,7 @@
     ; git log
     ;
     ; lg: Short commit message only
-    ; lt: Short commit message and branch graph
+    ; lt: Short commit message and branch graph. Equivalent to '--all --decorate --oneline --graph'
     lg = log         --pretty='%C(auto)%<(7)%h%d %s %C(green)(%cs) %C(cyan)<%aN>'
     lt = log --graph --pretty='%C(auto)%<(7)%h%d %s %C(green)(%cs) %C(cyan)<%aN>'
 
