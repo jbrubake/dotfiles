@@ -46,6 +46,21 @@ if have grc; then
 
     # Other aliases
     alias configure='grc ./configure'
+         alias make='grc make'
+          alias who='grc who'
+
+    # Override /etc/grc.conf setting
+    alias lastlog='grc --config conf.lastlog lastlog'
+
+    # conf.go-test
+    alias go='grc go'
+
+    # conf.semanage{boolean,fcontext,user}
+    alias semanage="grc semanage"
+    alias getsebool="grc getsebool"
+
+    # Force my grc config so running with sudo still works
+    alias lastb='grc --config $HOME/.grc/conf.last lastb'
 
     # Line buffer stdout so it won't appear to hang
     # Force my grc config so running with sudo still works
