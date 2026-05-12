@@ -449,6 +449,11 @@ let g:vimtex_compiler_latexmk = {
 
 autocmd plugins FileType tex,bib packadd vimtex | call vimtex#init()
 
+" vimux:                   Easily interact with tmux from vim                                     plugurl:preservim/vimux " {{{3
+
+" Always spawn a new pane
+let g:VimuxUseNeareset = 0
+
 " vlime:                   A Common Lisp dev environment for Vim                                  plugurl:vlime/vlime " {{{3
 
 let g:vlime_cl_impl = "sbcl"
