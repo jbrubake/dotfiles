@@ -350,6 +350,13 @@ autocmd plugins FileType gitcommit setlocal completeopt-=preview
 
 " No configuration needed
 
+" vim-sort-motion plugurl:christoomey/vim-sort-motion " {{{3
+"
+" gs<motion> : sort <motion> lines or words (e.g., gsi( to sort within parentheses)
+" <count>gss : sort <count> lines
+"
+" let g:sort_motion_flags = 'flags to pass to :sort'
+
 " vim-surround:            Modify surrounding characters                                          plugurl:tpope/vim-surround " {{{3
 
 " ds<t>         : delete <t>
