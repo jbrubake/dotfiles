@@ -18,9 +18,12 @@ have() { command -v "$1" >/dev/null; }
 # These will be modified if grc(1) is available
 jobs='jobs -l' # list PIDs
 alias "jobs=$jobs"
-#       brief listing             no loopback   no IPv6
-# --color has no effect when run with grc
-ipa='ip --brief --color address | grep -v ^lo | sed "s@ [^[:space:]]*/64@@g"'
+
+# grep removes loopback
+# sed removes IPv6 addresses
+ipa='ip --color=always --brief address \
+    | grep -v "\blo\b" \
+    | sed "s@[0-9a-f]*:[0-9a-f]*.[0-9]*@@g; s/[[:space:]]*$//"'
 
 alias ipa="$ipa"
 
@@ -53,8 +56,13 @@ if have grc; then
     unalias dnf 2>/dev/null
     dnf() { command dnf "$@" | grcat conf.dnf; }
 
-    # This one has to be handled differently
-    alias ipa='grc --colour on '"$ipa"
+    # Force the config as the options given to ip prevent grc
+    # from identifying it
+    # Force color so it passes through the pipeline
+    alias ipa="grc --config conf.ipaddr --colour on $ipa"
+
+    # Clear defaults
+    unset ipa
 fi
 
 # fzf aliases {{{1
