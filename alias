@@ -115,21 +115,18 @@ case $ls in
         la_opts='-a';      lla_opts='-lag';
         ld_opts='-d';      lld_opts='-lgd';
         ldot_opts='-d .*'; lldot_opts='-lgd .*';
-        lspa_opts=''
         ;;
     gnu-ls) # GNU ls
         ls_opts='';        ll_opts='-l';
         la_opts='-A';      lla_opts='-lA';
         ld_opts='-d';      lld_opts='-ld'
         ldot_opts='-d .*'; lldot_opts='-ld .*';
-        lspa_opts='-A'
         ;;
     ls) # POSIX ls
         ls_opts='';        ll_opts='-l';
         la_opts='-a';      lla_opts='-la';
         ld_opts='-d';      lld_opts='-lgd';
         ldot_opts='-d .*'; lldot_opts='-lgd .*';
-        lspa_opts='-A'
         ;;
     *) printf 'How did we get here?\n' >&2 ;;
 esac
@@ -150,7 +147,9 @@ alias   la="$LS $la_opts "'$LS_OPTS'
 alias  lla="${grc:+grc } $LS $lla_opts "'$LS_OPTS'" $grc_col"
 alias   l.="$LS $ldot_opts "'$LS_OPTS'
 alias  ll.="${grc:+grc } $LS $lldot_opts "'$LS_OPTS'" $grc_col"
-alias lspa="lsp $lspa_opts" # lsp is defined in ~/.functions
+# lsp is defined in ~/.functions
+alias  lsp="lsp $ll_opts"
+alias lspa="lsp $lla_opts"
 
 unset ls ls_opts la_opts ll_opts lla_opts ld_opts lld_opts ldot_opts lldot_opts ldap_opts grc_col
 
