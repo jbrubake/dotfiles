@@ -36,7 +36,6 @@ alias w="$w"
 # Put these first so that they can be overriden
 #
 if have grc; then
-    export GRC_OPTS='-es' # colorize stderr and stdout
     # grc must be defined because later aliases use grc(1) only if this variable
     # is defined
     # shellcheck disable=SC2016

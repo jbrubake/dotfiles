@@ -567,6 +567,10 @@ if have tldr; then
     export TLDR_EPARAM='white'
 fi
 
+# grc(1) {{{2
+#
+have grc && export GRC_OPTS='-es' # colorize stderr and stdout
+
 # Finalize PATH {{{1
 #
 # Add personal directories. Listed in order from least- to most-significant
