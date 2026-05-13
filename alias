@@ -21,10 +21,11 @@ have() { command -v "$1" >/dev/null; }
 # 
 unset grc
 if have grc; then
-    # grc must be defined because later aliases use grc(1) only if this variable
-    # is defined
     # shellcheck disable=SC2016
     grc='grc $GRC_OPTS'
+
+    # Defining this alias first allows 'grc' to expand everyehwere in this file
+    # So 'alias foo='grc foo' will become 'alias foo='<$grc value> foo'
     alias grc="$grc"
 
     # Create alias for all configs found *if* the command exists
@@ -114,7 +115,6 @@ else
     _LS_OPTS() { printf %s "$LS_OPTS"; }
 fi
 
-# Single-quote $LS_OPTS so it can be changed on the fly
 # shellcheck disable=SC2153
 alias   ls="$LS $ls_opts "'$LS_OPTS'
 alias   ll="${grc:+grc }$LS $ll_opts "'$(_LS_OPTS)'
@@ -236,7 +236,7 @@ elif have wget; then
     alias ipinfo="wget $infourl -O - -q; echo"
 else
     alias   myip='printf "wget or curl not available\n"'
-    alias ipinfo='myip'
+    alias ipinfo='printf "wget or curl not available\n"'
 fi
 unset ipurl infourl
 
@@ -361,19 +361,18 @@ have reset || alias reset='tput sgr0'  # reset terminal
 have clear || alias clear='tput clear' # emulate clear(1) if I don't have it
               alias   cls='clear'      # windows clear
 
-have buku       && alias       b='buku --suggest'        # easier buku
-have colormake  && alias    make='colormake'             # use colormake
-have locate     && alias     loc='locate -d "$LOCATEDB"' # use my personal locate(1) db
-have mgitstatus && alias    gits='mgitstatus -e -c'      # get status of git repos
-have pandoc     && alias md2html='pandoc -f markdown'    # convert Markdown to HTML
-have rpg-cli    && alias     rpg='rpg-cli'               # easier rpg-cli
-
-have dict && alias thesaurus='dict -d "moby-thesaurus"' # A...thesaurus
+have buku       && alias        b='buku --suggest'            # easier buku
+have mgitstatus && alias     gits='mgitstatus -e -c'          # get status of git repos
+have dunst      && alias     huh='dunstctl history-pop'       # Show previous desktop notifications
+have locate     && alias      loc='locate -d "$LOCATEDB"'     # use my personal locate(1) db
+have colormake  && alias     make='colormake'                 # use colormake
+have pandoc     && alias  md2html='pandoc -f markdown'        # convert Markdown to HTML
+have rpg-cli    && alias      rpg='rpg-cli'                   # easier rpg-cli
+have dict       && alias thesaurus='dict -d "moby-thesaurus"' # A...thesaurus
 
 alias             +x='chmod +x' # make file executable
 alias ${BASH:+--} -x='chmod -x' # make file non-executable 
 
-alias     huh='dunstctl history-pop' # Show previous desktop notifications
 alias      :q='exit'                                    # exit like it's vim
 alias      :e='vim'                                     # edit a file like it's vim
 alias    bell='printf "\a"'                             # ring the bell
@@ -384,7 +383,7 @@ alias   tree='command tree -CFI ".git" --dirsfirst'     # better looking tree(1)
 alias unexec='find . -type f -exec chmod ogu-x "{}" \;' # chmod -x all FILES in tree (needed when copying from Windows)
 
 # Force color in *grep
-alias   grep="grep     ${HAS_COLOR:+--color=auto}"
+alias    grep="grep    ${HAS_COLOR:+--color=auto}"
 alias   fgrep="grep -F ${HAS_COLOR:+--color=auto}"
 alias   egrep="grep -E ${HAS_COLOR:+--color=auto}"
 alias   zgrep="zgrep   ${HAS_COLOR:+--color=auto}"
@@ -405,13 +404,15 @@ alias nerd='feh https://www.nerdtests.com/images/badge/nt2/$NERDTEST_ID.png'
 
 # start / stop a local-only ssh server
 if have sshd && [ -n "$LOCAL_SSHD_CONFIG" ]; then
-    alias lsshd='/usr/sbin/sshd -f "$LOCAL_SSHD_CONFIG"' # start a local ssh server
-    alias klsshd='/bin/kill -TERM $(command cat $(sshd -f "$LOCAL_SSHD_CONFIG" -T | grep pidfile | cut -d" " -f2))'  # stop user sshd
+    # start and stop a local ssh server
+    alias lsshd='/usr/sbin/sshd -f "$LOCAL_SSHD_CONFIG"'
+    alias klsshd='/bin/kill -TERM $(command cat $(sshd -f "$LOCAL_SSHD_CONFIG" -T | grep pidfile | cut -d" " -f2))'
 fi
 
 if have todo.sh; then
     todo_alias=t
     alias "$todo_alias=todo.sh"
+    # Used to setup bash completion in ~/.bashrc
     [ -n "$BASH_VERSION" ] && export todo_alias
 fi
 
@@ -448,7 +449,7 @@ alias configure="${grc:+grc }./configure"
 
 # Load aliases for things installed in ~/opt {{{1
 #
-[ -r "$HOME/opt/alias" ]  && . "$HOME/opt/alias"
+[ -r "$HOME/opt/alias" ] && . "$HOME/opt/alias"
 
 # Cleanup {{{1
 #
