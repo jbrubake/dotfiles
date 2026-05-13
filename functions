@@ -256,7 +256,7 @@ lsp () { # Print numerical permissions at the start of ls -l output {{{2
 #
     # If ls is supposed to be colored, we have to force it because
     # piping the output with --color=auto strips color codes
-    _opts=$(echo "$LS_OPTS" | sed 's/--color=auto/--color=always/')
+    _opts=$(printf %s "$LS_OPTS" | sed 's/--color=auto/--color=always/')
 
     # If grc(1) is available, use it and force color through the pipe
     unset _grc
