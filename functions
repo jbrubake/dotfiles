@@ -19,9 +19,7 @@ command -v atwork >/dev/null || atwork() { true; }
 #
 __get_alias() {
     if alias $1 >/dev/null 2>&1; then
-        alias $1 | sed '
-            s/alias '$1'=.//
-            s/.$//'
+        alias $1 | sed 's/^[^=]*=.\(.*\).$/\1/'
     else
         printf %s "$2"
     fi
