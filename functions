@@ -275,7 +275,7 @@ lsp () { # Print numerical permissions at the start of ls -l output {{{2
 # ip() # Add 'get' command to ip(8) {{{2
 #
 __ip=$(__get_alias ip /usr/bin/ip)
-unalias ip
+unalias ip 2>/dev/null
 
 ip () {
 #
@@ -513,7 +513,7 @@ fi
 # ping() # Wrap ping(1) to allow pinging by SSH Host entry {{{2
 #
 __ping=$(__get_alias ping /usr/bin/ping)
-unalias ping
+unalias ping 2>/dev/null
 
 ping() {
     # shellcheck disable=SC2046
