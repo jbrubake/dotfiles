@@ -13,28 +13,13 @@
 #
 have() { command -v "$1" >/dev/null; }
 
-# Defaults {{{1
-#
-# These will be modified if grc(1) is available
-
-jobs='jobs -l' # list PIDs
-alias jobs="$jobs"
-
-# grep removes loopback
-# sed removes IPv6 addresses
-ipa='ip --color=always --brief address \
-    | grep -v "\blo\b" \
-    | sed "s@[0-9a-f]*:[0-9a-f]*.[0-9]*@@g; s/[[:space:]]*$//"'
-alias ipa="$ipa"
-
-# Add a blank line after uptime
-# Truncate at $COLUMNS (roughly because of color escapes)
-w='w | sed 1G | colrm $COLUMNS'
-alias w="$w"
-
 # grc(1)-only aliases {{{1
-# Put these first so that they can be overriden
 #
+# This block creates aliases that do nothing more than add grc coloring. Aliases
+# that do more but also want grc coloring should be defined outside this block
+# and use the $grc variable which will be empty if grc is not installed
+# 
+unset grc
 if have grc; then
     # grc must be defined because later aliases use grc(1) only if this variable
     # is defined
@@ -49,9 +34,7 @@ if have grc; then
     done
 
     # Other aliases
-    alias configure='grc ./configure'
          alias make='grc make'
-            alias w="grc --colour on $w"
           alias who='grc who'
 
     # Override /etc/grc.conf setting
@@ -74,22 +57,11 @@ if have grc; then
     # grc doesn't select the right config
     alias printenv='grc --config conf.printenv printenv'
 
-    # jobs has to run in the current shell
-    alias jobs="$jobs${BASH:+ | grcat conf.jobs}"
-
     # `dnf install|upgrade` does not work properly with grc
     unalias dnf
 
     # Force line buffering so ping doesn't appear to hang
     alias ping="grc --config conf.ping stdbuf -oL ping"
-
-    # Force the config as the options given to ip prevent grc
-    # from identifying it
-    # Force color so it passes through the pipeline
-    alias ipa="grc --config conf.ipaddr --colour on $ipa"
-
-    # Clear defaults
-    unset ipa jobs w
 fi
 
 # fzf aliases {{{1
@@ -440,13 +412,33 @@ fi
 [ -d "$XDG_DATA_HOME/make/make-tools" ] && \
     alias mkvenv="make -f $XDG_DATA_HOME/make/make-tools/venv.mk"
 
-# Use grc(1) if available {{{2
+# Use grc(1) if available {{{1
+#
+# The ${grc:+...} construction is to avoid needless spaces
+# at the front of the alias if $grc is not defined
 #
 alias   df="${grc:+grc }df -hT"              # human-readable is better
 alias   du="${grc:+grc }du -h"               # human-readable is better
 alias  du0="${grc:+grc }du -h --summarize"   # top-level summary
 alias  du1="${grc:+grc }du -h --max-depth=1" # one-level summary
 alias free="${grc:+grc }free -h"             # human-readable is better
+
+# Add a blank line after uptime
+# Truncate at $COLUMNS (roughly because of color escapes)
+alias w="${grc:+grc --colour on }w | sed 1G | colrm "'$COLUMNS'
+
+# list PIDs
+# jobs has to run in the current shell
+alias jobs="jobs -l${grc:+${BASH:+ | grcat conf.jobs}}"
+
+# grep removes loopback
+# sed removes IPv6 addresses
+alias ipa="${grc:+grc --config conf.ipaddr --colour on }\
+ip --color=always --brief address \
+| grep -v '\blo\b' \
+| sed 's@[0-9a-f]*:[0-9a-f]*.[0-9]*@@g; s/[[:space:]]*$//'"
+
+alias configure="${grc:+grc }./configure"
 
 # Load aliases for things installed in ~/opt {{{1
 #
@@ -456,7 +448,6 @@ alias free="${grc:+grc }free -h"             # human-readable is better
 #
 unset grc
 unset have
-unset jobs
 
 # vim: ft=sh foldlevel=0
 
