@@ -3,5 +3,5 @@
 Port 2022
 ListenAddress 127.0.0.1
 UsePam yes
-HostKey /home/jbrubake/etc/ssh/ssh_host_rsa_key
+HostKey /home/jbrubake/.config/ssh/ssh_host_rsa_key
 PidFile /home/jbrubake/var/run/sshd.pid
