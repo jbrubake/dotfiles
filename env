@@ -280,6 +280,7 @@ export WWW_SEARCH=www.duckduckgo.com # used in ~/.functions
 
 # ls {{{2
 #
+# NOTE: Changing the value of LS outside of this file is not supported
 export LS=$(pick ls ls eza exa)
 case $LS in
     eza | exa) export LS_OPTS="--group-directories-first --sort extension -F ${HAS_COLOR:+--color=auto}" ;;
