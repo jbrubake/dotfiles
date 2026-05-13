@@ -265,9 +265,12 @@ lsp () { # Print numerical permissions at the start of ls -l output {{{2
 
     # shellcheck disable=SC2086
     $_grc "$LS" $_opts -l "$@" | awk '{
+        # Get file permissions and strip any color codes
         mode = gensub("\x1b[^m]*m", "", "g", $1)
         k = 0; h = 0;
         for (i = 0; i <= 8; i++) {
+            # i+2 to ignore 'type' character and because awk
+            # strings start at 1 not 0 like normal people
             c = substr(mode, i+2, 1)
             k += (c ~ /[rwx]/) * 2^(8-i);
             h += (c ~ /[Tt]/) * 1;
