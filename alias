@@ -67,12 +67,6 @@ if have grc; then
     unalias dnf
 fi
 
-# fzf aliases {{{1
-#
-if have fzf; then
-    alias kill=fkill
-fi
-
 # ls(1) {{{1
 #
 # In case $LS was not defined in ~/.env
