@@ -33,35 +33,26 @@ if have grc; then
         have "$c" && alias "$c=grc $c"
     done
 
-    # Other aliases
-         alias make='grc make'
-          alias who='grc who'
 
-    # Override /etc/grc.conf setting
-    alias lastlog='grc --config conf.lastlog lastlog'
-
-    # conf.go-test
-    alias go='grc go'
-
-    # conf.semanage{boolean,fcontext,user}
-    alias semanage="grc semanage"
+    # Create additional aliases or modify auto-generated ones as needed
+    #
+    # - $HOME is interpreted **now** so the alias works with sudo, even
+    #   if the command doesn't actually need sudo
+    # - stdbuf is used for commands that don't do line-buffering through a pipe
     alias getsebool="grc getsebool"
+    alias        go='grc go' # for conf.go-test
+    alias     lastb="grc --config $HOME/.grc/conf.last lastb"
+    alias   lastlog="grc --config $HOME/.grc/conf.lastlog lastlog" # override /etc/grc.conf
+    alias      make='grc make' # uses conf.gcc
+    alias      ping="grc --config $HOME/.grc/conf.ping stdbuf -oL ping"
+    alias  printenv="grc --config $HOME/.grc/conf.printenv printenv" # grc picks the wrong config
+    alias  semanage="grc semanage"
+    alias   tcpdump="grc --config $HOME/.grc/conf.tcpdump tcpdump -l"
+    alias       who='grc who'
 
-    # Force my grc config so running with sudo still works
-    alias lastb='grc --config $HOME/.grc/conf.last lastb'
-
-    # Line buffer stdout so it won't appear to hang
-    # Force my grc config so running with sudo still works
-    alias tcpdump="grc --config $HOME/.grc/conf.tcpdump tcpdump -l"
-
-    # grc doesn't select the right config
-    alias printenv='grc --config conf.printenv printenv'
-
-    # `dnf install|upgrade` does not work properly with grc
+    # The confirmation prompt when installing packages does not
+    # display and dnf already does decent coloring on its own
     unalias dnf
-
-    # Force line buffering so ping doesn't appear to hang
-    alias ping="grc --config conf.ping stdbuf -oL ping"
 fi
 
 # fzf aliases {{{1
