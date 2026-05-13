@@ -240,6 +240,17 @@ else
 fi
 unset ipurl infourl
 
+# tmux {{{1
+#
+if [ -n "$TMUX" ]; then
+    # tmux popups
+    alias tcal='tmux-popup -k -w23 -h27 "cal -3"'
+    alias ttop='tmux-popup htop'
+    alias wttr='tmux-popup -k -w127 -h43 "curl wttr.in"'
+    alias  net='tmux-popup -w80 -h40 nmtui'
+    alias wgsh='tmux-popup -k -w80 -h25 "sudo wg show"'
+fi
+
 # Vim & Ex {{{1
 #
 alias  minpac_clean='vim +PackCleanAndQuit'          # remove old plugins
@@ -391,13 +402,6 @@ alias rcbb='telnet realitycheckbbs.org -l "Jeremy Brubaker"'
 
 # Show my Nerd Test result
 alias nerd='feh https://www.nerdtests.com/images/badge/nt2/$NERDTEST_ID.png'
-
-# tmux popups
-alias tcal='tmux-popup -k -w23 -h27 "cal -3"'
-alias ttop='tmux-popup htop'
-alias wttr='tmux-popup -k -w127 -h43 "curl wttr.in"'
-alias net='tmux-popup -w80 -h40 nmtui'
-alias wgsh='tmux-popup -k -w80 -h25 "sudo wg show"'
 
 # start / stop a local-only ssh server
 if have sshd && [ -n "$LOCAL_SSHD_CONFIG" ]; then
