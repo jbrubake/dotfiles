@@ -272,7 +272,7 @@ lsp () { # Print numerical permissions at the start of ls -l output {{{2
             # i+2 to ignore 'type' character and because awk
             # strings start at 1 not 0 like normal people
             c = substr(mode, i+2, 1)
-            k += (c ~ /[rwx]/) * 2^(8-i);
+            k += (c ~ /[rwxts]/) * 2^(8-i);
             h += (c ~ /[Tt]/) * 1;
             h += (c ~ /[Ss]/) * (i == 2 ? 4 : 2);
         }
