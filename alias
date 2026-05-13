@@ -132,28 +132,32 @@ case $ls in
 esac
 
 # Force color if using grc with an ls that supports color
-unset grc_col
-if have grc && [ -n "$HAS_COLOR" ] && [ "$ls" = 'gnu-ls' ]; then
-    grc_col='--color=always'
+#
+# This function is only needed for aliases that may add grc.
+# Other aliases can use LS_OPTS directly
+if have grc && [ -n "$HAS_COLOR" ] && [ "$ls" != 'ls' ]; then
+    _LS_OPTS() { printf %s "$LS_OPTS" | sed 's/--color=auto/--color=always/'; }
+else
+    _LS_OPTS() { printf %s "$LS_OPTS"; }
 fi
 
 # Single-quote $LS_OPTS so it can be changed on the fly
 # shellcheck disable=SC2153
 alias   ls="$LS $ls_opts "'$LS_OPTS'
-alias   ll="${grc:+grc }$LS $ll_opts "'$LS_OPTS'" $grc_col"
+alias   ll="${grc:+grc }$LS $ll_opts "'$(_LS_OPTS)'
 alias   ld="$LS $ld_opts "'$LS_OPTS'
-alias  lld="${grc:+grc }$LS $lld_opts "'$LS_OPTS'" $grc_col"
+alias  lld="${grc:+grc }$LS $lld_opts "'$(_LS_OPTS)'
 alias   la="$LS $la_opts "'$LS_OPTS'
-alias  lla="${grc:+grc } $LS $lla_opts "'$LS_OPTS'" $grc_col"
+alias  lla="${grc:+grc }$LS $lla_opts "'$(_LS_OPTS)'
 alias   l.="$LS $ldot_opts "'$LS_OPTS'
-alias  ll.="${grc:+grc } $LS $lldot_opts "'$LS_OPTS'" $grc_col"
+alias  ll.="${grc:+grc }$LS $lldot_opts "'$(_LS_OPTS)'
 # grc and LS_OPTS are handled in the lsp function
 alias  lp="lsp $ll_opts"
 alias lpd="lsp $lld_opts"
 alias lpa="lsp $lla_opts"
 alias lp.="lsp $lldot_opts"
 
-unset ls ls_opts la_opts ll_opts lla_opts ld_opts lld_opts ldot_opts lldot_opts ldap_opts grc_col
+unset ls ls_opts la_opts ll_opts lla_opts ld_opts lld_opts ldot_opts lldot_opts ldap_opts
 
 # cd {{{1
 #
