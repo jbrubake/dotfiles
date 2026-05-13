@@ -33,6 +33,17 @@ if have grc; then
         have "$c" && alias "$c=grc $c"
     done
 
+    # Get .grc conf directory
+    unset grc_dir
+    for d in \
+        "${XDG_CONFIG_HOME:-"$HOME/.config"}" \
+        "$HOME/.grc" \
+    ; do
+        if [ -d "$d" ]; then
+            grc_dir=$d/
+            break
+        fi
+    done
 
     # Create additional aliases or modify auto-generated ones as needed
     #
@@ -41,13 +52,13 @@ if have grc; then
     # - stdbuf is used for commands that don't do line-buffering through a pipe
     alias getsebool="grc getsebool"
     alias        go='grc go' # for conf.go-test
-    alias     lastb="grc --config $HOME/.grc/conf.last lastb"
-    alias   lastlog="grc --config $HOME/.grc/conf.lastlog lastlog" # override /etc/grc.conf
+    alias     lastb="grc --config ${grc_dir}conf.last lastb"
+    alias   lastlog="grc --config ${grc_dir}conf.lastlog lastlog" # override /etc/grc.conf
     alias      make='grc make' # uses conf.gcc
-    alias      ping="grc --config $HOME/.grc/conf.ping stdbuf -oL ping"
-    alias  printenv="grc --config $HOME/.grc/conf.printenv printenv" # grc picks the wrong config
+    alias      ping="grc --config ${grc_dir}conf.ping stdbuf -oL ping"
+    alias  printenv="grc --config ${grc_dir}conf.printenv printenv" # grc picks the wrong config
     alias  semanage="grc semanage"
-    alias   tcpdump="grc --config $HOME/.grc/conf.tcpdump tcpdump -l"
+    alias   tcpdump="grc --config ${grc_dir}conf.tcpdump tcpdump -l"
     alias       who='grc who'
 
     # The confirmation prompt when installing packages does not
@@ -424,7 +435,7 @@ alias jobs="jobs -l${grc:+${BASH:+ | grcat conf.jobs}}"
 
 # grep removes loopback
 # sed removes IPv6 addresses
-alias ipa="${grc:+grc --config conf.ipaddr --colour on }\
+alias ipa="${grc:+grc --config ${grc_dir}conf.ipaddr --colour on }\
 ip --color=always --brief address \
 | grep -v '\blo\b' \
 | sed 's@[0-9a-f]*:[0-9a-f]*.[0-9]*@@g; s/[[:space:]]*$//'"
@@ -437,7 +448,7 @@ alias configure="${grc:+grc }./configure"
 
 # Cleanup {{{1
 #
-unset grc
+unset grc grc_dir
 unset have
 
 # vim: ft=sh foldlevel=0
