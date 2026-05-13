@@ -248,7 +248,7 @@ http_code () { # Get meaning of HTTP error code {{{2
 lsp () { # Print numerical permissions at the start of ls -l output {{{2
 #
 # Inspired by:
-# https://github.com/blaenk/dots/blob/master/zsh/zsh/functions.zsh
+# https://github.com/blaenk/dots/blob/main/zsh/zsh/functions.zsh
 #
 # Globals:
 #   LS
