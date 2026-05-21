@@ -934,13 +934,6 @@ nnoremap <leader>gd <Cmd>Gdiffsplit<CR>
 " Mappings to jump between hunks (fugitive & gitgutter)
 " [c, ]c: previous, next hunk (default binding)
 
-" fzf.vim, fzf-checkout.vim: {{{2
-"
-noremap  <leader>b  <Cmd>Buffers<CR>
-nnoremap <leader>gc <Cmd>Commits<CR>
-nnoremap <leader>gb <Cmd>GBranches<CR>
-nnoremap <leader>f  <Cmd>Files<CR>
-
 " Cscope: {{{2
 " Based on https://raw.githubusercontent.com/chazy/cscope_maps/master/plugin/cscope_maps.vim
 
