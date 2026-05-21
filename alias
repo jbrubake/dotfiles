@@ -37,7 +37,7 @@ if have grc; then
     # Get .grc conf directory
     unset grc_dir
     for d in \
-        "${XDG_CONFIG_HOME:-"$HOME/.config"}" \
+        "${XDG_CONFIG_HOME:-"$HOME/.config"}/grc" \
         "$HOME/.grc" \
     ; do
         if [ -d "$d" ]; then
