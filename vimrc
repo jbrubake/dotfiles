@@ -427,13 +427,6 @@ else
     let g:navigator_key_p='<a-\>'
 endif
 
-let g:tmux_navigator_no_mappings = 1
-execute "nnoremap <silent> " . g:navigator_key_h . " :<C-U>TmuxNavigateLeft<cr>"
-execute "nnoremap <silent> " . g:navigator_key_j . " :<C-U>TmuxNavigateDown<cr>"
-execute "nnoremap <silent> " . g:navigator_key_k . " :<C-U>TmuxNavigateUp<cr>"
-execute "nnoremap <silent> " . g:navigator_key_l . " :<C-U>TmuxNavigateRight<cr>"
-execute "nnoremap <silent> " . g:navigator_key_p . " :<C-U>TmuxNavigatePrevious<cr>"
-
 if $TMUX != "" | packadd! vim-tmux-navigator | endif
 
 " vim-tridactyl:           Syntax plugin for Tridactyl configuration files                        plugurl:tridactyl/vim-tridactyl " {{{3
