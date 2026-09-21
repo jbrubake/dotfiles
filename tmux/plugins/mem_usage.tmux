@@ -16,6 +16,6 @@ mem_usage(){
 
     # Get human readable values
     set -- $(free -h | awk 'NR == 2 {print $2, $3}')
-    printf %s%s "$color" "$(printf %s "$format" | sed -e "s/%t/$1/" -e "s/%u/$2/")"
+    printf %s%s "$color" "$format" | sed -e "s/%t/$1/" -e "s/%u/$2/"
 }
 

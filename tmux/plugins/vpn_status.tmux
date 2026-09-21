@@ -8,12 +8,12 @@ vpn_status() {
 
     if ip --brief address | grep -q "^$interface"; then
         if ping -c1 "$server" >/dev/null 2>&1; then
-            echo "#[fg=${TMUX_COLOR_GREEN:-green}]$name"
+            printf '#[fg=%s]%s' "${TMUX_COLOR_GREEN:-green}" "$name"
         else
-            echo "#[fg=${TMUX_COLOR_YELLOW:-yellow}]$name"
+            printf '#[fg=%s]%s' "${TMUX_COLOR_YELLOW:-yellow}" "$name"
         fi
     else
-        echo "#[fg=${TMUX_COLOR_RED:-red}]$name"
+        printf '#[fg=%s]%s' "${TMUX_COLOR_RED:-red}" "$name"
     fi
 }
 

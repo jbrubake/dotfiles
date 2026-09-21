@@ -82,20 +82,21 @@ ip_location() {
         return
     fi
 
-    city=$(echo "$str" | jq -r .city)
-    region=$(echo "$str" | jq -r .region)
-    country=$(echo "$str" | jq -r .country)
+       city=$(printf %s "$str" | jq -r .city)
+     region=$(printf %s "$str" | jq -r .region)
+    country=$(printf %s "$str" | jq -r .country)
 
     if [ "$country" = 'US' ]; then
-        format=$(echo "$format" | sed -e 's/%R/%r/')
+        format=$(printf %s "$format" | sed -e 's/%R/%r/')
         region=$(state2abbrev "$region")
     else
-        format=$(echo "$format" | sed -e 's/%R/%c/')
+        format=$(printf %s "$format" | sed -e 's/%R/%c/')
     fi
 
-    echo "$format" | sed -e "s/%c/$city/" \
-                         -e "s/%r/$region/" \
-                         -e "s/%C/$country/" \
-                         -e "s/%R/$FOO/"
+    printf %s "$format" |
+        sed -e "s/%c/$city/" \
+            -e "s/%r/$region/" \
+            -e "s/%C/$country/" \
+            -e "s/%R/$FOO/"
 }
 

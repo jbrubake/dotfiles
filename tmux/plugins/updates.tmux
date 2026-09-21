@@ -7,8 +7,8 @@ updates() {
     format=${1:-%t (%s security) updates}
 
     security=$(dnf --refresh --quiet check-update --security | grep -v '^No security updates needed' | wc -l)
-    total=$(dnf --refresh --quiet check-update | wc -l)
+       total=$(dnf --refresh --quiet check-update                                                    | wc -l)
 
-    printf %s "$(printf %s "$format" | sed -e "s/%t/$total/" -e "s/%s/$security/")"
+    printf %s "$format" | sed -e "s/%t/$total/" -e "s/%s/$security/"
 }
 

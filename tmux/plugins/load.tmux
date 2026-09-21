@@ -15,14 +15,14 @@ load(){
 
     set -- $(uptime | awk -F: '{printf $NF}' | tr -d ',' )
 
-    ave1=$(get_load_average $1)
-    ave5=$(get_load_average $2)
+     ave1=$(get_load_average $1)
+     ave5=$(get_load_average $2)
     ave15=$(get_load_average $3)
 
-    ave1=$(colorize "$((100-ave1))" "$RED_THRESH" "$YELLOW_THRESH")$ave1
-    ave5=$(colorize "$((100-ave5))" "$RED_THRESH" "$YELLOW_THRESH")$ave5
+     ave1=$(colorize "$((100-ave1))"  "$RED_THRESH" "$YELLOW_THRESH")$ave1
+     ave5=$(colorize "$((100-ave5))"  "$RED_THRESH" "$YELLOW_THRESH")$ave5
     ave15=$(colorize "$((100-ave15))" "$RED_THRESH" "$YELLOW_THRESH")$ave15
 
-    printf %s "$(printf %s "$format" | sed -e "s/%o/$ave1/" -e "s/%f/$ave5/" -e "s/%F/$ave15/")"
+    printf %s "$format" | sed -e "s/%o/$ave1/" -e "s/%f/$ave5/" -e "s/%F/$ave15/"
 }
 

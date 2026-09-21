@@ -23,19 +23,19 @@ rpg_status() {
 
     set -- $(rpg-cli stat --plain)
 
-    class=$(echo "$1" | sed 's/\[.*//')
-    level=$(echo "$1" | sed 's/.*\[\(.*\)\].*/\1/')
-    hp=$(echo "$3" | cut -d: -f2 | cut -d'/' -f1)
-    max_hp=$(echo "$3" | cut -d: -f2 | cut -d'/' -f2)
-    mp=$(echo "$4" | cut -d: -f2 | cut -d'/' -f1)
-    max_mp=$(echo "$4" | cut -d: -f2 | cut -d'/' -f2)
-    xp=$(echo "$5" | cut -d: -f2 | cut -d'/' -f1)
-    need_xp=$(echo "$5" | cut -d: -f2 | cut -d'/' -f2)
-    atk=$6
-    mag=$7
-    def=$8
-    spd=$9
-    gold=${12}
+      class=$(printf %s "$1" | sed 's/\[.*//')
+      level=$(printf %s "$1" | sed 's/.*\[\(.*\)\].*/\1/')
+         hp=$(printf %s "$3" | cut -d: -f2 | cut -d'/' -f1)
+     max_hp=$(printf %s "$3" | cut -d: -f2 | cut -d'/' -f2)
+         mp=$(printf %s "$4" | cut -d: -f2 | cut -d'/' -f1)
+     max_mp=$(printf %s "$4" | cut -d: -f2 | cut -d'/' -f2)
+         xp=$(printf %s "$5" | cut -d: -f2 | cut -d'/' -f1)
+    need_xp=$(printf %s "$5" | cut -d: -f2 | cut -d'/' -f2)
+        atk=$6
+        mag=$7
+        def=$8
+        spd=$9
+       gold=${12}
 
     hp_clr=$(colorize "$(get_percent "$hp" "$max_hp")" "$RED_THRESH" "$YELLOW_THRESH")
     mp_clr=$(colorize "$(get_percent "$mp" "$max_mp")" "$RED_THRESH" "$YELLOW_THRESH")
@@ -48,7 +48,7 @@ rpg_status() {
     mp="$mp_clr$mp#[fg=default]"
 
 
-    echo "$format" | sed  \
+    printf %s "$format" | sed  \
         -e "s@%c@$class@" \
         -e "s@%l@$level@" \
         -e "s@%h@$hp@" \
