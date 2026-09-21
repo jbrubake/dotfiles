@@ -118,8 +118,8 @@
          id="rect"
          style="fill:blue;"
          usecurrent="1"
-         width="2.51623032239414"
-         height="2.5632581482851" />
+         width="724.150024414062"
+         height="737.280029296875" />
       <eventcontext
          id="3dbox"
          style="stroke:none;stroke-linejoin:round;"
@@ -155,8 +155,8 @@
          end="0"
          start="0"
          usecurrent="1"
-         rx="4.99999995633654"
-         ry="4.99999995633655" />
+         rx="3.9999997897411"
+         ry="3.9999997897411" />
       <eventcontext
          id="star"
          magnitude="5"
@@ -178,13 +178,15 @@
          style="stroke-width:1px;"
          usecurrent="1"
          average_all_sketches="1"
-         pressure="0" />
+         pressure="0"
+         freehand-mode="0" />
       <eventcontext
          id="pen"
          mode="drag"
          selcue="1"
          style="stroke-width:1px;"
-         usecurrent="1" />
+         usecurrent="1"
+         freehand-mode="0" />
     </group>
     <eventcontext
        id="calligraphic"
@@ -315,12 +317,18 @@
        font_sample="AaBbCcIiPpQq12369$€¢?.;/()"
        show_sample_in_list="1"
        use_svg2="1"
-       style="fill:black;fill-opacity:1;line-height:1.25;stroke:none;font-family:sans-serif;font-style:normal;font-weight:normal;font-size:40px;"
-       selcue="1" />
+       style="line-height:1.25;font-family:'Courier New';font-size:40px;text-orientation:auto;-inkscape-font-specification:'Courier New'"
+       selcue="1"
+       align_mode="0"
+       writing_mode="0"
+       orientation_mode="0"
+       direction_mode="0" />
     <eventcontext
        id="nodes"
        selcue="1"
        gradientdrag="1"
+       changelayer="0"
+       changepage="0"
        pathflash_enabled="1"
        pathflash_unselected="0"
        pathflash_timeout="500"
@@ -332,10 +340,10 @@
        live_outline="1"
        live_objects="1"
        show_helperpath="0"
-       x="0"
-       y="0"
        edit_clipping_paths="0"
-       edit_masks="0" />
+       edit_masks="0"
+       x="0"
+       y="0" />
     <eventcontext
        id="marker"
        selcue="1"
@@ -354,7 +362,8 @@
        doh="1"
        dos="1"
        dol="1"
-       doo="1" />
+       doo="1"
+       mode="0" />
     <eventcontext
        id="spray"
        selcue="1"
@@ -369,7 +378,9 @@
        mean="0" />
     <eventcontext
        id="gradient"
-       selcue="1" />
+       selcue="1"
+       newgradient="1"
+       newfillorstroke="1" />
     <eventcontext
        id="mesh"
        selcue="1" />
@@ -386,7 +397,9 @@
     <eventcontext
        id="select"
        selcue="1"
-       gradientdrag="0" />
+       gradientdrag="0"
+       changelayer="1"
+       changepage="1" />
     <eventcontext
        id="connector"
        style="fill:none;fill-rule:evenodd;stroke:black;stroke-opacity:1;stroke-linejoin:miter;stroke-width:1px;stroke-linecap:butt;"
@@ -399,6 +412,8 @@
     <group
        id="geometric"
        mode="drag" />
+    <group
+       id="picker" />
   </group>
   <group
      id="palette">
@@ -562,11 +577,14 @@
          rgb808080="1"
          gray-50="1"
          rgbffffff="1"
-         white="1" />
+         white="1"
+         olive-808000="0"
+         navy-000080="0" />
     </group>
   </group>
   <group
-     id="dialogs">
+     id="dialogs"
+     traceliveUpdate="1">
     <group
        id="toolbox" />
     <group
@@ -578,11 +596,12 @@
        id="textandfont" />
     <group
        id="transformation"
-       applyseparately="0" />
+       applyseparately="0"
+       rotateCounterClockwise="1" />
     <group
        id="align"
-       objects-align-to="last"
-       sel-as-groups="1" />
+       sel-as-groups="1"
+       objects-align-to="page" />
     <group
        id="xml"
        h="500"
@@ -612,20 +631,24 @@
        path="">
       <group
          id="exportarea"
-         value="page" />
+         value="drawing" />
       <group
          id="defaultxdpi" />
       <group
          id="batchexportarea"
          value="layer" />
+      <group
+         id="defaultdpi"
+         value="1.71000003814697" />
     </group>
     <group
        id="save_as"
-       default="org.inkscape.output.svg.inkscape"
+       default="org.inkscape.output.scour_inkscape"
        append_extension="1"
        enable_preview="1"
-       path="/home/jbrubake/games/Kriegsspiel/games-in-progress/oks-pestilence/img"
-       use_current_dir="1" />
+       path="/home/jbrubake/src/sharpie/working/ui/pics"
+       use_current_dir="1"
+       enable_svgexport="0" />
     <group
        id="save_copy"
        default=""
@@ -635,16 +658,17 @@
     <group
        id="open"
        enable_preview="1"
-       path="/home/jbrubake" />
+       path="/home/jbrubake/src/sharpie/gui/" />
     <group
        id="import"
        enable_preview="1"
        path=""
        ask="1"
        ask_svg="1"
-       link="link"
-       scale="auto"
-       import_mode_svg="include" />
+       link="embed"
+       scale="optimizeSpeed"
+       import_mode_svg="include"
+       forcexdpi="0" />
     <group
        id="debug"
        redirect="0" />
@@ -691,6 +715,15 @@
        id="objects"
        expand_to_layer="1"
        layers_only="0" />
+    <group
+       id="object-properties">
+      <group
+         id="path-panel"
+         precision="2" />
+    </group>
+    <group
+       id="object-properties-widget"
+       expand-props="0" />
   </group>
   <group
      id="printing">
@@ -736,7 +769,7 @@
        value="12" />
     <group
        id="cursortolerance"
-       value="8.0" />
+       value="8" />
     <group
        id="dragtolerance"
        value="4.0" />
@@ -952,11 +985,22 @@
          angle_x="30.0"
          angle_z="30.0"
          empspacing="5" />
+      <group
+         id="modular"
+         units="mm"
+         origin_x="0.0"
+         origin_y="0.0"
+         spacing_x="40.0"
+         spacing_y="40.0"
+         gapx="10"
+         gapy="10"
+         marginx="0"
+         marginy="0" />
     </group>
     <group
        id="workarounds"
-       colorsontop="0"
-       partialdynamic="0" />
+       partialdynamic="0"
+       colorsontop="0" />
     <group
        id="font"
        unitType="1" />
@@ -965,7 +1009,8 @@
        theme="colorful">
       <group
          id="shown"
-         ver1.3.2="1" />
+         ver1.3.2="1"
+         ver1.4.4="1" />
     </group>
     <group
        id="rendering" />
@@ -975,22 +1020,55 @@
        id="ruler" />
     <group
        id="snapping"
-       snap-global-toggle="0" />
+       snap-global-toggle="0"
+       snap-bbox="1"
+       snap-bbox-edge="1"
+       snap-bbox-corner="1"
+       snap-bbox-edge-midpoint="0"
+       snap-bbox-center="0"
+       simple-snap-bbox="1"
+       snap-node-category="1"
+       snap-path="1"
+       snap-path-intersection="0"
+       snap-node-cusp="1"
+       snap-node-smooth="1"
+       snap-line-midpoint="1"
+       snap-line-tangential="0"
+       snap-line-perpendicular="0"
+       simple-snap-nodes="1"
+       snap-alignment="0"
+       snap-alignment-self="0"
+       snap-distribution="0"
+       simple-snap-alignment="0"
+       snap-others="1"
+       snap-object-midpoint="0"
+       snap-rotation-center="0"
+       snap-text-baseline="1"
+       snap-path-mask="1"
+       snap-path-clip="1"
+       snap-page-border="1"
+       snap-page-margin="1"
+       snap-grid="1"
+       snap-grid-line="1"
+       snap-guide="1" />
   </group>
   <group
      id="extensions"
      org.inkscape.output.png.inkscape.png_bitdepth="99"
      org.inkscape.output.png.inkscape.png_compression="6"
-     org.inkscape.output.png.inkscape.png_antialias="2" />
+     org.inkscape.output.png.inkscape.png_antialias="2"
+     org.inkscape.input.gdkpixbuf.gif.scale="optimizeSpeed"
+     org.inkscape.output.scour_inkscape.indent="space"
+     org.inkscape.output.scour_inkscape.tab="About" />
   <group
      id="desktop"
-     style="fill:#800000;stroke:#0000ff;font-size:70px;-inkscape-font-specification:'Courier New';font-family:'Courier New';stroke-width:3">
+     style="stroke:#000000;font-size:24px;-inkscape-font-specification:'Courier New';font-family:'Courier New';text-orientation:auto;fill:#4d4d4d;stroke-width:0.75">
     <group
-       width="1188"
-       height="519"
-       x="2536"
-       y="547"
-       maximized="1"
+       width="1589"
+       height="916"
+       x="1651"
+       y="138"
+       maximized="0"
        fullscreen="0"
        id="geometry" />
     <group
@@ -1021,7 +1099,8 @@
        iconsize="16"
        width="32">
       <group
-         id="buttons" />
+         id="buttons"
+         showLPETool="0" />
     </group>
     <group
        id="controlbars"
