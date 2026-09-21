@@ -1,6 +1,77 @@
 #!/bin/sh
 #
 TPLUG_DIR=$(tmux show-option -gqv @tplug-dir)
+RS=
+
+# scroll {{{1
+#
+# Scroll the cached value
+scroll_output() {
+    separator=' | '
+    prepend=
+    append=
+    width=30
+
+    OPTIND=1
+    while getopts 's:p:a:w:' opt; do
+        case $opt in
+            s) separator=$OPTARG ;;
+            p) prepend=$OPTARG ;;
+            a) append=$OPTARG ;;
+            w) width=$OPTARG ;;
+        esac
+    done
+    shift $((OPTIND - 1))
+
+    plugin=$1
+    full_output=$2
+    first=1
+    last=
+
+    # Always print at least one character of the actual output
+    len=$(printf %s%s "$prepend" "$append" | wc -m)
+    if [ "$len" -lt "$width" ]; then
+        width=$((width - len - 1))
+    else
+        width=1
+    fi
+
+    # Only scroll if the output is greater than the width
+    if [ "$(printf %s "$full_output" | wc -m)" -gt "$width" ]; then
+        cache=$(get_cache_fn "$plugin").state
+
+        # If current output is the same as the previous output,
+        # get the starting index of the previous output
+        if [ -r "$cache" ] && [ "$full_output" = "$(sed -n 1p "$cache")" ]; then
+            first=$(sed -n 2p "$cache")
+            first=$((first + 1))
+        fi
+
+        output=$output$separator
+
+        len=$(printf %s "$output" | wc -m)
+
+        # If $first will overflow length, reset to beginning
+        if [ "$first" -gt "$len" ]; then
+            first=1
+
+        # If we run out of output, fill the output string with
+        # enough characters from the front of the output
+        elif [ "$((first + width))" -gt "$len" ]; then
+            last=$((first + width - len))
+            output=$output$(printf %s "$output" | cut -c1-$last)
+        fi
+
+        last=$((first + width - 1))
+
+        printf '%s\n' "$full_output"  > "$cache"
+        printf '%s\n' "$first"       >> "$cache"
+    fi
+
+    output=$(printf %s "$output" | cut -c$first-$last)
+
+    printf %s%s%s "$prepend" "$output" "$append"
+}
 
 # plugin {{{1
 #
@@ -12,6 +83,18 @@ TPLUG_DIR=$(tmux show-option -gqv @tplug-dir)
 # @stdout Plugin output
 #
 plugin() {
+    unset scroll separator width
+    OPTIND=1
+    while getopts 'sS:w:' opt; do
+        case $opt in
+            s) scroll=1 ;;
+            S) separator=$OPTARG ;;
+            w) width=$((OPTARG + 1)) ;;
+        esac
+    done
+    shift $((OPTIND - 1))
+    OPTIND=1
+
     plugin=$1; shift
     [ -f $TPLUG_DIR/plugins/$plugin.tmux ] || return
 
@@ -27,7 +110,43 @@ plugin() {
         interval=$INTERVAL
     fi
 
-    get_value "$plugin" "$interval" "$@"
+    output=$(get_value "$plugin" "$interval" "$@")
+
+    # Get prepend and append strings if present
+    if printf %s "$output" | grep -q "$RS"; then
+        prepend=$(printf %s "$output" | cut -d"$RS" -f2)
+        append=$(printf %s "$output" | cut -d"$RS" -f3)
+        output=$(printf %s "$output" | cut -d"$RS" -f1)
+    else
+        unset prepend append
+    fi
+
+    # TODO: How to properly use width and scrolling with tmux formatting strings?
+
+    if [ -n "$scroll" ]; then
+        scroll_output \
+            ${separator:+-s "$separator"} \
+            ${width:+-w "$width"} \
+            ${prepend:+-p "$prepend" } \
+            ${append:+-a "$append" } \
+            "$plugin" \
+            "$output"
+
+    else
+        printf %s "$prepend"
+
+        unset last
+
+        if [ -n "$width" ]; then
+            # Always print at least one character of the actual output
+            last=1
+            len=$(printf %s%s "$prepend" "$append" | wc -m)
+            [ "$len" -lt "$width" ] && last=$((width - len - 1))
+        fi
+
+        printf %s "$output" | cut -c1-$last
+        printf %s "$append"
+    fi
 }
 
 # Cache functions {{{1
@@ -83,7 +202,7 @@ get_value() {
 #
 # @stdout Cached value
 #
-get_cache() { cat "$(get_cache_fn "$1")"; }
+get_cache() { head -1 "$(get_cache_fn "$1")"; }
 
 # set_cache {{{2
 #
@@ -96,7 +215,12 @@ get_cache() { cat "$(get_cache_fn "$1")"; }
 #
 set_cache() {
     function=$1; shift
-    "$function" "$@" | tee "$(get_cache_fn "$function")"
+
+    # Split getting function output from tee, otherwise plugin functions
+    # cannot read their own cache (which is needed for plugins that need
+    # to store additional state in their cache
+    out=$("$function" "$@")
+    printf %s "$out" | tee "$(get_cache_fn "$function")" | head -1
 }
 
 # get_cache_fn {{{2
