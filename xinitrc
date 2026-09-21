@@ -6,7 +6,10 @@ command -v have >/dev/null || have() { command -v "$1" >/dev/null; }
 
 # xset options {{{1
 #
-have xset && xset b off # Turn off audible bell
+if have xset; then
+    xset b off # Turn off audible bell
+    xset s off # Disable screensaver
+fi
 
 # Merge XResources {{{1
 have xrdb &&
