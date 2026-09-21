@@ -5,7 +5,7 @@
 internal=eDP-1
 
 # Get connected screens
-screens=$(xrandr -q | grep ' connected' | cut -d' ' -f1)
+screens=$(xrandr -q | grep '\<connected' | cut -d' ' -f1)
 
 # How many external monitors are connected?
 num_external=$(echo "$screens" | grep -cv "$internal")
