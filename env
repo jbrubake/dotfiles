@@ -313,7 +313,6 @@ if [ -n "$HAS_COLOR" ] && have dircolors; then
     else
         eval "$(dircolors)"
     fi
-
     unset colorfile
 fi
 
