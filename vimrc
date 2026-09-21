@@ -354,6 +354,11 @@ autocmd plugins FileType gitcommit setlocal completeopt-=preview
 
 " No configuration needed
 
+" vim-spell:               Multiple spellfile 'levels'                                            plugurl:jbrubake/vim-spell " {{{3
+
+" Clean spellfiles
+command! CleanSpell call vim_spell#CleanSpell()
+
 " vim-sort-motion plugurl:christoomey/vim-sort-motion " {{{3
 "
 " gs<motion> : sort <motion> lines or words (e.g., gsi( to sort within parentheses)
