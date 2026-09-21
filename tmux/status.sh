@@ -99,19 +99,19 @@ right() { # {{{1
 
     # memory usage {{{2
     start_range memory
-    printf '  %s' "$(plugin mem_usage '%u/%t')"
+    printf '  %s' "$(plugin mem_usage "%u#[fg=$fg]/%t")"
     end_range
 
     # system load {{{2
     separator "$fg" "$bg"
     start_range load
-    printf '  %s' "$(plugin load '%o%/%f%/%F%')"
+    printf '  %s' "$(plugin load "%o%#[fg=$fg]/%f%#[fg=$fg]/%F%")"
     end_range
 
     # updates {{{2
     separator "$fg" "$bg"
     start_range updates
-    printf '󰒃 %s' "$(plugin updates "#[fg=color033]%t #[fg=$TMUX_COLOR_RED]( %s)#[fg=color033] updates")"
+    printf '󰒃 %s' "$(plugin updates "#[fg=color033]%t #[fg=$fg](#[fg=$TMUX_COLOR_RED] %s#[fg=$fg])")"
 
     # music {{{2
     separator "$fg" "$bg"
