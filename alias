@@ -48,7 +48,7 @@ if have grc; then
 
     # Create additional aliases or modify auto-generated ones as needed
     #
-    # - $HOME is interpreted **now** so the alias works with sudo, even
+    # - $grc_dir is interpreted **now** so the alias works with sudo, even
     #   if the command doesn't actually need sudo
     # - stdbuf is used for commands that don't do line-buffering through a pipe
     alias getsebool="grc getsebool"
