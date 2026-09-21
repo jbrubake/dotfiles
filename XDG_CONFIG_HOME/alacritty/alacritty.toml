@@ -92,7 +92,11 @@ hide_when_typing = false
 alphabet = "jfkdls;ahgurieowpq"
 # See documentation for enabled
 
-[keyboard]
-# bindings = 
+[[keyboard.bindings]]
 # See documentation for bindings
+#
+# Make Shift+Enter enter newline in OpenCode
+key = "Return"
+mods = "Shift"
+chars = "\n"
 
