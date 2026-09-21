@@ -79,3 +79,6 @@
 
 [diff]
     mnemonicPrefix = true ; Use helpful file prefixes instead of a and b
+
+[merge]
+	tool = vimdiff
