@@ -10,9 +10,9 @@ color urgencyborder color red
 
 fontname "sans-serif:pixelsize=14"
 
-gap 0 0 0 0
+gap 32 0 0 0
 
-snapdist 20
+snapdist 10
 
 unbind-key all
 unbind-mouse all
