@@ -119,7 +119,7 @@ right() { # {{{1
     printf %s "$(plugin -sw20 -S ' ¦ ' music -Sx '%t [%a]')"
 
     # weather {{{2
-    weather=$(plugin weather '+%c%C+%t+(%f)')
+    weather=$(plugin -sw20 -S ' ¦ ' weather '%c+%t+(%f)')
     if [ -n "$weather" ]; then
         separator "$fg" "$bg"
         start_range weather
