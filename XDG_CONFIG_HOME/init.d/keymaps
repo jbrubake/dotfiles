@@ -55,10 +55,15 @@ if command -v xcape >/dev/null; then
 fi
 
 if command -v sxhkd >/dev/null; then
-    # Start sxhkd in $HOME, otherwise everything it
-    # starts will start in /
-    cd
-    exec sxhkd &
+    pid=$(pidof sxhkd)
+    if [ -z "$pid" ]; then
+        # Start sxhkd in $HOME, otherwise everything it
+        # starts will start in /
+        cd
+        exec sxhkd &
+    else
+        kill -USR1 "$pid"
+    fi
 fi
 
 # Enable NumLock
