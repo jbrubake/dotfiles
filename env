@@ -220,6 +220,10 @@ if awk --version 2>/dev/null | grep -q GNU && [ -r "$HOME/.Xresources.$COLORSCHE
             tr -d '\n')
 fi
 
+# Default terminal
+#
+export TERMINAL=$(pick terminal alacritty st gnome-terminal xterm rxvt urxvt)
+
 # Alternatives {{{1
 #
 # EDITOR/VISUAL {{{2
