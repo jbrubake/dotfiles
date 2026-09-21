@@ -16,13 +16,7 @@ TMUX_STATUS_BAR_BG=$TMUX_BG_NONE
 TMUX_WINDOW_FORMAT="#I#F #W,,[],$TMUX_STATUS_BAR_BG"
 
 separator() { 
-    if [ "$1" = nospace ]; then
-        trail=
-    else
-        trail=' '
-    fi
-
-    printf '#[fg=%s,bg=%s] |%s' "$1" "$2" "$trail"
+    printf '#[fg=%s,bg=%s] | ' "$1" "$2"
 }
 
 start_range() {
@@ -135,7 +129,7 @@ right() { # {{{1
     # weather {{{2
     weather=$(plugin weather '+%c%C+%t+(%f)')
     if [ -n "$weather" ]; then
-        separator "$fg" "$bg" nospace
+        separator "$fg" "$bg"
         start_range weather
         printf '%s' "$(plugin weather '+%c%C+%t+(%f)')"
         end_range
