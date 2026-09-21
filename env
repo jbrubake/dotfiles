@@ -2,8 +2,8 @@
 #
 # ~/.env: environment variables
 
-export BASH_ENV=$HOME/.bash.env # non-interactive setup
-export ENV=$HOME/.shinit        # equivalent to .bashrc for sh
+export BASH_ENV=${SSHRC:-$HOME}/.bash.env # non-interactive setup
+export ENV=${SSHRC:-$HOME}/.shinit        # equivalent to .bashrc for sh
 
 # Sane defaults {{{1
 #
@@ -120,20 +120,21 @@ if [ -r "$xdg_env" ]; then
     # Because $xdg_env is also used by systemd, it cannot export anything
     export $(<"$xdg_env" awk -F= '/^#/ { next } /^$/ { next } { print $1 }')
 else
-    export XDG_CONFIG_HOME=$HOME/.config
-    export XDG_DATA_HOME=$HOME/.local/share
-    export XDG_CACHE_HOME=$HOME/.cache
-    export XDG_STATE_HOME=$HOME/.local/state
+    export XDG_CONFIG_HOME=${SSHRC:-$HOME}/.config
+    export XDG_DATA_HOME=${SSHRC:-$HOME}/.local/share
+    export XDG_CACHE_HOME=${SSHRC:-$HOME}/.cache
+    export XDG_STATE_HOME=${SSHRC:-$HOME}/.local/state
 
     # These are not real XDG directories
-    export XDG_LOCAL_HOME=$HOME/.local
-    export XDG_BIN_HOME=$HOME/.local/bin
-    export XDG_LIB_HOME=$HOME/.local/lib
+    export XDG_LOCAL_HOME=${SSHRC:-$HOME}/.local
+    export XDG_BIN_HOME=${SSHRC:-$HOME}/.local/bin
+    export XDG_LIB_HOME=${SSHRC:-$HOME}/.local/lib
     export XDG_GAMES_HOME=$HOME/games
-    export XDG_OPT_HOME=$HOME/.local/opt
+    export XDG_OPT_HOME=${SSHRC:-$HOME}/.local/opt
     export XDG_SRC_HOME=$HOME/src
 
-    export PYTHONUSERBASE=$HOME
+    # Make python use ~/lib instead of ~/.local/lib
+    [ -z "$SSHRC" ] && export PYTHONUSERBASE=$HOME
 fi
 unset xdg_env
 
@@ -240,7 +241,7 @@ fi
 # Configure pager {{{3
 case $PAGER in
     vimpager)
-        export VIMPAGER_RC=$HOME/.vimrc ;;
+        export VIMPAGER_RC=${SSHRC:-$HOME}/.vimrc ;;
     less)
         # NOTE: $LESS_TERMCAP_* variables are set in ~/.shinit
         # because *this* file may be sourced *before* TERM is defined
@@ -296,10 +297,10 @@ esac
 if [ -n "$HAS_COLOR" ] && have dircolors; then
     # If colorfile remains blank, dircolors will use defaults
     colorfile=
-    for colorfile in "$HOME/.dir_colors.$TERM" \
-                     "$HOME/.dircolors.$TERM" \
-                     "$HOME/.dir_colors" \
-                     "$HOME/.dircolors" \
+    for colorfile in "${SSHRC:-$HOME}/.dir_colors.$TERM" \
+                     "${SSHRC:-$HOME}/.dircolors.$TERM" \
+                     "${SSHRC:-$HOME}/.dir_colors" \
+                     "${SSHRC:-$HOME}/.dircolors" \
                      "/etc/DIR_COLORS.$TERM" \
                      /etc/DIR_COLORS \
                      '' ; do
@@ -488,8 +489,8 @@ else
 fi
 
 # Always use my .inputrc {{{2
-if [ -r "$HOME/.inputrc" ]; then
-    export INPUTRC=$HOME/.inputrc
+if [ -r "${SSHRC:-$HOME}/.inputrc" ]; then
+    export INPUTRC=${SSHRC:-$HOME}/.inputrc
 fi
 
 # Set news server {{{2
