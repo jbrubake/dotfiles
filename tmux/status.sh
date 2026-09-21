@@ -22,7 +22,7 @@ separator() {
         trail=' '
     fi
 
-    printf '#[fg=%s,bg=%s] |%s' "$TMUX_STATUS_BAR_FG" "$TMUX_STATUS_BAR_BG" "$trail"
+    printf '#[fg=%s,bg=%s] |%s' "$1" "$2" "$trail"
 }
 
 start_range() {
@@ -49,11 +49,11 @@ left() { # {{{1
     end_range
 
     # uptime {{{2
-    separator
+    separator "$fg" "$bg"
     printf ' #[fg=color171] up %s' "$(plugin uptime)"
 
     # clock {{{2
-    separator
+    separator "$fg" "$bg"
     start_range clock
     printf ''
     printf '#[fg=%s] %s#[fg=%s]'              "$TMUX_COLOR_YELLOW" "$(date +'%a, %d-%b %H:%M:%S')" "$TMUX_FG_NONE"
@@ -70,7 +70,7 @@ left() { # {{{1
     ssid=$(plugin wifi)
     [ -n "$ssid" ] && ssid=" ($ssid)"
 
-    separator
+    separator "$fg" "$bg"
     start_range network
     printf '󰖟 [#[fg=%s]%s#[fg=%s]%s]' "$color" "$(plugin ip_location '%c, %R')" "$fg" "$ssid"
     end_range
@@ -83,7 +83,7 @@ left() { # {{{1
     fi
 
     if [ -n "$work_vpn" ]; then
-        separator
+        separator "$fg" "$bg"
         start_range vpn
         printf '󰖂 [%s#[fg=%s]]' "$work_vpn" "$fg"
         end_range
@@ -109,18 +109,18 @@ right() { # {{{1
     end_range
 
     # system load {{{2
-    separator
+    separator "$fg" "$bg"
     start_range load
     printf '  %s' "$(plugin load '%o%/%f%/%F%')"
     end_range
 
     # updates {{{2
-    separator
+    separator "$fg" "$bg"
     start_range updates
     printf '󰒃 %s' "$(plugin updates "#[fg=color033]%t #[fg=$TMUX_COLOR_RED]( %s)#[fg=color033] updates")"
 
     # music {{{2
-    separator
+    separator "$fg" "$bg"
     start_range music
     # Remove '(.*)' album and song qualifiers
     track=$(plugin music '%s%F' | sed 's/([^)]*)[[:space:]]*//')
@@ -135,7 +135,7 @@ right() { # {{{1
     # weather {{{2
     weather=$(plugin weather '+%c%C+%t+(%f)')
     if [ -n "$weather" ]; then
-        separator nospace
+        separator "$fg" "$bg" nospace
         start_range weather
         printf '%s' "$(plugin weather '+%c%C+%t+(%f)')"
         end_range
@@ -143,12 +143,12 @@ right() { # {{{1
 
     # rpg-cli status {{{2
     if command -v atwork >/dev/null && ! atwork; then
-        separator
+        separator "$fg" "$bg"
         printf '󱡂 %s' "$(plugin rpg_status '%c-%l: %H hp')"
     fi
 
     # battery {{{2
-    separator
+    separator "$fg" "$bg"
     printf '%s' "$(plugin battery)"
 
     # reset {{{2
