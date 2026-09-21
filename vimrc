@@ -551,7 +551,9 @@ call mkdir(&backupdir, "p", 0o700)
 call mkdir(&directory, "p", 0o700)
 call mkdir(&undodir,   "p", 0o700)
 
-set path^=$DOTFILES                  " Search for files in $DOTFILES
+if !empty($DOTFILES)
+    set path^=$DOTFILES " Search for files in $DOTFILES
+endif
 
 " Use cursorline only in active window
 " TODO: cursorline is off when vim is first opened
@@ -842,7 +844,9 @@ nnoremap <expr> M ':%s/' . @/ . '//g<Left><Left>'
 
 " Simplify jumping to results of a "list" command
 "
-cnoremap <expr> <CR> ccr#CCR()
+if exists('*ccr#CCR')
+    cnoremap <expr> <CR> ccr#CCR()
+endif
 
 " Quickfix Window {{{2
 "
@@ -1029,19 +1033,21 @@ endif
 
 " My wiki {{{1
 "
-" Find wiki files
-set path^=$WIKI_DIR/content
+if !empty($WIKI)
+    " Find wiki files
+    set path^=$WIKI_DIR/content
 
-" Open wiki index
-nnoremap <leader>ni <Cmd>e $WIKI_DIR/content/index.md<CR>
+    " Open wiki index
+    nnoremap <leader>ni <Cmd>e $WIKI_DIR/content/index.md<CR>
 
-" Search the wiki
-if executable('rg')
-    command! -nargs=1 Ngrep silent! grep! "<args>" -g "*.md" $WIKI_DIR/content | execute ':redraw!'
-else
-    command! -nargs=1 Ngrep vimgrep "<args>" $WIKI_DIR/content/**/*.md
+    " Search the wiki
+    if executable('rg')
+        command! -nargs=1 Ngrep silent! grep! "<args>" -g "*.md" $WIKI_DIR/content | execute ':redraw!'
+    else
+        command! -nargs=1 Ngrep vimgrep "<args>" $WIKI_DIR/content/**/*.md
+    endif
+    nnoremap <leader>nn <Cmd>Ngrep<Space>
 endif
-nnoremap <leader>nn <Cmd>Ngrep<Space>
 
 " Colors and Syntax Settings {{{1
 " ==========================
@@ -1097,7 +1103,9 @@ if &term =~ '256color\|alacritty'
         " let &t_RF = "\e]10;?"
 
         " Make terminal colors match underlying terminal
-        " let g:terminal_ansi_colors = $VIM_TERMINAL_COLORS
+        if !empty($VIM_TERMINAL_COLORS)
+            let g:terminal_ansi_colors = $VIM_TERMINAL_COLORS
+        endif
     endif
 endif
 
@@ -1168,7 +1176,7 @@ endif
 " }}}
 
 set background=dark
-colorscheme PaperColor
+silent! colorscheme PaperColor
 let g:PaperColor_Theme_Options = {
             \ 'theme' : {
             \     'default' : {
