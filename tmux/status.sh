@@ -44,7 +44,7 @@ left() { # {{{1
 
     # uptime {{{2
     separator "$fg" "$bg"
-    printf ' #[fg=color171] up %s' "$(plugin uptime)"
+    printf ' #[fg=color171] %s' "$(plugin uptime)"
 
     # clock {{{2
     separator "$fg" "$bg"
