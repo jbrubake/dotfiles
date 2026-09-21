@@ -116,15 +116,7 @@ right() { # {{{1
     # music {{{2
     separator "$fg" "$bg"
     start_range music
-    # Remove '(.*)' album and song qualifiers
-    track=$(plugin music '%s%F' | sed 's/([^)]*)[[:space:]]*//')
-    # If player is stopped, music.tmux just outputs a single "stopped" emoji and
-    # the sed command above adds another character
-    if [ "$(echo "$track" | wc -m)" -gt 2 ]; then
-        printf '%s' "$track"
-    else
-        printf '%s  No track' "$track"
-    fi
+    printf %s "$(plugin -sw20 -S ' ¦ ' music -Sx '%t [%a]')"
 
     # weather {{{2
     weather=$(plugin weather '+%c%C+%t+(%f)')
