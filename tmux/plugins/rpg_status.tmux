@@ -3,8 +3,6 @@
 RED_THRESH=50
 YELLOW_THRESH=75
 
-get_percent() { printf "%.0f" $(echo "$1 / $2 * 100" | bc -l); }
-
 # %c class
 # %l level
 # %h current HP
@@ -37,8 +35,8 @@ rpg_status() {
         spd=$9
        gold=${12}
 
-    hp_clr=$(colorize "$(get_percent "$hp" "$max_hp")" "$RED_THRESH" "$YELLOW_THRESH")
-    mp_clr=$(colorize "$(get_percent "$mp" "$max_mp")" "$RED_THRESH" "$YELLOW_THRESH")
+    hp_clr=$(colorize "$(get_pct "$hp" "$max_hp")" "$RED_THRESH" "$YELLOW_THRESH")
+    mp_clr=$(colorize "$(get_pct "$mp" "$max_mp")" "$RED_THRESH" "$YELLOW_THRESH")
 
     HP="$hp_clr$hp/$max_hp#[fg=default]"
     MP="$mp_clr$mp/$max_mp#[fg=default]"

@@ -170,6 +170,22 @@ colorize() {
     printf "#[fg=%s]" "$color"
 }
 
+# get_pct {{{2
+#
+# Get integer percent
+get_pct() {
+    if [ "$2" = 0 ]; then
+        echo 100
+    else
+        printf '%.0f' "$(echo "$1 / $2 * 100" | bc -l)"
+    fi
+}
+
+# get_pct_remaining {{{2
+#
+# Get integer percent remaining
+get_pct_remaining() { echo $(( 100 - $(get_pct "$1" "$2") )); }
+
 # Main {{{1
 #
 # Source status and window definitions

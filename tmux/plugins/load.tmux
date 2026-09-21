@@ -6,12 +6,10 @@ YELLOW_THRESH=50
 RED_THRESH=70
 
 CORES=$(grep 'model name' /proc/cpuinfo | wc -l)
-get_load_average() {
-    printf "%.0f" $(echo "$1 / $CORES * 100" | bc -l)
-}
+get_load_average() { get_pct "$1" "$CORES"; }
 
 load(){
-    format=${1:-%o/%f/%F}
+    format=${1:-%o%/%f%/%F%}
 
     set -- $(uptime | awk -F: '{printf $NF}' | tr -d ',' )
 
