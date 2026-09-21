@@ -199,27 +199,32 @@ END
 	# Abort if current directory is in not a git repository
 	git rev-parse --is-inside-work-tree >/dev/null 2>&1 || return
 
-	# Get current branch
-    #
-    # Get the short symbolic ref. If HEAD is not a symbolic ref, get a tracking
-    # remote branch or tag. Otherwise, get the short SHA for the latest commit,
-    # or give up
-	local branch=$(git symbolic-ref --quiet --short HEAD 2> /dev/null || \
-		git describe --all --exact-match HEAD 2> /dev/null || \
-		git rev-parse --short HEAD 2> /dev/null || \
-		printf '%s' '(unknown)')
+    # Do not print anything if this is a bare repository
+    if [ "$(git rev-parse --is-bare-repository 2>/dev/null)" = 'true' ]; then # && return
+        branch=BARE-REPO-ROOT
+    else
+        # Get current branch
+        #
+        # Get the short symbolic ref. If HEAD is not a symbolic ref, get a tracking
+        # remote branch or tag. Otherwise, get the short SHA for the latest commit,
+        # or give up
+        local branch=$(git symbolic-ref --quiet --short HEAD 2> /dev/null || \
+            git describe --all --exact-match HEAD 2> /dev/null || \
+            git rev-parse --short HEAD 2> /dev/null || \
+            printf '%s' '(unknown)')
 
-    # Set flags
-	local s
+        # Set flags
+        local s
 
-    # Uncommitted changes
-    ! git diff --quiet --ignore-submodules --cached      && s=$s+
-    # Unstaged changes
-    ! git diff-files --quiet --ignore-submodules --      && s=$s!
-    # Untracked files
-    [ -n "$(git ls-files --others --exclude-standard)" ] && s=$s?
-    # Stashed files
-    git rev-parse --verify refs/stash >/dev/null 2>&1    && s=$s$
+        # Uncommitted changes
+        ! git diff --quiet --ignore-submodules --cached      && s=$s+
+        # Unstaged changes
+        ! git diff-files --quiet --ignore-submodules --      && s=$s!
+        # Untracked files
+        [ -n "$(git ls-files --others --exclude-standard)" ] && s=$s?
+        # Stashed files
+        git rev-parse --verify refs/stash >/dev/null 2>&1    && s=$s$
+    fi
 
     printf '%s' "$1" | sed -e "s@%b@$branch@" -e "s@%f@$s@"
 }
