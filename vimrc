@@ -16,16 +16,22 @@
 " zj    move down to start of next fold
 " zk    move up to end of previous fold
 
+" This is the default but sourcing this file with `-u` (as my sshrc
+" configuration does) changes the default to `set compatible`
+set nocompatible
+
 " Initialization {{{1
 " ==============
 " Miscellaneous autocmds
 augroup misc | autocmd! | augroup end
 
-" Use a "file" mark to open .vimrc
-nmap <silent> 'V <Cmd>next $MYVIMRC<CR>
+if empty($SSHRC)
+    " Use a "file" mark to open .vimrc
+    nmap <silent> 'V <Cmd>next $MYVIMRC<CR>
 
-" Source .vimrc when saving changes
-autocmd misc BufWritePost $MYVIMRC nested source $MYVIMRC 
+    " Source .vimrc when saving changes
+    autocmd misc BufWritePost $MYVIMRC nested source $MYVIMRC 
+endif
 
 if has ('clientserver') && empty(v:servername) && exists('*remote_startserver')
     call remote_startserver('VIM')
@@ -41,6 +47,8 @@ let maplocalleader = ' '
 " Optional packages {{{2
 packadd! matchit " Enhanced % matching
 packadd! cfilter " Filter quickfix or location lists
+
+if empty($SSHRC)
 
 " Commands to manipulate minpac {{{2
 "
@@ -483,6 +491,8 @@ nnoremap <silent> <F5> :YRShow<CR>
 let g:yankring_history_dir = 
     \ ($XDG_CACHE_HOME != '') ? $XDG_CACHE_HOME : '~/.cache'
 
+endif " empty($SSHRC)
+
 " Basics {{{1
 " ======
 filetype plugin indent on            " Load filetype plugins and indent settings
@@ -496,8 +506,6 @@ set autowrite                        " Write file when changing to a new file
 set wildmenu                         " Show wildmenu
 set wildmode=longest:full,full       " Tab complete longest part, then show wildmenu
 set backspace=indent,eol,start       " What BS can delete
-set backupdir=~/.vim/backup          " Where to put backup files
-set directory=~/.vim/tmp             " Where to put swap files
 set mouse=a                          " Use mouse everywhere
 set mousehide                        " Hide mouse while typing
 set incsearch                        " Incremental search
@@ -527,8 +535,22 @@ set history=1000                     " Save more command history
 set fillchars=vert:\|,fold:―
 set updatecount=10                   " Write swapfile every 10 keystrokes
 set undofile                         " Persistent undo tree
-set undodir=~/.vim/undo              " Put undo files here
-call mkdir(&undodir, "p", 0o700)
+
+" Set some directories differently if using SSHRC
+if empty($SSHRC)
+    let d = $MYVIMDIR
+else
+    let d = $SSHRC . '/vim'
+endif
+
+let &backupdir = d . '/backup' " Where to put backup files
+let &directory = d . '/tmp'    " Where to put swap files
+let &undodir   = d . '/undo'   " Put undo files here
+
+call mkdir(&backupdir, "p", 0o700)
+call mkdir(&directory, "p", 0o700)
+call mkdir(&undodir,   "p", 0o700)
+
 set path^=$DOTFILES                  " Search for files in $DOTFILES
 
 " Use cursorline only in active window
