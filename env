@@ -381,6 +381,10 @@ done
 [ -d "$XDG_CACHE_HOME/cargo" ] && export CARGO_HOME=$XDG_CACHE_HOME/cargo
 [ -d "$HOME/.cargo/bin" ]      && pathadd "$HOME/.cargo/bin"
 
+if have podman && have cross; then
+    export CROSS_CONTAINER_ENGINE=podman
+fi
+
 # Packer {{{2
 #
 export PACKER_CONFIG_DIR=$XDG_STATE_HOME
