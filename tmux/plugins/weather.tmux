@@ -11,6 +11,7 @@ weather() {
     # h    Humidity,
     # t    Temperature (Actual),
     # f    Temperature (Feels Like),
+    # F    Temperature (Feels Like) [if different], Temperature [if the same]
     # w    Wind,
     # l    Location,
     # m    Moon phase 🌑🌒🌓🌔🌕🌖🌗🌘,
@@ -28,14 +29,39 @@ weather() {
 
     # (*times are shown in the local timezone)
     format=${1:-%c%t}
+    do_feels=0
+
+    # Get actual and feels-like for %F
+    case $format in
+        *%F*)
+            format=$(printf %s "$format" | sed 's/%F/?%t?%f?/')
+            do_feels=1
+            ;;
+    esac
 
     # u USCS (US default)
     # m metric
     # M metric (wind speed in m/s)
     units=${2:-u}
 
-    r=$(curl --silent --compressed --connect-timeout 5 --max-time 5 \
-        "http://wttr.in/?$units&format=$format" | tr -s ' ')
+    weather=$(curl --silent --compressed --connect-timeout 5 --max-time 5 \
+        "http://wttr.in/?$units&format=$format")
+
+    # Format actual and feels-like for %F
+    if [ "$do_feels" = 1 ]; then
+        temp=$(printf %s "$weather" | sed 's/^[^?]*?//; s/?[^?]*$//')
+        real=$(printf %s "$temp" | cut -d'?' -f1)
+        feel=$(printf %s "$temp" | cut -d'?' -f2)
+
+        if [ "$real" = "$feel" ]; then
+            temp=$real
+        else
+            temp="$real ($feel)"
+        fi
+
+        weather=$(printf %s "$weather" | sed "s/?\(.*\)?/$temp/")
+    fi
+
     case $r in
         *Sorry*) printf '' ;;
         *)       printf %s "$weather" ;;
