@@ -49,8 +49,8 @@ left() { # {{{1
     # clock {{{2
     separator "$fg" "$bg"
     start_range clock
-    printf ''
-    printf '#[fg=%s] %s#[fg=%s]'              "$TMUX_COLOR_YELLOW" "$(date +'%a, %d-%b %H:%M:%S')" "$TMUX_FG_NONE"
+    printf ' '
+    printf '#[fg=%s] %s#[fg=%s]'              "$TMUX_COLOR_YELLOW" "$(date +'%d-%b %H:%M')" "$TMUX_FG_NONE"
     printf '#[fg=%s] UTC:#[nobold] %s#[bold]' "$TMUX_FG_NONE"      "$(TZ=UTC date '+%H:%M')"
     end_range
 
