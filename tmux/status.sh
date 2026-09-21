@@ -131,7 +131,7 @@ right() { # {{{1
     if [ -n "$weather" ]; then
         separator "$fg" "$bg"
         start_range weather
-        printf '%s' "$(plugin weather '+%c%C+%t+(%f)')"
+        printf '%s' "$weather"
         end_range
     fi
 
