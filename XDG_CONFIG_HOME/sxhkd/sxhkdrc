@@ -22,7 +22,7 @@ mod4 + B
 #
 # Connect or load 'main' tmux session
 mod4 + Return
-    wmctrl -xa main || launchterm main
+    wmctrl -xa main || launchterm -t alacritty -n main tmux-single main
 
 # Various apps {{{1
 #

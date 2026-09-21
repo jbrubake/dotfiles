@@ -103,7 +103,7 @@ fi
 have signal-desktop && signal-desktop
 have discord        && discord
 have firefox        && firefox &
-have launchterm     && launchterm main
+have launchterm     && launchterm -t alacritty -n main tmux-single main
 
 # Run this stuff forever {{{1
 #
