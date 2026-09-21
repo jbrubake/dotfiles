@@ -14,6 +14,12 @@ Include config.d/*.conf
 Host tron
     HostName sshtron.zachlatta.com
 
+# Play intricacy over SSH
+# Password: intricacy
+Host intricacy
+    HostName thegonz.net
+    User intricacy
+
 # git cannot find my keys as they are not in the default location
 #
 Host github.com
