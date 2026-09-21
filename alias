@@ -445,6 +445,7 @@ alias configure="${grc:+grc }./configure"
 # Load aliases for things installed in ~/opt {{{1
 #
 [ -r "$HOME/opt/alias" ] && . "$HOME/opt/alias"
+[ -r "$HOME/games/alias" ] && . "$HOME/games/alias"
 
 # Cleanup {{{1
 #
