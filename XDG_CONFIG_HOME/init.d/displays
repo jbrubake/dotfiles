@@ -3,11 +3,6 @@
 [ -z "$DISPLAY" ] && exit
 
 internal=eDP-1
-hdmi=HDMI-1
-dp=DP-1
-
-left=$dp
-right=$hdmi
 
 # Get connected screens
 screens=$(xrandr -q | grep ' connected' | cut -d' ' -f1)
@@ -17,10 +12,17 @@ num_external=$(echo "$screens" | grep -cv "$internal")
 screens=$(echo "$screens" | grep -v "$internal")
 
 case $num_external in
-    2) xrandr --output "$left" --left-of "$right" --primary --scale 1x1 \
-              --output "$right" --scale 1x1 \
-              --output "$internal" --off
-       ;;
+    # Two external monitors == home office
+    2) 
+        left=DP-1-5
+        right=DP-1-6 
+
+        xrandr --output "$left" --left-of "$right" --auto --primary --scale 1x1 \
+               --output "$right"                   --auto --scale 1x1 \
+               --output eDP-1                      --off
+    ;;
+
+    # One external monitor
     1) 
         case $1 in
             right)
