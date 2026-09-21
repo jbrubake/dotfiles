@@ -4,11 +4,12 @@
 
 internal=eDP-1
 
-# Get connected screens
+# Get a list of all connected screens
 screens=$(xrandr -q | grep '\<connected' | cut -d' ' -f1)
 
 # How many external monitors are connected?
 num_external=$(echo "$screens" | grep -cv "$internal")
+# Get a list of connected screens, excluding the internal one
 screens=$(echo "$screens" | grep -v "$internal")
 
 case $num_external in
@@ -27,15 +28,17 @@ case $num_external in
         case $1 in
             # External monitor to the right or left of internal screen
             right|left)
-            xrandr --output "$screens" --$1-of "$internal" --auto --primary --scale 1x1 \
-                   --output "$internal"                    --auto
-            ;;
-            # External monitor only
-            external)
-            xrandr --output "$screens" \
-                   --output "$internal" --off
+                xrandr --output "$screens" --$1-of "$internal" --auto --primary --scale 1x1 \
+                    --output "$internal"                    --auto
             ;;
 
+            # External monitor only
+            external)
+                xrandr --output "$screens" \
+                    --output "$internal" --off
+            ;;
+
+            # Default to mirroring to ensure the setup is at least minimally usable
             mirror|*)
                 res_ext=$(xrandr | awk "/^$screens/  {f = 1} /\*/ && f == 1 {print \$1; exit}")
                 res_int=$(xrandr | awk "/^$internal/ {f = 1} /\*/ && f == 1 {print \$1; exit}")
@@ -61,6 +64,8 @@ case $num_external in
                 ;;
         esac
         ;;
+
+    # No external monitors
     0)
         xrandr --output "$internal" --primary
         ;;
