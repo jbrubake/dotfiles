@@ -39,7 +39,7 @@ left() { # {{{1
 
     # session:host {{{2
     start_range new
-    printf '  #[fg=color44]#{client_user}#[fg=%s,nobold]:#[fg=color171,bold]#h' "$TMUX_FG_NONE"
+    printf '  #[fg=color44]#{client_session}#[fg=%s,nobold]:#[fg=color171,bold]#h' "$TMUX_FG_NONE"
     end_range
 
     # uptime {{{2
