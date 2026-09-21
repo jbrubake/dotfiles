@@ -113,6 +113,10 @@ let g:ansible_template_syntaxes = {
 autocmd plugins BufRead,BufNewFile playbooks/*.yaml set filetype=yaml.ansible
 autocmd plugins BufRead,BufNewFile playbooks/*.yml  set filetype=yaml.ansible
 
+" AnsiEscape:              Ansi Escape Sequence Visualization                                     manual install " {{{3
+
+" No configuration needed
+
 " CCTree:                  Vim CCTree plugin                                                      plugurl:hari-rangarajan/CCTree type:opt " {{{3
 
 " See Mappings & Commands -> Cscope for mappings
