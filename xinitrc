@@ -52,8 +52,14 @@ dwm)
     if have "$WINDOWMANAGER"; then
         "$WINDOWMANAGER" & wmpid=$!
     else
-        term="st gnome-terminal rxvt xterm"
-        for t in $term; do
+        for t in \
+            twm \
+            alacritty \
+            st \
+            gnome-terminal \
+            rxvt \
+            xterm \
+        ; do
             if have "$t"; then
                 $t & wmpid=$!
                 break
