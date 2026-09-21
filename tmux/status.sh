@@ -37,22 +37,22 @@ left() { # {{{1
     fg=$TMUX_STATUS_BAR_FG
     bg=$TMUX_STATUS_BAR_BG
 
-    # default color
+    # default color {{{2
     printf '#[bg=%s,bold]' "$bg"
 
-    # spacing
+    # spacing {{{2
     printf ' '
 
-    # host:session
+    # session:host {{{2
     start_range new
     printf '  #[fg=color44]#{client_user}@#[fg=color171]#h'
     end_range
 
-    # uptime
+    # uptime {{{2
     separator
     printf ' #[fg=color171] up %s' "$(plugin uptime)"
 
-    # clock
+    # clock {{{2
     separator
     start_range clock
     printf ''
@@ -60,25 +60,28 @@ left() { # {{{1
     printf '#[fg=%s] UTC:#[nobold] %s#[bold]' "$TMUX_FG_NONE"      "$(TZ=UTC date '+%H:%M')"
     end_range
 
-    # network status and internet POP
+    # network status and internet POP {{{2
     case $(plugin uplink) in
         'up')     color=$TMUX_COLOR_GREEN ;;
         'no dns') color=$TMUX_COLOR_YELLOW ;;
         'down')   color=$TMUX_COLOR_RED ;;
     esac
+
     ssid=$(plugin wifi)
     [ -n "$ssid" ] && ssid=" ($ssid)"
+
     separator
     start_range network
     printf '󰖟 [#[fg=%s]%s#[fg=%s]%s]' "$color" "$(plugin ip_location '%c, %R')" "$fg" "$ssid"
     end_range
 
-    # VPN status
+    # VPN status {{{2
     if ip --brief address | grep -q ^jeremy-range; then
         work_vpn=$(plugin vpn_status jeremy-range 10.25.100.1 test.roka.live)
     elif ip --brief address | grep -q ^tng; then
         work_vpn=$(plugin vpn_status tng 172.25.0.1 roka.live)
     fi
+
     if [ -n "$work_vpn" ]; then
         separator
         start_range vpn
@@ -86,7 +89,7 @@ left() { # {{{1
         end_range
     fi
 
-    # end
+    # end {{{2
     printf '#[fg=%s,bg=%s]  ' "$fg" "$bg"
 }
 
@@ -94,29 +97,29 @@ right() { # {{{1
     fg=$TMUX_STATUS_BAR_FG
     bg=$TMUX_STATUS_BAR_BG
 
-    # default color
+    # default color {{{2
     printf '#[bg=%s,bold]' "$bg"
 
-    # leader
+    # leader {{{2
     printf ' '
 
-    # memory usage
+    # memory usage {{{2
     start_range memory
     printf '  %s' "$(plugin mem_usage '%u/%t')"
     end_range
 
-    # system load
+    # system load {{{2
     separator
     start_range load
     printf '  %s' "$(plugin load '%o%/%f%/%F%')"
     end_range
 
-    # updates
+    # updates {{{2
     separator
     start_range updates
     printf '󰒃 %s' "$(plugin updates "#[fg=color033]%t #[fg=$TMUX_COLOR_RED]( %s)#[fg=color033] updates")"
 
-    # music
+    # music {{{2
     separator
     start_range music
     # Remove '(.*)' album and song qualifiers
@@ -129,7 +132,7 @@ right() { # {{{1
         printf '%s  No track' "$track"
     fi
 
-    # weather
+    # weather {{{2
     weather=$(plugin weather '+%c%C+%t+(%f)')
     if [ -n "$weather" ]; then
         separator nospace
@@ -138,20 +141,20 @@ right() { # {{{1
         end_range
     fi
 
-    # rpg-cli status
+    # rpg-cli status {{{2
     if command -v atwork >/dev/null && ! atwork; then
         separator
         printf '󱡂 %s' "$(plugin rpg_status '%c-%l: %H hp')"
     fi
 
-    # battery
+    # battery {{{2
     separator
     printf '%s' "$(plugin battery)"
 
-    # reset
+    # reset {{{2
     printf '#[fg=%s,bg=%s]' "$fg" "$bg"
 
-    # provide some separation from the terminal's edge
+    # provide some separation from the terminal's edge {{{2
     printf '  '
 }
 
