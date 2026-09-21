@@ -33,7 +33,7 @@ mod4 + b
 mod4 + F10
     jumpapp -i discord discord
 mod4 + F11
-    jumpapp -i signal signal-desktop
+    jumpapp -i org.signal.signal signal-desktop
 mod4 + F9
     jumpapp -i whalebird whalebird
 # XF86Back
