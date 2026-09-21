@@ -30,6 +30,12 @@ case $num_external in
             xrandr --output "$screens" --$1-of "$internal" --auto --primary --scale 1x1 \
                    --output "$internal"                    --auto
             ;;
+            # External monitor only
+            external)
+            xrandr --output "$screens" \
+                   --output "$internal" --off
+            ;;
+
             mirror|*)
                 res_ext=$(xrandr | awk "/^$screens/  {f = 1} /\*/ && f == 1 {print \$1; exit}")
                 res_int=$(xrandr | awk "/^$internal/ {f = 1} /\*/ && f == 1 {print \$1; exit}")
