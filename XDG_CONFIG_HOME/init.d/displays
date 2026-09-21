@@ -49,8 +49,15 @@ case $num_external in
                 scale_x=$((x_int / x_ext))
                 scale_y=$((y_int / y_ext))
 
+                # Failsafe scaling
+                if [ "$scale_x" = 0 -a "$scale_y" = 0 ]; then
+                    scale=
+                else
+                    scale="--scale ${scale_x}x${scale_y}"
+                fi
+
                 xrandr --output "$internal" \
-                       --output "$screens" --same-as "$internal" --scale "${scale_x}x${scale_y}"
+                       --output "$screens" --same-as "$internal" $scale
                 ;;
         esac
         ;;
