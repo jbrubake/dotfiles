@@ -82,3 +82,6 @@
 
 [merge]
 	tool = vimdiff
+
+[worktree]
+	useRelativePaths = true
