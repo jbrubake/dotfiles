@@ -23,9 +23,15 @@ HOOK_NAMES="
     post-update
     pre-auto-gc"
 
-HOOK_DIR=$GIT_DIR/hooks
-TRACKED_HOOK_DIR=.tracked-hooks
-HOOK_WRAPPER=../../$TRACKED_HOOK_DIR/hook-wrapper
+# Find the relative path from the hooks directory to the tracked hooks
+# This makes two assumptions so that it works with worktrees:
+#   1. There is a 'main' or 'master' branch
+#   2. That branch always has the latest version of tracked hooks
+#
+HOOK_DIR=$(git rev-parse --path-format=absolute --git-path hooks)
+MAIN_WORKTREE=$(git worktree list --porcelain | grep -EB2 'worktree .*/(main|master)$' | head -1 | cut -d' ' -f2)
+TRACKED_HOOK_DIR=$MAIN_WORKTREE/.tracked-hooks
+HOOK_WRAPPER=$(realpath -m --relative-to="$HOOK_DIR" "$TRACKED_HOOK_DIR")/hook-wrapper
 
 for hook in $HOOK_NAMES; do
     # If the hook already exists and is not a symlink

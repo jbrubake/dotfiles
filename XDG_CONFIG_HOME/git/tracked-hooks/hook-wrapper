@@ -4,13 +4,20 @@
 # Posted by Cascabel, modified by community. See post 'Timeline' for change history
 # Retrieved 2026-04-09, License - CC BY-SA 4.0
 #
+# Find the absolute path to the tracked hooks
+# This makes two assumptions so that it works with worktrees:
+#   1. There is a 'main' or 'master' branch
+#   2. That branch always has the latest version of tracked hooks
+#
+main_worktree=$(git worktree list --porcelain | grep -EB2 'worktree .*/(main|master)$' | head -1 | cut -d' ' -f2)
+
 # Run local hooks first
 if [ -x "$0.local" ]; then
     "$0.local" "$@" || exit $?
 fi
 
 # Then run tracked hooks
-if [ -x ".tracked-hooks/$(basename "$0")" ]; then
-    ".tracked-hooks/$(basename "$0")" "$@" || exit $?
+if [ -x "$main_worktree/.tracked-hooks/$(basename "$0")" ]; then
+    "$main_worktree/.tracked-hooks/$(basename "$0")" "$@" || exit $?
 fi
 

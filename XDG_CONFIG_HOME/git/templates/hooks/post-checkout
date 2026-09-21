@@ -2,6 +2,8 @@
 
 . "$(git --exec-path)/git-sh-setup"
 
-"$GIT_DIR/hooks/ctags" 2>&1 >/dev/null &
-"$GIT_DIR/hooks/cscope" 2>&1 >/dev/null &
+hooks_dir=$(git rev-parse --git-path hooks)
+
+"$hooks_dir/ctags" 2>&1 >/dev/null &
+"$hooks_dir/cscope" 2>&1 >/dev/null &
 
