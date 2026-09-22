@@ -39,7 +39,7 @@ case $num_external in
             ;;
 
             # Default to mirroring to ensure the setup is at least minimally usable
-            mirror|*)
+            mirror)
                 res_ext=$(xrandr | awk "/^$screens/  {f = 1} /\*/ && f == 1 {print \$1; exit}")
                 res_int=$(xrandr | awk "/^$internal/ {f = 1} /\*/ && f == 1 {print \$1; exit}")
 
@@ -62,6 +62,8 @@ case $num_external in
                 xrandr --output "$internal" \
                        --output "$screens" --same-as "$internal" $scale
                 ;;
+
+            *) printf 'Unknown command: %s\n' "$1" >&2; exit 1 ;;
         esac
         ;;
 
